@@ -1,0 +1,711 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2017-03-31T17:39:26 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Secretaria" pageWidth="1200" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1200" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="37ed2b96-4991-4df6-a685-0545e5bf7158">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GEMCRUZ"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="net.sf.jasperreports.export.xls.ignore.cell.background" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.white.page.background" value="false"/>
+	<parameter name="imagen" class="java.lang.String"/>
+	<parameter name="firmaP1" class="java.lang.String">
+		<defaultValueExpression><![CDATA["firma"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firmaP2" class="java.lang.String">
+		<defaultValueExpression><![CDATA["firma"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firmaP3" class="java.lang.String">
+		<defaultValueExpression><![CDATA["firma"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firmaN1" class="java.lang.String">
+		<defaultValueExpression><![CDATA["firma"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firmaN2" class="java.lang.String">
+		<defaultValueExpression><![CDATA["firma"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firmaN3" class="java.lang.String">
+		<defaultValueExpression><![CDATA["firma"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="mes" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[3]]></defaultValueExpression>
+	</parameter>
+	<parameter name="sector" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[2]]></defaultValueExpression>
+	</parameter>
+	<parameter name="secretaria" class="java.lang.String">
+		<defaultValueExpression><![CDATA["203"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="anio" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[2016]]></defaultValueExpression>
+	</parameter>
+	<parameter name="No.Firmas" class="java.lang.Integer">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[3]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nombreEntidad" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT partida,N.NOMGAS,
+ CASE $P{mes} 
+		 WHEN 1 THEN nvl(SUM(AUTO1_1),0)
+         WHEN 2 THEN nvl(SUM(AUTO1_1)+SUM(AUTO1_2),0)
+         WHEN 3 THEN nvl(SUM(AUTO1_1)+SUM(AUTO1_2)+SUM(AUTO1_3),0)
+         WHEN 4 THEN nvl(SUM(AUTO1_1)+SUM(AUTO1_2)+SUM(AUTO1_3)+SUM(AUTO1_4),0)
+         WHEN 5 THEN nvl(SUM(AUTO1_1)+SUM(AUTO1_2)+SUM(AUTO1_3)+SUM(AUTO1_4)+SUM(AUTO1_5),0)
+         WHEN 6 THEN nvl(SUM(AUTO1_1)+SUM(AUTO1_2)+SUM(AUTO1_3)+SUM(AUTO1_4)+SUM(AUTO1_5)+SUM(AUTO1_6),0)
+         WHEN 7 THEN nvl(SUM(AUTO1_1)+SUM(AUTO1_2)+SUM(AUTO1_3)+SUM(AUTO1_4)+SUM(AUTO1_5)+SUM(AUTO1_6)+SUM(AUTO1_7),0)
+         WHEN 8 THEN nvl(SUM(AUTO1_1)+SUM(AUTO1_2)+SUM(AUTO1_3)+SUM(AUTO1_4)+SUM(AUTO1_5)+SUM(AUTO1_6)+SUM(AUTO1_7)+SUM(AUTO1_8),0)
+         WHEN 9 THEN nvl(SUM(AUTO1_1)+SUM(AUTO1_2)+SUM(AUTO1_3)+SUM(AUTO1_4)+SUM(AUTO1_5)+SUM(AUTO1_6)+SUM(AUTO1_7)+SUM(AUTO1_8)+SUM(AUTO1_9),0)
+         WHEN 10 THEN nvl(SUM(AUTO1_1)+SUM(AUTO1_2)+SUM(AUTO1_3)+SUM(AUTO1_4)+SUM(AUTO1_5)+SUM(AUTO1_6)+SUM(AUTO1_7)+SUM(AUTO1_8)+SUM(AUTO1_9)+SUM(AUTO1_10),0)
+         WHEN 11 THEN nvl(SUM(AUTO1_1)+SUM(AUTO1_2)+SUM(AUTO1_3)+SUM(AUTO1_4)+SUM(AUTO1_5)+SUM(AUTO1_6)+SUM(AUTO1_7)+SUM(AUTO1_8)+SUM(AUTO1_9)+SUM(AUTO1_10)+SUM(AUTO1_11),0)
+         WHEN 12 THEN nvl(SUM(AUTO1_1)+SUM(AUTO1_2)+SUM(AUTO1_3)+SUM(AUTO1_4)+SUM(AUTO1_5)+SUM(AUTO1_6)+SUM(AUTO1_7)+SUM(AUTO1_8)+SUM(AUTO1_9)+SUM(AUTO1_10)+SUM(AUTO1_11)+SUM(AUTO1_12),0)
+    ELSE 0
+    END as a,
+ CASE $P{mes} 
+		 WHEN 1 THEN nvl(SUM(EJPA1_1),0)
+         WHEN 2 THEN nvl(SUM(EJPA1_1)+SUM(EJPA1_2),0)
+         WHEN 3 THEN nvl(SUM(EJPA1_1)+SUM(EJPA1_2)+SUM(EJPA1_3),0)
+         WHEN 4 THEN nvl(SUM(EJPA1_1)+SUM(EJPA1_2)+SUM(EJPA1_3)+SUM(EJPA1_4),0)
+         WHEN 5 THEN nvl(SUM(EJPA1_1)+SUM(EJPA1_2)+SUM(EJPA1_3)+SUM(EJPA1_4)+SUM(EJPA1_5),0)
+         WHEN 6 THEN nvl(SUM(EJPA1_1)+SUM(EJPA1_2)+SUM(EJPA1_3)+SUM(EJPA1_4)+SUM(EJPA1_5)+SUM(EJPA1_6),0)
+         WHEN 7 THEN nvl(SUM(EJPA1_1)+SUM(EJPA1_2)+SUM(EJPA1_3)+SUM(EJPA1_4)+SUM(EJPA1_5)+SUM(EJPA1_6)+SUM(EJPA1_7),0)
+         WHEN 8 THEN nvl(SUM(EJPA1_1)+SUM(EJPA1_2)+SUM(EJPA1_3)+SUM(EJPA1_4)+SUM(EJPA1_5)+SUM(EJPA1_6)+SUM(EJPA1_7)+SUM(EJPA1_8),0)
+         WHEN 9 THEN nvl(SUM(EJPA1_1)+SUM(EJPA1_2)+SUM(EJPA1_3)+SUM(EJPA1_4)+SUM(EJPA1_5)+SUM(EJPA1_6)+SUM(EJPA1_7)+SUM(EJPA1_8)+SUM(EJPA1_9),0)
+         WHEN 10 THEN nvl(SUM(EJPA1_1)+SUM(EJPA1_2)+SUM(EJPA1_3)+SUM(EJPA1_4)+SUM(EJPA1_5)+SUM(EJPA1_6)+SUM(EJPA1_7)+SUM(EJPA1_8)+SUM(EJPA1_9)+SUM(EJPA1_10),0)
+         WHEN 11 THEN nvl(SUM(EJPA1_1)+SUM(EJPA1_2)+SUM(EJPA1_3)+SUM(EJPA1_4)+SUM(EJPA1_5)+SUM(EJPA1_6)+SUM(EJPA1_7)+SUM(EJPA1_8)+SUM(EJPA1_9)+SUM(EJPA1_10)+SUM(EJPA1_11),0)
+         WHEN 12 THEN nvl(SUM(EJPA1_1)+SUM(EJPA1_2)+SUM(EJPA1_3)+SUM(EJPA1_4)+SUM(EJPA1_5)+SUM(EJPA1_6)+SUM(EJPA1_7)+SUM(EJPA1_8)+SUM(EJPA1_9)+SUM(EJPA1_10)+SUM(EJPA1_11)+SUM(EJPA1_12),0)
+    ELSE 0
+    END as b, 
+ CASE $P{mes} 
+		 WHEN 1 THEN nvl(SUM(EJXPA1_1),0)
+         WHEN 2 THEN nvl(SUM(EJXPA1_1)+SUM(EJXPA1_2),0)
+         WHEN 3 THEN nvl(SUM(EJXPA1_1)+SUM(EJXPA1_2)+SUM(EJXPA1_3),0)
+         WHEN 4 THEN nvl(SUM(EJXPA1_1)+SUM(EJXPA1_2)+SUM(EJXPA1_3)+SUM(EJXPA1_4),0)
+         WHEN 5 THEN nvl(SUM(EJXPA1_1)+SUM(EJXPA1_2)+SUM(EJXPA1_3)+SUM(EJXPA1_4)+SUM(EJXPA1_5),0)
+         WHEN 6 THEN nvl(SUM(EJXPA1_1)+SUM(EJXPA1_2)+SUM(EJXPA1_3)+SUM(EJXPA1_4)+SUM(EJXPA1_5)+SUM(EJXPA1_6),0)
+         WHEN 7 THEN nvl(SUM(EJXPA1_1)+SUM(EJXPA1_2)+SUM(EJXPA1_3)+SUM(EJXPA1_4)+SUM(EJXPA1_5)+SUM(EJXPA1_6)+SUM(EJXPA1_7),0)
+         WHEN 8 THEN nvl(SUM(EJXPA1_1)+SUM(EJXPA1_2)+SUM(EJXPA1_3)+SUM(EJXPA1_4)+SUM(EJXPA1_5)+SUM(EJXPA1_6)+SUM(EJXPA1_7)+SUM(EJXPA1_8),0)
+         WHEN 9 THEN nvl(SUM(EJXPA1_1)+SUM(EJXPA1_2)+SUM(EJXPA1_3)+SUM(EJXPA1_4)+SUM(EJXPA1_5)+SUM(EJXPA1_6)+SUM(EJXPA1_7)+SUM(EJXPA1_8)+SUM(EJXPA1_9),0)
+         WHEN 10 THEN nvl(SUM(EJXPA1_1)+SUM(EJXPA1_2)+SUM(EJXPA1_3)+SUM(EJXPA1_4)+SUM(EJXPA1_5)+SUM(EJXPA1_6)+SUM(EJXPA1_7)+SUM(EJXPA1_8)+SUM(EJXPA1_9)+SUM(EJXPA1_10),0)
+         WHEN 11 THEN nvl(SUM(EJXPA1_1)+SUM(EJXPA1_2)+SUM(EJXPA1_3)+SUM(EJXPA1_4)+SUM(EJXPA1_5)+SUM(EJXPA1_6)+SUM(EJXPA1_7)+SUM(EJXPA1_8)+SUM(EJXPA1_9)+SUM(EJXPA1_10)+SUM(EJXPA1_11),0)
+         WHEN 12 THEN nvl(SUM(EJXPA1_1)+SUM(EJXPA1_2)+SUM(EJXPA1_3)+SUM(EJXPA1_4)+SUM(EJXPA1_5)+SUM(EJXPA1_6)+SUM(EJXPA1_7)+SUM(EJXPA1_8)+SUM(EJXPA1_9)+SUM(EJXPA1_10)+SUM(EJXPA1_11)+SUM(EJXPA1_12),0)
+    ELSE 0
+    END as c,
+ CASE $P{mes} 
+		 WHEN 1 THEN nvl(SUM(TOEJE1_1),0)
+         WHEN 2 THEN nvl(SUM(TOEJE1_1)+SUM(TOEJE1_2),0)
+         WHEN 3 THEN nvl(SUM(TOEJE1_1)+SUM(TOEJE1_2)+SUM(TOEJE1_3),0)
+         WHEN 4 THEN nvl(SUM(TOEJE1_1)+SUM(TOEJE1_2)+SUM(TOEJE1_3)+SUM(TOEJE1_4),0)
+         WHEN 5 THEN nvl(SUM(TOEJE1_1)+SUM(TOEJE1_2)+SUM(TOEJE1_3)+SUM(TOEJE1_4)+SUM(TOEJE1_5),0)
+         WHEN 6 THEN nvl(SUM(TOEJE1_1)+SUM(TOEJE1_2)+SUM(TOEJE1_3)+SUM(TOEJE1_4)+SUM(TOEJE1_5)+SUM(TOEJE1_6),0)
+         WHEN 7 THEN nvl(SUM(TOEJE1_1)+SUM(TOEJE1_2)+SUM(TOEJE1_3)+SUM(TOEJE1_4)+SUM(TOEJE1_5)+SUM(TOEJE1_6)+SUM(TOEJE1_7),0)
+         WHEN 8 THEN nvl(SUM(TOEJE1_1)+SUM(TOEJE1_2)+SUM(TOEJE1_3)+SUM(TOEJE1_4)+SUM(TOEJE1_5)+SUM(TOEJE1_6)+SUM(TOEJE1_7)+SUM(TOEJE1_8),0)
+         WHEN 9 THEN nvl(SUM(TOEJE1_1)+SUM(TOEJE1_2)+SUM(TOEJE1_3)+SUM(TOEJE1_4)+SUM(TOEJE1_5)+SUM(TOEJE1_6)+SUM(TOEJE1_7)+SUM(TOEJE1_8)+SUM(TOEJE1_9),0)
+         WHEN 10 THEN nvl(SUM(TOEJE1_1)+SUM(TOEJE1_2)+SUM(TOEJE1_3)+SUM(TOEJE1_4)+SUM(TOEJE1_5)+SUM(TOEJE1_6)+SUM(TOEJE1_7)+SUM(TOEJE1_8)+SUM(TOEJE1_9)+SUM(TOEJE1_10),0)
+         WHEN 11 THEN nvl(SUM(TOEJE1_1)+SUM(TOEJE1_2)+SUM(TOEJE1_3)+SUM(TOEJE1_4)+SUM(TOEJE1_5)+SUM(TOEJE1_6)+SUM(TOEJE1_7)+SUM(TOEJE1_8)+SUM(TOEJE1_9)+SUM(TOEJE1_10)+SUM(TOEJE1_11),0)
+         WHEN 12 THEN nvl(SUM(TOEJE1_1)+SUM(TOEJE1_2)+SUM(TOEJE1_3)+SUM(TOEJE1_4)+SUM(TOEJE1_5)+SUM(TOEJE1_6)+SUM(TOEJE1_7)+SUM(TOEJE1_8)+SUM(TOEJE1_9)+SUM(TOEJE1_10)+SUM(TOEJE1_11)+SUM(TOEJE1_12),0)
+    ELSE 0
+    END as d, 
+ CASE $P{mes} 
+		 WHEN 1 THEN nvl(SUM(AMPLI1_1),0)
+         WHEN 2 THEN nvl(SUM(AMPLI1_1)+SUM(AMPLI1_2),0)
+         WHEN 3 THEN nvl(SUM(AMPLI1_1)+SUM(AMPLI1_2)+SUM(AMPLI1_3),0)
+         WHEN 4 THEN nvl(SUM(AMPLI1_1)+SUM(AMPLI1_2)+SUM(AMPLI1_3)+SUM(AMPLI1_4),0)
+         WHEN 5 THEN nvl(SUM(AMPLI1_1)+SUM(AMPLI1_2)+SUM(AMPLI1_3)+SUM(AMPLI1_4)+SUM(AMPLI1_5),0)
+         WHEN 6 THEN nvl(SUM(AMPLI1_1)+SUM(AMPLI1_2)+SUM(AMPLI1_3)+SUM(AMPLI1_4)+SUM(AMPLI1_5)+SUM(AMPLI1_6),0)
+         WHEN 7 THEN nvl(SUM(AMPLI1_1)+SUM(AMPLI1_2)+SUM(AMPLI1_3)+SUM(AMPLI1_4)+SUM(AMPLI1_5)+SUM(AMPLI1_6)+SUM(AMPLI1_7),0)
+         WHEN 8 THEN nvl(SUM(AMPLI1_1)+SUM(AMPLI1_2)+SUM(AMPLI1_3)+SUM(AMPLI1_4)+SUM(AMPLI1_5)+SUM(AMPLI1_6)+SUM(AMPLI1_7)+SUM(AMPLI1_8),0)
+         WHEN 9 THEN nvl(SUM(AMPLI1_1)+SUM(AMPLI1_2)+SUM(AMPLI1_3)+SUM(AMPLI1_4)+SUM(AMPLI1_5)+SUM(AMPLI1_6)+SUM(AMPLI1_7)+SUM(AMPLI1_8)+SUM(AMPLI1_9),0)
+         WHEN 10 THEN nvl(SUM(AMPLI1_1)+SUM(AMPLI1_2)+SUM(AMPLI1_3)+SUM(AMPLI1_4)+SUM(AMPLI1_5)+SUM(AMPLI1_6)+SUM(AMPLI1_7)+SUM(AMPLI1_8)+SUM(AMPLI1_9)+SUM(AMPLI1_10),0)
+         WHEN 11 THEN nvl(SUM(AMPLI1_1)+SUM(AMPLI1_2)+SUM(AMPLI1_3)+SUM(AMPLI1_4)+SUM(AMPLI1_5)+SUM(AMPLI1_6)+SUM(AMPLI1_7)+SUM(AMPLI1_8)+SUM(AMPLI1_9)+SUM(AMPLI1_10)+SUM(AMPLI1_11),0)
+         WHEN 12 THEN nvl(SUM(AMPLI1_1)+SUM(AMPLI1_2)+SUM(AMPLI1_3)+SUM(AMPLI1_4)+SUM(AMPLI1_5)+SUM(AMPLI1_6)+SUM(AMPLI1_7)+SUM(AMPLI1_8)+SUM(AMPLI1_9)+SUM(AMPLI1_10)+SUM(AMPLI1_11)+SUM(AMPLI1_12),0)
+    ELSE 0
+    END as f,
+ CASE $P{mes} 
+		 WHEN 1 THEN nvl(SUM(REDU1_1),0)
+         WHEN 2 THEN nvl(SUM(REDU1_1)+SUM(REDU1_2),0)
+         WHEN 3 THEN nvl(SUM(REDU1_1)+SUM(REDU1_2)+SUM(REDU1_3),0)
+         WHEN 4 THEN nvl(SUM(REDU1_1)+SUM(REDU1_2)+SUM(REDU1_3)+SUM(REDU1_4),0)
+         WHEN 5 THEN nvl(SUM(REDU1_1)+SUM(REDU1_2)+SUM(REDU1_3)+SUM(REDU1_4)+SUM(REDU1_5),0)
+         WHEN 6 THEN nvl(SUM(REDU1_1)+SUM(REDU1_2)+SUM(REDU1_3)+SUM(REDU1_4)+SUM(REDU1_5)+SUM(REDU1_6),0)
+         WHEN 7 THEN nvl(SUM(REDU1_1)+SUM(REDU1_2)+SUM(REDU1_3)+SUM(REDU1_4)+SUM(REDU1_5)+SUM(REDU1_6)+SUM(REDU1_7),0)
+         WHEN 8 THEN nvl(SUM(REDU1_1)+SUM(REDU1_2)+SUM(REDU1_3)+SUM(REDU1_4)+SUM(REDU1_5)+SUM(REDU1_6)+SUM(REDU1_7)+SUM(REDU1_8),0)
+         WHEN 9 THEN nvl(SUM(REDU1_1)+SUM(REDU1_2)+SUM(REDU1_3)+SUM(REDU1_4)+SUM(REDU1_5)+SUM(REDU1_6)+SUM(REDU1_7)+SUM(REDU1_8)+SUM(REDU1_9),0)
+         WHEN 10 THEN nvl(SUM(REDU1_1)+SUM(REDU1_2)+SUM(REDU1_3)+SUM(REDU1_4)+SUM(REDU1_5)+SUM(REDU1_6)+SUM(REDU1_7)+SUM(REDU1_8)+SUM(REDU1_9)+SUM(REDU1_10),0)
+         WHEN 11 THEN nvl(SUM(REDU1_1)+SUM(REDU1_2)+SUM(REDU1_3)+SUM(REDU1_4)+SUM(REDU1_5)+SUM(REDU1_6)+SUM(REDU1_7)+SUM(REDU1_8)+SUM(REDU1_9)+SUM(REDU1_10)+SUM(REDU1_11),0)
+         WHEN 12 THEN nvl(SUM(REDU1_1)+SUM(REDU1_2)+SUM(REDU1_3)+SUM(REDU1_4)+SUM(REDU1_5)+SUM(REDU1_6)+SUM(REDU1_7)+SUM(REDU1_8)+SUM(REDU1_9)+SUM(REDU1_10)+SUM(REDU1_11)+SUM(REDU1_12),0)
+    ELSE 0
+    END as g,
+ CASE $P{mes} 
+		 WHEN 1 THEN nvl(SUM(COMPRO1_1),0)
+         WHEN 2 THEN nvl(SUM(COMPRO1_1)+SUM(COMPRO1_2),0)
+         WHEN 3 THEN nvl(SUM(COMPRO1_1)+SUM(COMPRO1_2)+SUM(COMPRO1_3),0)
+         WHEN 4 THEN nvl(SUM(COMPRO1_1)+SUM(COMPRO1_2)+SUM(COMPRO1_3)+SUM(COMPRO1_4),0)
+         WHEN 5 THEN nvl(SUM(COMPRO1_1)+SUM(COMPRO1_2)+SUM(COMPRO1_3)+SUM(COMPRO1_4)+SUM(COMPRO1_5),0)
+         WHEN 6 THEN nvl(SUM(COMPRO1_1)+SUM(COMPRO1_2)+SUM(COMPRO1_3)+SUM(COMPRO1_4)+SUM(COMPRO1_5)+SUM(COMPRO1_6),0)
+         WHEN 7 THEN nvl(SUM(COMPRO1_1)+SUM(COMPRO1_2)+SUM(COMPRO1_3)+SUM(COMPRO1_4)+SUM(COMPRO1_5)+SUM(COMPRO1_6)+SUM(COMPRO1_7),0)
+         WHEN 8 THEN nvl(SUM(COMPRO1_1)+SUM(COMPRO1_2)+SUM(COMPRO1_3)+SUM(COMPRO1_4)+SUM(COMPRO1_5)+SUM(COMPRO1_6)+SUM(COMPRO1_7)+SUM(COMPRO1_8),0)
+         WHEN 9 THEN nvl(SUM(COMPRO1_1)+SUM(COMPRO1_2)+SUM(COMPRO1_3)+SUM(COMPRO1_4)+SUM(COMPRO1_5)+SUM(COMPRO1_6)+SUM(COMPRO1_7)+SUM(COMPRO1_8)+SUM(COMPRO1_9),0)
+         WHEN 10 THEN nvl(SUM(COMPRO1_1)+SUM(COMPRO1_2)+SUM(COMPRO1_3)+SUM(COMPRO1_4)+SUM(COMPRO1_5)+SUM(COMPRO1_6)+SUM(COMPRO1_7)+SUM(COMPRO1_8)+SUM(COMPRO1_9)+SUM(COMPRO1_10),0)
+         WHEN 11 THEN nvl(SUM(COMPRO1_1)+SUM(COMPRO1_2)+SUM(COMPRO1_3)+SUM(COMPRO1_4)+SUM(COMPRO1_5)+SUM(COMPRO1_6)+SUM(COMPRO1_7)+SUM(COMPRO1_8)+SUM(COMPRO1_9)+SUM(COMPRO1_10)+SUM(COMPRO1_11),0)
+         WHEN 12 THEN nvl(SUM(COMPRO1_1)+SUM(COMPRO1_2)+SUM(COMPRO1_3)+SUM(COMPRO1_4)+SUM(COMPRO1_5)+SUM(COMPRO1_6)+SUM(COMPRO1_7)+SUM(COMPRO1_8)+SUM(COMPRO1_9)+SUM(COMPRO1_10)+SUM(COMPRO1_11)+SUM(COMPRO1_12),0)
+    ELSE 0
+    END as ctm
+ FROM PASO P 
+INNER JOIN NATGAS N ON P.PARTIDA=N.CLVGAS 
+ WHERE   SUBSTR(CLAVE,1,3) =  $P{secretaria} 
+ AND P.IDSECTOR=N.IDSECTOR
+ AND P.IDSECTOR= $P{sector} 
+ group by partida,N.NOMGAS]]>
+	</queryString>
+	<field name="PARTIDA" class="java.lang.String"/>
+	<field name="NOMGAS" class="java.lang.String"/>
+	<field name="A" class="java.math.BigDecimal"/>
+	<field name="B" class="java.math.BigDecimal"/>
+	<field name="C" class="java.math.BigDecimal"/>
+	<field name="D" class="java.math.BigDecimal"/>
+	<field name="F" class="java.math.BigDecimal"/>
+	<field name="G" class="java.math.BigDecimal"/>
+	<field name="CTM" class="java.math.BigDecimal"/>
+	<variable name="MODIFICADO" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{A}.add( $F{F} ).subtract( $F{G})]]></variableExpression>
+	</variable>
+	<variable name="E" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{A}.add( $F{F} ).subtract( $F{G} ).subtract($F{D})]]></variableExpression>
+	</variable>
+	<variable name="RANGO" class="java.lang.String">
+		<variableExpression><![CDATA[($P{mes} == 1) ? "DEL 1 DE ENERO DE DE "+ $P{anio}+" AL 31 DE ENERO DE "+$P{anio} : (
+	($P{mes} == 2) ?  (($P{anio} % 4==0)?"DEL 1 DE FEBRERO DE "+ $P{anio}+" DE "+ $P{anio}+" AL 29 DE FEBRERO DE "+$P{anio}: "DEL 1 DE FEBRERO DE "+ $P{anio}+" AL 28 DE FEBRERO DE "+ $P{anio}): (
+		($P{mes} == 3) ? "DEL 1 DE MARZO DE "+ $P{anio}+" DE "+ $P{anio}+" AL 31 DE MARZO DE "+$P{anio}	: (
+			($P{mes} == 4) ? "DEL 1 DE ABRIL DE "+ $P{anio}+" AL 30 DE ABRIL DE "+$P{anio}	: (
+				($P{mes} == 5) ? "DEL 1 DE MAYO DE "+ $P{anio}+" AL 31 DE MAYO DE "+$P{anio} : (
+					($P{mes} == 6) ? "DEL 1 DE JUNIO DE "+ $P{anio}+" AL 30 DE JUNIO DE "+$P{anio} : (
+						($P{mes} == 7) ? "DEL 1 DE JULIO DE "+ $P{anio}+" AL 31 DE JULIO DE "+$P{anio} : (
+							($P{mes} == 8) ? "DEL 1 DE AGOSTO DE "+ $P{anio}+" AL 31DE AGOSTO DE "+$P{anio} : (
+								($P{mes} == 9) ? "DEL 1 DE SEPTIEMBRE DE "+ $P{anio}+" AL 30 DE SEPTIEMBRE DE "+$P{anio} : (
+									($P{mes} == 10) ? "DEL 1 DE OCTUBRE DE "+ $P{anio}+" AL 31 DE OCTUBRE DE "+$P{anio} : (
+										($P{mes} == 11) ? "DEL 1 DE NOVIEMBRE DE "+ $P{anio}+" AL 30 DE NOVIEMBRE DE "+$P{anio} : (
+											($P{mes} == 12) ? "DEL 1 DE DICIEMBRE DE "+ $P{anio}+" AL 31 DE DICIEMBRE DE "+$P{anio} : ""
+										)
+									)
+								)
+							)
+						)
+					)
+				)
+			)
+		)
+	)
+)]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="141">
+			<staticText>
+				<reportElement x="80" y="60" width="420" height="20" uuid="739ea22a-a348-4f36-b9ca-9f3a5e81c328">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONTADURIA GENERAL GUBERNAMENTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="40" width="420" height="20" uuid="0704c010-42c0-4f66-bfe4-cfc850ea53ac">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SUBSECRETARIA DE PLANEACION Y PRESUPUESTO]]></text>
+			</staticText>
+			<image onErrorType="Blank">
+				<reportElement x="0" y="0" width="80" height="80" uuid="a5c01557-16ed-4d05-9d3a-d08c18ca579c">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<imageExpression><![CDATA[$P{imagen}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="80" y="20" width="1120" height="20" uuid="73a2bbe4-9d38-4afb-959a-c88d3777e806">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SECRETARIA DE FINANZAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="80" width="1200" height="60" uuid="0231e495-3557-4dcf-ac8c-42483138978c">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="2.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="2.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="500" y="60" width="500" height="20" uuid="a4f290f5-5519-4f13-901f-05b9b8015121">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[HOJA No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="500" y="40" width="500" height="20" uuid="e43ba8f7-cb9d-4438-9fca-eb61a177de11">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[FECHA DE EMISION:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="0" width="1120" height="20" uuid="4eaf0e9b-42d7-4914-8174-8f46219649a7">
+					<property name="net.sf.jasperreports.export.xls.column.name" value="GOBIERNO DEL ESTADO DE MEXICO"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GOBIERNO DEL ESTADO DE MEXICO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="1000" y="60" width="200" height="20" uuid="9c6b826d-e27d-4913-a62f-e6a560a11cd6">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="0" y="81" width="1200" height="60" uuid="92c94f3c-52c9-46e4-830d-54eb5cd4756e">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<subreportParameter name="mes">
+					<subreportParameterExpression><![CDATA[$P{mes}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="anio">
+					<subreportParameterExpression><![CDATA[$P{anio}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="clave">
+					<subreportParameterExpression><![CDATA[$P{secretaria}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="nombreEntidad">
+					<subreportParameterExpression><![CDATA[$P{nombreEntidad}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reporte55_titulo.jasper"]]></subreportExpression>
+			</subreport>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="1000" y="40" width="200" height="20" uuid="44ff0520-333e-4d50-8959-cd5b05931187">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20">
+			<staticText>
+				<reportElement x="1000" y="0" width="100" height="20" uuid="e2cef7bd-89d3-47b5-bfc7-07aa9715a738">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL EJERCIDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="500" y="0" width="100" height="20" uuid="330f5e86-2a09-4938-82d9-2af714b99bcf">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REDUCCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="600" y="0" width="100" height="20" uuid="41261a38-26f3-4622-9a48-1a5b7aa4b6f8">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MODIFICADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1100" y="0" width="100" height="20" uuid="814eceff-abf5-46c7-bb99-2a9c7c2c7b7b">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[POR EJERCER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="900" y="0" width="100" height="20" uuid="a04c13a7-3ae5-4cdf-9902-46ec34dfcaf5">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PAGADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="0" width="100" height="20" uuid="ceda8b7f-acd3-4b9d-9fbc-4e2485a8ce69">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AMPLIACION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="800" y="0" width="100" height="20" uuid="fb18d963-0095-4cb5-b307-83802d2ce08b">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DEVENGADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="100" height="20" uuid="c14861ec-3ed5-4b24-b3c2-f449b4410547">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[APROBADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="50" height="20" uuid="003c08c4-6c52-4f0a-a191-790cff9dc535">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PART]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="0" width="250" height="20" uuid="226d7620-e896-4520-a731-6181df838a5f">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="700" y="0" width="100" height="20" uuid="b9f4dd58-5ac3-4133-b6d6-fa717fb6f389">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMPROMETIDO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<textField>
+				<reportElement x="0" y="0" width="50" height="20" uuid="1d10a509-4ca6-43ef-9850-5aca3cd36897">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PARTIDA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="0" width="250" height="20" uuid="7dbbb5be-44bc-4696-841c-b752f8044ba5">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMGAS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#">
+				<reportElement x="300" y="0" width="100" height="20" uuid="81e50c3d-8ec3-4e25-ae7e-578a500772eb">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{A}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#">
+				<reportElement x="400" y="0" width="100" height="20" uuid="1970d3a4-5342-499b-b839-6937a1603b98">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{F}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#">
+				<reportElement x="500" y="0" width="100" height="20" uuid="11d93bd9-1629-418f-9f8f-63dba4bd3711">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{G}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#">
+				<reportElement x="600" y="0" width="100" height="20" uuid="f832be76-8335-4d9f-b88a-0b9dd8dff65b">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{MODIFICADO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#">
+				<reportElement x="800" y="0" width="100" height="20" uuid="9d9024ad-d409-4c99-b3d2-25cc006ee6c7">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{C}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#">
+				<reportElement x="900" y="0" width="100" height="20" uuid="4e76eefa-019c-4888-89e7-771f30bdbaee">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{B}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#">
+				<reportElement x="700" y="0" width="100" height="20" uuid="2ebeafe3-6df5-4e52-9a02-180c42cbfb9c">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CTM}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#">
+				<reportElement x="1100" y="0" width="100" height="20" uuid="f1d921d3-f27d-43fc-a58b-76b9d47d50a6">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+					<paragraph rightIndent="1"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{E}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#">
+				<reportElement x="1000" y="0" width="100" height="20" uuid="0fbf500f-02c0-4836-b474-45bd6368984f">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{D}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="100">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField>
+				<reportElement x="50" y="40" width="200" height="20" uuid="d8c40999-75fb-47f4-a5cc-b3d74bcd1fc8">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<printWhenExpression><![CDATA[$P{No.Firmas}>=1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{firmaP1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="40" width="200" height="20" uuid="1c73cabe-5f88-4738-ab8e-a7a476af09d8">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<printWhenExpression><![CDATA[$P{No.Firmas}>=2]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{firmaP2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="80" width="200" height="20" uuid="6994c3e1-0a17-4a6d-9844-4f3b4dff2694">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<printWhenExpression><![CDATA[$P{No.Firmas}>=1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{firmaN1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="80" width="200" height="20" uuid="3dd8b1e3-6749-47b6-9dbf-282801ac713e">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<printWhenExpression><![CDATA[$P{No.Firmas}>=2]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{firmaN2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="750" y="40" width="200" height="20" uuid="fbad20e1-8c9b-4078-bafe-b0fdb07d032d">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<printWhenExpression><![CDATA[$P{No.Firmas}>=3]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{firmaP3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="750" y="80" width="200" height="20" uuid="6d94069f-550f-47b7-9723-26b8d4c33455">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<printWhenExpression><![CDATA[$P{No.Firmas}>=3]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{firmaN3}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="350" y="60" width="200" height="20" uuid="52c8bcaf-ddef-41a6-87f6-30d66c485141"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[____________________________________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="750" y="60" width="200" height="20" uuid="42c35ea0-3480-4e11-a14a-66302451808d"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[____________________________________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="60" width="200" height="20" uuid="452321b2-c36f-49fb-bb53-b8c5694001e4"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[____________________________________________]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band height="50">
+			<subreport>
+				<reportElement x="0" y="0" width="1200" height="20" uuid="6ec8e0cd-c677-450c-8f19-9143e56a1424">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<subreportParameter name="sector">
+					<subreportParameterExpression><![CDATA[$P{sector}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="mes">
+					<subreportParameterExpression><![CDATA[$P{mes}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="clave">
+					<subreportParameterExpression><![CDATA[$P{secretaria}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reporte55_Totales.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:body>
+
+	<ui:composition template="/WEB-INF/layout/layout.xhtml">
+		<ui:define name="content">
+
+			<p:growl id="messagesEdit" showDetail="true" sticky="true" />
+
+			<h:form id="form1">
+
+				<p:focus context="objects" id="focusTable" />
+
+				<p:dataTable id="objects" var="object"
+					value="#{caratulaPresupuestoEgresoMB.pasotDataModel}"
+					styleClass="et_datatable" emptyMessage="No hay registros"
+					editable="true" editMode="cell" paginator="true" rows="10"
+					lazy="true" rowsPerPageTemplate="5,10,15,20"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					widgetVar="programsWdg" selectionMode="single"
+					selection="#{caratulaPresupuestoEgresoMB.selectedPasot}"
+					rowKey="#{object.id}">
+
+					<f:facet name="header">Caratula del presupuesto de Egresos</f:facet>
+
+					<p:ajax event="cellEdit"
+						listener="#{caratulaPresupuestoEgresoMB.onCellEdit}"
+						update="messagesEdit" />
+
+					<p:column headerText="Partida" exportable="true">
+						<center>
+							<h:outputText value="#{object.partida}" />
+						</center>
+					</p:column>
+
+
+					<p:column headerText="Autorizado (A&#241;o anterior)"
+						exportable="true">
+						<h:outputText value="#{object.auto12}" style="float:right;">
+							<f:convertNumber pattern="###,###,##0.00" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Ejercido (A&#241;o anterior)"
+						exportable="false">
+						<h:outputText value="#{object.auto13}" style="float:right;">
+							<f:convertNumber pattern="###,###,##0.00" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Presupuestado" exportable="false">
+						<h:outputText value="#{object.auto11}" style="float:right;">
+							<f:convertNumber pattern="###,###,##0.00" />
+						</h:outputText>
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

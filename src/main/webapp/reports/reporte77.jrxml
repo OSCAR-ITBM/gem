@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.2.final using JasperReports Library version 6.2.2  -->
+<!-- 2017-01-12T11:09:49 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte77" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4ca13698-03c7-447c-bcf6-1447bbca18e9">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="gemdb_linux"/>
+	<parameter name="MESPOL" class="java.lang.Integer"/>
+	<parameter name="ANOPOL" class="java.lang.Integer"/>
+	<parameter name="SECTOR" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT SCTA, DIR, SEC, SUM(CANPOL) AS CANPOL, SUM(CANPOLH) AS CANPOLH FROM 
+
+(SELECT SCTA, SUBSTR(SCTA,1,5) as DIR,SUBSTR(SCTA,1,3) as SEC, CANPOL , CANPOLH, ide.SSSCTA
+FROM POLIDE ide JOIN POLIEN ien
+ON ien.TIPPOL = ide.TIPPOL
+AND ien.MESPOL=ide.MESPOL 
+AND ien.ANOPOL=ide.ANOPOL 
+AND ien.CONPOL=ide.CONPOL 
+WHERE ide.MESPOL <= $P{MESPOL}
+AND ide.ANOPOL = $P{ANOPOL}
+AND (ide.CUENTA LIKE '827%' 
+        OR ide.CUENTA LIKE '825%' 
+        OR ide.CUENTA LIKE '824%')
+AND SUBSTR(ide.CUENTA, 4, 1) <> '0' 
+AND ide.SSSCTA > '1000' AND ide.SSSCTA < '2000'
+AND ien.idSector = ide.idSector
+AND ien.idSector = $P{SECTOR}
+
+AND (SCTA LIKE '205%' 
+        OR SCTA LIKE '204A1%' 
+        OR SCTA LIKE '213%'  
+        OR SCTA LIKE '20403%' 
+        OR SCTA LIKE '400E1%' 
+        OR SCTA LIKE '400F1%' 
+        OR SCTA LIKE '400D1%' 
+        OR SCTA LIKE '400H1%' 
+        OR SCTA LIKE '212G%'  
+        OR SCTA LIKE '20314%' 
+        OR SCTA LIKE '202%'   
+        OR SCTA LIKE '20305%' 
+        )
+ AND ien.staafe = 'A'
+)
+GROUP BY DIR, SEC, SCTA]]>
+	</queryString>
+	<field name="SCTA" class="java.lang.String"/>
+	<field name="DIR" class="java.lang.String"/>
+	<field name="SEC" class="java.lang.String"/>
+	<field name="CANPOL" class="java.math.BigDecimal"/>
+	<field name="CANPOLH" class="java.math.BigDecimal"/>
+	<variable name="diferencia" class="java.math.BigDecimal" incrementType="Group" incrementGroup="DIR">
+		<variableExpression><![CDATA[$F{CANPOL}.subtract( $F{CANPOLH} )]]></variableExpression>
+	</variable>
+	<variable name="meses" class="java.lang.String[]"/>
+	<variable name="sumCanpolSec" class="java.lang.Double" resetType="Group" resetGroup="SEC" calculation="Sum">
+		<variableExpression><![CDATA[$F{CANPOL}]]></variableExpression>
+	</variable>
+	<variable name="sumCanpolhSec" class="java.lang.Double" resetType="Group" resetGroup="SEC" calculation="Sum">
+		<variableExpression><![CDATA[$F{CANPOLH}]]></variableExpression>
+	</variable>
+	<variable name="diferenciaSec" class="java.lang.Double" resetType="Group" resetGroup="SEC" incrementType="Group" incrementGroup="DIR" calculation="Sum">
+		<variableExpression><![CDATA[$V{diferencia}]]></variableExpression>
+	</variable>
+	<variable name="totalCanpol" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{CANPOL}]]></variableExpression>
+	</variable>
+	<variable name="totalCanpolh" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{CANPOLH}]]></variableExpression>
+	</variable>
+	<variable name="totalDiferencia" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{CANPOL}.subtract( $F{CANPOLH} )]]></variableExpression>
+	</variable>
+	<group name="SEC" minHeightToStartNewPage="15">
+		<groupExpression><![CDATA[$F{SEC}]]></groupExpression>
+		<groupHeader>
+			<band height="15"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="14">
+				<textField pattern="#,##0.00#">
+					<reportElement x="82" y="0" width="88" height="14" uuid="c5e80e27-68e9-4326-87d1-4a9428ffb0d7">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{diferenciaSec} == null ? 0.0 : $V{diferenciaSec}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="181" y="0" width="100" height="14" uuid="4485137a-055f-4874-bfd9-5cc407bc9ff4">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<text><![CDATA[SUMA POR SEC.]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="DIR" minHeightToStartNewPage="15">
+		<groupExpression><![CDATA[$F{DIR}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="15" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField>
+				<reportElement x="0" y="0" width="550" height="15" uuid="3b2ef1dc-56fc-4a6e-bb55-980c5dde7c80"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["AL MES DE " +
+($P{MESPOL} == 1 ? "ENERO" :
+$P{MESPOL} == 2 ? "FEBRERO" :
+$P{MESPOL} == 3 ? "MARZO" :
+$P{MESPOL} == 4 ? "ABRIL" :
+$P{MESPOL} == 5 ? "MAYO" :
+$P{MESPOL} == 6 ? "JUNIO" :
+$P{MESPOL} == 7 ? "JULIO" :
+$P{MESPOL} == 8 ? "AGOSTO" :
+$P{MESPOL} == 9 ? "SEPTIEMBRE" :
+$P{MESPOL} == 10 ? "OCTUBRE" :
+$P{MESPOL} == 11 ? "NOVIEMBRE" : "DICIEMBRE")]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField pattern="#,##0.00#">
+				<reportElement x="82" y="0" width="88" height="15" uuid="079a3a3e-9629-4e83-a425-2bb3f10955df">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{diferencia} == null ? 0.0 : $V{diferencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="70" height="15" uuid="0622747d-4ec8-49a2-ae94-caee26bfad5d"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{SCTA}==null?"":$F{SCTA})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="181" y="0" width="100" height="15" uuid="95f6896c-2bf5-4618-9103-c9d725f45bd7">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[SUMA POR DIR.]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="15" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField pattern="#,##0.00#">
+				<reportElement x="82" y="0" width="88" height="15" uuid="1bcf7572-4c37-483b-9a85-1c14f8da7ca6">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalCanpol} == null ? 0.0 : $V{totalCanpol}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#">
+				<reportElement x="181" y="0" width="100" height="15" uuid="ed91d5ba-0482-4bdc-ac6f-2508f1de04c3">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalCanpolh} == null ? 0.0 : $V{totalCanpolh}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#">
+				<reportElement x="290" y="0" width="100" height="15" uuid="c39f6f45-43de-4097-806b-b0e184b8992f">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalDiferencia} == null ? 0.0 : $V{totalDiferencia}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="402" y="0" width="68" height="15" uuid="a5ab0175-f574-4589-8b0b-003c70cbaa5d"/>
+				<text><![CDATA[DIFERENCIA]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

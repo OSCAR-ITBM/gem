@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<h:body>
+	  <ui:composition template="/WEB-INF/layout/layout.xhtml">
+		<ui:define name="content">
+			<h:form id="auxiliarcuenta">
+			  <p:panel id="panel" header="Auxiliar de Cuenta"	styleClass="green col-md-5 col-centered row-centered shadow-panel">
+				<p:growl id="growl" showDetail="true" sticky="true"></p:growl>
+				<h:panelGrid columns="7" styleClass="col-centered row-centered">
+					<h:panelGroup>
+						<h:outputText value="Cuenta:" ></h:outputText>
+						<p:inputMask maxlength="4" size="4" value="#{auxiliarCuentaMB.cta}">
+              <pe:keyFilter regEx="/[0-9_]/i" />
+            </p:inputMask>
+					</h:panelGroup>
+					&nbsp;
+					<h:panelGroup>
+						<h:outputText value="Mes:" ></h:outputText>
+
+						<p:selectOneMenu id="mesInputOri" size="18" editable="false"
+							value="#{auxiliarCuentaMB.mes}">
+							<f:selectItems value="#{auxiliarCuentaMB.listMes}" var="meses"
+								itemValue="#{meses.mes}" itemLabel="#{meses.mes}" />
+						</p:selectOneMenu>
+						<!-- <h:inputText size="4" value="#{auxiliarCuentaMB.mes}"></h:inputText> -->
+					</h:panelGroup>
+				</h:panelGrid>
+				<br/><br/>
+					<h:panelGrid columns="5" styleClass="col-centered row-centered">
+						<p:commandButton value="Correcto" style="padding: 5px;" ajax="false"
+						id="download" actionListener="#{auxiliarCuentaMB.process}"
+						onclick="PrimeFaces.monitorDownload(showStatus, hideStatus)">
+  					<p:fileDownload value="#{auxiliarCuentaMB.download}"/>
+					</p:commandButton>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+					</h:panelGrid>
+
+ 		      </p:panel>
+			</h:form>
+		</ui:define>
+	  </ui:composition>
+   </h:body>
+</html>

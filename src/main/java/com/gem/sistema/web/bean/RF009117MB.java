@@ -1,0 +1,335 @@
+package com.gem.sistema.web.bean;
+
+import java.util.Map;
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
+import org.primefaces.model.StreamedContent;
+
+import com.gem.sistema.business.domain.Firmas;
+import com.gem.sistema.business.repository.catalogs.FirmasRepository;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RF009117MB.
+ */
+@ManagedBean
+@ViewScoped
+public class RF009117MB extends BaseDirectReport {
+	
+	/** The mes. */
+	private Integer mes;
+	
+	/** The firmas. */
+	private Firmas firmas;
+	
+	/** The firmas repository. */
+	@ManagedProperty("#{firmasRepository}")
+	private FirmasRepository firmasRepository;
+	
+	/**
+	 * Inits the.
+	 */
+	@PostConstruct
+	public void init() {
+		LOGGER.info(":: En postconsruct RF009117MB ");		
+		jasperReporteName = "rf009_11_17";
+		endFilename = jasperReporteName+".pdf";
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.gem.sistema.web.bean.BaseDirectReport#getParametersReports()
+	 */
+	public Map<String, Object> getParametersReports() {
+		Map<String, Object> paramsReport = new java.util.HashMap<String, Object>();
+		firmas = firmasRepository.findAllByIdsector(this.getUserDetails().getIdSector());
+		
+		paramsReport.put("mes", mes);
+		paramsReport.put("year", firmas.getCampo3());
+		paramsReport.put("sQuery", generateQuery(mes, getUserDetails().getIdSector()));
+		if(this.getUserDetails().getIdSector() == 2){
+			paramsReport.put("firmaP1", firmas.getL4());
+			paramsReport.put("firmaP2", firmas.getL5());
+			paramsReport.put("firmaP3", firmas.getL27());
+			paramsReport.put("firmaN1", firmas.getN4());
+			paramsReport.put("firmaN2", firmas.getN5());
+			paramsReport.put("firmaN3", firmas.getN27());
+		}else{
+			paramsReport.put("firmaP1", firmas.getL1());
+			paramsReport.put("firmaP2", firmas.getL3());
+			paramsReport.put("firmaP3", firmas.getL4());
+			paramsReport.put("firmaN1", firmas.getN1());
+			paramsReport.put("firmaN2", firmas.getN3());
+			paramsReport.put("firmaN3", firmas.getN4());
+		}
+		paramsReport.put("entidadName", firmas.getCampo1());
+		paramsReport.put("entidadRfc", firmas.getCampo2());
+		paramsReport.put("imagePath", this.getUserDetails().getPathImgCab1());
+		
+		return paramsReport;
+	}	
+
+	/* (non-Javadoc)
+	 * @see com.gem.sistema.web.bean.BaseDirectReport#generaReporteSimple(int)
+	 */
+	public StreamedContent generaReporteSimple(int type) {
+		return null;
+		/*
+		Map<String, Object> paramsQuery = new java.util.HashMap<String, Object>();
+		paramsQuery.put("ID_REF", new Integer(0)); //FALTA
+		return reporteadorDirectoImpl.getFileReport(tcReporte,paramsQuery, reporteName,type);
+		*/
+	}
+
+	/**
+	 * Gets the mes.
+	 *
+	 * @return the mes
+	 */
+	public Integer getMes() {
+		return mes;
+	}
+
+	/**
+	 * Sets the mes.
+	 *
+	 * @param mes the new mes
+	 */
+	public void setMes(Integer mes) {
+		this.mes = mes;
+	}
+
+	/**
+	 * Gets the firmas.
+	 *
+	 * @return the firmas
+	 */
+	public Firmas getFirmas() {
+		return firmas;
+	}
+
+	/**
+	 * Sets the firmas.
+	 *
+	 * @param firmas the new firmas
+	 */
+	public void setFirmas(Firmas firmas) {
+		this.firmas = firmas;
+	}
+
+	/**
+	 * Gets the firmas repository.
+	 *
+	 * @return the firmas repository
+	 */
+	public FirmasRepository getFirmasRepository() {
+		return firmasRepository;
+	}
+
+	/**
+	 * Sets the firmas repository.
+	 *
+	 * @param firmasRepository the new firmas repository
+	 */
+	public void setFirmasRepository(FirmasRepository firmasRepository) {
+		this.firmasRepository = firmasRepository;
+	}
+
+	/**
+	 * Generate query.
+	 *
+	 * @param mes the mes
+	 * @param sector the sector
+	 * @return the string
+	 */
+	private static String generateQuery(Integer mes, Integer sector ){
+		StringBuilder sSql = new StringBuilder();
+		StringBuilder sSd = new StringBuilder();
+		StringBuilder sSe = new StringBuilder();
+		StringBuilder sXampli = new StringBuilder();
+		StringBuilder sXredu = new StringBuilder();
+		sSd.append(" THEN (P.AUTO1_1");
+		sSe.append(" THEN (C.CARGOS_1 - C.ABONOS_1)");
+		sXampli.append(" THEN (P.AMPLI1_1");
+		sXredu.append(" THEN (P.REDU1_1");
+		for(int i=2; i<=mes; i++){
+			sSd.append(" + P.AUTO1_"+i);
+			sSe.append(" + (C.CARGOS_"+i+" - C.ABONOS_"+i+")");
+			sXampli.append(" + P.AMPLI1_"+i);
+			sXredu.append(" + P.REDU1_"+i);
+		}
+		sSd.append(" ) ");
+		sSe.append(" ");
+		sXampli.append(" ) ");
+		sXredu.append(" ) ");
+		
+		/*
+		System.out.println(sSd);
+		System.out.println(sSe);
+		System.out.println(sXampli);
+		System.out.println(sXredu);
+		*/
+		
+		sSql.append(" SELECT   ");
+		sSql.append(" NOMBRE Z1");
+		sSql.append(" , ABS(SA) Z2 ");
+		sSql.append(" , ABS(SB) Z3 ");
+		sSql.append(" , SC Z4 ");
+		sSql.append(" , ABS(SD + XAMPLI - XREDU) Z5 ");
+		sSql.append(" , SE Z6 ");
+		sSql.append(" , (SE - SD + XAMPLI - XREDU) Z7 ");
+		sSql.append(" FROM ( ");
+		sSql.append(" SELECT  ");
+		sSql.append(" NOMBRE ");
+		sSql.append(" , SUM(SA) SA ");
+		sSql.append(" , SUM(SB) SB ");
+		sSql.append(" , SUM(SC) SC ");
+		sSql.append(" , SUM(SD) SD ");
+		sSql.append(" , SUM(SE) SE ");
+		sSql.append(" , SUM(XAMPLI) XAMPLI ");
+		sSql.append(" , SUM(XREDU) XREDU ");
+		sSql.append(" FROM ( ");
+		sSql.append(" SELECT  ");
+		sSql.append(" NOMBRE ");
+		sSql.append(" , SA ");
+		sSql.append(" , SB ");
+		sSql.append(" , SC ");
+		sSql.append(" , SD ");
+		sSql.append(" , SE ");
+		sSql.append(" , XAMPLI ");
+		sSql.append(" , XREDU ");
+		sSql.append(" FROM ( ");
+		sSql.append(" SELECT ");
+		sSql.append(" CASE  ");
+		sSql.append("    WHEN C.CUENTA=8211 AND C.SSSCTA BETWEEN '1001' AND '1999' THEN '1000 SERVICIOS PERSONALES'  ");
+		sSql.append("    WHEN C.CUENTA=8211 AND C.SSSCTA BETWEEN '2001' AND '2999' THEN '2000 MATERIALES Y SUMINISTROS'  ");
+		sSql.append("    WHEN C.CUENTA=8211 AND C.SSSCTA BETWEEN '3001' AND '3999' THEN '3000 SERVICIOS GENERALES'  ");
+		sSql.append("    WHEN C.CUENTA=8212 AND C.SSSCTA BETWEEN '4001' AND '4999' THEN '4000 TRANSFERENCIAS, ASIGNACIONES, SUBSIDIOS Y OTRAS'  ");
+		sSql.append("    WHEN C.CUENTA=8215 AND C.SSSCTA BETWEEN '5001' AND '5999' THEN '5000 BIENES MUEBLES,INMUEBLES E INTANGIBLES'  ");
+		sSql.append("    WHEN C.CUENTA=8216 AND C.SSSCTA BETWEEN '6001' AND '6999' THEN '6000 INVERSION PUBLICA'  ");
+		sSql.append("    WHEN C.CUENTA=8217 AND C.SSSCTA BETWEEN '7001' AND '7999' THEN '7000 INVERSIONES FINANCIERAS Y OTRAS PROVISIONES'  ");
+		sSql.append("    WHEN C.CUENTA=8213 AND C.SSSCTA BETWEEN '8001' AND '8999' THEN '8000 PARTICIPACIONES Y APORTACIONES'  ");
+		sSql.append("    WHEN C.CUENTA=8214 AND C.SSSCTA BETWEEN '9001' AND '9899' THEN '9000 DEUDA PUBLICA'  ");
+		sSql.append("    ELSE '' ");
+		sSql.append(" END NOMBRE  ");
+		sSql.append(" , CASE  ");
+		sSql.append("    WHEN C.CUENTA=8211 AND C.SSSCTA BETWEEN '1001' AND '1999' THEN C.SALINI ");
+		sSql.append("    WHEN C.CUENTA=8211 AND C.SSSCTA BETWEEN '2001' AND '2999' THEN C.SALINI ");
+		sSql.append("    WHEN C.CUENTA=8211 AND C.SSSCTA BETWEEN '3001' AND '3999' THEN C.SALINI ");
+		sSql.append("    WHEN C.CUENTA=8212 AND C.SSSCTA BETWEEN '4001' AND '4999' THEN C.SALINI ");
+		sSql.append("    WHEN C.CUENTA=8215 AND C.SSSCTA BETWEEN '5001' AND '5999' THEN C.SALINI ");
+		sSql.append("    WHEN C.CUENTA=8216 AND C.SSSCTA BETWEEN '6001' AND '6999' THEN C.SALINI ");
+		sSql.append("    WHEN C.CUENTA=8217 AND C.SSSCTA BETWEEN '7001' AND '7999' THEN C.SALINI ");
+		sSql.append("    WHEN C.CUENTA=8213 AND C.SSSCTA BETWEEN '8001' AND '8999' THEN C.SALINI ");
+		sSql.append("    WHEN C.CUENTA=8214 AND C.SSSCTA BETWEEN '9001' AND '9899' THEN C.SALINI   ");
+		sSql.append("    ELSE 0.00 ");
+		sSql.append(" END SA ");
+		sSql.append(" , CASE  ");
+		sSql.append("    WHEN C.CUENTA=8211 AND C.SSSCTA BETWEEN '1001' AND '1999' THEN (P.AUTO1_"+mes+" + P.AMPLI1_"+mes+" - P.REDU1_"+mes+") ");
+		sSql.append("    WHEN C.CUENTA=8211 AND C.SSSCTA BETWEEN '2001' AND '2999' THEN (P.AUTO1_"+mes+" + P.AMPLI1_"+mes+" - P.REDU1_"+mes+") ");
+		sSql.append("    WHEN C.CUENTA=8211 AND C.SSSCTA BETWEEN '3001' AND '3999' THEN (P.AUTO1_"+mes+" + P.AMPLI1_"+mes+" - P.REDU1_"+mes+") ");
+		sSql.append("    WHEN C.CUENTA=8212 AND C.SSSCTA BETWEEN '4001' AND '4999' THEN (P.AUTO1_"+mes+" + P.AMPLI1_"+mes+" - P.REDU1_"+mes+") ");
+		sSql.append("    WHEN C.CUENTA=8215 AND C.SSSCTA BETWEEN '5001' AND '5999' THEN (P.AUTO1_"+mes+" + P.AMPLI1_"+mes+" - P.REDU1_"+mes+") ");
+		sSql.append("    WHEN C.CUENTA=8216 AND C.SSSCTA BETWEEN '6001' AND '6999' THEN (P.AUTO1_"+mes+" + P.AMPLI1_"+mes+" - P.REDU1_"+mes+") ");
+		sSql.append("    WHEN C.CUENTA=8217 AND C.SSSCTA BETWEEN '7001' AND '7999' THEN (P.AUTO1_"+mes+" + P.AMPLI1_"+mes+" - P.REDU1_"+mes+") ");
+		sSql.append("    WHEN C.CUENTA=8213 AND C.SSSCTA BETWEEN '8001' AND '8999' THEN (P.AUTO1_"+mes+" + P.AMPLI1_"+mes+" - P.REDU1_"+mes+") ");
+		sSql.append("    WHEN C.CUENTA=8214 AND C.SSSCTA BETWEEN '9001' AND '9899' THEN (P.AUTO1_"+mes+" + P.AMPLI1_"+mes+" - P.REDU1_"+mes+")   ");
+		sSql.append("    ELSE 0.0 ");
+		sSql.append(" END SB  ");
+		sSql.append(" , CASE ");
+		sSql.append("    WHEN C.CUENTA=8211 AND C.SSSCTA BETWEEN '1001' AND '1999' ").append(sSd);
+		sSql.append("    WHEN C.CUENTA=8211 AND C.SSSCTA BETWEEN '2001' AND '2999' ").append(sSd);
+		sSql.append("    WHEN C.CUENTA=8211 AND C.SSSCTA BETWEEN '3001' AND '3999' ").append(sSd);
+		sSql.append("    WHEN C.CUENTA=8212 AND C.SSSCTA BETWEEN '4001' AND '4999' ").append(sSd);
+		sSql.append("    WHEN C.CUENTA=8215 AND C.SSSCTA BETWEEN '5001' AND '5999' ").append(sSd);
+		sSql.append("    WHEN C.CUENTA=8216 AND C.SSSCTA BETWEEN '6001' AND '6999' ").append(sSd);
+		sSql.append("    WHEN C.CUENTA=8217 AND C.SSSCTA BETWEEN '7001' AND '7999' ").append(sSd);
+		sSql.append("    WHEN C.CUENTA=8213 AND C.SSSCTA BETWEEN '8001' AND '8999' ").append(sSd);
+		sSql.append("    WHEN C.CUENTA=8214 AND C.SSSCTA BETWEEN '9001' AND '9899' ").append(sSd);  
+		sSql.append("    ELSE 0.0 ");
+		sSql.append(" END SD ");
+		sSql.append(" , 0.00 SE ");
+		sSql.append(" , CASE ");
+		sSql.append("    WHEN C.CUENTA=8211 AND C.SSSCTA BETWEEN '1001' AND '1999'  ").append(sXampli);
+		sSql.append("    WHEN C.CUENTA=8211 AND C.SSSCTA BETWEEN '2001' AND '2999'  ").append(sXampli);
+		sSql.append("    WHEN C.CUENTA=8211 AND C.SSSCTA BETWEEN '3001' AND '3999'  ").append(sXampli);
+		sSql.append("    WHEN C.CUENTA=8212 AND C.SSSCTA BETWEEN '4001' AND '4999'  ").append(sXampli);
+		sSql.append("    WHEN C.CUENTA=8215 AND C.SSSCTA BETWEEN '5001' AND '5999'  ").append(sXampli);
+		sSql.append("    WHEN C.CUENTA=8216 AND C.SSSCTA BETWEEN '6001' AND '6999'  ").append(sXampli);
+		sSql.append("    WHEN C.CUENTA=8217 AND C.SSSCTA BETWEEN '7001' AND '7999'  ").append(sXampli);
+		sSql.append("    WHEN C.CUENTA=8213 AND C.SSSCTA BETWEEN '8001' AND '8999'  ").append(sXampli);
+		sSql.append("    WHEN C.CUENTA=8214 AND C.SSSCTA BETWEEN '9001' AND '9899'  ").append(sXampli); 
+		sSql.append("    ELSE 0.0 ");
+		sSql.append(" END XAMPLI ");
+		sSql.append(" , CASE ");
+		sSql.append("    WHEN C.CUENTA=8211 AND C.SSSCTA BETWEEN '1001' AND '1999' ").append(sXredu);
+		sSql.append("    WHEN C.CUENTA=8211 AND C.SSSCTA BETWEEN '2001' AND '2999' ").append(sXredu);
+		sSql.append("    WHEN C.CUENTA=8211 AND C.SSSCTA BETWEEN '3001' AND '3999' ").append(sXredu);
+		sSql.append("    WHEN C.CUENTA=8212 AND C.SSSCTA BETWEEN '4001' AND '4999' ").append(sXredu);
+		sSql.append("    WHEN C.CUENTA=8215 AND C.SSSCTA BETWEEN '5001' AND '5999' ").append(sXredu);
+		sSql.append("    WHEN C.CUENTA=8216 AND C.SSSCTA BETWEEN '6001' AND '6999' ").append(sXredu);
+		sSql.append("    WHEN C.CUENTA=8217 AND C.SSSCTA BETWEEN '7001' AND '7999' ").append(sXredu);
+		sSql.append("    WHEN C.CUENTA=8213 AND C.SSSCTA BETWEEN '8001' AND '8999' ").append(sXredu);
+		sSql.append("    WHEN C.CUENTA=8214 AND C.SSSCTA BETWEEN '9001' AND '9899' ").append(sXredu);  
+		sSql.append("    ELSE 0.0 ");
+		sSql.append(" END XREDU ");
+		sSql.append(" ,0.0 SC ");
+		sSql.append(" FROM CUENTA C LEFT JOIN PASO P ON C.IDSECTOR=P.IDSECTOR AND C.SCTA=P.CLAVE AND C.SSCTA=P.PROGRAMA AND C.SSSCTA=P.PARTIDA AND C.SSSSCTA=''  ");
+		sSql.append(" AND C.CUENTA BETWEEN '8200' AND '8299'  ");
+		sSql.append(" WHERE P.IDSECTOR="+sector+" ");
+		sSql.append(" UNION ALL ");
+		sSql.append(" SELECT  ");
+		sSql.append(" CASE  ");
+		sSql.append("    WHEN C.CUENTA IN ('8241', '8251', '8271') AND C.SSSCTA BETWEEN '1001' AND '1999' THEN '1000 SERVICIOS PERSONALES'  ");
+		sSql.append("    WHEN C.CUENTA IN ('8241', '8251', '8271') AND C.SSSCTA BETWEEN '2001' AND '2999' THEN '2000 MATERIALES Y SUMINISTROS'  ");
+		sSql.append("    WHEN C.CUENTA IN ('8241', '8251', '8271') AND C.SSSCTA BETWEEN '3001' AND '3999' THEN '3000 SERVICIOS GENERALES'  ");
+		sSql.append("    WHEN C.CUENTA IN ('8242', '8252', '8272') AND C.SSSCTA BETWEEN '4001' AND '4999' THEN '4000 TRANSFERENCIAS, ASIGNACIONES, SUBSIDIOS Y OTRAS'  ");
+		sSql.append("    WHEN C.CUENTA IN ('8245', '8255', '8275') AND C.SSSCTA BETWEEN '5001' AND '5999' THEN '5000 BIENES MUEBLES,INMUEBLES E INTANGIBLES'  ");
+		sSql.append("    WHEN C.CUENTA IN ('8246', '8256', '8276') AND C.SSSCTA BETWEEN '6001' AND '6999' THEN '6000 INVERSION PUBLICA'  ");
+		sSql.append("    WHEN C.CUENTA IN ('8247', '8257', '8277') AND C.SSSCTA BETWEEN '7001' AND '7999' THEN '7000 INVERSIONES FINANCIERAS Y OTRAS PROVISIONES'  ");
+		sSql.append("    WHEN C.CUENTA IN ('8243', '8253', '8273') AND C.SSSCTA BETWEEN '8001' AND '8999' THEN '8000 PARTICIPACIONES Y APORTACIONES'  ");
+		sSql.append("    WHEN C.CUENTA IN ('8244', '8254', '8274') AND C.SSSCTA BETWEEN '9001' AND '9899' THEN '9000 DEUDA PUBLICA'  ");
+		sSql.append("    ELSE '' ");
+		sSql.append(" END NOMBRE  ");
+		sSql.append(" , 0.00 SA ");
+		sSql.append(" , 0.00 SB ");
+		sSql.append(" , 0.00 SD ");
+		sSql.append(" , CASE  ");
+		sSql.append("    WHEN C.CUENTA IN ('8241', '8251', '8271') AND C.SSSCTA BETWEEN '1001' AND '1999' ").append(sSe);
+		sSql.append("    WHEN C.CUENTA IN ('8241', '8251', '8271') AND C.SSSCTA BETWEEN '2001' AND '2999' ").append(sSe);
+		sSql.append("    WHEN C.CUENTA IN ('8241', '8251', '8271') AND C.SSSCTA BETWEEN '3001' AND '3999' ").append(sSe);
+		sSql.append("    WHEN C.CUENTA IN ('8242', '8252', '8272') AND C.SSSCTA BETWEEN '4001' AND '4999' ").append(sSe);
+		sSql.append("    WHEN C.CUENTA IN ('8245', '8255', '8275') AND C.SSSCTA BETWEEN '5001' AND '5999' ").append(sSe);
+		sSql.append("    WHEN C.CUENTA IN ('8246', '8256', '8276') AND C.SSSCTA BETWEEN '6001' AND '6999' ").append(sSe);
+		sSql.append("    WHEN C.CUENTA IN ('8247', '8257', '8277') AND C.SSSCTA BETWEEN '7001' AND '7999' ").append(sSe);
+		sSql.append("    WHEN C.CUENTA IN ('8243', '8253', '8273') AND C.SSSCTA BETWEEN '8001' AND '8999' ").append(sSe);
+		sSql.append("    WHEN C.CUENTA IN ('8244', '8254', '8274') AND C.SSSCTA BETWEEN '9001' AND '9899' ").append(sSe);  
+		sSql.append("    ELSE 0.0 ");
+		sSql.append(" END SE ");
+		sSql.append(" , 0.00 XAMPLI ");
+		sSql.append(" , 0.00 XREDU ");
+		sSql.append("  , CASE  ");
+		sSql.append("     WHEN C.CUENTA IN ('8241', '8251', '8271') AND C.SSSCTA BETWEEN '1001' AND '1999' THEN  (C.CARGOS_"+mes+" - C.ABONOS_"+mes+") ");
+		sSql.append("     WHEN C.CUENTA IN ('8241', '8251', '8271') AND C.SSSCTA BETWEEN '2001' AND '2999' THEN  (C.CARGOS_"+mes+" - C.ABONOS_"+mes+") ");
+		sSql.append("     WHEN C.CUENTA IN ('8241', '8251', '8271') AND C.SSSCTA BETWEEN '3001' AND '3999' THEN  (C.CARGOS_"+mes+" - C.ABONOS_"+mes+") ");
+		sSql.append("     WHEN C.CUENTA IN ('8242', '8252', '8272') AND C.SSSCTA BETWEEN '4001' AND '4999' THEN  (C.CARGOS_"+mes+" - C.ABONOS_"+mes+") ");
+		sSql.append("     WHEN C.CUENTA IN ('8245', '8255', '8275') AND C.SSSCTA BETWEEN '5001' AND '5999' THEN  (C.CARGOS_"+mes+" - C.ABONOS_"+mes+") ");
+		sSql.append("     WHEN C.CUENTA IN ('8246', '8256', '8276') AND C.SSSCTA BETWEEN '6001' AND '6999' THEN  (C.CARGOS_"+mes+" - C.ABONOS_"+mes+") ");
+		sSql.append("     WHEN C.CUENTA IN ('8247', '8257', '8277') AND C.SSSCTA BETWEEN '7001' AND '7999' THEN  (C.CARGOS_"+mes+" - C.ABONOS_"+mes+") ");
+		sSql.append("     WHEN C.CUENTA IN ('8243', '8253', '8273') AND C.SSSCTA BETWEEN '8001' AND '8999' THEN  (C.CARGOS_"+mes+" - C.ABONOS_"+mes+") ");
+		sSql.append("     WHEN C.CUENTA IN ('8244', '8254', '8274') AND C.SSSCTA BETWEEN '9001' AND '9899' THEN  (C.CARGOS_"+mes+" - C.ABONOS_"+mes+") ");
+		sSql.append("     ELSE 0.00 ");
+		sSql.append(" END SC ");
+		sSql.append(" FROM CUENTA C LEFT JOIN PASO P ON C.IDSECTOR=P.IDSECTOR AND C.SCTA=P.CLAVE AND C.SSCTA=P.PROGRAMA AND C.SSSCTA=P.PARTIDA AND C.SSSSCTA=''  ");
+		sSql.append(" AND C.CUENTA BETWEEN '8200' AND '8299'  ");
+		sSql.append(" WHERE P.IDSECTOR="+sector+" ");
+		sSql.append(" )TA WHERE TA.NOMBRE <>''  ");
+		sSql.append(" ) GROUP BY NOMBRE  ");
+		sSql.append(" ) ");
+		
+		
+		return sSql.toString();
+	}
+
+}

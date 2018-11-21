@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2017-04-10T16:39:07 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RF0010116_EdoADetail" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="792" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isSummaryWithPageHeaderAndFooter="true" whenResourceMissingType="Key" uuid="da77b63c-b1e2-4b7c-a147-11a449a6aa6d">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GEMCRUZ"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<parameter name="pSsql2" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[$P!{pSsql2}]]>
+	</queryString>
+	<field name="CUENTA" class="java.lang.String"/>
+	<field name="NOMCTA" class="java.lang.String"/>
+	<field name="SIHABER" class="java.math.BigDecimal"/>
+	<field name="SIHABER2" class="java.math.BigDecimal"/>
+	<variable name="vSihaber" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{SIHABER}]]></variableExpression>
+	</variable>
+	<variable name="vSihaber2" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{SIHABER2}]]></variableExpression>
+	</variable>
+	<group name="Group_Tot">
+		<groupFooter>
+			<band height="10">
+				<textField pattern="#,##0.00#">
+					<reportElement x="457" y="0" width="147" height="10" uuid="7e42ff87-a5a6-4380-8678-5e994f04fbb2">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{vSihaber}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00#">
+					<reportElement x="604" y="0" width="147" height="10" uuid="036cb9bb-dbdb-4c5b-a0c2-dc4948a6611a">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{vSihaber2}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="0" width="456" height="10" uuid="9ca35745-f10f-45c5-940a-34a1ab2ac694">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="6" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["TOTALES"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="10">
+			<textField>
+				<reportElement x="0" y="0" width="162" height="10" uuid="77baf97d-6efa-4c0b-aceb-7a29a0dd133a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUENTA} +"  "+$F{NOMCTA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="310" y="0" width="147" height="10" uuid="ef50df12-10e0-4ad5-9c56-fee75adca637">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["México"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="162" y="0" width="148" height="10" uuid="80fd6bd4-de46-4550-9aa4-fef6f8d57451">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["pesos"]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#">
+				<reportElement x="457" y="0" width="147" height="10" uuid="9142ce63-0869-4352-8737-78444b0deb11">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SIHABER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#">
+				<reportElement x="604" y="0" width="147" height="10" uuid="81493d6e-5126-4f9c-b6dc-616655c3082f">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SIHABER2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

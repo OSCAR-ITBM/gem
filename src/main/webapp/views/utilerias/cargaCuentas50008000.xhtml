@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:body>
+	<ui:composition template="/WEB-INF/layout/layout.xhtml">
+		<ui:define name="content">
+			<h:form id="cargaCuestas50008000">
+				<p:panel id="panel" header="Genera Cuentas 5000 y 8000"
+					styleClass="green col-md-8 col-centered row-centered shadow-panel">
+					<p:growl id="growl" showDetail="true" sticky="true"></p:growl>
+					<br />
+					<p:panelGrid styleClass="col-centered row-centered">
+            <p:row>
+              <p:column colspan="4">
+                <h:outputText value="Despues de introducir la cuenta oprima el boton 'Correcto'"/>
+              </p:column>
+            </p:row>
+            <p:row>
+              <p:column>
+                <h:outputText value="CTA"></h:outputText>
+                <br/>
+                <p:inputMask value="#{cargacuenta58MB.cta}" size="16" mask="9999"></p:inputMask>
+              </p:column>
+
+              <p:column>
+                <h:outputText value="SCTA"></h:outputText>
+                <br/>
+                <p:inputText value="#{cargacuenta58MB.scta}" size="16" maxlength="10" ></p:inputText>
+              </p:column>
+
+              <p:column>
+                <h:outputText value="SSCTA"></h:outputText>
+                <br/>
+                <p:inputMask value="#{cargacuenta58MB.sscta}" size="16" mask="999999999999999"></p:inputMask>
+              </p:column>
+
+              <p:column>
+                <h:outputText value="SSSCTA"></h:outputText>
+                <br/>
+                <p:inputMask value="#{cargacuenta58MB.ssscta}" size="16" mask="9999"></p:inputMask>
+              </p:column>
+            </p:row>
+					</p:panelGrid>
+					<br />
+					<br />
+					<h:panelGrid columns="5" styleClass="col-centered row-centered">
+						<p:commandButton value="Correcto" style="padding: 5px;"
+                             ajax="false" action="#{cargacuenta58MB.load()}"/>
+					</h:panelGrid>
+				</p:panel>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

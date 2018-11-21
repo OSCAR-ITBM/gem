@@ -1,0 +1,605 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:body>
+	<ui:composition template="/WEB-INF/layout/layout.xhtml">
+		<ui:define name="content">
+			<p:growl id="growlIndicadoresDiseno" showDetail="true" sticky="true"></p:growl>
+			<h:form id="formIndDiseno">
+				<p:remoteCommand name="onload"
+					action="#{indicadoresDisenoMB.onPageLoad}"
+					update=":formIndDiseno:indDisenoTable,:formIndDiseno:indDetalleTable,:formIndDiseno:pnlBotones,growlIndicadoresDiseno" />
+
+				<p:remoteCommand name="consultaVariables"
+					actionListener="#{indicadoresDisenoMB.consultaVariables}"
+					oncomplete="PF('catalogVariablesDlg').show()"
+					update="formIndDiseno:variablesTbl" />
+
+				<p:remoteCommand name="consultIndicadores"
+					actionListener="#{indicadoresDisenoMB.consultIndicadores}"
+					oncomplete="PF('catalogIndicadoresDlg').show()"
+					update="formIndDiseno:indicadoresTbl" />
+
+				<p:panel id="panelIndicadoresDiseno"
+					header="Ficha Técnica de diseño de indicadores estratégicos o de gestión"
+					styleClass="green col-md-10 col-centered row-centered shadow-panel">
+					<p:dataTable id="indDisenoTable" var="varDiseno"
+						value="#{indicadoresDisenoMB.listaEncabezado}"
+						styleClass="et_datatable" emptyMessage="Cargando información..."
+						paginator="true" rows="1"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
+						widgetVar="indWdg" paginatorPosition="top"
+						rowIndexVar="rowIndexDiseno">
+
+						<p:ajax event="page"
+							listener="#{indicadoresDisenoMB.cambiarPagina}"
+							process="indDisenoTable"
+							update="formIndDiseno:indDisenoTable,formIndDiseno:indDetalleTable"
+							oncomplete="updateGridDeatl()" />
+						<p:column>
+							<center>
+
+								<p:panelGrid columns="2" columnClasses="col-md-8,col-md-2"
+									styleClass="noBorders">
+									<p:panelGrid id="gridContent" columns="1">
+										<p:row>
+											<p:column>
+												<h:panelGrid columns="3"
+													columnClasses="column20,column20L,column50l">
+													<h:outputLabel value="Cve. Temas:"></h:outputLabel>
+													<p:selectOneMenu value="#{varDiseno.cvetemas}"
+														disabled="#{indicadoresDisenoMB.disenoDeshabilitado}">
+														<f:selectItem itemLabel="Seleccione..." itemValue="0"></f:selectItem>
+														<f:selectItems value="#{indicadoresDisenoMB.listaTemas}"
+															var="tema" itemValue="#{tema.cvetemas}"
+															itemLabel="#{tema.cvetemas}"></f:selectItems>
+														<p:ajax update="inputTemas" event="change"
+															listener="#{indicadoresDisenoMB.filtraTema(rowIndexDiseno)}" />
+													</p:selectOneMenu>
+													<h:inputText id="inputTemas"
+														value="#{indicadoresDisenoMB.descTemas}" size="50"
+														disabled="true"></h:inputText>
+												</h:panelGrid>
+											</p:column>
+										</p:row>
+										<p:row>
+											<p:column>
+												<h:panelGrid columns="3"
+													columnClasses="column20,column20L,column50l">
+													<h:outputLabel value="Dependencias:"></h:outputLabel>
+													<p:selectOneMenu value="#{varDiseno.clvdep}" var="comboDep"
+														disabled="#{indicadoresDisenoMB.disenoDeshabilitado}">
+														<f:selectItem itemLabel="Seleccione..." itemValue="0"></f:selectItem>
+														<f:selectItems
+															value="#{indicadoresDisenoMB.listaDependencias}"
+															var="dep" itemValue="#{dep}" itemLabel="#{dep}"></f:selectItems>
+														<p:ajax update="inputDependencia, oneMenuProgramas"
+															event="change"
+															listener="#{indicadoresDisenoMB.filtraDependencia(rowIndexDiseno)}" />
+													</p:selectOneMenu>
+
+													<h:inputText id="inputDependencia"
+														value="#{indicadoresDisenoMB.descDependencia}" size="50"
+														disabled="true"></h:inputText>
+												</h:panelGrid>
+											</p:column>
+										</p:row>
+										<p:row>
+											<p:column>
+												<h:panelGrid columns="3"
+													columnClasses="column20,column20L,column50l">
+													<h:outputLabel value="Programas:"></h:outputLabel>
+
+													<p:selectOneMenu value="#{varDiseno.clvfun}"
+														id="oneMenuProgramas"
+														disabled="#{indicadoresDisenoMB.disenoDeshabilitado}">
+														<f:selectItem itemLabel="Seleccione..." itemValue="0"></f:selectItem>
+														<f:selectItems
+															value="#{indicadoresDisenoMB.listaProgramas}" var="prog"
+															itemValue="#{prog}" itemLabel="#{prog}"></f:selectItems>
+														<p:ajax update="inputProgramas" event="change"
+															listener="#{indicadoresDisenoMB.filtraPrograma(rowIndexDiseno)}" />
+													</p:selectOneMenu>
+
+													<h:inputText id="inputProgramas"
+														value="#{indicadoresDisenoMB.descPrograma}" size="50"
+														disabled="true"></h:inputText>
+												</h:panelGrid>
+											</p:column>
+										</p:row>
+										<h:panelGroup>
+											<h:outputLabel value="Objectivo del programa:"></h:outputLabel>
+									&nbsp;&nbsp;
+									<h:inputText value="#{varDiseno.objetivo}" size="80"
+												disabled="#{indicadoresDisenoMB.deshabilitadoEditables}"></h:inputText>
+										</h:panelGroup>
+									</p:panelGrid>
+									<p:panelGrid id="pnlBotonesDiseno" columns="1">
+										<p:commandButton value="Salvar   "
+											style="padding: 5px; width:100px"
+											action="#{indicadoresDisenoMB.salvarDiseno(rowIndexDiseno)}"
+											rendered="#{indicadoresDisenoMB.disenoVisibleSalvar}"
+											oncomplete="updateGridDeatl()"
+											update="indDisenoTable,growlIndicadoresDiseno,formIndDiseno:pnlBotones"></p:commandButton>
+										<p:commandButton value="Modificar"
+											style="padding: 5px; width:100px"
+											disabled="#{indicadoresDisenoMB.bBtnMEncabezado}"
+											action="#{indicadoresDisenoMB.modificarDiseno(rowIndexDiseno)}"
+											rendered="#{indicadoresDisenoMB.disenoVisibleModificar}"
+											oncomplete="updateGridDeatl()"
+											update="indDisenoTable,growlIndicadoresDiseno,formIndDiseno:pnlBotones"></p:commandButton>
+										<p:commandButton value="Limpiar  "
+											style="padding: 5px; width:100px"
+											action="#{indicadoresDisenoMB.resetDiseno(rowIndexDiseno)}"
+											disabled="#{indicadoresDisenoMB.disenoDesabilitadoReset}"
+											oncomplete="updateGridDeatl()"
+											update="indDisenoTable,growlIndicadoresDiseno,formIndDiseno:pnlBotones"></p:commandButton>
+										<p:commandButton value="Adicionar"
+											style="padding: 5px; width:100px"
+											action="#{indicadoresDisenoMB.adicionarDiseno(rowIndexDiseno)}"
+											disabled="#{indicadoresDisenoMB.disenoDesabilitadoAdicionar}"
+											update="indDisenoTable,growlIndicadoresDiseno,formIndDiseno:pnlBotones"
+											oncomplete="PF('indWdg').getPaginator().setPage(PF('indWdg').paginator.cfg.pageCount-1);updateGridDeatl();" />
+										<p:commandButton value="Borrar   "
+											style="padding: 5px; width:100px"
+											onclick="PF('confirmFileDeleteDiseno').show();"
+											disabled="#{indicadoresDisenoMB.disenoDesabilitadoBorrar}">
+											<p:confirmDialog widgetVar="confirmFileDeleteDiseno"
+												message="¿Desea borrar el registro actual?"
+												header="Confirmacion" severity="alert">
+												<p:commandButton value="SI" label="SI"
+													style="margin-top:10px;padding:5px;"
+													actionListener="#{indicadoresDisenoMB.borrarDiseno(rowIndexDiseno)}"
+													onclick="PF('confirmFileDeleteDiseno').hide();"
+													styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+													update=":formIndDiseno:indDisenoTable, growlIndicadoresDiseno" />
+												<p:commandButton value="NO" label="NO"
+													style="margin-top:10px;padding:5px;"
+													onclick="PF('confirmFileDeleteDiseno').hide();"
+													styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+													update="indDisenoTable,growlIndicadoresDiseno,formIndDiseno:indDetalleTable" />
+											</p:confirmDialog>
+										</p:commandButton>
+										<p:commandButton value="Cancelar "
+											style="padding: 5px; width:100px"
+											action="#{indicadoresDisenoMB.cancelarDiseno(rowIndexDiseno)}"
+											disabled="#{indicadoresDisenoMB.disenoDesabilitadoCancelar}"
+											oncomplete="updateGridDeatl()"
+											update="indDisenoTable,growlIndicadoresDiseno" />
+									</p:panelGrid>
+								</p:panelGrid>
+
+								<p:separator style="width:1000px;height:10px" />
+
+								<p:panelGrid id="pnDet" styleClass="noBorders">
+									<p:row>
+										<p:column>
+											<h:panelGrid columns="3"
+												columnClasses="column25r,column25l,column50l"
+												styleClass="noBorders">
+												<h:outputLabel value="Código Indicador:"></h:outputLabel>
+												<h:panelGroup>
+													<h:inputText id="varIndic" value="#{varDiseno.cveind}"
+														disabled="#{indicadoresDisenoMB.deshabilitadoEditables}">
+														<p:ajax
+															update="varIndic,descIndicator,growlIndicadoresDiseno"
+															event="change"
+															listener="#{indicadoresDisenoMB.cambiarCodigoIndicador}" />
+													</h:inputText>
+													<p:commandLink id="searchcInds"
+														disabled="#{indicadoresDisenoMB.deshabilitadoEditables}"
+														styleClass="glyphicon glyphicon-search"
+														onclick="consultIndicadores(); return false;"
+														style="width:18px;height:18px;" />
+												</h:panelGroup>
+												<h:outputText id="descIndicator"
+													value="#{indicadoresDisenoMB.descCodigoIndicador}"
+													disabled="true"></h:outputText>
+											</h:panelGrid>
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<h:panelGrid columns="2" columnClasses="column20,column80"
+												styleClass="noBorders">
+												<h:outputLabel value="Formula de Calculo:"></h:outputLabel>
+												<h:inputText value="#{varDiseno.formula}" size="70"
+													disabled="#{indicadoresDisenoMB.deshabilitadoEditables}"></h:inputText>
+											</h:panelGrid>
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<h:panelGrid columns="2" columnClasses="column20,column80"
+												styleClass="noBorders">
+												<h:outputLabel value="Interpretacion:"></h:outputLabel>
+												<h:inputText value="#{varDiseno.interpretacion}" size="70"
+													disabled="#{indicadoresDisenoMB.deshabilitadoEditables}"></h:inputText>
+											</h:panelGrid>
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<h:panelGrid columns="4"
+												columnClasses="column25r,column25l,column25r,column25l"
+												styleClass="noBorders">
+												<h:outputLabel value="Dimension que atiende:"></h:outputLabel>
+												<h:inputText value="#{varDiseno.dimension}"
+													disabled="#{indicadoresDisenoMB.deshabilitadoEditables}"></h:inputText>
+
+												<h:outputLabel value="Frecuencia:"></h:outputLabel>
+												<p:selectOneMenu value="#{varDiseno.frecuencia}"
+													disabled="#{indicadoresDisenoMB.deshabilitadoEditables}"
+													required="true"
+													requiredMessage="Seleccione el tipo de Frecuencia Update cancelled">
+													<f:selectItem itemLabel="Seleccione..." itemValue="0"></f:selectItem>
+													<f:selectItems
+														value="#{indicadoresDisenoMB.listaFrecuencia}" var="frec"
+														itemValue="#{frec}" itemLabel="#{frec}"></f:selectItems>
+												</p:selectOneMenu>
+											</h:panelGrid>
+
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<h:panelGrid columns="4"
+												columnClasses="column25r,column25l,column25r,column25l"
+												styleClass="noBorders">
+												<h:outputLabel value="Factor de comparacion:"></h:outputLabel>
+												<pe:inputNumber value="#{varDiseno.factor}"
+													disabled="#{indicadoresDisenoMB.deshabilitadoEditables}"
+													size="7" emptyValue="zero" decimalPlaces="2"
+													decimalSeparator="." thousandSeparator="," maxlength="15">
+												</pe:inputNumber>
+												<h:outputLabel value="Tipo de indicador:"></h:outputLabel>
+												<p:selectOneMenu value="#{varDiseno.tipo}"
+													disabled="#{indicadoresDisenoMB.deshabilitadoEditables}"
+													required="true"
+													requiredMessage="Seleccione el tipo de Indicador Update cancelled">
+													<f:selectItem itemLabel="Seleccione..." itemValue="0"></f:selectItem>
+													<f:selectItems
+														value="#{indicadoresDisenoMB.listaTipoIndicador}"
+														var="tInd" itemValue="#{tInd}" itemLabel="#{tInd}"></f:selectItems>
+												</p:selectOneMenu>
+											</h:panelGrid>
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<h:panelGrid columns="2" columnClasses="column20,column80"
+												styleClass="noBorders">
+												<h:outputLabel value="Descripcion del factor:"></h:outputLabel>
+												<h:inputText value="#{varDiseno.descfac}" size="70"
+													disabled="#{indicadoresDisenoMB.deshabilitadoEditables}"></h:inputText>
+											</h:panelGrid>
+										</p:column>
+									</p:row>
+								</p:panelGrid>
+
+								<p:separator style="width:1000px;height:10px" />
+
+								<p:panelGrid id="pnlMetss" columns="2"
+									columnClasses="column20,column80" styleClass="noBorders">
+									<h:outputLabel value="Descripcion de la meta anual:"></h:outputLabel>
+									<h:inputText value="#{varDiseno.descanual}" size="70"
+										disabled="#{indicadoresDisenoMB.deshabilitadoEditables}"></h:inputText>
+
+									<h:outputLabel value="Medios de verificacion:"></h:outputLabel>
+									<h:inputText value="#{varDiseno.medios}" size="70"
+										disabled="#{indicadoresDisenoMB.deshabilitadoEditables}"></h:inputText>
+
+									<h:outputLabel value="Metas de acciones:"></h:outputLabel>
+									<h:inputText value="#{varDiseno.metasact}" size="70"
+										disabled="#{indicadoresDisenoMB.deshabilitadoEditables}"></h:inputText>
+								</p:panelGrid>
+
+								<p:panelGrid id="pnlTrim" columns="6"
+									styleClass="col-md-1 col-centered row-centered">
+									<h:outputLabel value="RESULTADO ESPERADO:"></h:outputLabel>
+
+									<h:panelGroup>
+										<h:outputLabel value="Trimestre 1:"></h:outputLabel>
+									&nbsp;&nbsp;&nbsp;
+									<pe:inputNumber value="#{varDiseno.trim1e}"
+											disabled="#{indicadoresDisenoMB.deshabilitadoEditables}"
+											size="7" emptyValue="0.00" decimalPlaces="2"
+											decimalSeparator="." thousandSeparator="," maxlength="15">
+											<p:ajax event="change" update="metAnual"
+												listener="#{indicadoresDisenoMB.validarKeyUpCalendarizado}" />
+										</pe:inputNumber>
+									</h:panelGroup>
+
+									<h:panelGroup>
+										<h:outputLabel value="Trimestre 2:"></h:outputLabel>
+									&nbsp;&nbsp;&nbsp;
+									<pe:inputNumber value="#{varDiseno.trim2e}"
+											disabled="#{indicadoresDisenoMB.deshabilitadoEditables}"
+											size="7" emptyValue="0.00" decimalPlaces="2"
+											decimalSeparator="." thousandSeparator="," maxlength="15">
+											<p:ajax event="change" update="metAnual"
+												listener="#{indicadoresDisenoMB.validarKeyUpCalendarizado}" />
+										</pe:inputNumber>
+									</h:panelGroup>
+
+									<h:panelGroup>
+										<h:outputLabel value="Trimestre 3:"></h:outputLabel>
+									&nbsp;&nbsp;&nbsp;
+									<pe:inputNumber value="#{varDiseno.trim3e}"
+											disabled="#{indicadoresDisenoMB.deshabilitadoEditables}"
+											size="7" emptyValue="0.00" decimalPlaces="2"
+											decimalSeparator="." thousandSeparator="," maxlength="15">
+											<p:ajax event="change" update="metAnual"
+												listener="#{indicadoresDisenoMB.validarKeyUpCalendarizado}" />
+										</pe:inputNumber>
+									</h:panelGroup>
+
+									<h:panelGroup>
+										<h:outputLabel value="Trimestre 4:"></h:outputLabel>
+									&nbsp;&nbsp;&nbsp;
+									<pe:inputNumber value="#{varDiseno.trim4e}"
+											disabled="#{indicadoresDisenoMB.deshabilitadoEditables}"
+											size="7" emptyValue="0.00" decimalPlaces="2"
+											decimalSeparator="." thousandSeparator="," maxlength="15">
+											<p:ajax event="change" update="metAnual"
+												listener="#{indicadoresDisenoMB.validarKeyUpCalendarizado}" />
+										</pe:inputNumber>
+									</h:panelGroup>
+
+									<h:panelGroup>
+										<h:outputLabel value="Meta Anual:"></h:outputLabel>
+									&nbsp;&nbsp;&nbsp;
+									<pe:inputNumber id="metAnual" value="#{varDiseno.metanuale}"
+											disabled="true" size="7" emptyValue="zero" decimalPlaces="2"
+											decimalSeparator="." thousandSeparator="," maxlength="15">
+										</pe:inputNumber>
+									</h:panelGroup>
+								</p:panelGrid>
+							</center>
+						</p:column>
+					</p:dataTable>
+					<br />
+					<br />
+					<p:dataTable id="indDetalleTable" var="varDetalle"
+						value="#{indicadoresDisenoMB.listaDetalle}"
+						styleClass="et_datatable" emptyMessage="No hay información..."
+						paginator="true" rows="1"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
+						widgetVar="detWdg" paginatorPosition="top"
+						rowIndexVar="rowIndexDetalle">
+
+						<p:ajax event="page"
+							listener="#{indicadoresDisenoMB.cambiarPaginaDetalle}"
+							process="indDetalleTable"
+							update="formIndDiseno:indDisenoTable,formIndDiseno:indDetalleTable" />
+						<p:column headerText="Codigo">
+							<h:inputText value="#{varDetalle.codigo}"
+								disabled="#{indicadoresDisenoMB.metaDeshabilitado}" size="7" />
+						</p:column>
+						<p:column headerText="Cve Variable">
+							<h:inputText id="varClave" value="#{varDetalle.cvevar}" size="7"
+								disabled="#{indicadoresDisenoMB.metaDeshabilitado}">
+								<p:ajax update="varClave,nomvariable,growlIndicadoresDiseno"
+									event="change"
+									listener="#{indicadoresDisenoMB.cambiarVariable}" />
+							</h:inputText>
+							<p:commandLink id="searchclvdgm"
+								disabled="#{indicadoresDisenoMB.metaDeshabilitado}"
+								styleClass="glyphicon glyphicon-search"
+								onclick="consultaVariables(); return false;"
+								style="width:18px;height:18px;" />
+						</p:column>
+						<p:column headerText="Nombre de la Variable del Indicador">
+							<h:inputText id="nomvariable" value="#{varDetalle.variables}"
+								disabled="true" size="10" />
+						</p:column>
+						<p:column headerText="Unidad de Medida">
+							<h:inputText value="#{varDetalle.unimed}"
+								disabled="#{indicadoresDisenoMB.metaDeshabilitado}" size="7" />
+						</p:column>
+						<p:column headerText="Tipo de Operacion">
+							<h:inputText value="#{varDetalle.tipoper}"
+								disabled="#{indicadoresDisenoMB.metaDeshabilitado}" size="7" />
+						</p:column>
+						<p:column headerText="Trimestre 1">
+							<pe:inputNumber value="#{varDetalle.trim1}"
+								disabled="#{indicadoresDisenoMB.metaDeshabilitado}" size="7"
+								emptyValue="0.00" decimalPlaces="2" decimalSeparator="."
+								thousandSeparator="," maxlength="15">
+								<p:ajax event="change" update="metAnualDetalle"
+									listener="#{indicadoresDisenoMB.validarKeyUpDetalle}" />
+							</pe:inputNumber>
+						</p:column>
+						<p:column headerText="Trimestre 2">
+							<pe:inputNumber value="#{varDetalle.trim2}"
+								disabled="#{indicadoresDisenoMB.metaDeshabilitado}" size="7"
+								emptyValue="0.00" decimalPlaces="2" decimalSeparator="."
+								thousandSeparator="," maxlength="15">
+								<p:ajax event="change" update="metAnualDetalle"
+									listener="#{indicadoresDisenoMB.validarKeyUpDetalle}" />
+							</pe:inputNumber>
+						</p:column>
+						<p:column headerText="Trimestre 3">
+							<pe:inputNumber value="#{varDetalle.trim3}"
+								disabled="#{indicadoresDisenoMB.metaDeshabilitado}" size="7"
+								emptyValue="0.00" decimalPlaces="2" decimalSeparator="."
+								thousandSeparator="," maxlength="15">
+								<p:ajax event="change" update="metAnualDetalle"
+									listener="#{indicadoresDisenoMB.validarKeyUpDetalle}" />
+							</pe:inputNumber>
+						</p:column>
+						<p:column headerText="Trimestre 4">
+							<pe:inputNumber value="#{varDetalle.trim4}"
+								disabled="#{indicadoresDisenoMB.metaDeshabilitado}" size="7"
+								emptyValue="0.00" decimalPlaces="2" decimalSeparator="."
+								thousandSeparator="," maxlength="15">
+								<p:ajax event="change" update="metAnualDetalle"
+									listener="#{indicadoresDisenoMB.validarKeyUpDetalle}" />
+							</pe:inputNumber>
+						</p:column>
+						<p:column headerText="Meta Anual">
+							<pe:inputNumber id="metAnualDetalle"
+								value="#{varDetalle.metanual}" disabled="true" size="7"
+								emptyValue="0.00" decimalPlaces="2" decimalSeparator="."
+								thousandSeparator="," maxlength="15">
+							</pe:inputNumber>
+						</p:column>
+					</p:dataTable>
+					<br />
+					<br />
+					<p:panelGrid id="pnlBotones" columns="6"
+						styleClass="noBorders col-centered row-centered">
+						<p:commandButton value="Salvar   " id="salvardetalle"
+							style="padding: 5px; width:100px"
+							action="#{indicadoresDisenoMB.salvarDetalle(rowIndexDetalle)}"
+							rendered="#{indicadoresDisenoMB.metaVisibleSalvar}"
+							update="formIndDiseno:indDetalleTable,growlIndicadoresDiseno,pnlBotones, :formIndDiseno:indDisenoTable" />
+						<p:commandButton value="Modificar" id="modifcadetalle"
+							style="padding: 5px; width:100px"
+							action="#{indicadoresDisenoMB.modificarDetalle(rowIndexDetalle)}"
+							rendered="#{indicadoresDisenoMB.metaVisibleModificar}"
+							disabled="#{indicadoresDisenoMB.bBtnModificar}"
+							update="formIndDiseno:indDetalleTable,growlIndicadoresDiseno,pnlBotones, :formIndDiseno:indDisenoTable" />
+						<p:commandButton value="Limpiar  " id="limpiardetalle"
+							style="padding: 5px; width:100px"
+							action="#{indicadoresDisenoMB.resetDetalle(rowIndexDetalle)}"
+							disabled="#{indicadoresDisenoMB.metaDesabilitadoReset}"
+							update="formIndDiseno:indDetalleTable,growlIndicadoresDiseno,pnlBotones, :formIndDiseno:indDisenoTable" />
+						<p:commandButton value="Adicionar" id="adicionarlimpiar"
+							style="padding: 5px; width:100px"
+							action="#{indicadoresDisenoMB.adicionarDetalle(rowIndexDetalle)}"
+							disabled="#{indicadoresDisenoMB.metaDesabilitadoAdicionar}"
+							update="formIndDiseno:indDetalleTable,growlIndicadoresDiseno,pnlBotones, :formIndDiseno:indDisenoTable"
+							oncomplete="PF('detWdg').getPaginator().setPage(PF('detWdg').paginator.cfg.pageCount-1);" />
+						<p:commandButton value="Borrar   " id="borradetails"
+							style="padding: 5px; width:100px"
+							onclick="PF('confirmFileDeleteDetalle').show();"
+							disabled="#{indicadoresDisenoMB.metaDesabilitadoBorrar}">
+							<p:confirmDialog widgetVar="confirmFileDeleteDetalle"
+								message="¿Desea borrar el registro actual?"
+								header="Confirmacion" severity="alert">
+								<p:commandButton value="SI" label="SI"
+									style="margin-top:10px;padding:5px;"
+									actionListener="#{indicadoresDisenoMB.borrarDetalle(rowIndexDetalle)}"
+									onclick="PF('confirmFileDeleteDetalle').hide();"
+									styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+									update=":formIndDiseno:indDetalleTable, growlIndicadoresDiseno, :formIndDiseno:indDisenoTable"
+									oncomplete="updateGridDeatl()" />
+								<p:commandButton value="NO" label="NO"
+									style="margin-top:10px;padding:5px;"
+									onclick="PF('confirmFileDeleteDetalle').hide();"
+									styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+									update="formIndDiseno:indDetalleTable,growlIndicadoresDiseno,pnlBotones" />
+							</p:confirmDialog>
+						</p:commandButton>
+						<p:commandButton value="Cancelar " id="canceldetalle"
+							style="padding: 5px; width:100px"
+							action="#{indicadoresDisenoMB.cancelarDetalle(rowIndexDetalle)}"
+							disabled="#{indicadoresDisenoMB.metaDesabilitadoCancelar}"
+							update="formIndDiseno:indDetalleTable,growlIndicadoresDiseno,pnlBotones"
+							immediate="true"></p:commandButton>
+					</p:panelGrid>
+				</p:panel>
+				<p:remoteCommand id="updateGridDeatl" name="updateGridDeatl"
+					update=":formIndDiseno:indDetalleTable,:formIndDiseno:indDisenoTable, :formIndDiseno:modifcadetalle, :formIndDiseno:limpiardetalle,:formIndDiseno:adicionarlimpiar, :formIndDiseno:borradetails,:formIndDiseno:canceldetalle  "
+					actionListener="#{indicadoresDisenoMB.blockButtonsEmpty}" />
+				<p:dialog header="Consulta al Cat&aacute;logo de Variables"
+					widgetVar="catalogVariablesDlg" resizable="false" width="800"
+					height="650" showEffect="clip" hideEffect="clip" modal="true">
+					<br />
+					<p:outputPanel id="panelCatalogVariables" layout="block"
+						style="text-align:left">
+						<p:dataTable id="variablesTbl" var="variable" widgetVar="variablesWdg"
+							value="#{indicadoresDisenoMB.variables}"
+							styleClass="et_datatable" paginator="true" rows="10"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							selectionMode="single"
+							selection="#{indicadoresDisenoMB.variableSelected}"
+							rowKey="#{variable.cvevar}" emptyMessage="No hay registros"
+							filteredValue="#{indicadoresDisenoMB.filteredVariables}">
+
+							<p:ajax event="rowDblselect"
+								update="growlIndicadoresDiseno,formIndDiseno:panelIndicadoresDiseno"
+								listener="#{indicadoresDisenoMB.onClvdgmRowDblClckSelect}"
+								oncomplete="PF('catalogVariablesDlg').hide();"></p:ajax>
+							<f:facet name="header">Consulta al Cat&aacute;logo de Variables</f:facet>
+
+							<p:column headerText="Clave" width="20%"
+								filterMatchMode="contains" filterBy="#{variable.cvevar}">
+								<h:outputText value="#{variable.cvevar}" />
+							</p:column>
+
+							<p:column headerText="Nombre" width="80%"
+								filterMatchMode="contains" filterBy="#{variable.nomvar}">
+								<h:outputText value="#{variable.nomvar}" />
+							</p:column>
+						</p:dataTable>
+						<br />
+						<p:commandButton value="Aceptar"
+							actionListener="#{indicadoresDisenoMB.changeVariable}"
+							update="growlIndicadoresDiseno,formIndDiseno:panelIndicadoresDiseno"
+							oncomplete="PF('catalogVariablesDlg').hide();"
+							style="padding: 5px; position: absolute; right: 50%;" />
+						<p:commandButton value="Cancelar"
+							oncomplete="PF('catalogVariablesDlg').hide();"
+							style="padding: 5px; margin-left: 15px; position: absolute; right: 35%;" />
+					</p:outputPanel>
+
+				</p:dialog>
+
+				<p:dialog
+					header="Consulta al Cat&aacute;logo de Código de Indicadores"
+					widgetVar="catalogIndicadoresDlg" resizable="false" width="800"
+					height="650" showEffect="clip" hideEffect="clip" modal="true">
+					<br />
+					<p:outputPanel id="panelCatalogIndicadores" layout="block"
+						style="text-align:left">
+						<p:dataTable id="indicadoresTbl" var="indicador" widgetVar="indicadorWdg"
+							value="#{indicadoresDisenoMB.indicadores}"
+							styleClass="et_datatable" paginator="true" rows="10"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							selectionMode="single"
+							selection="#{indicadoresDisenoMB.indicadorSelected}"
+							rowKey="#{indicador.codigo}" emptyMessage="No hay registros"
+							filteredValue="#{indicadoresDisenoMB.filteredIndicadores}">
+
+							<p:ajax event="rowDblselect"
+								update="growlIndicadoresDiseno,formIndDiseno:panelIndicadoresDiseno"
+								listener="#{indicadoresDisenoMB.onIndRowDblClckSelect}"
+								oncomplete="PF('catalogIndicadoresDlg').hide();"></p:ajax>
+							<f:facet name="header">Consulta al Cat&aacute;logo de Código de Indicadores</f:facet>
+
+							<p:column headerText="Código" width="20%"
+								filterMatchMode="contains" filterBy="#{indicador.codigo}"
+								filterMaxLength="13">
+								<h:outputText value="#{indicador.codigo}" />
+							</p:column>
+
+							<p:column headerText="Nombre" width="80%"
+								filterMatchMode="contains" filterBy="#{indicador.nomind}">
+								<h:outputText value="#{indicador.nomind}" />
+							</p:column>
+						</p:dataTable>
+						<br />
+						<p:commandButton value="Aceptar"
+							actionListener="#{indicadoresDisenoMB.changeIndicador}"
+							update="growlIndicadoresDiseno,formIndDiseno:panelIndicadoresDiseno"
+							onclick="PF('catalogIndicadoresDlg').hide();"
+							style="padding: 5px; position: absolute; right: 50%;" />
+						<p:commandButton value="Cancelar"
+							onclick="PF('catalogIndicadoresDlg').hide();"
+							style="padding: 5px; margin-left: 15px; position: absolute; right: 35%;" />
+					</p:outputPanel>
+
+				</p:dialog>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

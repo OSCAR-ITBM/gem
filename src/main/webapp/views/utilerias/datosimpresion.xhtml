@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<h:body>
+	  <ui:composition template="/WEB-INF/layout/layout.xhtml">
+		<ui:define name="content">			
+			<h:form id="datosimpresion">						
+			  <p:panel id="panel" header="DATOS DE IMPRESION"	styleClass="green col-md-9 col-centered row-centered shadow-panel">				
+				<h:panelGrid columns="2" columnClasses="column20,column80" styleClass="col-centered row-centered">
+					<h:outputText value="NOMBRE DEPENDENCIA: "/>
+					<h:inputText/>
+					<h:outputText value="R.F.C: "/>
+					<h:inputText/>
+					<h:outputText value="AÑO: "/>
+					<h:inputText/>
+					<h:outputText value="NOMBRE:"/>
+					<h:inputText/>
+					<h:outputText value="NOMBRE:"/>
+					<h:inputText/>
+					<h:outputText value="NOMBRE:"/>
+					<h:inputText/>
+					<h:outputText value="NOMBRE:"/>
+					<h:inputText/>
+					<h:outputText value="NOMBRE:"/>
+					<h:inputText/>
+					<h:outputText value="NOMBRE::"/>
+					<h:inputText/>
+					<h:outputText value="TITULO"/>
+					<h:inputText/>
+					<h:outputText value="TITULO:"/>
+					<h:inputText/>
+					<h:outputText value="TITULO:"/>
+					<h:inputText/>
+					<h:outputText value="TITULO:"/>
+					<h:inputText/>
+					<h:outputText value="TITULO:"/>
+					<h:inputText/>
+				</h:panelGrid>
+				<br/><br/>
+				<p:panelGrid id="buttons" >
+					<p:commandButton id="salvarButton" style="padding: 5px;" value="Salvar" />
+						
+					&nbsp;
+					<p:commandButton  value="Modificar" style="padding: 5px;">						
+					</p:commandButton>
+					&nbsp;
+					<p:commandButton  value="Reset"  style="padding: 5px;"/>
+					&nbsp;
+					<p:commandButton  value="Adicionar"  style="padding: 5px;"/>
+					&nbsp;
+					<p:commandButton  value="Borrar" style="padding: 5px;">	
+					</p:commandButton>
+					&nbsp;
+					<p:commandButton value="Cancelar"  style="padding: 5px;"/>	
+					&nbsp;
+					<p:commandButton value="Fin"  style="padding: 5px;" />								
+				</p:panelGrid>	
+ 		      </p:panel>	  															
+			</h:form>			
+		</ui:define>
+	  </ui:composition>
+   </h:body>
+</html>

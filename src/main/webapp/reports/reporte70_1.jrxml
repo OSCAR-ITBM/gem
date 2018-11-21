@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-06-20T15:35:19 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte70_1" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="792" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="825d9a8d-ebe9-4b69-8e91-f12ca4f06b56">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="serverLinux26"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<parameter name="MES" class="java.lang.Integer"/>
+	<parameter name="POLIZA" class="java.lang.Integer"/>
+	<parameter name="ANIO" class="java.lang.Integer"/>
+	<parameter name="SECTOR" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT cuenta, scta, sscta, ssscta, sssscta, sum(CANPOL) AS cargos, sum(CANPOL) AS sograc, sum(CANPOLH) AS abonos, sum(CANPOLH) AS sonoba,  (sum(CANPOL)-sum(CANPOLH)) AS SALDO
+FROM POLIDE
+WHERE TIPPOL = 'E'
+AND CONPOL = $P{POLIZA}
+AND MESPOL = $P{MES}
+AND anopol = $P{ANIO}
+AND cuenta <> '5100'
+AND IDSECTOR = $P{SECTOR}
+AND cuenta NOT LIKE '8%'
+GROUP BY  cuenta, scta, sscta, ssscta, sssscta
+ORDER BY cuenta, scta, sscta, ssscta, sssscta]]>
+	</queryString>
+	<field name="CUENTA" class="java.lang.String"/>
+	<field name="SCTA" class="java.lang.String"/>
+	<field name="SSCTA" class="java.lang.String"/>
+	<field name="SSSCTA" class="java.lang.String"/>
+	<field name="SSSSCTA" class="java.lang.String"/>
+	<field name="CARGOS" class="java.math.BigDecimal"/>
+	<field name="SOGRAC" class="java.math.BigDecimal"/>
+	<field name="ABONOS" class="java.math.BigDecimal"/>
+	<field name="SONOBA" class="java.math.BigDecimal"/>
+	<field name="SALDO" class="java.math.BigDecimal"/>
+	<variable name="SumSOGRAC" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{SOGRAC}]]></variableExpression>
+	</variable>
+	<variable name="SumSONOBA" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{SONOBA}]]></variableExpression>
+	</variable>
+	<variable name="SumSALDO" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{SALDO}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="12">
+			<staticText>
+				<reportElement x="0" y="0" width="70" height="12" uuid="bbdc26ca-6cea-4d9f-b585-e10fb01c2e0e"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[CTA-----------------------------]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="0" width="80" height="12" uuid="c4d72343-41a5-415c-8485-60e394c10e2f"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[SCTA--------------------------------]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="0" width="100" height="12" uuid="d639149a-76dd-4940-a12b-cb10b6f2e323"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[SSCTA----------------------------]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="250" y="0" width="100" height="12" uuid="1cb111b2-0e0c-4b14-a57d-a05d26a62cab"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[SSSCTA----------------------]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="0" width="100" height="12" uuid="ebeaded1-7018-4532-87a4-a08d5f6db34e"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[SSSSCTA---------------------]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="70" height="12" uuid="5233fbe7-6914-405b-9620-65618c8a0c61">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUENTA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="0" width="80" height="12" uuid="9680312c-3e67-45fa-a9af-217a870f0096"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{SCTA}==null?" ":$F{SCTA})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="0" width="100" height="12" uuid="76add331-dc19-49c8-85b5-7e634fd2eeb8"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{SSCTA}==null?" ":$F{SSCTA})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="0" width="100" height="12" uuid="b6174d47-1fca-43e7-ba1d-ab7330e4f989"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{SSSCTA}==null?" ":$F{SSSCTA})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="0" width="100" height="12" uuid="4e909c1c-e094-46b7-981d-dea4f144be1d"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{SSSSCTA}==null?" ":$F{SSSSCTA})]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="450" y="0" width="130" height="12" uuid="9da1f5e2-881f-4938-83a4-db1b9ab9b19f"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SALDO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="24">
+			<textField pattern="#,##0.00">
+				<reportElement x="0" y="12" width="224" height="12" uuid="eb9e38bf-d43d-4036-b89d-ec23ef49d5eb">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{SumSOGRAC}==null?"0.00":$V{SumSOGRAC})]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="224" y="12" width="188" height="12" uuid="2bed27fa-5d3a-4d97-8952-1bd303c61d51">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{SumSONOBA}==null?"0.00":$V{SumSONOBA})]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="412" y="12" width="168" height="12" uuid="9c9eb563-0924-4744-94b8-06cf9e991bd5"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{SumSALDO}==null?"0.00":$V{SumSALDO})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="366" y="0" width="46" height="12" uuid="2deae3fc-8c6d-4c88-84c5-1bd0ad9e60bc">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[ABONOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="0" width="44" height="12" uuid="391fcd23-812c-4f15-969f-72ef2e68d76c"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[CARGOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="180" height="12" uuid="a4ce67f3-4a43-4094-87aa-de4349d04cdc">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="536" y="0" width="44" height="12" uuid="0b393f6b-b384-405c-9022-65398518a6ab">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[SALDOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="412" y="0" width="124" height="12" uuid="21fd4a70-2f68-442e-9500-923989fd5f9b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[--------------------------------------------------------------------------------------------------]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="224" y="0" width="142" height="12" uuid="a795a64e-1c43-4455-a022-f7fd74537b33">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[--------------------------------------------------------------------------------------------------------------]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+</jasperReport>

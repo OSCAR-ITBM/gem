@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:body>
+	<ui:composition template="/WEB-INF/layout/layout.xhtml">
+		<ui:define name="content">
+			<script type="text/javascript">
+        function showStatus() {
+          PF('statusDialog').show();
+        }
+        function hideStatus() {
+          PF('statusDialog').hide();
+          rc();
+        }
+      </script>
+			<h:form id="exportainformacion">
+				<p:panel id="panel" header="Exporta Información"
+					styleClass="green col-md-5 col-centered row-centered shadow-panel">
+					<h:panelGrid styleClass="col-centered row-centered">
+						<h:outputText
+							value="Seleccione el mes y la clave presione el boton Correcto"
+							style="color:red" />
+						<br />
+					</h:panelGrid>
+					<p:panelGrid styleClass="col-centered row-centered ui-datagrid-no-border">
+
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Mes a exportar:" />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu value="#{exportaInfo.month}">
+									<f:selectItem itemLabel="01" itemValue="1" />
+									<f:selectItem itemLabel="02" itemValue="2" />
+									<f:selectItem itemLabel="03" itemValue="3" />
+									<f:selectItem itemLabel="04" itemValue="4" />
+									<f:selectItem itemLabel="05" itemValue="5" />
+									<f:selectItem itemLabel="06" itemValue="6" />
+									<f:selectItem itemLabel="07" itemValue="7" />
+									<f:selectItem itemLabel="08" itemValue="8" />
+									<f:selectItem itemLabel="09" itemValue="9" />
+									<f:selectItem itemLabel="10" itemValue="10" />
+									<f:selectItem itemLabel="11" itemValue="11" />
+									<f:selectItem itemLabel="12" itemValue="12" />
+								</p:selectOneMenu>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+
+					<h:panelGrid columns="5" styleClass="col-centered row-centered">
+						<p:dialog modal="true" widgetVar="statusDialog" header="Status"
+							draggable="false" closable="false">
+							<p:graphicImage value="#{resource['images/ajaxloadingbar.gif']}" />
+						</p:dialog>
+
+						<p:commandButton value="Correcto" ajax="false" id="download"
+							actionListener="#{exportaInfo.process}" icon="ui-icon-document"
+							onclick="PrimeFaces.monitorDownload(showStatus, hideStatus)">
+							<p:fileDownload value="#{exportaInfo.download}" />
+						</p:commandButton>
+						<p:remoteCommand name="rc"
+							actionListener="#{exportaInfo.cleanFile}" />
+					</h:panelGrid>
+
+				</p:panel>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

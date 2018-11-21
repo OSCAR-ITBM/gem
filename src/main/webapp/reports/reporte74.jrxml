@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-05-20T16:15:49 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte74" pageWidth="1100" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1100" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="37ed2b96-4991-4df6-a685-0545e5bf7158">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GEMUSER"/>
+	<property name="net.sf.jasperreports.export.text.remove.empty.space.between.rows" value="true"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="net.sf.jasperreports.export.text.character.width" value="7"/>
+	<property name="net.sf.jasperreports.export.text.character.height" value="13.948"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="mes" class="java.lang.Integer"/>
+	<parameter name="sector" class="java.lang.Integer"/>
+	<parameter name="anio" class="java.lang.Integer"/>
+	<parameter name="scta" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT SSSCTA
+FROM POLIDE
+WHERE MESPOL <=  $P{mes} 
+	AND ANOPOL =  $P{anio} 
+	AND IDSECTOR = $P{sector} 
+	AND (CUENTA LIKE '827%'
+		OR CUENTA LIKE '825%'
+		OR CUENTA LIKE '824%')
+	AND SUBSTR(CUENTA,4,1) <> '0'
+	AND SSSCTA > '1000'
+	AND SSSCTA < '2000'
+	AND SCTA LIKE '$P!{scta}%'
+GROUP BY SSSCTA
+ORDER BY SSSCTA]]>
+	</queryString>
+	<field name="SSSCTA" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="12">
+			<staticText>
+				<reportElement x="0" y="0" width="60" height="12" isRemoveLineWhenBlank="true" uuid="2dce4f89-84ac-42dc-9c9b-0e4d5808ee01">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AL MES ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<subreport>
+				<reportElement x="0" y="0" width="1100" height="24" isRemoveLineWhenBlank="true" uuid="449fe330-acd4-4a29-ad8c-90eeb46cbf15">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<subreportParameter name="mes">
+					<subreportParameterExpression><![CDATA[$P{mes}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="anio">
+					<subreportParameterExpression><![CDATA[$P{anio}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="sector">
+					<subreportParameterExpression><![CDATA[$P{sector}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="scta">
+					<subreportParameterExpression><![CDATA[$P{scta}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ssscta">
+					<subreportParameterExpression><![CDATA[$F{SSSCTA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reporte74_agrupados.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

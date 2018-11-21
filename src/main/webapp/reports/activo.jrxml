@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-05-20T11:28:37 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="activo" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="772" leftMargin="10" rightMargin="10" topMargin="5" bottomMargin="5" whenResourceMissingType="Error" uuid="adb6b51c-30dd-49dc-bc70-4989735dd919">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GEMCRUZ"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="p_mes" class="java.lang.Integer"/>
+	<parameter name="p_Idsector" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT 		
+          SUBSTR(C.CUENTA,1,2)GRUPO,
+          MA.NATCTA, 
+          C.NOMCTA, 
+	     		C.CUENTA,  
+	     		C.SALINI, 
+	     	   CASE   
+					WHEN  $P{p_mes}=1  THEN    0
+					WHEN  $P{p_mes}=2  THEN  SUM(DECIMAL (C.CARGOS_1,20,2))
+					WHEN  $P{p_mes}=3  THEN  SUM(DECIMAL (C.CARGOS_1,20,2))+SUM(DECIMAL (C.CARGOS_2,20,2))
+					WHEN  $P{p_mes}=4  THEN  SUM(DECIMAL (C.CARGOS_1,20,2))+SUM(DECIMAL (C.CARGOS_2,20,2))+SUM(DECIMAL (C.CARGOS_3,20,2))
+					WHEN  $P{p_mes}=5  THEN  SUM(DECIMAL (C.CARGOS_1,20,2))+SUM(DECIMAL (C.CARGOS_2,20,2))+SUM(DECIMAL (C.CARGOS_3,20,2))+SUM(DECIMAL (C.CARGOS_4,20,2))
+					WHEN  $P{p_mes}=6  THEN  SUM(DECIMAL (C.CARGOS_1,20,2))+SUM(DECIMAL (C.CARGOS_2,20,2))+SUM(DECIMAL (C.CARGOS_3,20,2))+SUM(DECIMAL (C.CARGOS_4,20,2))+SUM(DECIMAL (C.CARGOS_5,20,2))
+					WHEN  $P{p_mes}=7  THEN  SUM(DECIMAL (C.CARGOS_1,20,2))+SUM(DECIMAL (C.CARGOS_2,20,2))+SUM(DECIMAL (C.CARGOS_3,20,2))+SUM(DECIMAL (C.CARGOS_4,20,2))+SUM(DECIMAL (C.CARGOS_5,20,2))+SUM(DECIMAL (C.CARGOS_6,20,2))
+					WHEN  $P{p_mes}=8  THEN  SUM(DECIMAL (C.CARGOS_1,20,2))+SUM(DECIMAL (C.CARGOS_2,20,2))+SUM(DECIMAL (C.CARGOS_3,20,2))+SUM(DECIMAL (C.CARGOS_4,20,2))+SUM(DECIMAL (C.CARGOS_5,20,2))+SUM(DECIMAL (C.CARGOS_6,20,2))+SUM(DECIMAL (C.CARGOS_7,20,2))
+					WHEN  $P{p_mes}=9  THEN  SUM(DECIMAL (C.CARGOS_1,20,2))+SUM(DECIMAL (C.CARGOS_2,20,2))+SUM(DECIMAL (C.CARGOS_3,20,2))+SUM(DECIMAL (C.CARGOS_4,20,2))+SUM(DECIMAL (C.CARGOS_5,20,2))+SUM(DECIMAL (C.CARGOS_6,20,2))+SUM(DECIMAL (C.CARGOS_7,20,2)) +SUM(DECIMAL (C.CARGOS_8,20,2))
+					WHEN  $P{p_mes}=10 THEN  SUM(DECIMAL (C.CARGOS_1,20,2))+SUM(DECIMAL (C.CARGOS_2,20,2))+SUM(DECIMAL (C.CARGOS_3,20,2))+SUM(DECIMAL (C.CARGOS_4,20,2))+SUM(DECIMAL (C.CARGOS_5,20,2))+SUM(DECIMAL (C.CARGOS_6,20,2))+SUM(DECIMAL (C.CARGOS_7,20,2)) +SUM(DECIMAL (C.CARGOS_8,20,2)) +SUM(DECIMAL (C.CARGOS_9,20,2))
+					WHEN  $P{p_mes}=11 THEN  SUM(DECIMAL (C.CARGOS_1,20,2))+SUM(DECIMAL (C.CARGOS_2,20,2))+SUM(DECIMAL (C.CARGOS_3,20,2))+SUM(DECIMAL (C.CARGOS_4,20,2))+SUM(DECIMAL (C.CARGOS_5,20,2))+SUM(DECIMAL (C.CARGOS_6,20,2))+SUM(DECIMAL (C.CARGOS_7,20,2)) +SUM(DECIMAL (C.CARGOS_8,20,2)) +SUM(DECIMAL (C.CARGOS_9,20,2))+SUM(DECIMAL (C.CARGOS_10,20,2))
+					WHEN  $P{p_mes}=12 THEN  SUM(DECIMAL (C.CARGOS_1,20,2))+SUM(DECIMAL (C.CARGOS_2,20,2))+SUM(DECIMAL (C.CARGOS_3,20,2))+SUM(DECIMAL (C.CARGOS_4,20,2))+SUM(DECIMAL (C.CARGOS_5,20,2))+SUM(DECIMAL (C.CARGOS_6,20,2))+SUM(DECIMAL (C.CARGOS_7,20,2)) +SUM(DECIMAL (C.CARGOS_8,20,2)) +SUM(DECIMAL (C.CARGOS_9,20,2))+SUM(DECIMAL (C.CARGOS_10,20,2))+SUM(DECIMAL (C.CARGOS_11,20,2))
+					ELSE 0
+				END CARGOS_ANT,
+				CASE   
+					WHEN  $P{p_mes}=1  THEN  0
+					WHEN  $P{p_mes}=2  THEN  SUM(DECIMAL (C.ABONOS_1,20,2))
+					WHEN  $P{p_mes}=3  THEN  SUM(DECIMAL (C.ABONOS_1,20,2))+SUM(DECIMAL (C.ABONOS_2,20,2))
+					WHEN  $P{p_mes}=4  THEN  SUM(DECIMAL (C.ABONOS_1,20,2))+SUM(DECIMAL (C.ABONOS_2,20,2))+SUM(DECIMAL (C.ABONOS_3,20,2))
+					WHEN  $P{p_mes}=5  THEN  SUM(DECIMAL (C.ABONOS_1,20,2))+SUM(DECIMAL (C.ABONOS_2,20,2))+SUM(DECIMAL (C.ABONOS_3,20,2))+SUM(DECIMAL (C.ABONOS_4,20,2))
+					WHEN  $P{p_mes}=6  THEN  SUM(DECIMAL (C.ABONOS_1,20,2))+SUM(DECIMAL (C.ABONOS_2,20,2))+SUM(DECIMAL (C.ABONOS_3,20,2))+SUM(DECIMAL (C.ABONOS_4,20,2))+SUM(DECIMAL (C.ABONOS_5,20,2))
+					WHEN  $P{p_mes}=7  THEN  SUM(DECIMAL (C.ABONOS_1,20,2))+SUM(DECIMAL (C.ABONOS_2,20,2))+SUM(DECIMAL (C.ABONOS_3,20,2))+SUM(DECIMAL (C.ABONOS_4,20,2))+SUM(DECIMAL (C.ABONOS_5,20,2))+SUM(DECIMAL (C.ABONOS_6,20,2))
+					WHEN  $P{p_mes}=8  THEN  SUM(DECIMAL (C.ABONOS_1,20,2))+SUM(DECIMAL (C.ABONOS_2,20,2))+SUM(DECIMAL (C.ABONOS_3,20,2))+SUM(DECIMAL (C.ABONOS_4,20,2))+SUM(DECIMAL (C.ABONOS_5,20,2))+SUM(DECIMAL (C.ABONOS_6,20,2))+SUM(DECIMAL (C.ABONOS_7,20,2))
+					WHEN  $P{p_mes}=9  THEN  SUM(DECIMAL (C.ABONOS_1,20,2))+SUM(DECIMAL (C.ABONOS_2,20,2))+SUM(DECIMAL (C.ABONOS_3,20,2))+SUM(DECIMAL (C.ABONOS_4,20,2))+SUM(DECIMAL (C.ABONOS_5,20,2))+SUM(DECIMAL (C.ABONOS_6,20,2))+SUM(DECIMAL (C.ABONOS_7,20,2)) +SUM(DECIMAL (C.ABONOS_8,20,2))
+					WHEN  $P{p_mes}=10 THEN  SUM(DECIMAL (C.ABONOS_1,20,2))+SUM(DECIMAL (C.ABONOS_2,20,2))+SUM(DECIMAL (C.ABONOS_3,20,2))+SUM(DECIMAL (C.ABONOS_4,20,2))+SUM(DECIMAL (C.ABONOS_5,20,2))+SUM(DECIMAL (C.ABONOS_6,20,2))+SUM(DECIMAL (C.ABONOS_7,20,2)) +SUM(DECIMAL (C.ABONOS_8,20,2)) +SUM(DECIMAL (C.ABONOS_9,20,2))
+					WHEN  $P{p_mes}=11 THEN  SUM(DECIMAL (C.ABONOS_1,20,2))+SUM(DECIMAL (C.ABONOS_2,20,2))+SUM(DECIMAL (C.ABONOS_3,20,2))+SUM(DECIMAL (C.ABONOS_4,20,2))+SUM(DECIMAL (C.ABONOS_5,20,2))+SUM(DECIMAL (C.ABONOS_6,20,2))+SUM(DECIMAL (C.ABONOS_7,20,2)) +SUM(DECIMAL (C.ABONOS_8,20,2)) +SUM(DECIMAL (C.ABONOS_9,20,2))+SUM(DECIMAL (C.ABONOS_10,20,2))
+					WHEN  $P{p_mes}=12 THEN  SUM(DECIMAL (C.ABONOS_1,20,2))+SUM(DECIMAL (C.ABONOS_2,20,2))+SUM(DECIMAL (C.ABONOS_3,20,2))+SUM(DECIMAL (C.ABONOS_4,20,2))+SUM(DECIMAL (C.ABONOS_5,20,2))+SUM(DECIMAL (C.ABONOS_6,20,2))+SUM(DECIMAL (C.ABONOS_7,20,2)) +SUM(DECIMAL (C.ABONOS_8,20,2)) +SUM(DECIMAL (C.ABONOS_9,20,2))+SUM(DECIMAL (C.ABONOS_10,20,2))+SUM(DECIMAL (C.ABONOS_11,20,2))
+					ELSE 0
+				END ABONOS_ANT,
+					     	   CASE   
+					WHEN  $P{p_mes}=1  THEN  SUM(DECIMAL (C.ABONOS_1,20,2))
+					WHEN  $P{p_mes}=2  THEN  SUM(DECIMAL (C.ABONOS_1,20,2))+SUM(DECIMAL (C.ABONOS_2,20,2))
+					WHEN  $P{p_mes}=3  THEN  SUM(DECIMAL (C.ABONOS_1,20,2))+SUM(DECIMAL (C.ABONOS_2,20,2))+SUM(DECIMAL (C.ABONOS_3,20,2))
+					WHEN  $P{p_mes}=4  THEN  SUM(DECIMAL (C.ABONOS_1,20,2))+SUM(DECIMAL (C.ABONOS_2,20,2))+SUM(DECIMAL (C.ABONOS_3,20,2))+SUM(DECIMAL (C.ABONOS_4,20,2))
+					WHEN  $P{p_mes}=5  THEN  SUM(DECIMAL (C.ABONOS_1,20,2))+SUM(DECIMAL (C.ABONOS_2,20,2))+SUM(DECIMAL (C.ABONOS_3,20,2))+SUM(DECIMAL (C.ABONOS_4,20,2))+SUM(DECIMAL (C.ABONOS_5,20,2))
+					WHEN  $P{p_mes}=6  THEN  SUM(DECIMAL (C.ABONOS_1,20,2))+SUM(DECIMAL (C.ABONOS_2,20,2))+SUM(DECIMAL (C.ABONOS_3,20,2))+SUM(DECIMAL (C.ABONOS_4,20,2))+SUM(DECIMAL (C.ABONOS_5,20,2))+SUM(DECIMAL (C.ABONOS_6,20,2))
+					WHEN  $P{p_mes}=7  THEN  SUM(DECIMAL (C.ABONOS_1,20,2))+SUM(DECIMAL (C.ABONOS_2,20,2))+SUM(DECIMAL (C.ABONOS_3,20,2))+SUM(DECIMAL (C.ABONOS_4,20,2))+SUM(DECIMAL (C.ABONOS_5,20,2))+SUM(DECIMAL (C.ABONOS_6,20,2))+SUM(DECIMAL (C.ABONOS_7,20,2))
+					WHEN  $P{p_mes}=8  THEN  SUM(DECIMAL (C.ABONOS_1,20,2))+SUM(DECIMAL (C.ABONOS_2,20,2))+SUM(DECIMAL (C.ABONOS_3,20,2))+SUM(DECIMAL (C.ABONOS_4,20,2))+SUM(DECIMAL (C.ABONOS_5,20,2))+SUM(DECIMAL (C.ABONOS_6,20,2))+SUM(DECIMAL (C.ABONOS_7,20,2))+SUM(DECIMAL (C.ABONOS_8,20,2))
+					WHEN  $P{p_mes}=9  THEN  SUM(DECIMAL (C.ABONOS_1,20,2))+SUM(DECIMAL (C.ABONOS_2,20,2))+SUM(DECIMAL (C.ABONOS_3,20,2))+SUM(DECIMAL (C.ABONOS_4,20,2))+SUM(DECIMAL (C.ABONOS_5,20,2))+SUM(DECIMAL (C.ABONOS_6,20,2))+SUM(DECIMAL (C.ABONOS_7,20,2)) +SUM(DECIMAL (C.ABONOS_8,20,2))+SUM(DECIMAL (C.ABONOS_9,20,2))
+					WHEN  $P{p_mes}=10 THEN  SUM(DECIMAL (C.ABONOS_1,20,2))+SUM(DECIMAL (C.ABONOS_2,20,2))+SUM(DECIMAL (C.ABONOS_3,20,2))+SUM(DECIMAL (C.ABONOS_4,20,2))+SUM(DECIMAL (C.ABONOS_5,20,2))+SUM(DECIMAL (C.ABONOS_6,20,2))+SUM(DECIMAL (C.ABONOS_7,20,2)) +SUM(DECIMAL (C.ABONOS_8,20,2)) +SUM(DECIMAL (C.ABONOS_9,20,2))+SUM(DECIMAL (C.ABONOS_10,20,2))
+					WHEN  $P{p_mes}=11 THEN  SUM(DECIMAL (C.ABONOS_1,20,2))+SUM(DECIMAL (C.ABONOS_2,20,2))+SUM(DECIMAL (C.ABONOS_3,20,2))+SUM(DECIMAL (C.ABONOS_4,20,2))+SUM(DECIMAL (C.ABONOS_5,20,2))+SUM(DECIMAL (C.ABONOS_6,20,2))+SUM(DECIMAL (C.ABONOS_7,20,2)) +SUM(DECIMAL (C.ABONOS_8,20,2)) +SUM(DECIMAL (C.ABONOS_9,20,2))+SUM(DECIMAL (C.ABONOS_10,20,2))+SUM(DECIMAL (C.ABONOS_11,20,2))
+					WHEN  $P{p_mes}=12 THEN  SUM(DECIMAL (C.ABONOS_1,20,2))+SUM(DECIMAL (C.ABONOS_2,20,2))+SUM(DECIMAL (C.ABONOS_3,20,2))+SUM(DECIMAL (C.ABONOS_4,20,2))+SUM(DECIMAL (C.ABONOS_5,20,2))+SUM(DECIMAL (C.ABONOS_6,20,2))+SUM(DECIMAL (C.ABONOS_7,20,2)) +SUM(DECIMAL (C.ABONOS_8,20,2)) +SUM(DECIMAL (C.ABONOS_9,20,2))+SUM(DECIMAL (C.ABONOS_10,20,2))+SUM(DECIMAL (C.ABONOS_11,20,2))+SUM(DECIMAL (C.ABONOS_12,20,2))
+					ELSE 0
+				END ABONOS_ACT,
+				CASE   
+					WHEN  $P{p_mes}=1  THEN  SUM(DECIMAL (C.CARGOS_1,20,2))
+					WHEN  $P{p_mes}=2  THEN  SUM(DECIMAL (C.CARGOS_1,20,2))+SUM(DECIMAL (C.CARGOS_2,20,2))
+					WHEN  $P{p_mes}=3  THEN  SUM(DECIMAL (C.CARGOS_1,20,2))+SUM(DECIMAL (C.CARGOS_2,20,2))+SUM(DECIMAL (C.CARGOS_3,20,2))
+					WHEN  $P{p_mes}=4  THEN  SUM(DECIMAL (C.CARGOS_1,20,2))+SUM(DECIMAL (C.CARGOS_2,20,2))+SUM(DECIMAL (C.CARGOS_3,20,2))+SUM(DECIMAL (C.CARGOS_4,20,2))
+					WHEN  $P{p_mes}=5  THEN  SUM(DECIMAL (C.CARGOS_1,20,2))+SUM(DECIMAL (C.CARGOS_2,20,2))+SUM(DECIMAL (C.CARGOS_3,20,2))+SUM(DECIMAL (C.CARGOS_4,20,2))+SUM(DECIMAL (C.CARGOS_5,20,2))
+					WHEN  $P{p_mes}=6  THEN  SUM(DECIMAL (C.CARGOS_1,20,2))+SUM(DECIMAL (C.CARGOS_2,20,2))+SUM(DECIMAL (C.CARGOS_3,20,2))+SUM(DECIMAL (C.CARGOS_4,20,2))+SUM(DECIMAL (C.CARGOS_5,20,2))+SUM(DECIMAL (C.CARGOS_6,20,2))
+					WHEN  $P{p_mes}=7  THEN  SUM(DECIMAL (C.CARGOS_1,20,2))+SUM(DECIMAL (C.CARGOS_2,20,2))+SUM(DECIMAL (C.CARGOS_3,20,2))+SUM(DECIMAL (C.CARGOS_4,20,2))+SUM(DECIMAL (C.CARGOS_5,20,2))+SUM(DECIMAL (C.CARGOS_6,20,2))+SUM(DECIMAL (C.CARGOS_7,20,2))
+					WHEN  $P{p_mes}=8  THEN  SUM(DECIMAL (C.CARGOS_1,20,2))+SUM(DECIMAL (C.CARGOS_2,20,2))+SUM(DECIMAL (C.CARGOS_3,20,2))+SUM(DECIMAL (C.CARGOS_4,20,2))+SUM(DECIMAL (C.CARGOS_5,20,2))+SUM(DECIMAL (C.CARGOS_6,20,2))+SUM(DECIMAL (C.CARGOS_7,20,2))+SUM(DECIMAL (C.CARGOS_8,20,2))
+					WHEN  $P{p_mes}=9  THEN  SUM(DECIMAL (C.CARGOS_1,20,2))+SUM(DECIMAL (C.CARGOS_2,20,2))+SUM(DECIMAL (C.CARGOS_3,20,2))+SUM(DECIMAL (C.CARGOS_4,20,2))+SUM(DECIMAL (C.CARGOS_5,20,2))+SUM(DECIMAL (C.CARGOS_6,20,2))+SUM(DECIMAL (C.CARGOS_7,20,2)) +SUM(DECIMAL (C.CARGOS_8,20,2))+SUM(DECIMAL (C.CARGOS_9,20,2))
+					WHEN  $P{p_mes}=10 THEN  SUM(DECIMAL (C.CARGOS_1,20,2))+SUM(DECIMAL (C.CARGOS_2,20,2))+SUM(DECIMAL (C.CARGOS_3,20,2))+SUM(DECIMAL (C.CARGOS_4,20,2))+SUM(DECIMAL (C.CARGOS_5,20,2))+SUM(DECIMAL (C.CARGOS_6,20,2))+SUM(DECIMAL (C.CARGOS_7,20,2)) +SUM(DECIMAL (C.CARGOS_8,20,2)) +SUM(DECIMAL (C.CARGOS_9,20,2))+SUM(DECIMAL (C.CARGOS_10,20,2))
+					WHEN  $P{p_mes}=11 THEN  SUM(DECIMAL (C.CARGOS_1,20,2))+SUM(DECIMAL (C.CARGOS_2,20,2))+SUM(DECIMAL (C.CARGOS_3,20,2))+SUM(DECIMAL (C.CARGOS_4,20,2))+SUM(DECIMAL (C.CARGOS_5,20,2))+SUM(DECIMAL (C.CARGOS_6,20,2))+SUM(DECIMAL (C.CARGOS_7,20,2)) +SUM(DECIMAL (C.CARGOS_8,20,2)) +SUM(DECIMAL (C.CARGOS_9,20,2))+SUM(DECIMAL (C.CARGOS_10,20,2))+SUM(DECIMAL (C.CARGOS_11,20,2))
+					WHEN  $P{p_mes}=12 THEN  SUM(DECIMAL (C.CARGOS_1,20,2))+SUM(DECIMAL (C.CARGOS_2,20,2))+SUM(DECIMAL (C.CARGOS_3,20,2))+SUM(DECIMAL (C.CARGOS_4,20,2))+SUM(DECIMAL (C.CARGOS_5,20,2))+SUM(DECIMAL (C.CARGOS_6,20,2))+SUM(DECIMAL (C.CARGOS_7,20,2)) +SUM(DECIMAL (C.CARGOS_8,20,2)) +SUM(DECIMAL (C.CARGOS_9,20,2))+SUM(DECIMAL (C.CARGOS_10,20,2))+SUM(DECIMAL (C.CARGOS_11,20,2))+SUM(DECIMAL (C.CARGOS_12,20,2))
+					ELSE 0
+				 END CARGOS_ACT
+               FROM   MAYCTA MA
+	 		INNER JOIN CUENTA C ON MA.CUENTA = C.CUENTA 
+ 			WHERE  C.CUENTA >= '1000' 
+			AND C.CUENTA <= '1293' 
+			AND C.SCTA = '' 
+			AND C.NOTCTA = 0
+			AND C.IDSECTOR = $P{p_Idsector}
+			GROUP BY 
+			MA.NATCTA, 
+      C.NOMCTA, 
+	    C.CUENTA,  
+	    C.SALINI, 
+	    SUBSTR(C.CUENTA,1,2)
+			ORDER BY C.CUENTA]]>
+	</queryString>
+	<field name="GRUPO" class="java.lang.String"/>
+	<field name="NATCTA" class="java.lang.String"/>
+	<field name="NOMCTA" class="java.lang.String"/>
+	<field name="CUENTA" class="java.lang.String"/>
+	<field name="SALINI" class="java.math.BigDecimal"/>
+	<field name="CARGOS_ANT" class="java.math.BigDecimal"/>
+	<field name="ABONOS_ANT" class="java.math.BigDecimal"/>
+	<field name="ABONOS_ACT" class="java.math.BigDecimal"/>
+	<field name="CARGOS_ACT" class="java.math.BigDecimal"/>
+	<variable name="v_Grupo" class="java.lang.String">
+		<variableExpression><![CDATA[$F{GRUPO}.equals("11")
+?
+("ACTIVO PASIVO")
+:
+("ACTIVO NO PASIVO")]]></variableExpression>
+	</variable>
+	<variable name="v_MesAnt" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[($F{NATCTA}.equals("D")?(
+	($F{SALINI}.add($F{CARGOS_ANT}).subtract($F{ABONOS_ANT}))
+)
+:
+(
+	$F{CUENTA}.equals("1162") || $F{CUENTA}.equals("1261")|| $F{CUENTA}.equals("1263"))?
+        ($F{SALINI}.multiply(new BigDecimal (-1)).add($F{CARGOS_ANT}).subtract($F{ABONOS_ANT}))
+	:
+        ($F{CUENTA}.equals("1115")  )?(
+ 	    ($F{SALINI}.add($F{CARGOS_ANT}).subtract($F{ABONOS_ANT}))
+ ):
+      ($F{SALINI}.subtract($F{CARGOS_ANT}).add($F{ABONOS_ANT})) 
+      )]]></variableExpression>
+	</variable>
+	<variable name="v_MesAct" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[($F{NATCTA}.equals("D")?(
+	($F{SALINI}.add($F{CARGOS_ACT}).subtract($F{ABONOS_ACT}))
+)
+:
+(
+	$F{CUENTA}.equals("1162") ||($F{CUENTA}.equals("1261") ||$F{CUENTA}.equals("1263"))?
+		($F{SALINI}.multiply(new BigDecimal (-1)).add($F{CARGOS_ACT}).subtract($F{ABONOS_ACT}))
+	:
+	
+       ($F{CUENTA}.equals("1115")  )?(
+ 	($F{SALINI}.add($F{CARGOS_ACT}).subtract($F{ABONOS_ACT}))
+ ):
+      ($F{SALINI}.subtract($F{CARGOS_ACT}).add($F{ABONOS_ACT})) 
+
+))]]></variableExpression>
+	</variable>
+	<variable name="v_Variacion" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$V{v_MesAct}.subtract($V{v_MesAnt})]]></variableExpression>
+	</variable>
+	<variable name="v_Total" class="java.lang.String">
+		<variableExpression><![CDATA[($F{GRUPO}.equals("11"))?(
+	("TOTAL ACTIVO CIRCULANTE")
+):
+(
+	($F{GRUPO}.equals("12")?("TOTAL ACTIVO NO CIRCULANTE")
+		:
+		("TOTAL OTROS ACTIVOS")
+		
+	)
+	
+)]]></variableExpression>
+	</variable>
+	<variable name="v_SumaMesAnt" class="java.math.BigDecimal" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$V{v_MesAnt}]]></variableExpression>
+	</variable>
+	<variable name="v_SumMesAct" class="java.math.BigDecimal" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$V{v_MesAct}]]></variableExpression>
+	</variable>
+	<variable name="v_SumVar" class="java.math.BigDecimal" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$V{v_Variacion}]]></variableExpression>
+	</variable>
+	<variable name="v_SumaTotalMesAnt" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$V{v_MesAnt}]]></variableExpression>
+	</variable>
+	<variable name="v_SumaTotalMesAct" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$V{v_MesAct}]]></variableExpression>
+	</variable>
+	<variable name="v_SumaTotalVar" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$V{v_Variacion}]]></variableExpression>
+	</variable>
+	<variable name="vSalini" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[($F{CUENTA}.equals("1162") || $F{CUENTA}.equals("1261")|| $F{CUENTA}.equals("1263") )?
+    ($F{SALINI}.multiply(new BigDecimal (-1))):
+    ($F{SALINI})]]></variableExpression>
+	</variable>
+	<group name="Group2">
+		<groupFooter>
+			<band height="12">
+				<staticText>
+					<reportElement x="0" y="0" width="179" height="12" uuid="c506436b-d550-4ffb-b9c1-2db088a01734">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TOTAL ACTIVOS]]></text>
+				</staticText>
+				<textField pattern="#,##0.00#">
+					<reportElement x="179" y="0" width="65" height="12" uuid="0096fe8d-e96b-47ee-a39f-bd3bb0bec91c">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{v_SumaTotalMesAnt}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00#">
+					<reportElement x="244" y="0" width="65" height="12" uuid="a575fa9a-1b92-4154-9254-d024c87e8279">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{v_SumaTotalMesAct}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00#">
+					<reportElement x="309" y="0" width="65" height="12" uuid="9419ea5d-e5ed-4bf8-b2ae-2dba55a73405">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{v_SumaTotalVar}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{GRUPO}]]></groupExpression>
+		<groupHeader>
+			<band height="12">
+				<textField>
+					<reportElement x="0" y="0" width="40" height="12" uuid="4e9c72e0-1ab1-43a9-9238-fa74e986a64a"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{GRUPO} + "00"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="40" y="0" width="334" height="12" uuid="bf72aedf-1b91-4b73-9359-06b035f48c46"/>
+					<box>
+						<topPen lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($F{GRUPO}.equals("11"))?(
+	("ACTIVO CIRCULANTE")
+):
+(
+	($F{GRUPO}.equals("12")?("ACTIVO NO CIRCULANTE")
+		:
+		("OTROS ACTIVOS")
+		
+	)
+	
+)]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="12">
+				<textField>
+					<reportElement x="0" y="0" width="179" height="12" uuid="f0495c1a-a02e-4706-88ab-bb2b21ce6980">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{v_Total}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00#">
+					<reportElement x="179" y="0" width="65" height="12" uuid="bc52d205-9695-46af-80c8-1226049709a2">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{v_SumaMesAnt}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00#">
+					<reportElement x="244" y="0" width="65" height="12" uuid="e37c6603-f081-45bc-8b58-6ac33e47e834">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{v_SumMesAct}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00#">
+					<reportElement x="309" y="0" width="65" height="12" uuid="44c929f8-0497-430a-80e8-318a36f3d8bb">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{v_SumVar}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="40" height="12" uuid="c9ba878d-499a-4162-b63a-20148c8a2362">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CTA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="0" width="139" height="12" uuid="afa0c959-f8b9-428a-bbe6-44960f3e65cc">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE DE LA CUENTA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="179" y="0" width="65" height="12" uuid="fe8f28ad-6d53-4feb-a1ae-a42b2fb8a59f"/>
+				<box>
+					<topPen lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MES ANTERIOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="244" y="0" width="65" height="12" uuid="1cf2e36c-a73d-47cf-b699-2c681ecb211d"/>
+				<box>
+					<topPen lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MES ACTUAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="309" y="0" width="65" height="12" uuid="9fe4fa57-8142-4c27-b045-70c4ab9c178d"/>
+				<box>
+					<topPen lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VARIACION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="12" width="40" height="12" uuid="05683a97-6344-458e-af75-3cf7333c8915">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[1000]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="12" width="334" height="12" uuid="07efa853-ff19-4fee-a311-fdbc14c394f3">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CUENTAS DE ACTIVO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="12">
+			<textField>
+				<reportElement x="0" y="0" width="40" height="12" uuid="729a0f07-2f47-4e71-95f9-382b1a840b0b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUENTA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="0" width="139" height="12" uuid="f359e5f8-ae2d-4db2-8349-355afd7af04b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMCTA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#" isBlankWhenNull="true">
+				<reportElement x="179" y="0" width="65" height="12" uuid="1001d767-8084-41e0-b19e-ca9023e4ad11">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_MesAnt}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#">
+				<reportElement x="244" y="0" width="65" height="12" uuid="bd89a5d1-9d11-4d93-a433-165ad5fca646"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_MesAct}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#" isBlankWhenNull="true">
+				<reportElement x="309" y="0" width="65" height="12" uuid="13914258-9396-497a-84a9-2c06b4373d10"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_Variacion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-05-09T11:16:48 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte138" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="636249bf-8af6-4c11-8fab-3c1337573b4e">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DB2_LOCAL"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="municipioName" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="municipioClave" class="java.lang.String"/>
+	<parameter name="lastDayOfMonth" class="java.lang.Integer">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="mesInicioName" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="mesFinName" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="year" class="java.lang.Integer">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="pathImage" class="java.lang.String"/>
+	<parameter name="semestre" class="java.lang.Integer">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="idSector" class="java.lang.Integer"/>
+	<parameter name="firmaP1" class="java.lang.String"/>
+	<parameter name="firmaN1" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT	SEMES,
+		NOMBRE, 
+		EDAD, 
+		SEXO, 
+		FECING,
+		GRADO, 
+		DOCU, 
+		EXPERI,
+		ULTPUESTO, 
+		ULTPERIODO, 
+		ULTLUGAR,
+		SECPUB, 
+		PUBPUESTO, 
+		PUBPERIODO,
+		PUBLUGAR, 
+		ESTSUP, 
+		ESPEST, 
+		CERTIF,
+		ESPECER, 
+		CAPTURO, 
+		FIUPUESTO, 
+		FTUPUESTO, 
+		FIPSPUBLICO, 
+		FTPSPUBLICO
+	FROM PM3511
+WHERE	SEMES = $P{semestre}
+	AND IDSECTOR = $P{idSector}]]>
+	</queryString>
+	<field name="SEMES" class="java.lang.Integer"/>
+	<field name="NOMBRE" class="java.lang.String"/>
+	<field name="EDAD" class="java.lang.Integer"/>
+	<field name="SEXO" class="java.lang.String"/>
+	<field name="FECING" class="java.sql.Date"/>
+	<field name="GRADO" class="java.lang.String"/>
+	<field name="DOCU" class="java.lang.String"/>
+	<field name="EXPERI" class="java.lang.String"/>
+	<field name="ULTPUESTO" class="java.lang.String"/>
+	<field name="ULTPERIODO" class="java.lang.String"/>
+	<field name="ULTLUGAR" class="java.lang.String"/>
+	<field name="SECPUB" class="java.lang.String"/>
+	<field name="PUBPUESTO" class="java.lang.String"/>
+	<field name="PUBPERIODO" class="java.lang.String"/>
+	<field name="PUBLUGAR" class="java.lang.String"/>
+	<field name="ESTSUP" class="java.lang.String"/>
+	<field name="ESPEST" class="java.lang.String"/>
+	<field name="CERTIF" class="java.lang.String"/>
+	<field name="ESPECER" class="java.lang.String"/>
+	<field name="CAPTURO" class="java.lang.String"/>
+	<field name="FIUPUESTO" class="java.sql.Date"/>
+	<field name="FTUPUESTO" class="java.sql.Date"/>
+	<field name="FIPSPUBLICO" class="java.sql.Date"/>
+	<field name="FTPSPUBLICO" class="java.sql.Date"/>
+	<title>
+		<band height="61" splitType="Stretch">
+			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement x="0" y="0" width="60" height="60" uuid="e98cb762-3198-4606-bccd-fcf820842abb"/>
+				<imageExpression><![CDATA[$P{pathImage}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="60" y="0" width="450" height="60" uuid="f09775c7-4bf9-42ec-a78b-777f1069af45"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REQUERIMIENTO DE INFORMACIÓN QUE ALIMENTA EL INDICADOR DE COMPETENCIA LABORAL DEL TESORERO MUNICIPAL]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="60" width="572" height="1" uuid="2aa1c82d-bd93-4918-9fbf-4711ac8c2f88">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="3.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</title>
+	<detail>
+		<band height="607" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="70" height="20" uuid="ba394b97-ee6f-4243-9162-2f6a526fdffb">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+					<paragraph tabStopWidth="40"/>
+				</textElement>
+				<text><![CDATA[MUNICIPIO:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="70" y="10" width="260" height="20" uuid="3f47ea66-a1f2-4f38-90d6-6a6a7f20e00e"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{municipioName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="330" y="10" width="100" height="20" uuid="153ae8f6-9389-45f8-86e8-249149e44c39">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[NÚM:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="430" y="10" width="142" height="20" uuid="7ff56a31-5abe-47f4-81b2-c6bbd266c4ea"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{municipioClave}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="30" width="572" height="20" uuid="fddc15ee-3708-416e-9a60-2c9a4b40f0d3">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DEL 1° DE " + $P{mesInicioName} + " AL " + $P{lastDayOfMonth} + " DE " + $P{mesFinName} + " DE " +$P{year}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-1" y="59" width="572" height="1" uuid="1d74a2ab-c91e-43ea-a787-fbfd7903a74c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="3.0"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="70" width="572" height="15" uuid="6e9a2503-a3f9-4cf6-a470-fdf0e00e0f6a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[DATOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="85" width="59" height="15" uuid="0e32c2ec-bd06-43ac-b766-8df584e942e5">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[NOMBRE:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="60" y="85" width="511" height="15" uuid="26f48819-2db0-4c9f-8267-e32bf8a00325">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="100" width="50" height="15" uuid="85d48dc7-3ca6-4ab0-b88c-e2814c6a4413">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[EDAD:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="100" width="40" height="15" uuid="8a9df0c8-3c8c-4d00-b62f-03116500945e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[SEXO:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="50" y="100" width="120" height="15" uuid="8ef10490-7084-4e7d-9eb9-3bb342fbf220"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EDAD}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="210" y="100" width="170" height="15" uuid="6f9ee07f-f609-4529-88bf-d7ce983db555"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SEXO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="120" width="572" height="40" uuid="65fe7eef-76aa-4142-8da5-70d6b643f282">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[INSTRUCCIONES: Para ser contestado por el Tesorero Municipal. Leer detenidamente cada uno de los reactivos y contestar apropiadamente.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="120" width="572" height="1" uuid="b6d3bdb4-939f-4024-ae19-b4643338cf0c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="3.0"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="165" width="290" height="15" uuid="bb98bc12-c9ec-4bf6-820e-2eb6b990d1cf">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[1.- Fecha de Ingreso al cargo de Tesorero Municipal.]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="290" y="165" width="282" height="15" uuid="d450947c-92d6-47d8-aad5-384631764509"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECING}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="185" width="150" height="15" uuid="47451572-14e7-4119-858c-0aed1bacdfaf">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[2.- Máximo Grado Académico.]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="150" y="185" width="140" height="15" uuid="ffff8e0a-5fc2-45b7-9477-73a1ce6b5ffe"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GRADO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="290" y="185" width="145" height="15" uuid="4435d635-4c73-4997-ab67-34242dda30d8">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Documento que lo Acredita.]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="435" y="185" width="137" height="15" uuid="2bdd10fa-ca13-4e20-ae37-dad1f6f2cc78"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DOCU}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="205" width="572" height="15" uuid="127fb2ee-d3cc-4c41-bf72-0031cd41580d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[3.- Experiencia Laboral Relacionada con el puesto que desempeña actualmente]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="10" y="220" width="562" height="15" uuid="40d9a93b-8acf-4c87-8c0b-717444643377"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EXPERI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="240" width="572" height="15" uuid="a89f3110-11e0-47fb-9c33-b9b315380fb9">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[4.- Último Empleo en que se desempeño previo al cargo de Tesorero Municipal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="255" width="80" height="15" uuid="acc0493f-925b-451b-8810-f4896056d496">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[PUESTO:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="80" y="255" width="200" height="15" uuid="5fbf159f-2135-44f9-bd7a-d644723c176e"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ULTPUESTO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="280" y="255" width="150" height="15" uuid="0553d785-2f6b-4967-ab96-71aea3ad8a33">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[FECHA DE INICIO:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="430" y="255" width="142" height="15" uuid="24a97ddf-08f7-48f5-9293-0f9e496bb47b"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FIUPUESTO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="270" width="80" height="15" uuid="291df5a7-879a-441c-b525-af415f880993">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[LUGAR:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="80" y="270" width="200" height="15" uuid="86c1fcc0-44fe-467e-b178-fc45c5122762"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ULTLUGAR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="280" y="270" width="150" height="15" uuid="1274c927-04c9-4fa5-9cb7-c52d18831a1e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[FECHA DE TERMINO:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="430" y="270" width="142" height="15" uuid="f96e7e3d-f926-412c-b066-f3902f84cbfc"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FTUPUESTO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="290" width="310" height="15" uuid="cc3dc052-b504-4419-a37c-adcb9ef73838">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[5.- Ha desempeñado algun puesto en el Sector Público]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="266" y="305" width="90" height="15" uuid="f4ad62d7-56f0-45d3-8f6a-d8926b5c9423"/>
+				<box>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SECPUB}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="325" width="572" height="30" uuid="628ede62-d4d7-4ee7-ab34-8e1dbd82e8c6">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[6.- Ha realizado estudios superiores como diplomados, posgrados, cursos de especialización, maestrías, etc, en temas Hacendarios Municipales.]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="266" y="355" width="90" height="15" uuid="f31849d9-d70f-4718-b8f9-d772c6e18696"/>
+				<box>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ESTSUP}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="19" y="370" width="553" height="15" uuid="abfc8bda-a3a8-4c71-b20d-e481ceb6dbe5">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Si su respuesta es positiva especifique ¿Cuáles, en que Institución y Documento que lo avala?]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="19" y="385" width="553" height="15" uuid="fdf9381e-b4cf-4e65-8c41-da43848b2b17"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ESPEST}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="405" width="572" height="35" uuid="5f02ecdf-12b3-4120-8eec-c7bcd90e06a8">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[7.- Cuenta usted con la certificación de competencia laboral "En funciones de la Hacienda Pública Municipal"]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="266" y="440" width="90" height="15" uuid="d788c892-de40-4309-82cb-60505de45493"/>
+				<box>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CERTIF}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="460" width="572" height="59" uuid="916c6c06-da16-4c6e-a6e7-40f886209a18"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[NOTA: *Este cuestionario se deberá presentar únicamente en los informes mensuales de junio y diciembre de cada año en archivo de texto.txt.
+* Favor de remitir en digital copia de su constancia de no inhabilitación, certificación en competencia expedida por el IHAEM y certificado de ultimo grado de estudios, solo en el primer envio de información.]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="172" y="530" width="228" height="20" uuid="de530cb6-800e-4177-a8db-1e725a2e6be3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{firmaP1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="172" y="580" width="228" height="20" uuid="7099ef48-985c-4f60-b4d5-f858ddd71825">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{firmaN1}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="172" y="580" width="228" height="1" uuid="0938e112-4d85-4384-b823-696e415b3a75">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20">
+			<staticText>
+				<reportElement x="0" y="10" width="70" height="10" uuid="4c4eb46c-6b6e-4849-a0ff-a226325a1936"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[OSFEPM/35/11]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="344" y="10" width="90" height="10" uuid="be9e6c24-60c1-42dd-811d-2a74309cbedf"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Fecha de Elaboración: ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="435" y="10" width="48" height="10" uuid="153789a4-a20e-4402-9f31-4ca1cf122b98"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="483" y="10" width="44" height="10" uuid="f7b09656-031c-4d99-8c61-dbfc256a5d56"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="527" y="10" width="60" height="10" uuid="6bdee9b7-78bb-4066-b096-dcdaf44bfc5a"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="20">
+			<staticText>
+				<reportElement x="0" y="10" width="70" height="10" uuid="8a506e36-94fe-4427-86f0-056cd4adecb1"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[OSFEPM/35/11]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="344" y="10" width="90" height="10" uuid="89c733f6-58d2-41b3-931b-74ed01eb2c6f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Fecha de Elaboración: ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="435" y="10" width="48" height="10" uuid="bb2f76e9-6b24-4eed-a848-001fdf5d5849"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="483" y="10" width="44" height="10" uuid="d412603a-df28-4965-a811-4813f817dc02"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="527" y="10" width="60" height="10" uuid="eb47ad10-9147-452e-a020-598265a6a73a"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+</jasperReport>
