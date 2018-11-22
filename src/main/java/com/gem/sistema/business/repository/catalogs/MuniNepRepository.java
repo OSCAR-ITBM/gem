@@ -118,7 +118,7 @@ public interface MuniNepRepository extends PagingAndSortingRepository<Muninep, L
 	 * @return the list
 	 */
 	@ReadOnlyProperty
-	List<Muninep> findByCampo0AndCampo1AndCampo2AndCampo3AndCampo4AndCampo5(String campo0, String campo1, String campo2, String campo3, String campo4, String campo5);
+	List<Muninep> findByCampo0AndCampo1AndCampo2AndCampo3AndCampo4AndCampo5AndIdsector(String campo0, String campo1, String campo2, String campo3, String campo4, String campo5, Integer idsector);
 	
 	
 	/**

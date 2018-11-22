@@ -23,7 +23,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections4.IteratorUtils;
@@ -464,10 +463,10 @@ public class CatalogProgramsMB extends CommonCatalogMB<Xcatpro> implements Seria
 			result = CollectionUtils.isNotEmpty(deps) && deps.get(0).getUltniv().toUpperCase().equals("S") &&
 
 					CollectionUtils
-							.isNotEmpty(muniNepRepository.findByCampo0AndCampo1AndCampo2AndCampo3AndCampo4AndCampo5(
+							.isNotEmpty(muniNepRepository.findByCampo0AndCampo1AndCampo2AndCampo3AndCampo4AndCampo5AndIdsector(
 									catalog.getClvfun().substring(0, 2), catalog.getClvfun().substring(2, 4),
 									catalog.getClvfun().substring(4, 6), catalog.getClvfun().substring(6, 8),
-									catalog.getClvfun().substring(8, 10), catalog.getClvfun().substring(10, 12)))
+									catalog.getClvfun().substring(8, 10), catalog.getClvfun().substring(10, 12), catalog.getSectorid()))
 					&&
 
 					CollectionUtils.isNotEmpty(fuentefRepository.findByLigaAndIdsector(catalog.getClvfin(),
@@ -478,7 +477,7 @@ public class CatalogProgramsMB extends CommonCatalogMB<Xcatpro> implements Seria
 			}
 		}
 		if (errorMsg.length() == ZERO && BooleanUtils.negate(result)) {
-			errorMsg.append("La informacion capturada en ClvFun/ ClvDep / Clvfin no existe en la Base de datos.");
+			errorMsg.append("La Estructura Programatica no existe en la Base de datos.");
 		}
 		return result;
 	}
