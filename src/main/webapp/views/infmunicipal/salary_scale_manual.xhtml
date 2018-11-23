@@ -171,7 +171,7 @@
 						</p:cellEditor>
 					</p:column>
 
-					<p:column headerText="Nivel" exportable="false" style="width:12%">
+					<p:column headerText="Nivel" exportable="false" style="width:20%">
 						<p:cellEditor>
 							<f:facet name="output">
 								<h:outputText value="#{object.nivel}">
@@ -183,7 +183,7 @@
 									onkeyup="this.value=this.value.toUpperCase();"
 									validatorMessage="Nivel solo permite valores num&eacute;ricos">
 									<f:validateRegex
-										pattern="^\s*([0-9a-zA-ZñÑ_-áéíóúÁÉÍÓÚ.^\/^\,^\s])*\s*$"
+										pattern="s*([0-9a-zA-ZñÑ\-áéíóúÁÉÍÓÚ.^\/^\,^\s])+(\(s*([?0-9a-zA-ZñÑ\-áéíóúÁÉÍÓÚ.^\/^\,^\s])+\))?(s*([0-9a-zA-ZñÑ\-_áéíóúÁÉÍÓÚ.^\/^\,^\s])+)?"
 										for="nivel" />
 								</p:inputText>
 							</f:facet>
@@ -191,7 +191,7 @@
 					</p:column>
 
 					<p:column headerText="Confianza" exportable="false"
-						style="width:30%">
+						style="width:23%">
 						<p:cellEditor>
 							<f:facet name="output">
 								<h:outputText value="#{object.nconfianza}" style="float:right;" />
@@ -227,7 +227,7 @@
 					</p:column>
 
 					<p:column headerText="Eventual" exportable="false"
-						style="width:30%">
+						style="width:27%">
 						<p:cellEditor>
 							<f:facet name="output">
 								<h:outputText value="#{object.neventual}" style="float:right;" />
