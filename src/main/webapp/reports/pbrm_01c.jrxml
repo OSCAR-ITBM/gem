@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-05-25T12:51:25 -->
+<!-- 2018-11-22T15:48:55 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pbrm_01c" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3f089e0d-df25-4bfe-9cc3-a01207286b26">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ServerLinux"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GEM_Adapter"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
@@ -55,7 +55,7 @@
 		DGM.NOMBRE NOMDG,
 		DAA.NOMBRE NOMDA,
 		CAP.OBJ_PROY,
-		PAS.PROGRAMA PROGRA,
+		--PAS.PROGRAMA PROGRA,
 		PAS.CLAVE,
 		SUM(PAS.AUTO1_1 + PAS.AUTO1_2 + PAS.AUTO1_3 +
 		PAS.AUTO1_4 + PAS.AUTO1_5 + PAS.AUTO1_6 +
@@ -64,7 +64,7 @@
 	FROM PP_METT MET 
 			INNER JOIN CATDEP DEP ON MET.CLVDEP = DEP.CLVDEP AND MET.IDSECTOR= DEP.IDSECTOR
 			INNER JOIN PASO PAS ON MET.CLVNEP = SUBSTR(PAS.PROGRAMA,1,12) AND MET.CLVDEP = PAS.CLAVE AND SUBSTR(PAS.PARTIDA,4,1) <> '0' AND MET.IDSECTOR = PAS.IDSECTOR
-			INNER JOIN PP_CAPP CAP ON MET.CLVNEP = CAP.CLVNEP AND MET.CLVDEP = CAP.CLVDEP AND MET.IDSECTOR = CAP.IDSECTOR
+			INNER JOIN PP_CAPP CAP ON MET.CLVNEP = CAP.CLVNEP AND MET.CLVDEP = CAP.CLVDEP AND MET.IDSECTOR = CAP.IDSECTOR AND CAP.CLVFUEN = MET.CLVFUEN
  			INNER JOIN CATDGM DGM ON SUBSTR(MET.CLVDEP,1,3) = DGM.CLAVE 
 			INNER JOIN CATDAA DAA ON SUBSTR(MET.CLVDEP,4,3) = DAA.CLAVE 
 			INNER JOIN MUNINEP MU1 ON SUBSTR(MET.CLVNEP,1,2) = MU1.CAMPO7 AND MET.IDSECTOR = MU1.IDSECTOR
@@ -102,9 +102,10 @@ GROUP BY MET.CLVDEP||MET.CLVNEP||MET.CLVFUEN,
 		DGM.NOMBRE,
 		DAA.NOMBRE,
 		CAP.OBJ_PROY,
-		PAS.PROGRAMA,
+		--PAS.PROGRAMA,
 		PAS.CLAVE
-ORDER BY MET.CLVDEP, 
+ORDER BY 1,
+		 MET.CLVDEP, 
 		 MET.CLVNEP,
 		 MET.CLVMET]]>
 	</queryString>
@@ -136,7 +137,6 @@ ORDER BY MET.CLVDEP,
 	<field name="NOMDG" class="java.lang.String"/>
 	<field name="NOMDA" class="java.lang.String"/>
 	<field name="OBJ_PROY" class="java.lang.String"/>
-	<field name="PROGRA" class="java.lang.String"/>
 	<field name="CLAVE" class="java.lang.String"/>
 	<field name="AUTO" class="java.math.BigDecimal"/>
 	<variable name="varAbs" class="java.lang.Double">
