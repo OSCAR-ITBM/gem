@@ -241,6 +241,8 @@ public class IndicadoresDisenoMB extends AbstractMB {
 	/** The cpd repository. */
 	@ManagedProperty("#{cpdRepository}")
 	private CpdRepository cpdRepository;
+	
+	private Integer idSector;
 
 	/**
 	 * Gets the b btn modificar.
@@ -304,6 +306,8 @@ public class IndicadoresDisenoMB extends AbstractMB {
 		LOGGER.info(":: En postconsruct IndicadoresDisenoMB ");
 
 		this.setbBtnModificar(TRUE);
+		
+		idSector =  this.getUserDetails().getIdSector();
 	}
 
 	/**
@@ -447,7 +451,7 @@ public class IndicadoresDisenoMB extends AbstractMB {
 	 * metas correspondientes.
 	 */
 	public void llenarDiseno() {
-		listaEncabezado = indicadoresDisenoService.llenaListaEncabezado();
+		listaEncabezado = indicadoresDisenoService.llenaListaEncabezado(idSector);
 		if (!listaEncabezado.isEmpty()) {
 			tieneDatosEncabezado = true;
 			filtraTema(ZERO);
@@ -742,20 +746,20 @@ public class IndicadoresDisenoMB extends AbstractMB {
 	 */
 	public void salvarDiseno(Integer row) {
 		if (listaEncabezado.get(row).getCvetemas().equals("0")) {
-			generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!", "Seleccione Cve. Temas Update cancelled");
+			generateNotificationFront(FacesMessage.SEVERITY_FATAL, "Error!", "El campo Cve. Temas es obligatorio!");
 		} else if (listaEncabezado.get(row).getClvdep().equals("0")) {
-			generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!", "Seleccione Dependencia Update cancelled");
+			generateNotificationFront(FacesMessage.SEVERITY_FATAL, "Error!", "El campo Dependencia es obligatorio!");
 		} else if (listaEncabezado.get(row).getClvfun().equals("0")) {
-			generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!", "Seleccione Programa Update cancelled");
+			generateNotificationFront(FacesMessage.SEVERITY_FATAL, "Error!", "El campo Programa es obligatorio!");
 		} else if (listaEncabezado.get(row).getFrecuencia().equals("0")) {
-			generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!",
-					"Seleccione el tipo de Frecuencia Update cancelled");
+			generateNotificationFront(FacesMessage.SEVERITY_FATAL, "Error!",
+					"El campo Frecuencia es obligatorio!");
 		} else if (listaEncabezado.get(row).getCveind() == null) {
-			generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!",
-					"Seleccione Código Indicador Update cancelled");
+			generateNotificationFront(FacesMessage.SEVERITY_FATAL, "Error!",
+					"El campo Código Indicador es obligatorio!");
 		} else if (listaEncabezado.get(row).getTipo().equals("0")) {
-			generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!",
-					"Seleccione el tipo de Indicador Update cancelled");
+			generateNotificationFront(FacesMessage.SEVERITY_FATAL, "Error!",
+					"El campo Tipo de Indicador es obligaorio!");
 		} else {
 			try {
 				listaEncabezado.get(row).setUsuario(this.getUserDetails().getUsername());
@@ -766,44 +770,55 @@ public class IndicadoresDisenoMB extends AbstractMB {
 				listaEncabezado.get(row).setNomind(this.getDescCodigoIndicador());
 				if (disenoModificar) {
 					indicadoresDisenoService.salvarDisenoModificado(listaEncabezado.get(row));
+					
+					generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!","Indicador de Diseño actualizado correctamente");
+					this.estadoInicialBotones();
+					
 				} else {
-					indicadoresDisenoService.salvarDiseno(listaEncabezado.get(row));
-				}
+					boolean validaSave = indicadoresDisenoService.salvarDiseno(listaEncabezado.get(row));
+					if(!validaSave) {
+						String codIndicador = listaEncabezado.get(row).getCveind() == null ? ""
+								: listaEncabezado.get(row).getCveind();
+						generateNotificationFront(SEVERITY_ERROR, "Error!",
+								"Ficha de Diseño ya existe con CveTemas: " + listaEncabezado.get(row).getCvetemas()
+										+ ", " + "Dependencia: " + listaEncabezado.get(row).getClvdep() + ", Programa: "
+										+ listaEncabezado.get(row).getClvfun() + " " + ", Codigo Indicador:"
+										+ codIndicador);
+						
+						
+						this.setMetaVisibleModificar(true);
+						this.setbBtnModificar(FALSE);
+						this.setMetaVisibleSalvar(false);
+						this.setMetaDesabilitadoAdicionar(FALSE);
+						this.setMetaDesabilitadoReset(FALSE);
+						this.setMetaDesabilitadoBorrar(FALSE);
+						List<Ftecnicadd> ldeta = (List<Ftecnicadd>) this.ftecnicaDdRepository.findAll(
+								FtecnicaDdPredicate.findByClvDepAndClvFunAndClvInd(listaEncabezado.get(row).getClvdep(),
+										listaEncabezado.get(row).getClvfun(), listaEncabezado.get(row).getCveind(),
+										this.getUserDetails().getIdSector()));
+						if (CollectionUtils.isEmpty(ldeta)) {
+							this.setMetaVisibleModificar(true);
+							this.setbBtnModificar(TRUE);
+							this.setMetaVisibleSalvar(false);
+							this.setMetaDesabilitadoAdicionar(FALSE);
+							this.setMetaDesabilitadoReset(true);
+							this.setMetaDesabilitadoBorrar(true);
+							this.setMetaDesabilitadoCancelar(true);
+						}
 
-				this.setMetaVisibleModificar(true);
-				this.setbBtnModificar(FALSE);
-				this.setMetaVisibleSalvar(false);
-				this.setMetaDesabilitadoAdicionar(FALSE);
-				this.setMetaDesabilitadoReset(FALSE);
-				this.setMetaDesabilitadoBorrar(FALSE);
-				List<Ftecnicadd> ldeta = (List<Ftecnicadd>) this.ftecnicaDdRepository.findAll(
-						FtecnicaDdPredicate.findByClvDepAndClvFunAndClvInd(listaEncabezado.get(row).getClvdep(),
-								listaEncabezado.get(row).getClvfun(), listaEncabezado.get(row).getCveind(),
-								this.getUserDetails().getIdSector()));
-				if (CollectionUtils.isEmpty(ldeta)) {
-					this.setMetaVisibleModificar(true);
-					this.setbBtnModificar(TRUE);
-					this.setMetaVisibleSalvar(false);
-					this.setMetaDesabilitadoAdicionar(FALSE);
-					this.setMetaDesabilitadoReset(true);
-					this.setMetaDesabilitadoBorrar(true);
-					this.setMetaDesabilitadoCancelar(true);
+					}else {
+						generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!","Indicador de Diseño guardado correctamente");
+						this.estadoInicialBotones();
+					}
 				}
-
-				generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!",
-						"Indicador de Diseño guardado correctamente");
-				this.estadoInicialBotones();
+				
 			} catch (Exception e) {
-				String codIndicador = listaEncabezado.get(row).getCveind() == null ? ""
-						: listaEncabezado.get(row).getCveind();
-				generateNotificationFront(SEVERITY_ERROR, "Error!",
-						"Ficha de Diseño ya existe con CveTemas: " + listaEncabezado.get(row).getCvetemas() + ", "
-								+ "Dependencia: " + listaEncabezado.get(row).getClvdep() + ", Programa: "
-								+ listaEncabezado.get(row).getClvfun() + " " + ", Codigo Indicador:" + codIndicador);
+				
+				generateNotificationFront(SEVERITY_ERROR, "Error!", "Ha ocurrido un error, contacta al administrador.");
 			}
 		}
 	}
-
+	
 	/**
 	 * metodo que modifica un encabezado de diseño de indicadores estratégicos o
 	 * de gestión.
@@ -812,7 +827,7 @@ public class IndicadoresDisenoMB extends AbstractMB {
 	 */
 	public void modificarDiseno(Integer row) {
 		listaEncabezado.clear();
-		listaEncabezado = indicadoresDisenoService.llenaListaEncabezado();
+		listaEncabezado = indicadoresDisenoService.llenaListaEncabezado(idSector);
 		if (listaEncabezado.isEmpty()) {
 			FtecnicadmDTO ftecnicadmDTO = new FtecnicadmDTO();
 			listaEncabezado.add(ftecnicadmDTO);
@@ -884,7 +899,7 @@ public class IndicadoresDisenoMB extends AbstractMB {
 
 			if (disenoAdicionar) {
 				listaEncabezado.clear();
-				listaEncabezado = indicadoresDisenoService.llenaListaEncabezado();
+				listaEncabezado = indicadoresDisenoService.llenaListaEncabezado(idSector);
 				FtecnicadmDTO ftecnicadmDTO = new FtecnicadmDTO();
 				listaEncabezado.add(ftecnicadmDTO);
 				this.setDisenoVisibleSalvar(true);
@@ -994,7 +1009,7 @@ public class IndicadoresDisenoMB extends AbstractMB {
 	 */
 	public void borrarDiseno(Integer row) {
 		listaEncabezado.clear();
-		listaEncabezado = indicadoresDisenoService.llenaListaEncabezado();
+		listaEncabezado = indicadoresDisenoService.llenaListaEncabezado(idSector);
 		try {
 			if (indicadoresDisenoService.tieneDetalle(listaEncabezado.get(row))) {
 				generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!",
@@ -1003,7 +1018,7 @@ public class IndicadoresDisenoMB extends AbstractMB {
 				boolean resultadoDel = indicadoresDisenoService.deleteDiseno(listaEncabezado.get(row).getId());
 				if (resultadoDel) {
 					listaEncabezado.clear();
-					listaEncabezado = indicadoresDisenoService.llenaListaEncabezado();
+					listaEncabezado = indicadoresDisenoService.llenaListaEncabezado(idSector);
 					if (listaEncabezado.isEmpty()) {
 						FtecnicadmDTO ftecnicadmDTO = new FtecnicadmDTO();
 						listaEncabezado.add(ftecnicadmDTO);
@@ -1024,15 +1039,16 @@ public class IndicadoresDisenoMB extends AbstractMB {
 					}
 					this.setDisenoDeshabilitado(true);
 					this.setDeshabilitadoEditables(true);
-					listaEncabezado.clear();
-					limpiarListas();
-					llenarCombos();
-					llenarDiseno();
+					this.findAllIndicadoresDisenoMetas();
+					//listaEncabezado.clear();
+					//limpiarListas();
+					//llenarCombos();
+					//llenarDiseno();
 					generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!",
 							"El registro se elimino correctamente");
 				} else {
 					listaEncabezado.clear();
-					listaEncabezado = indicadoresDisenoService.llenaListaEncabezado();
+					listaEncabezado = indicadoresDisenoService.llenaListaEncabezado(idSector);
 					if (listaEncabezado.isEmpty()) {
 						FtecnicadmDTO ftecnicadmDTO = new FtecnicadmDTO();
 						listaEncabezado.add(ftecnicadmDTO);
@@ -1092,7 +1108,7 @@ public class IndicadoresDisenoMB extends AbstractMB {
 				filtraDependencia(currentPage);
 				filtraPrograma(currentPage);
 				filtraCodeIndicador(currentPage);
-				listaEncabezado = indicadoresDisenoService.llenaListaEncabezado();
+				listaEncabezado = indicadoresDisenoService.llenaListaEncabezado(idSector);
 				if (listaEncabezado.isEmpty()) {
 					FtecnicadmDTO ftecnicadmDTO = new FtecnicadmDTO();
 					listaEncabezado.add(ftecnicadmDTO);
@@ -1125,7 +1141,7 @@ public class IndicadoresDisenoMB extends AbstractMB {
 						filtraCodeIndicador(currentPage - 1);
 						currentPage = currentPage - 1;
 					} else {
-						listaEncabezado = indicadoresDisenoService.llenaListaEncabezado();
+						listaEncabezado = indicadoresDisenoService.llenaListaEncabezado(idSector);
 						filtraTema(currentPage);
 						filtraDependencia(currentPage);
 						filtraPrograma(currentPage);

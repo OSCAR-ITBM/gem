@@ -16,6 +16,7 @@ import com.gem.sistema.business.domain.Mir;
 import com.gem.sistema.business.domain.Variables;
 import com.gem.sistema.business.dto.FtecnicaddDTO;
 import com.gem.sistema.business.dto.FtecnicadmDTO;
+import com.gem.sistema.business.predicates.FtecnicaDmPredicate;
 import com.gem.sistema.business.repository.catalogos.VariablesRepository;
 import com.gem.sistema.business.repository.catalogs.CatdepRepository;
 import com.gem.sistema.business.repository.catalogs.CpdRepository;
@@ -28,43 +29,41 @@ import com.gem.sistema.business.repository.catalogs.XcatproRepository;
 /**
  * The Class IndicadoresDisenoServiceImpl.
  */
-@Service(value ="indicadoresDisenoService")
+@Service(value = "indicadoresDisenoService")
 public class IndicadoresDisenoServiceImpl implements IndicadoresDisenoService {
-	
+
 	/** The Constant ORDER_BY_ID. */
 	private static final Sort ORDER_BY_ID = new Sort(Direction.ASC, "id");
-	
+
 	private static final Sort ORDER_BY_CLVDEP = new Sort(Direction.ASC, "clvdep");
 
 	/** The cpd repository. */
 	@Autowired
 	CpdRepository cpdRepository;
-	
+
 	/** The xcatpro repository. */
 	@Autowired
 	XcatproRepository xcatproRepository;
-	
+
 	/** The mir repository. */
 	@Autowired
 	MirRepository mirRepository;
-	
+
 	/** The ftecnica dd repository. */
 	@Autowired
 	FtecnicaDdRepository ftecnicaDdRepository;
-	
+
 	/** The ftecnica dm repository. */
 	@Autowired
 	FtecnicaDmRepository ftecnicaDmRepository;
-	
+
 	/** The catdep repository. */
 	@Autowired
 	CatdepRepository catdepRepository;
-	
+
 	/** The variables repository. */
 	@Autowired
 	VariablesRepository variablesRepository;
-	
-	
 
 	/**
 	 * metodo que llena la lista de diseño de indicadores.
@@ -72,166 +71,183 @@ public class IndicadoresDisenoServiceImpl implements IndicadoresDisenoService {
 	 * @return the list
 	 */
 	@Override
-	public List<FtecnicadmDTO> llenaListaEncabezado() {
-		return this.entities2DisenoDTO((List<Ftecnicadm>) ftecnicaDmRepository.findAll( ORDER_BY_CLVDEP));
+	public List<FtecnicadmDTO> llenaListaEncabezado(Integer idSector) {
+		return this.entities2DisenoDTO((List<Ftecnicadm>) ftecnicaDmRepository.findAllByIdSector(idSector));
 	}
-	
+
 	/**
-	 *  metodo borra un encabezado.
+	 * metodo borra un encabezado.
 	 *
 	 * @param id the id
 	 * @return true, if successful
 	 */
-	public boolean deleteDiseno(long id){
-		boolean ans=false;
-		try{
-			ftecnicaDmRepository.delete(id);	
+	public boolean deleteDiseno(long id) {
+		boolean ans = false;
+		try {
+			ftecnicaDmRepository.delete(id);
 			ans = true;
-		}catch(Exception e){
+		} catch (Exception e) {
 			ans = false;
 		}
 		return ans;
 	}
-	
+
 	/**
 	 * metodo que guarda un encabezado.
 	 *
 	 * @param ftecnicadmDTO the ftecnicadm DTO
 	 */
-	public void salvarDiseno(FtecnicadmDTO ftecnicadmDTO) {
-		ftecnicaDmRepository.save(this.disenoDTO2Entity(ftecnicadmDTO));
+	public boolean salvarDiseno(FtecnicadmDTO ftecnicadmDTO) {
+		
+		Ftecnicadm aux = this.disenoDTO2Entity(ftecnicadmDTO);
+		Ftecnicadm ftecnicadm = ftecnicaDmRepository.findOne(FtecnicaDmPredicate.validaFichaTecnicaDiseno(aux));
+		if (null == ftecnicadm) {
+			ftecnicaDmRepository.save(aux);
+			return true;
+		}
+		return false;
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.gem.sistema.business.service.indicadoresdiseno.IndicadoresDisenoService#salvarDisenoModificado(com.gem.sistema.business.dto.FtecnicadmDTO)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gem.sistema.business.service.indicadoresdiseno.IndicadoresDisenoService#
+	 * salvarDisenoModificado(com.gem.sistema.business.dto.FtecnicadmDTO)
 	 */
 	public void salvarDisenoModificado(FtecnicadmDTO ftecnicadmDTO) {
 		ftecnicaDmRepository.save(this.disenoDTO2EntityModificado(ftecnicadmDTO));
 	}
-	
+
 	/**
 	 * metodo que guarda un detalle.
 	 *
 	 * @param ftecnicaddDTO the ftecnicadd DTO
-	 */	
+	 */
 	public void salvarDetalle(FtecnicaddDTO ftecnicaddDTO) {
 		ftecnicaDdRepository.save(this.detalleDTO2Entity(ftecnicaddDTO));
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.gem.sistema.business.service.indicadoresdiseno.IndicadoresDisenoService#salvarDetalleModificado(com.gem.sistema.business.dto.FtecnicaddDTO)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gem.sistema.business.service.indicadoresdiseno.IndicadoresDisenoService#
+	 * salvarDetalleModificado(com.gem.sistema.business.dto.FtecnicaddDTO)
 	 */
 	public void salvarDetalleModificado(FtecnicaddDTO ftecnicaddDTO) {
 		ftecnicaDdRepository.save(this.detalleDTO2EntityModificado(ftecnicaddDTO));
 	}
-	
+
 	/**
-	 *  metodo borra un detalle.
+	 * metodo borra un detalle.
 	 *
 	 * @param id the id
 	 * @return true, if successful
 	 */
 	public boolean deleteDetalle(long id) {
-		boolean ans=false;
-		try{
+		boolean ans = false;
+		try {
 			ftecnicaDdRepository.delete(id);
 			ans = true;
-		}catch(Exception e){
+		} catch (Exception e) {
 			ans = false;
 		}
-		return ans;		
+		return ans;
 	}
-	
+
 	/**
 	 * metodo que convierte un dto diseno al entity Ftecnicadm.
 	 *
 	 * @param ftecnicadmDTO the ftecnicadm DTO
 	 * @return the ftecnicadm
 	 */
-	public Ftecnicadm disenoDTO2Entity(FtecnicadmDTO ftecnicadmDTO){
+	public Ftecnicadm disenoDTO2Entity(FtecnicadmDTO ftecnicadmDTO) {
 		Ftecnicadm ftecnicadm = new Ftecnicadm();
 //		ftecnicadm.setId(ftecnicadmDTO.getId());
-		ftecnicadm.setClvdep(ftecnicadmDTO.getClvdep()!=null?ftecnicadmDTO.getClvdep():"");
-		ftecnicadm.setClvfin(ftecnicadmDTO.getClvfin()!=null?ftecnicadmDTO.getClvfin():"");
-		ftecnicadm.setClvfun(ftecnicadmDTO.getClvfun()!=null?ftecnicadmDTO.getClvfun():"");
-		ftecnicadm.setCveind(ftecnicadmDTO.getCveind()!=null?ftecnicadmDTO.getCveind():"");
-		ftecnicadm.setCvetemas(ftecnicadmDTO.getCvetemas()!=null?ftecnicadmDTO.getCvetemas():"");
-		ftecnicadm.setDescanual(ftecnicadmDTO.getDescanual()!=null?ftecnicadmDTO.getDescanual():"");
-		ftecnicadm.setDescfac(ftecnicadmDTO.getDescfac()!=null?ftecnicadmDTO.getDescfac():"");
-		ftecnicadm.setDimension(ftecnicadmDTO.getDimension()!=null?ftecnicadmDTO.getDimension():"");
-		ftecnicadm.setElaboro(ftecnicadmDTO.getElaboro()!=null?ftecnicadmDTO.getElaboro():"");
+		ftecnicadm.setClvdep(ftecnicadmDTO.getClvdep() != null ? ftecnicadmDTO.getClvdep() : "");
+		ftecnicadm.setClvfin(ftecnicadmDTO.getClvfin() != null ? ftecnicadmDTO.getClvfin() : "");
+		ftecnicadm.setClvfun(ftecnicadmDTO.getClvfun() != null ? ftecnicadmDTO.getClvfun() : "");
+		ftecnicadm.setCveind(ftecnicadmDTO.getCveind() != null ? ftecnicadmDTO.getCveind() : "");
+		ftecnicadm.setCvetemas(ftecnicadmDTO.getCvetemas() != null ? ftecnicadmDTO.getCvetemas() : "");
+		ftecnicadm.setDescanual(ftecnicadmDTO.getDescanual() != null ? ftecnicadmDTO.getDescanual() : "");
+		ftecnicadm.setDescfac(ftecnicadmDTO.getDescfac() != null ? ftecnicadmDTO.getDescfac() : "");
+		ftecnicadm.setDimension(ftecnicadmDTO.getDimension() != null ? ftecnicadmDTO.getDimension() : "");
+		ftecnicadm.setElaboro(ftecnicadmDTO.getElaboro() != null ? ftecnicadmDTO.getElaboro() : "");
 		ftecnicadm.setFactor(ftecnicadmDTO.getFactor());
 		ftecnicadm.setFeccap(ftecnicadmDTO.getFeccap());
-		ftecnicadm.setFormula(ftecnicadmDTO.getFormula()!=null?ftecnicadmDTO.getFormula():"");
-		ftecnicadm.setFrecuencia(ftecnicadmDTO.getFrecuencia()!=null?ftecnicadmDTO.getFrecuencia():"");
+		ftecnicadm.setFormula(ftecnicadmDTO.getFormula() != null ? ftecnicadmDTO.getFormula() : "");
+		ftecnicadm.setFrecuencia(ftecnicadmDTO.getFrecuencia() != null ? ftecnicadmDTO.getFrecuencia() : "");
 		ftecnicadm.setIdRef(ftecnicadmDTO.getIdRef());
-		ftecnicadm.setIdsector(ftecnicadmDTO.getIdsector());
-		ftecnicadm.setInterpretacion(ftecnicadmDTO.getInterpretacion()!=null?ftecnicadmDTO.getInterpretacion():"");
-		ftecnicadm.setMedios(ftecnicadmDTO.getMedios()!=null?ftecnicadmDTO.getMedios():"");
+		ftecnicadm.setIdSector(ftecnicadmDTO.getIdsector());
+		ftecnicadm
+				.setInterpretacion(ftecnicadmDTO.getInterpretacion() != null ? ftecnicadmDTO.getInterpretacion() : "");
+		ftecnicadm.setMedios(ftecnicadmDTO.getMedios() != null ? ftecnicadmDTO.getMedios() : "");
 		ftecnicadm.setMetanuale(ftecnicadmDTO.getMetanuale());
-		ftecnicadm.setMetasact(ftecnicadmDTO.getMetasact()!=null?ftecnicadmDTO.getMetasact():"");
-		ftecnicadm.setNomind(ftecnicadmDTO.getNomind()!=null?ftecnicadmDTO.getNomind():"");
-		ftecnicadm.setNope(ftecnicadmDTO.getNope()!=null?ftecnicadmDTO.getNope():"");
-		ftecnicadm.setObjetivo(ftecnicadmDTO.getObjetivo()!=null?ftecnicadmDTO.getObjetivo():"");
-		ftecnicadm.setPe(ftecnicadmDTO.getPe()!=null?ftecnicadmDTO.getPe():"");
-		ftecnicadm.setTema(ftecnicadmDTO.getTema()!=null?ftecnicadmDTO.getTema():"");
-		ftecnicadm.setTipo(ftecnicadmDTO.getTipo()!=null?ftecnicadmDTO.getTipo():"");
+		ftecnicadm.setMetasact(ftecnicadmDTO.getMetasact() != null ? ftecnicadmDTO.getMetasact() : "");
+		ftecnicadm.setNomind(ftecnicadmDTO.getNomind() != null ? ftecnicadmDTO.getNomind() : "");
+		ftecnicadm.setNope(ftecnicadmDTO.getNope() != null ? ftecnicadmDTO.getNope() : "");
+		ftecnicadm.setObjetivo(ftecnicadmDTO.getObjetivo() != null ? ftecnicadmDTO.getObjetivo() : "");
+		ftecnicadm.setPe(ftecnicadmDTO.getPe() != null ? ftecnicadmDTO.getPe() : "");
+		ftecnicadm.setTema(ftecnicadmDTO.getTema() != null ? ftecnicadmDTO.getTema() : "");
+		ftecnicadm.setTipo(ftecnicadmDTO.getTipo() != null ? ftecnicadmDTO.getTipo() : "");
 		ftecnicadm.setTrim1e(ftecnicadmDTO.getTrim1e());
 		ftecnicadm.setTrim2e(ftecnicadmDTO.getTrim2e());
 		ftecnicadm.setTrim3e(ftecnicadmDTO.getTrim3e());
 		ftecnicadm.setTrim4e(ftecnicadmDTO.getTrim4e());
 		ftecnicadm.setUserid(ftecnicadmDTO.getUserid());
-		ftecnicadm.setUsuario(ftecnicadmDTO.getUsuario()!=null?ftecnicadmDTO.getUsuario():"");
-		ftecnicadm.setValido(ftecnicadmDTO.getValido()!=null?ftecnicadmDTO.getValido():"");
-		
+		ftecnicadm.setUsuario(ftecnicadmDTO.getUsuario() != null ? ftecnicadmDTO.getUsuario() : "");
+		ftecnicadm.setValido(ftecnicadmDTO.getValido() != null ? ftecnicadmDTO.getValido() : "");
+
 		return ftecnicadm;
 	}
-	
+
 	/**
 	 * metodo que convierte un dto diseno al entity Ftecnicadm.
 	 *
 	 * @param ftecnicadmDTO the ftecnicadm DTO
 	 * @return the ftecnicadm
 	 */
-	public Ftecnicadm disenoDTO2EntityModificado(FtecnicadmDTO ftecnicadmDTO){
+	public Ftecnicadm disenoDTO2EntityModificado(FtecnicadmDTO ftecnicadmDTO) {
 		Ftecnicadm ftecnicadm = new Ftecnicadm();
 		ftecnicadm.setId(ftecnicadmDTO.getId());
-		ftecnicadm.setClvdep(ftecnicadmDTO.getClvdep()!=null?ftecnicadmDTO.getClvdep():"");
-		ftecnicadm.setClvfin(ftecnicadmDTO.getClvfin()!=null?ftecnicadmDTO.getClvfin():"");
-		ftecnicadm.setClvfun(ftecnicadmDTO.getClvfun()!=null?ftecnicadmDTO.getClvfun():"");
-		ftecnicadm.setCveind(ftecnicadmDTO.getCveind()!=null?ftecnicadmDTO.getCveind():"");
-		ftecnicadm.setCvetemas(ftecnicadmDTO.getCvetemas()!=null?ftecnicadmDTO.getCvetemas():"");
-		ftecnicadm.setDescanual(ftecnicadmDTO.getDescanual()!=null?ftecnicadmDTO.getDescanual():"");
-		ftecnicadm.setDescfac(ftecnicadmDTO.getDescfac()!=null?ftecnicadmDTO.getDescfac():"");
-		ftecnicadm.setDimension(ftecnicadmDTO.getDimension()!=null?ftecnicadmDTO.getDimension():"");
-		ftecnicadm.setElaboro(ftecnicadmDTO.getElaboro()!=null?ftecnicadmDTO.getElaboro():"");
+		ftecnicadm.setClvdep(ftecnicadmDTO.getClvdep() != null ? ftecnicadmDTO.getClvdep() : "");
+		ftecnicadm.setClvfin(ftecnicadmDTO.getClvfin() != null ? ftecnicadmDTO.getClvfin() : "");
+		ftecnicadm.setClvfun(ftecnicadmDTO.getClvfun() != null ? ftecnicadmDTO.getClvfun() : "");
+		ftecnicadm.setCveind(ftecnicadmDTO.getCveind() != null ? ftecnicadmDTO.getCveind() : "");
+		ftecnicadm.setCvetemas(ftecnicadmDTO.getCvetemas() != null ? ftecnicadmDTO.getCvetemas() : "");
+		ftecnicadm.setDescanual(ftecnicadmDTO.getDescanual() != null ? ftecnicadmDTO.getDescanual() : "");
+		ftecnicadm.setDescfac(ftecnicadmDTO.getDescfac() != null ? ftecnicadmDTO.getDescfac() : "");
+		ftecnicadm.setDimension(ftecnicadmDTO.getDimension() != null ? ftecnicadmDTO.getDimension() : "");
+		ftecnicadm.setElaboro(ftecnicadmDTO.getElaboro() != null ? ftecnicadmDTO.getElaboro() : "");
 		ftecnicadm.setFactor(ftecnicadmDTO.getFactor());
 		ftecnicadm.setFeccap(ftecnicadmDTO.getFeccap());
-		ftecnicadm.setFormula(ftecnicadmDTO.getFormula()!=null?ftecnicadmDTO.getFormula():"");
-		ftecnicadm.setFrecuencia(ftecnicadmDTO.getFrecuencia()!=null?ftecnicadmDTO.getFrecuencia():"");
+		ftecnicadm.setFormula(ftecnicadmDTO.getFormula() != null ? ftecnicadmDTO.getFormula() : "");
+		ftecnicadm.setFrecuencia(ftecnicadmDTO.getFrecuencia() != null ? ftecnicadmDTO.getFrecuencia() : "");
 		ftecnicadm.setIdRef(ftecnicadmDTO.getIdRef());
-		ftecnicadm.setIdsector(ftecnicadmDTO.getIdsector());
-		ftecnicadm.setInterpretacion(ftecnicadmDTO.getInterpretacion()!=null?ftecnicadmDTO.getInterpretacion():"");
-		ftecnicadm.setMedios(ftecnicadmDTO.getMedios()!=null?ftecnicadmDTO.getMedios():"");
+		ftecnicadm.setIdSector(ftecnicadmDTO.getIdsector());
+		ftecnicadm
+				.setInterpretacion(ftecnicadmDTO.getInterpretacion() != null ? ftecnicadmDTO.getInterpretacion() : "");
+		ftecnicadm.setMedios(ftecnicadmDTO.getMedios() != null ? ftecnicadmDTO.getMedios() : "");
 		ftecnicadm.setMetanuale(ftecnicadmDTO.getMetanuale());
-		ftecnicadm.setMetasact(ftecnicadmDTO.getMetasact()!=null?ftecnicadmDTO.getMetasact():"");
-		ftecnicadm.setNomind(ftecnicadmDTO.getNomind()!=null?ftecnicadmDTO.getNomind():"");
-		ftecnicadm.setNope(ftecnicadmDTO.getNope()!=null?ftecnicadmDTO.getNope():"");
-		ftecnicadm.setObjetivo(ftecnicadmDTO.getObjetivo()!=null?ftecnicadmDTO.getObjetivo():"");
-		ftecnicadm.setPe(ftecnicadmDTO.getPe()!=null?ftecnicadmDTO.getPe():"");
-		ftecnicadm.setTema(ftecnicadmDTO.getTema()!=null?ftecnicadmDTO.getTema():"");
-		ftecnicadm.setTipo(ftecnicadmDTO.getTipo()!=null?ftecnicadmDTO.getTipo():"");
+		ftecnicadm.setMetasact(ftecnicadmDTO.getMetasact() != null ? ftecnicadmDTO.getMetasact() : "");
+		ftecnicadm.setNomind(ftecnicadmDTO.getNomind() != null ? ftecnicadmDTO.getNomind() : "");
+		ftecnicadm.setNope(ftecnicadmDTO.getNope() != null ? ftecnicadmDTO.getNope() : "");
+		ftecnicadm.setObjetivo(ftecnicadmDTO.getObjetivo() != null ? ftecnicadmDTO.getObjetivo() : "");
+		ftecnicadm.setPe(ftecnicadmDTO.getPe() != null ? ftecnicadmDTO.getPe() : "");
+		ftecnicadm.setTema(ftecnicadmDTO.getTema() != null ? ftecnicadmDTO.getTema() : "");
+		ftecnicadm.setTipo(ftecnicadmDTO.getTipo() != null ? ftecnicadmDTO.getTipo() : "");
 		ftecnicadm.setTrim1e(ftecnicadmDTO.getTrim1e());
 		ftecnicadm.setTrim2e(ftecnicadmDTO.getTrim2e());
 		ftecnicadm.setTrim3e(ftecnicadmDTO.getTrim3e());
 		ftecnicadm.setTrim4e(ftecnicadmDTO.getTrim4e());
 		ftecnicadm.setUserid(ftecnicadmDTO.getUserid());
-		ftecnicadm.setUsuario(ftecnicadmDTO.getUsuario()!=null?ftecnicadmDTO.getUsuario():"");
-		ftecnicadm.setValido(ftecnicadmDTO.getValido()!=null?ftecnicadmDTO.getValido():"");
-		
+		ftecnicadm.setUsuario(ftecnicadmDTO.getUsuario() != null ? ftecnicadmDTO.getUsuario() : "");
+		ftecnicadm.setValido(ftecnicadmDTO.getValido() != null ? ftecnicadmDTO.getValido() : "");
+
 		return ftecnicadm;
 	}
-	
+
 	/**
 	 * Entities 2 diseno DTO.
 	 *
@@ -257,7 +273,7 @@ public class IndicadoresDisenoServiceImpl implements IndicadoresDisenoService {
 			ftecnicadmDTO.setFormula(ftecnicadm.getFormula());
 			ftecnicadmDTO.setFrecuencia(ftecnicadm.getFrecuencia());
 			ftecnicadmDTO.setIdRef(ftecnicadm.getIdRef());
-			ftecnicadmDTO.setIdsector(ftecnicadm.getIdsector());
+			ftecnicadmDTO.setIdsector(ftecnicadm.getIdSector());
 			ftecnicadmDTO.setInterpretacion(ftecnicadm.getInterpretacion());
 			ftecnicadmDTO.setMedios(ftecnicadm.getMedios());
 			ftecnicadmDTO.setMetanuale(ftecnicadm.getMetanuale());
@@ -280,14 +296,14 @@ public class IndicadoresDisenoServiceImpl implements IndicadoresDisenoService {
 		}
 		return listaEncabezadoDTO;
 	}
-	
+
 	/**
 	 * metodo que convierte un dto detalle al entity Ftecnicadd.
 	 *
 	 * @param ftecnicaddDTO the ftecnicadd DTO
 	 * @return the ftecnicadd
 	 */
-	public Ftecnicadd detalleDTO2Entity(FtecnicaddDTO ftecnicaddDTO){
+	public Ftecnicadd detalleDTO2Entity(FtecnicaddDTO ftecnicaddDTO) {
 		Ftecnicadd ftecnicadd = new Ftecnicadd();
 //		ftecnicadd.setId(ftecnicaddDTO.getId());
 		ftecnicadd.setClvdep(ftecnicaddDTO.getClvdep());
@@ -315,14 +331,14 @@ public class IndicadoresDisenoServiceImpl implements IndicadoresDisenoService {
 		ftecnicadd.setVariables(ftecnicaddDTO.getVariables());
 		return ftecnicadd;
 	}
-	
+
 	/**
 	 * Detalle DTO 2 entity modificado.
 	 *
 	 * @param ftecnicaddDTO the ftecnicadd DTO
 	 * @return the ftecnicadd
 	 */
-	public Ftecnicadd detalleDTO2EntityModificado(FtecnicaddDTO ftecnicaddDTO){
+	public Ftecnicadd detalleDTO2EntityModificado(FtecnicaddDTO ftecnicaddDTO) {
 		Ftecnicadd ftecnicadd = new Ftecnicadd();
 		ftecnicadd.setId(ftecnicaddDTO.getId());
 		ftecnicadd.setClvdep(ftecnicaddDTO.getClvdep());
@@ -350,7 +366,7 @@ public class IndicadoresDisenoServiceImpl implements IndicadoresDisenoService {
 		ftecnicadd.setVariables(ftecnicaddDTO.getVariables());
 		return ftecnicadd;
 	}
-	
+
 	/**
 	 * Entities detalle 2 DTO.
 	 *
@@ -400,13 +416,18 @@ public class IndicadoresDisenoServiceImpl implements IndicadoresDisenoService {
 	@Override
 	public List<FtecnicaddDTO> llenaListaDetalle(FtecnicadmDTO ftecnicadmDTO) {
 		List<FtecnicaddDTO> listaMetas = new ArrayList<FtecnicaddDTO>();
-		listaMetas = this.entitiesDetalle2DTO(ftecnicaDdRepository.findByCvetemasAndClvdepAndClvfunAndClvfinAndCveind(ftecnicadmDTO.getCvetemas(),
-				ftecnicadmDTO.getClvdep(), ftecnicadmDTO.getClvfun(), ftecnicadmDTO.getClvfin(), ftecnicadmDTO.getCveind())); 
+		listaMetas = this.entitiesDetalle2DTO(ftecnicaDdRepository.findByCvetemasAndClvdepAndClvfunAndClvfinAndCveindAndIdsector(
+				ftecnicadmDTO.getCvetemas(), ftecnicadmDTO.getClvdep(), ftecnicadmDTO.getClvfun(),
+				ftecnicadmDTO.getClvfin(), ftecnicadmDTO.getCveind(), ftecnicadmDTO.getIdsector()));
 		return listaMetas;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.gem.sistema.business.service.indicadoresdiseno.IndicadoresDisenoService#llenaComboTemas()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gem.sistema.business.service.indicadoresdiseno.IndicadoresDisenoService#
+	 * llenaComboTemas()
 	 */
 	@Override
 	/**
@@ -422,12 +443,16 @@ public class IndicadoresDisenoServiceImpl implements IndicadoresDisenoService {
 	 * @return the list
 	 */
 	@Override
-	public List<Variables> llenaComboVariables(){
+	public List<Variables> llenaComboVariables() {
 		return variablesRepository.findAll();
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.gem.sistema.business.service.indicadoresdiseno.IndicadoresDisenoService#llenaComboDependencias(java.lang.Integer)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gem.sistema.business.service.indicadoresdiseno.IndicadoresDisenoService#
+	 * llenaComboDependencias(java.lang.Integer)
 	 */
 	@Override
 	/**
@@ -438,8 +463,12 @@ public class IndicadoresDisenoServiceImpl implements IndicadoresDisenoService {
 		return xcatproRepository.findDistinctClvdepBySectoridOrderByClvdep(sectorId);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.gem.sistema.business.service.indicadoresdiseno.IndicadoresDisenoService#llenaComboProgramas(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gem.sistema.business.service.indicadoresdiseno.IndicadoresDisenoService#
+	 * llenaComboProgramas(java.lang.Integer)
 	 */
 	@Override
 	/**
@@ -449,8 +478,12 @@ public class IndicadoresDisenoServiceImpl implements IndicadoresDisenoService {
 		return xcatproRepository.llenaListaProgramasComplete(idSector);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.gem.sistema.business.service.indicadoresdiseno.IndicadoresDisenoService#llenaComboCodigosIndicador()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gem.sistema.business.service.indicadoresdiseno.IndicadoresDisenoService#
+	 * llenaComboCodigosIndicador()
 	 */
 	@Override
 	/**
@@ -460,22 +493,26 @@ public class IndicadoresDisenoServiceImpl implements IndicadoresDisenoService {
 		return mirRepository.findAll();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.gem.sistema.business.service.indicadoresdiseno.IndicadoresDisenoService#tieneDetalle(com.gem.sistema.business.dto.FtecnicadmDTO)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gem.sistema.business.service.indicadoresdiseno.IndicadoresDisenoService#
+	 * tieneDetalle(com.gem.sistema.business.dto.FtecnicadmDTO)
 	 */
 	@Override
 	public boolean tieneDetalle(FtecnicadmDTO ftecnicadmDTO) {
-		List<Ftecnicadd>  listaDetalle = ftecnicaDdRepository.findByCvetemasAndClvdepAndClvfunAndClvfinAndCveind(ftecnicadmDTO.getCvetemas(),
-				ftecnicadmDTO.getClvdep(), ftecnicadmDTO.getClvfun(), ftecnicadmDTO.getClvfin(),
-				ftecnicadmDTO.getCveind());
-		if(!listaDetalle.isEmpty()){
+		List<Ftecnicadd> listaDetalle = ftecnicaDdRepository.findByCvetemasAndClvdepAndClvfunAndClvfinAndCveindAndIdsector(
+				ftecnicadmDTO.getCvetemas(), ftecnicadmDTO.getClvdep(), ftecnicadmDTO.getClvfun(),
+				ftecnicadmDTO.getClvfin(), ftecnicadmDTO.getCveind(), ftecnicadmDTO.getIdsector());
+		if (!listaDetalle.isEmpty()) {
 			return true;
-		}else{
-			return false;	
+		} else {
+			return false;
 		}
-		
+
 	}
-	
+
 	// ----------------GETTERS AND SETTERS----------------
 	/**
 	 * Gets the cpd repository.
@@ -489,7 +526,7 @@ public class IndicadoresDisenoServiceImpl implements IndicadoresDisenoService {
 	/**
 	 * Sets the cpd repository.
 	 *
-	 * @param cpdRepository            the cpdRepository to set
+	 * @param cpdRepository the cpdRepository to set
 	 */
 	public void setCpdRepository(CpdRepository cpdRepository) {
 		this.cpdRepository = cpdRepository;
@@ -507,7 +544,7 @@ public class IndicadoresDisenoServiceImpl implements IndicadoresDisenoService {
 	/**
 	 * Sets the xcatpro repository.
 	 *
-	 * @param xcatproRepository            the xcatproRepository to set
+	 * @param xcatproRepository the xcatproRepository to set
 	 */
 	public void setXcatproRepository(XcatproRepository xcatproRepository) {
 		this.xcatproRepository = xcatproRepository;
@@ -525,7 +562,7 @@ public class IndicadoresDisenoServiceImpl implements IndicadoresDisenoService {
 	/**
 	 * Sets the mir repository.
 	 *
-	 * @param mirRepository            the mirRepository to set
+	 * @param mirRepository the mirRepository to set
 	 */
 	public void setMirRepository(MirRepository mirRepository) {
 		this.mirRepository = mirRepository;
@@ -584,7 +621,7 @@ public class IndicadoresDisenoServiceImpl implements IndicadoresDisenoService {
 	public void setCatdepRepository(CatdepRepository catdepRepository) {
 		this.catdepRepository = catdepRepository;
 	}
-	
+
 	/**
 	 * Gets the variables repository.
 	 *
@@ -593,7 +630,7 @@ public class IndicadoresDisenoServiceImpl implements IndicadoresDisenoService {
 	public VariablesRepository getVariablesRepository() {
 		return variablesRepository;
 	}
-	
+
 	/**
 	 * Sets the variables repository.
 	 *
@@ -602,19 +639,27 @@ public class IndicadoresDisenoServiceImpl implements IndicadoresDisenoService {
 	public void setVariablesRepository(VariablesRepository variablesRepository) {
 		this.variablesRepository = variablesRepository;
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.gem.sistema.business.service.indicadoresdiseno.IndicadoresDisenoService#llenaComboProgramasFiltradoXDep(java.lang.String, java.lang.Integer)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gem.sistema.business.service.indicadoresdiseno.IndicadoresDisenoService#
+	 * llenaComboProgramasFiltradoXDep(java.lang.String, java.lang.Integer)
 	 */
 	@Override
 	public List<String> llenaComboProgramasFiltradoXDep(String clvDep, Integer sectorId) {
 		return xcatproRepository.llenaListaProgramasDistinct(clvDep, sectorId);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.gem.sistema.business.service.indicadoresdiseno.IndicadoresDisenoService#buscaDescDependencia(java.lang.String, java.lang.Integer)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gem.sistema.business.service.indicadoresdiseno.IndicadoresDisenoService#
+	 * buscaDescDependencia(java.lang.String, java.lang.Integer)
 	 */
-	public List<Catdep> buscaDescDependencia(String clvDep, Integer sectorId){
+	public List<Catdep> buscaDescDependencia(String clvDep, Integer sectorId) {
 		return catdepRepository.findByClvdepAndIdsector(clvDep, sectorId);
 	}
 }
