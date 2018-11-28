@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +49,7 @@ import com.mysema.query.types.Predicate;
  */
 @Service(value = "matrizIndicadoresService")
 public class MatrizIndicadoresServiceImpl implements MatrizIndicadoresService {
+	private static final Log LOG = LogFactory.getLog(MatrizIndicadoresServiceImpl.class);
 
 	/** The xcatpro repository. */
 	@Autowired
@@ -120,6 +123,7 @@ public class MatrizIndicadoresServiceImpl implements MatrizIndicadoresService {
 		switch (tipo) {
 		case 1:
 			Finalidad f = (Finalidad) entity;
+			LOG.debug("FINALIDAD:::" + f);
 			finalidadRepository.save(f);
 			break;
 		case 2:

@@ -19,13 +19,15 @@ public class QProposito extends EntityPathBase<Proposito> {
 
     public static final QProposito proposito = new QProposito("proposito");
 
+    public final QAbstractEntity _super = new QAbstractEntity(this);
+
     public final StringPath clvdepg = createString("clvdepg");
 
     public final StringPath cvefin = createString("cvefin");
 
     public final StringPath cveind = createString("cveind");
 
-    public final NumberPath<Integer> cvepro = createNumber("cvepro", Integer.class);
+    public final NumberPath<Long> cvepro = createNumber("cvepro", Long.class);
 
     public final StringPath cveprog = createString("cveprog");
 
@@ -37,7 +39,8 @@ public class QProposito extends EntityPathBase<Proposito> {
 
     public final StringPath frecuencia = createString("frecuencia");
 
-    public final NumberPath<Long> id = createNumber("id", Long.class);
+    //inherited
+    public final NumberPath<Long> id = _super.id;
 
     public final NumberPath<Long> idRef = createNumber("idRef", Long.class);
 

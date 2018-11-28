@@ -12,7 +12,7 @@ import com.gem.sistema.business.domain.Finalidad;
 /**
  * The Interface FinalidadRepository.
  */
-@Repository
+@Repository(value = "finalidadRepository")
 public interface FinalidadRepository extends PagingAndSortingRepository<Finalidad, Long>, QueryDslPredicateExecutor<Finalidad> {
 
 	/* (non-Javadoc)
