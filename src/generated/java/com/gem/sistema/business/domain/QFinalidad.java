@@ -19,11 +19,13 @@ public class QFinalidad extends EntityPathBase<Finalidad> {
 
     public static final QFinalidad finalidad = new QFinalidad("finalidad");
 
+    public final QAbstractEntity _super = new QAbstractEntity(this);
+
     public final StringPath clvdepg = createString("clvdepg");
 
     public final StringPath cvefin = createString("cvefin");
 
-    public final NumberPath<Integer> cvefinal = createNumber("cvefinal", Integer.class);
+    public final NumberPath<Long> cvefinal = createNumber("cvefinal", Long.class);
 
     public final StringPath cveind = createString("cveind");
 
@@ -37,7 +39,8 @@ public class QFinalidad extends EntityPathBase<Finalidad> {
 
     public final StringPath frecuencia = createString("frecuencia");
 
-    public final NumberPath<Long> id = createNumber("id", Long.class);
+    //inherited
+    public final NumberPath<Long> id = _super.id;
 
     public final NumberPath<Long> idRef = createNumber("idRef", Long.class);
 

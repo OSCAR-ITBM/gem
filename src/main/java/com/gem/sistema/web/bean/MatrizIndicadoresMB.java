@@ -4,6 +4,7 @@ import static com.gem.sistema.util.UtilFront.generateNotificationFront;
 import static com.gem.sistema.util.Constants.ZERO;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -32,8 +33,17 @@ import com.gem.sistema.business.domain.Finalidad;
 import com.gem.sistema.business.domain.Mir;
 import com.gem.sistema.business.domain.Proposito;
 import com.gem.sistema.business.dto.MatrizIndicadoresDTO;
+import com.gem.sistema.business.predicates.ActividadPredicate;
+import com.gem.sistema.business.predicates.ComponentePredicates;
+import com.gem.sistema.business.predicates.FinalidadPredicates;
+import com.gem.sistema.business.predicates.PropositoPredicates;
+import com.gem.sistema.business.repository.catalogs.ActividadRepository;
+import com.gem.sistema.business.repository.catalogs.ComponenteRepository;
+import com.gem.sistema.business.repository.catalogs.FinalidadRepository;
+import com.gem.sistema.business.repository.catalogs.PropositoRepository;
 import com.gem.sistema.business.service.indicadores.MatrizIndicadoresService;
 import com.gem.sistema.util.UtilFront;
+import com.roonin.utils.UtilDate;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -45,206 +55,217 @@ public class MatrizIndicadoresMB extends AbstractMB {
 
 	/** The Constant CLOSE_PANEL_JQUERY. */
 	private static final String CLOSE_PANEL_JQUERY = "jQuery('span.ui-icon-minusthick').eq(";
-	
+
 	/** The Constant CLOSE_COMPLETE_JQUERY. */
 	private static final String CLOSE_COMPLETE_JQUERY = ").each(function(){jQuery(this).click()});";
-	
+
 	/** The Constant OPEN_PANEL_JQUERY. */
 	private static final String OPEN_PANEL_JQUERY = "jQuery('span.ui-icon-plusthick').eq(";
-	
+
 	/** The Constant OPEN_COMPLETE_JQUERY. */
 	private static final String OPEN_COMPLETE_JQUERY = ").each(function(){jQuery(this).click()});";
 
 	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(MatrizIndicadoresMB.class);
-	
+
 	/** The master list. */
 	private List<MatrizIndicadoresDTO> masterList = new ArrayList<MatrizIndicadoresDTO>();
-	
+
 	/** The old matriz DTO. */
 	private MatrizIndicadoresDTO oldMatrizDTO = new MatrizIndicadoresDTO();
-	
+
 	/** The clv dependencias list. */
 	private List<String> clvDependenciasList = new ArrayList<String>();
-	
+
 	/** The clv programa list. */
 	private List<String> clvProgramaList = new ArrayList<String>();
-	
+
 	/** The clv tema list. */
 	private List<String> clvTemaList = new ArrayList<String>();
-	
+
 	/** The captura desabilitado reset. */
 	private boolean capturaDesabilitadoReset;
-	
+
 	/** The captura desabilitado adicionar. */
 	private boolean capturaDesabilitadoAdicionar;
-	
+
 	/** The captura desabilitado borrar. */
 	private boolean capturaDesabilitadoBorrar;
-	
+
 	/** The captura desabilitado cancelar. */
 	private boolean capturaDesabilitadoCancelar;
-	
+
 	/** The captura visible salvar. */
 	private boolean capturaVisibleSalvar;
-	
+
 	/** The captura visible modificar. */
 	private boolean capturaVisibleModificar;
-	
+
 	/** The captura deshabilitado. */
 	private boolean capturaDeshabilitado;
-	
+
 	/** The captura deshabilitado objetivo. */
 	private boolean capturaDeshabilitadoObjetivo;
-	
+
 	/** The meta deshabilitado. */
 	private boolean metaDeshabilitado;
-	
+
 	/** The captura adicionar. */
 	private boolean capturaAdicionar;
-	
+
 	/** The meta adicionar. */
 	private boolean metaAdicionar;
-	
+
 	/** The clv dep bean. */
 	private String clvDepBean;
-	
+
 	/** The clv prog bean. */
 	private String clvProgBean;
-	
+
 	/** The componente actual. */
 	private int componenteActual;
-	
+
 	/** The modificar encabezado. */
 	private boolean modificarEncabezado;
-	
+
 	/** The finalidad visible modificar. */
 	private boolean finalidadVisibleModificar;
-	
+
 	/** The finalidad disabled adicionar. */
 	private boolean finalidadDisabledAdicionar;
-	
+
 	/** The finalidad disabled borrar. */
 	private boolean finalidadDisabledBorrar;
-	
+
 	/** The finalidad disabled reset. */
 	private boolean finalidadDisabledReset;
-	
+
 	/** The finalidad disabled cancelar. */
 	private boolean finalidadDisabledCancelar;
-	
+
 	/** The finalidad visible salvar. */
 	private boolean finalidadVisibleSalvar;
-	
+
 	/** The finalidad disabled editables. */
 	private boolean finalidadDisabledEditables;
-	
+
 	/** The proposito visible modificar. */
 	private boolean propositoVisibleModificar;
-	
+
 	/** The proposito disabled adicionar. */
 	private boolean propositoDisabledAdicionar;
-	
+
 	/** The proposito disabled borrar. */
 	private boolean propositoDisabledBorrar;
-	
+
 	/** The proposito disabled reset. */
 	private boolean propositoDisabledReset;
-	
+
 	/** The proposito disabled cancelar. */
 	private boolean propositoDisabledCancelar;
-	
+
 	/** The proposito visible salvar. */
 	private boolean propositoVisibleSalvar;
-	
+
 	/** The proposito disabled editables. */
 	private boolean propositoDisabledEditables;
-	
+
 	/** The componente visible modificar. */
 	private boolean componenteVisibleModificar;
-	
+
 	/** The componente disabled adicionar. */
 	private boolean componenteDisabledAdicionar;
-	
+
 	/** The componente disabled borrar. */
 	private boolean componenteDisabledBorrar;
-	
+
 	/** The componente disabled reset. */
 	private boolean componenteDisabledReset;
-	
+
 	/** The componente disabled cancelar. */
 	private boolean componenteDisabledCancelar;
-	
+
 	/** The componente visible salvar. */
 	private boolean componenteVisibleSalvar;
-	
+
 	/** The componente disabled editables. */
 	private boolean componenteDisabledEditables;
-	
+
 	/** The actividad visible modificar. */
 	private boolean actividadVisibleModificar;
-	
+
 	/** The actividad disabled adicionar. */
 	private boolean actividadDisabledAdicionar;
-	
+
 	/** The actividad disabled borrar. */
 	private boolean actividadDisabledBorrar;
-	
+
 	/** The actividad disabled reset. */
 	private boolean actividadDisabledReset;
-	
+
 	/** The actividad disabled cancelar. */
 	private boolean actividadDisabledCancelar;
-	
+
 	/** The actividad visible salvar. */
 	private boolean actividadVisibleSalvar;
-	
+
 	/** The actividad disabled editables. */
 	private boolean actividadDisabledEditables;
-	
+
 	/** The bandera modificar. */
 	private Boolean banderaModificar = new Boolean(false);
-	
+
 	/** The b adicionar. */
 	private Boolean bAdicionar;
 
 	/** The lista codigo indicador finalidad. */
 	private List<Mir> listaCodigoIndicadorFinalidad = new ArrayList<Mir>();
-	
+
 	/** The lista codigo indicador proposito. */
 	private List<Mir> listaCodigoIndicadorProposito = new ArrayList<Mir>();
-	
+
 	/** The lista codigo indicador componente. */
 	private List<Mir> listaCodigoIndicadorComponente = new ArrayList<Mir>();
-	
+
 	/** The lista codigo indicador actividad. */
 	private List<Mir> listaCodigoIndicadorActividad = new ArrayList<Mir>();
-	
+
 	/** The encabezado en edicion. */
 	private MatrizIndicadoresDTO encabezadoEnEdicion = new MatrizIndicadoresDTO();
-	
+
 	/** The finalidad en edicion. */
 	private Finalidad finalidadEnEdicion = new Finalidad();
-	
+
 	/** The proposito en edicion. */
 	private Proposito propositoEnEdicion = new Proposito();
-	
+
 	/** The componente en edicion. */
 	private Componente componenteEnEdicion = new Componente();
-	
+
 	/** The actividad en edicion. */
 	private Actividad actividadEnEdicion = new Actividad();
-	
+
 	/** The current page. */
 	private int currentPage = 0;
-	
+
 	/** The current page det. */
 	private int currentPageDet = 0;
-	
+
 	/** The matriz indicadores service. */
 	@ManagedProperty("#{matrizIndicadoresService}")
 	private MatrizIndicadoresService matrizIndicadoresService;
-	
+
+	@ManagedProperty("#{finalidadRepository}")
+	private FinalidadRepository finalidadRepository;
+
+	@ManagedProperty("#{propositoRepository}")
+	private PropositoRepository propositoRepository;
+
+	@ManagedProperty("#{componenteRepository}")
+	private ComponenteRepository componenteRepository;
+
+	@ManagedProperty("#{actividadRepository}")
+	private ActividadRepository actividadRepository;
 	/** The deshabilitado editables. */
 	private boolean deshabilitadoEditables;
 
@@ -388,8 +409,8 @@ public class MatrizIndicadoresMB extends AbstractMB {
 	/**
 	 * Adicionar indicador.
 	 *
-	 * @param rowMaster the row master
-	 * @param rowIndicador the row indicador
+	 * @param rowMaster     the row master
+	 * @param rowIndicador  the row indicador
 	 * @param tipoIndicador the tipo indicador
 	 */
 	public void adicionarIndicador(Integer rowMaster, Integer rowIndicador, Integer tipoIndicador) {
@@ -529,8 +550,8 @@ public class MatrizIndicadoresMB extends AbstractMB {
 	/**
 	 * Salvar indicador.
 	 *
-	 * @param rowMaster the row master
-	 * @param rowIndicador the row indicador
+	 * @param rowMaster     the row master
+	 * @param rowIndicador  the row indicador
 	 * @param tipoIndicador the tipo indicador
 	 */
 	public void salvarIndicador(Integer rowMaster, Integer rowIndicador, Integer tipoIndicador) {
@@ -548,20 +569,32 @@ public class MatrizIndicadoresMB extends AbstractMB {
 					} else {
 						f.setClvdepg(dto.getClvdepg());
 						f.setCveprog(dto.getCveprog());
-						f.setCvefin(" ");
+						f.setCvefin(dto.getCvefin());
 						f.setCvetemas(dto.getCvetemas());
 						f.setUserid(getUserDetails().getUsername());
 						f.setUsuario(getUserDetails().getFullName());
-						f.setFeccap(new Date());
+						f.setFeccap(Calendar.getInstance().getTime());
+
 						f.setSectorid(getUserDetails().getIdSector());
+						Finalidad valida = this.finalidadRepository.findOne(FinalidadPredicates.eixtsFinalidad(f));
+						if (null == valida) {
+							matrizIndicadoresService.saveIndicador(f, 1);
 
-						matrizIndicadoresService.saveIndicador(f, 1);
+							llenarListaDependencias();
 
-						llenarListaDependencias();
+							UtilFront.generateNotificationFront(FacesMessage.SEVERITY_INFO,
+									"Finalidad guardada correctamente", "Finalidad guardada correctamente");
+							estadoInicialBotonesFinalidad(rowMaster);
+						} else {
+							UtilFront.generateNotificationFront(FacesMessage.SEVERITY_ERROR,
+									"Finalidad ya existe con Cve Dependencia " + f.getClvdepg() + " Clave Programa "
+											+ f.getCveprog() + " Clave Temas de Desarrollo " + f.getCvetemas()
+											+ " Num. Indicador " + f.getCvefinal(),
+									"Finalidad ya existe con Cve Dependencia " + f.getClvdepg() + " Clave Programa "
+											+ f.getCveprog() + " Clave Temas de Desarrollo " + f.getCvetemas()
+											+ " Num. Indicador " + f.getCvefinal());
+						}
 
-						UtilFront.generateNotificationFront(FacesMessage.SEVERITY_INFO,
-								"Finalidad guardada correctamente", "Finalidad guardada correctamente");
-						estadoInicialBotonesFinalidad(rowMaster);
 					}
 				} else {
 					UtilFront.generateNotificationFront(FacesMessage.SEVERITY_WARN, "Debe capturar Encabezado",
@@ -593,20 +626,30 @@ public class MatrizIndicadoresMB extends AbstractMB {
 					} else {
 						p.setClvdepg(dto.getClvdepg());
 						p.setCveprog(dto.getCveprog());
-						p.setCvefin(" ");
+						p.setCvefin(dto.getCvefin());
 						p.setCvetemas(dto.getCvetemas());
 						p.setUserid(getUserDetails().getUsername());
 						p.setUsuario(getUserDetails().getFullName());
-						p.setFeccap(new Date());
+						p.setFeccap(UtilDate.getDateSystem());
 						p.setSectorid(getUserDetails().getIdSector());
-						p.setIdRef(getUserDetails().getIdSector());
+						p.setIdRef(0L);
+						Proposito valida = this.propositoRepository.findOne(PropositoPredicates.existeProposito(p));
+						if (null == valida) {
+							matrizIndicadoresService.saveIndicador(p, 2);
+							llenarListaDependencias();
 
-						matrizIndicadoresService.saveIndicador(p, 2);
-						llenarListaDependencias();
-
-						UtilFront.generateNotificationFront(FacesMessage.SEVERITY_INFO,
-								"Propósito guardado correctamente", "Propósito guardado correctamente");
-						estadoInicialBotonesProposito(rowMaster);
+							UtilFront.generateNotificationFront(FacesMessage.SEVERITY_INFO,
+									"Propósito guardado correctamente", "Propósito guardado correctamente");
+							estadoInicialBotonesProposito(rowMaster);
+						} else {
+							UtilFront.generateNotificationFront(FacesMessage.SEVERITY_ERROR,
+									"Propósito ya existe con Cve Dependencia " + p.getClvdepg() + " Clave Programa "
+											+ p.getCveprog() + " Clave Temas de Desarrollo " + p.getCvetemas()
+											+ " Num. Indicador " + p.getCvepro(),
+									"Propósito ya existe con Cve Dependencia " + p.getClvdepg() + " Clave Programa "
+											+ p.getCveprog() + " Clave Temas de Desarrollo " + p.getCvetemas()
+											+ " Num. Indicador " + p.getCvepro());
+						}
 					}
 				} else {
 					UtilFront.generateNotificationFront(FacesMessage.SEVERITY_WARN, "Debe capturar Encabezado",
@@ -637,20 +680,30 @@ public class MatrizIndicadoresMB extends AbstractMB {
 					} else {
 						c.setClvdepg(dto.getClvdepg());
 						c.setCveprog(dto.getCveprog());
-						c.setCvefin(" ");
+						c.setCvefin(dto.getCvefin());
 						c.setCvetemas(dto.getCvetemas());
 						c.setUserid(getUserDetails().getUsername());
 						c.setUsuario(getUserDetails().getFullName());
-						c.setFeccap(new Date());
-						c.setIdRef(getUserDetails().getIdSector());
+						c.setFeccap(UtilDate.getDateSystem());
+						c.setIdRef(0L);
 						c.setSectorid(getUserDetails().getIdSector());
+						Componente valida = this.componenteRepository.findOne(ComponentePredicates.existecomponente(c));
+						if (null == valida) {
+							matrizIndicadoresService.saveIndicador(c, 3);
+							llenarListaDependencias();
 
-						matrizIndicadoresService.saveIndicador(c, 3);
-						llenarListaDependencias();
-
-						UtilFront.generateNotificationFront(FacesMessage.SEVERITY_INFO,
-								"Componente guardado correctamente", "Componente guardado correctamente");
-						estadoInicialBotonesComponente(rowMaster);
+							UtilFront.generateNotificationFront(FacesMessage.SEVERITY_INFO,
+									"Componente guardado correctamente", "Componente guardado correctamente");
+							estadoInicialBotonesComponente(rowMaster);
+						} else {
+							UtilFront.generateNotificationFront(FacesMessage.SEVERITY_ERROR,
+									"Componente ya existe con Cve Dependencia " + c.getClvdepg() + " Clave Programa "
+											+ c.getCveprog() + " Clave Temas de Desarrollo " + c.getCvetemas()
+											+ " Num. Indicador " + c.getCvecom(),
+									"Componente ya existe con Cve Dependencia " + c.getClvdepg() + " Clave Programa "
+											+ c.getCveprog() + " Clave Temas de Desarrollo " + c.getCvetemas()
+											+ " Num. Indicador " + c.getCvecom());
+						}
 					}
 				} else {
 					UtilFront.generateNotificationFront(FacesMessage.SEVERITY_WARN, "Debe capturar Encabezado",
@@ -683,23 +736,33 @@ public class MatrizIndicadoresMB extends AbstractMB {
 					} else {
 						a.setClvdepg(dto.getClvdepg());
 						a.setCveprog(dto.getCveprog());
-						a.setCvefin(" ");
+						a.setCvefin(dto.getCvefin());
 						a.setCvetemas(dto.getCvetemas());
 						a.setUserid(getUserDetails().getUsername());
 						a.setUsuario(getUserDetails().getFullName());
-						a.setFeccap(new Date());
+						a.setFeccap(UtilDate.getDateSystem());
 						a.setCvecom(getComponenteActual());
-						a.setIdRef(getUserDetails().getIdSector());
+						a.setIdRef(0L);
 						a.setSectorid(getUserDetails().getIdSector());
+						Actividad validar = this.actividadRepository.findOne(ActividadPredicate.existeActividad(a));
+						if (null == validar) {
+							matrizIndicadoresService.saveIndicador(a, 4);
 
-						matrizIndicadoresService.saveIndicador(a, 4);
+							// TODO
+							// llenarListaActividad2(rowMaster, rowComp);
 
-						// TODO
-						// llenarListaActividad2(rowMaster, rowComp);
-
-						UtilFront.generateNotificationFront(FacesMessage.SEVERITY_INFO,
-								"Actividad guardada correctamente", "Actividad guardada correctamente");
-						estadoInicialBotonesActividad(rowMaster);
+							UtilFront.generateNotificationFront(FacesMessage.SEVERITY_INFO,
+									"Actividad guardada correctamente", "Actividad guardada correctamente");
+							estadoInicialBotonesActividad(rowMaster);
+						} else {
+							UtilFront.generateNotificationFront(FacesMessage.SEVERITY_ERROR,
+									"Actividad ya existe con Cve Dependencia " + a.getClvdepg() + " Clave Programa "
+											+ a.getCveprog() + " Clave Temas de Desarrollo " + a.getCvetemas()
+											+ " Num. Indicador " + a.getCveact(),
+									"Actividad ya existe con Cve Dependencia " + a.getClvdepg() + " Clave Programa "
+											+ a.getCveprog() + " Clave Temas de Desarrollo " + a.getCvetemas()
+											+ " Num. Indicador " + a.getCveact());
+						}
 					}
 				} else {
 					UtilFront.generateNotificationFront(FacesMessage.SEVERITY_WARN, "Debe capturar Componente",
@@ -763,9 +826,9 @@ public class MatrizIndicadoresMB extends AbstractMB {
 	/**
 	 * Update desc nombre ind.
 	 *
-	 * @param rowMaster the row master
+	 * @param rowMaster    the row master
 	 * @param rowIndicador the row indicador
-	 * @param tipo the tipo
+	 * @param tipo         the tipo
 	 */
 	public void updateDescNombreInd(Integer rowMaster, Integer rowIndicador, Integer tipo) {
 		MatrizIndicadoresDTO mat = masterList.get(rowMaster);
@@ -775,7 +838,7 @@ public class MatrizIndicadoresMB extends AbstractMB {
 			f.setNombre(matrizIndicadoresService.getDescripcionIndicador(f.getCveind()));
 			for (Mir mir : listaCodigoIndicadorFinalidad) {
 				if (f.getCveind().equals(mir.getCodigo())) {
-					f.setCvefinal(mir.getConsec());
+					f.setCvefinal(mir.getConsec().longValue());
 					break;
 				}
 			}
@@ -785,7 +848,7 @@ public class MatrizIndicadoresMB extends AbstractMB {
 			p.setNombre(matrizIndicadoresService.getDescripcionIndicador(p.getCveind()));
 			for (Mir mir : listaCodigoIndicadorProposito) {
 				if (p.getCveind().equals(mir.getCodigo())) {
-					p.setCvepro(mir.getConsec());
+					p.setCvepro(mir.getConsec().longValue());
 					break;
 				}
 			}
@@ -1220,8 +1283,8 @@ public class MatrizIndicadoresMB extends AbstractMB {
 	 * Modificar indicador.
 	 *
 	 * @param rowMaster the row master
-	 * @param rowInd the row ind
-	 * @param tipoInd the tipo ind
+	 * @param rowInd    the row ind
+	 * @param tipoInd   the tipo ind
 	 */
 	public void modificarIndicador(Integer rowMaster, Integer rowInd, Integer tipoInd) {
 
@@ -1329,8 +1392,8 @@ public class MatrizIndicadoresMB extends AbstractMB {
 	 * Reset indicador.
 	 *
 	 * @param rowMaster the row master
-	 * @param rowInd the row ind
-	 * @param tipoInd the tipo ind
+	 * @param rowInd    the row ind
+	 * @param tipoInd   the tipo ind
 	 */
 	public void resetIndicador(Integer rowMaster, Integer rowInd, Integer tipoInd) {
 		LOGGER.debug("row Master " + rowMaster + " row Indicador " + rowInd + " tipo " + tipoInd);
@@ -1574,14 +1637,17 @@ public class MatrizIndicadoresMB extends AbstractMB {
 	 * Cancelar captura indicador.
 	 *
 	 * @param rowMaster the row master
-	 * @param rowInd the row ind
-	 * @param tipoInd the tipo ind
+	 * @param rowInd    the row ind
+	 * @param tipoInd   the tipo ind
 	 */
 	public void cancelarCapturaIndicador(Integer rowMaster, Integer rowInd, Integer tipoInd) {
 		MatrizIndicadoresDTO mat = masterList.get(rowMaster);
+		Long id = 0L;
 		switch (tipoInd) {
+
 		case 1:
-			Finalidad fin = matrizIndicadoresService.findFinalidadById(mat.getListaFinalidad().get(rowInd).getId());
+			id = null == mat.getListaFinalidad().get(rowInd).getId() ? 0 : mat.getListaFinalidad().get(rowInd).getId();
+			Finalidad fin = matrizIndicadoresService.findFinalidadById(id);
 			if (fin == null) {
 				mat.getListaFinalidad().remove(rowInd.intValue());
 			} else {
@@ -1590,7 +1656,8 @@ public class MatrizIndicadoresMB extends AbstractMB {
 			estadoInicialBotonesFinalidad(rowMaster);
 			break;
 		case 2:
-			Proposito prop = matrizIndicadoresService.findPropositoById(mat.getListaProposito().get(rowInd).getId());
+			id = null == mat.getListaProposito().get(rowInd).getId() ? 0 : mat.getListaProposito().get(rowInd).getId();
+			Proposito prop = matrizIndicadoresService.findPropositoById(id);
 			if (prop == null) {
 				mat.getListaProposito().remove(rowInd.intValue());
 			} else {
@@ -1599,7 +1666,9 @@ public class MatrizIndicadoresMB extends AbstractMB {
 			estadoInicialBotonesProposito(rowMaster);
 			break;
 		case 3:
-			Componente comp = matrizIndicadoresService.findComponenteById(mat.getListaComponente().get(rowInd).getId());
+			id = null == mat.getListaComponente().get(rowInd).getId() ? 0
+					: mat.getListaComponente().get(rowInd).getId();
+			Componente comp = matrizIndicadoresService.findComponenteById(id);
 			if (comp == null) {
 				mat.getListaComponente().remove(rowInd.intValue());
 			} else {
@@ -1608,7 +1677,8 @@ public class MatrizIndicadoresMB extends AbstractMB {
 			estadoInicialBotonesComponente(rowMaster);
 			break;
 		case 4:
-			Actividad act = matrizIndicadoresService.findActividadById(mat.getListaActividad().get(rowInd).getId());
+			id = null == mat.getListaActividad().get(rowInd).getId() ? 0 : mat.getListaActividad().get(rowInd).getId();
+			Actividad act = matrizIndicadoresService.findActividadById(id);
 			if (act == null) {
 				mat.getListaActividad().remove(rowInd.intValue());
 			} else {
@@ -1625,8 +1695,8 @@ public class MatrizIndicadoresMB extends AbstractMB {
 	/**
 	 * Llenar lista finalidad.
 	 *
-	 * @param clvdepg the clvdepg
-	 * @param cveprog the cveprog
+	 * @param clvdepg  the clvdepg
+	 * @param cveprog  the cveprog
 	 * @param cvetemas the cvetemas
 	 * @return the list
 	 */
@@ -1637,8 +1707,8 @@ public class MatrizIndicadoresMB extends AbstractMB {
 	/**
 	 * Llenar lista proposito.
 	 *
-	 * @param clvdepg the clvdepg
-	 * @param cveprog the cveprog
+	 * @param clvdepg  the clvdepg
+	 * @param cveprog  the cveprog
 	 * @param cvetemas the cvetemas
 	 * @return the list
 	 */
@@ -1649,8 +1719,8 @@ public class MatrizIndicadoresMB extends AbstractMB {
 	/**
 	 * Llenar lista componente.
 	 *
-	 * @param clvdepg the clvdepg
-	 * @param cveprog the cveprog
+	 * @param clvdepg  the clvdepg
+	 * @param cveprog  the cveprog
 	 * @param cvetemas the cvetemas
 	 * @return the list
 	 */
@@ -1662,7 +1732,7 @@ public class MatrizIndicadoresMB extends AbstractMB {
 	 * Llenar lista actividad 2.
 	 *
 	 * @param rowMaster the row master
-	 * @param rowComp the row comp
+	 * @param rowComp   the row comp
 	 */
 	public void llenarListaActividad2(Integer rowMaster, Integer rowComp) {
 		MatrizIndicadoresDTO mat = masterList.get(rowMaster);
@@ -1682,8 +1752,8 @@ public class MatrizIndicadoresMB extends AbstractMB {
 	 * Borrar indicador.
 	 *
 	 * @param rowMaster the row master
-	 * @param rowInd the row ind
-	 * @param tipoInd the tipo ind
+	 * @param rowInd    the row ind
+	 * @param tipoInd   the tipo ind
 	 */
 	public void borrarIndicador(Integer rowMaster, Integer rowInd, Integer tipoInd) {
 		LOGGER.debug("row Master " + rowMaster + " row Indicador " + rowInd + " tipo " + tipoInd);
@@ -2131,7 +2201,8 @@ public class MatrizIndicadoresMB extends AbstractMB {
 	/**
 	 * Sets the lista codigo indicador componente.
 	 *
-	 * @param listaCodigoIndicadorComponente the new lista codigo indicador componente
+	 * @param listaCodigoIndicadorComponente the new lista codigo indicador
+	 *                                       componente
 	 */
 	public void setListaCodigoIndicadorComponente(List<Mir> listaCodigoIndicadorComponente) {
 		this.listaCodigoIndicadorComponente = listaCodigoIndicadorComponente;
@@ -2973,6 +3044,38 @@ public class MatrizIndicadoresMB extends AbstractMB {
 		executeToggle.append(index);
 		executeToggle.append(OPEN_COMPLETE_JQUERY);
 		RequestContext.getCurrentInstance().execute(executeToggle.toString());
+	}
+
+	public FinalidadRepository getFinalidadRepository() {
+		return finalidadRepository;
+	}
+
+	public void setFinalidadRepository(FinalidadRepository finalidadRepository) {
+		this.finalidadRepository = finalidadRepository;
+	}
+
+	public PropositoRepository getPropositoRepository() {
+		return propositoRepository;
+	}
+
+	public void setPropositoRepository(PropositoRepository propositoRepository) {
+		this.propositoRepository = propositoRepository;
+	}
+
+	public ComponenteRepository getComponenteRepository() {
+		return componenteRepository;
+	}
+
+	public void setComponenteRepository(ComponenteRepository componenteRepository) {
+		this.componenteRepository = componenteRepository;
+	}
+
+	public ActividadRepository getActividadRepository() {
+		return actividadRepository;
+	}
+
+	public void setActividadRepository(ActividadRepository actividadRepository) {
+		this.actividadRepository = actividadRepository;
 	}
 
 }

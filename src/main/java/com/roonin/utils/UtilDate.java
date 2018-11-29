@@ -195,5 +195,9 @@ public class UtilDate {
 		calendario.set(anio, (month-1), DAY);
 		return calendario.getActualMaximum(Calendar.DAY_OF_MONTH);
 	}
+	
+	public static Date getDateSystem() {
+		return Calendar.getInstance().getTime();
+	}
 
 }
