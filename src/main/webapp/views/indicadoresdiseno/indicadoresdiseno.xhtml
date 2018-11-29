@@ -382,7 +382,7 @@
 							<h:inputText value="#{varDetalle.codigo}"
 								disabled="#{indicadoresDisenoMB.metaDeshabilitado}" size="7" />
 						</p:column>
-						<p:column headerText="Cve Variable">
+						<p:column headerText="Nonmbre Corto de la Variable">
 							<h:inputText id="varClave" value="#{varDetalle.cvevar}" size="7"
 								disabled="#{indicadoresDisenoMB.metaDeshabilitado}">
 								<p:ajax update="varClave,nomvariable,growlIndicadoresDiseno"
@@ -530,7 +530,7 @@
 								oncomplete="PF('catalogVariablesDlg').hide();"></p:ajax>
 							<f:facet name="header">Consulta al Cat&aacute;logo de Variables</f:facet>
 
-							<p:column headerText="Clave" width="20%"
+							<p:column headerText="Nombre Corto de la Variable" width="20%"
 								filterMatchMode="contains" filterBy="#{variable.cvevar}">
 								<h:outputText value="#{variable.cvevar}" />
 							</p:column>
