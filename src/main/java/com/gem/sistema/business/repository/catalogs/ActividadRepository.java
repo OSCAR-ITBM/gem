@@ -12,7 +12,7 @@ import com.gem.sistema.business.domain.Actividad;
 /**
  * The Interface ActividadRepository.
  */
-@Repository
+@Repository(value = "actividadRepository")
 public interface ActividadRepository
 		extends PagingAndSortingRepository<Actividad, Long>, QueryDslPredicateExecutor<Actividad> {
 

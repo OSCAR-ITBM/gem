@@ -12,19 +12,22 @@ import com.gem.sistema.business.domain.Proposito;
 /**
  * The Interface PropositoRepository.
  */
-@Repository
-public interface PropositoRepository extends PagingAndSortingRepository<Proposito, Long>, QueryDslPredicateExecutor<Proposito> {
+@Repository(value = "propositoRepository")
+public interface PropositoRepository
+		extends PagingAndSortingRepository<Proposito, Long>, QueryDslPredicateExecutor<Proposito> {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.springframework.data.repository.CrudRepository#findAll()
 	 */
 	List<Proposito> findAll();
-	
+
 	/**
 	 * Find by clvdepg and cveprog and cvetemas.
 	 *
-	 * @param clvdepg the clvdepg
-	 * @param cveprog the cveprog
+	 * @param clvdepg  the clvdepg
+	 * @param cveprog  the cveprog
 	 * @param cvetemas the cvetemas
 	 * @return the list
 	 */

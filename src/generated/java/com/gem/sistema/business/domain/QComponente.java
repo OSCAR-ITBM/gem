@@ -19,6 +19,8 @@ public class QComponente extends EntityPathBase<Componente> {
 
     public static final QComponente componente = new QComponente("componente");
 
+    public final QAbstractEntity _super = new QAbstractEntity(this);
+
     public final StringPath clvdepg = createString("clvdepg");
 
     public final NumberPath<Integer> cvecom = createNumber("cvecom", Integer.class);
@@ -37,7 +39,8 @@ public class QComponente extends EntityPathBase<Componente> {
 
     public final StringPath frecuencia = createString("frecuencia");
 
-    public final NumberPath<Long> id = createNumber("id", Long.class);
+    //inherited
+    public final NumberPath<Long> id = _super.id;
 
     public final NumberPath<Long> idRef = createNumber("idRef", Long.class);
 

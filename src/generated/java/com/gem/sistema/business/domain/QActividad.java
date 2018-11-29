@@ -19,6 +19,8 @@ public class QActividad extends EntityPathBase<Actividad> {
 
     public static final QActividad actividad = new QActividad("actividad");
 
+    public final QAbstractEntity _super = new QAbstractEntity(this);
+
     public final StringPath clvdepg = createString("clvdepg");
 
     public final NumberPath<Integer> cveact = createNumber("cveact", Integer.class);
@@ -39,7 +41,8 @@ public class QActividad extends EntityPathBase<Actividad> {
 
     public final StringPath frecuencia = createString("frecuencia");
 
-    public final NumberPath<Long> id = createNumber("id", Long.class);
+    //inherited
+    public final NumberPath<Long> id = _super.id;
 
     public final NumberPath<Long> idRef = createNumber("idRef", Long.class);
 
