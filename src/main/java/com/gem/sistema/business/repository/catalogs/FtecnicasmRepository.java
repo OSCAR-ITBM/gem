@@ -45,5 +45,5 @@ public interface FtecnicasmRepository  extends PagingAndSortingRepository<Ftecni
 	 * @param idsector the idsector
 	 * @return the list
 	 */
-	List<Ftecnicasm> findByIdsector(int idsector);
+	List<Ftecnicasm> findByIdsectorOrderByCvetemasAscClvdepAscClvfunAscCveindAsc(Integer idsector);
 }
