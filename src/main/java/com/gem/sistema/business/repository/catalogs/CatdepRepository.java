@@ -169,7 +169,7 @@ public interface CatdepRepository extends PagingAndSortingRepository<Catdep, Lon
 	 * @param idsector the idsector
 	 * @return the clvdep 3 by idsector
 	 */
-	@Query("select distinct substr(clvdep, 1,3)  from Catdep  where idsector=:idsector and clvdep like '%0000000'")
+	@Query("select distinct clvdep  from Catdep  where idsector=:idsector and clvdep like '%0000000'")
 	List<String> getClvdep3ByIdsector (@Param ("idsector") Integer idsector);
 
 	/**
