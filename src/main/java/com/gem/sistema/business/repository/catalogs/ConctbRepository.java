@@ -109,5 +109,11 @@ public interface ConctbRepository extends PagingAndSortingRepository<Conctb, Lon
 	@Modifying(clearAutomatically = true)
 	@Query("update #{#entityName} cb set cb.clave = :clave where cb.idsector = :idsector")
 	int updateClave(@Param("clave") String clave, @Param("idsector") Integer idsector);
+	
+	/**
+	 * @param idSector
+	 * @return
+	 */
+	Conctb findByIdsectorAndIdRef(Integer idSector, long idRef);
 
 }

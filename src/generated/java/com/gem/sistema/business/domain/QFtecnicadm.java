@@ -19,6 +19,8 @@ public class QFtecnicadm extends EntityPathBase<Ftecnicadm> {
 
     public static final QFtecnicadm ftecnicadm = new QFtecnicadm("ftecnicadm");
 
+    public final QAbstractEntity _super = new QAbstractEntity(this);
+
     public final StringPath clvdep = createString("clvdep");
 
     public final StringPath clvfin = createString("clvfin");
@@ -45,11 +47,12 @@ public class QFtecnicadm extends EntityPathBase<Ftecnicadm> {
 
     public final StringPath frecuencia = createString("frecuencia");
 
-    public final NumberPath<Long> id = createNumber("id", Long.class);
+    //inherited
+    public final NumberPath<Long> id = _super.id;
 
     public final NumberPath<Long> idRef = createNumber("idRef", Long.class);
 
-    public final NumberPath<Integer> idsector = createNumber("idsector", Integer.class);
+    public final NumberPath<Integer> idSector = createNumber("idSector", Integer.class);
 
     public final StringPath interpretacion = createString("interpretacion");
 
