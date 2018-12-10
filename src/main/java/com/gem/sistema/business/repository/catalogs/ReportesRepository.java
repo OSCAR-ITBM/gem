@@ -17,7 +17,7 @@ import com.gem.sistema.business.domain.Xcatpro;
  * @author 
  */
 @Repository(value = "reportesRepository")
-public interface ReportesRepository extends PagingAndSortingRepository<TcReporte, Long>, QueryDslPredicateExecutor<Xcatpro>{
+public interface ReportesRepository extends PagingAndSortingRepository<TcReporte, Long>, QueryDslPredicateExecutor<TcReporte>{
 	
 	/*
 	 * (non-Javadoc)
