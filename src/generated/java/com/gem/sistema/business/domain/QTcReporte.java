@@ -36,6 +36,8 @@ public class QTcReporte extends EntityPathBase<TcReporte> {
 
     public final StringPath rutaArchivo = createString("rutaArchivo");
 
+    public final StringPath tipoArchivo = createString("tipoArchivo");
+
     public final ListPath<TrReportesLog, QTrReportesLog> trReportesLogs = this.<TrReportesLog, QTrReportesLog>createList("trReportesLogs", TrReportesLog.class, QTrReportesLog.class, PathInits.DIRECT2);
 
     public QTcReporte(String variable) {

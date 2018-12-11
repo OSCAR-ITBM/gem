@@ -2,7 +2,9 @@ package com.gem.sistema.web.bean;
 
 import static com.gem.sistema.util.UtilFront.generateNotificationFront;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -14,6 +16,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.model.StreamedContent;
 
 import com.gem.sistema.business.domain.Conctb;
 import com.gem.sistema.business.domain.Eaid;
@@ -21,17 +24,20 @@ import com.gem.sistema.business.domain.Eaid;
 import com.gem.sistema.business.domain.TcPeriodo;
 import com.gem.sistema.business.service.catalogos.EaidService;
 import com.gem.sistema.business.service.catalogos.TcPeriodoService;
+import com.gem.sistema.business.service.reportador.ReportValidationException;
 import com.gem.sistema.web.datamodel.DataModelGeneric;
 import com.roonin.utils.UtilDate;
 
 @ManagedBean(name = "eaidMB")
 @ViewScoped
-public class EaidMB extends AbstractMB {
+public class EaidMB extends BaseDirectReport {
 
 	private static final Log LOG = LogFactory.getLog(EaidMB.class);
 
 	private static final Boolean FALSE = Boolean.FALSE;
 	private static final Boolean TRUE = Boolean.TRUE;
+	
+	
 
 	private static final Integer TRIMESTRE = 3;
 	/** The Constant VIEW_EDIT_ROW_ACTIVATE_PENCIL. */
@@ -47,6 +53,10 @@ public class EaidMB extends AbstractMB {
 	private static final String UPDATE_OBJETS = "jQuery('#form1\\\\:hiddenUpdate').click();";
 
 	private static final String CLICK_UPDATE = "jQuery('#form1\\\\\\\\:lasPage').click();";
+	
+	private static final String REPORT_NAME = "EAID";
+	
+	
 
 	@ManagedProperty("#{tcPeriodoService}")
 	private TcPeriodoService tcPeriodoService;
@@ -83,6 +93,9 @@ public class EaidMB extends AbstractMB {
 	@PostConstruct
 	public void init() {
 		LOG.info("INICIA EL PROCESO DE CAPTURA DE EAID");
+		
+		jasperReporteName = REPORT_NAME;
+		endFilename = jasperReporteName + ".pdf";
 		this.setIdSector(this.getUserDetails().getIdSector());
 		conctb = this.eaidService.getAnioContable(idSector, 0l);
 		eaid = new Eaid();
@@ -467,6 +480,20 @@ public class EaidMB extends AbstractMB {
 
 	public void setTrimestre(Integer trimestre) {
 		this.trimestre = trimestre;
+	}
+
+	@Override
+	public Map<String, Object> getParametersReports() throws ReportValidationException {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("idSector", this.getIdSector());
+		parameters.put("trimestre", trimestre);
+		return parameters;
+	}
+
+	@Override
+	public StreamedContent generaReporteSimple(int type) throws ReportValidationException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
