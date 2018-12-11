@@ -8,6 +8,8 @@
 	<parameter name="pMesFinal" class="java.lang.String"/>
 	<parameter name="pLastDay" class="java.lang.Integer"/>
 	<parameter name="pYear" class="java.lang.Integer"/>
+	<parameter name="idSector" class="java.lang.Integer"/>
+	<parameter name="trimestre" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT EAID.CONCEPTO,
        EAID.ESTIMADO,
@@ -17,8 +19,8 @@
        EAID.RECAUDADO,
        EAID.DIFERENCIA
 	 FROM GEMUSER.EAID EAID 
-WHERE EAID.ID_SECTOR= 1
-  AND EAID.TRIMESTRE= 1]]>
+WHERE EAID.ID_SECTOR= $P{idSector}
+  AND EAID.TRIMESTRE= $P{trimestre}]]>
 	</queryString>
 	<field name="CONCEPTO" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="CONCEPTO"/>
