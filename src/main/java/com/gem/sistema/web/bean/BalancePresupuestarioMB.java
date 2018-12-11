@@ -319,7 +319,6 @@ public class BalancePresupuestarioMB extends BaseDirectReport {
 						.getDescripcion(),
 				getLastDayByAnoEmp(mesFinal, anio) };
 
-		System.out.println(meses.toString());
 		return meses;
 	}
 
