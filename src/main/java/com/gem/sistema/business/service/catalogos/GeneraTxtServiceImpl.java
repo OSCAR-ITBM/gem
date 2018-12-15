@@ -25,4 +25,9 @@ public class GeneraTxtServiceImpl implements GeneraTxtService {
 		this.generaTxtBs = generaTxtBs;
 	}
 
+	@Override
+	public String generaArchivoEaepecaldf(Integer idSector, Integer trimestre) {
+		return this.generaTxtBs.generaArchivoEaepecaldf(idSector, trimestre);
+	}
+
 }
