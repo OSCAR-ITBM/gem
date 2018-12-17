@@ -2,12 +2,14 @@ package com.gem.sistema.business.dto;
 
 import java.math.BigDecimal;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * @author mateo
  *
  */
 public class EaepecaldfDTO {
-	private Integer clave;
+	private String clave = StringUtils.EMPTY;
 	private String titulo;
 	private BigDecimal aprobado = BigDecimal.ZERO;
 	private BigDecimal pagado = BigDecimal.ZERO;
@@ -15,14 +17,14 @@ public class EaepecaldfDTO {
 	private BigDecimal ampliacion = BigDecimal.ZERO;
 	private BigDecimal reduccion = BigDecimal.ZERO;
 	private BigDecimal porEjercer = BigDecimal.ZERO;
-	private BigDecimal ampreduccion;
-	private BigDecimal modificado;
+	private BigDecimal ampreduccion = BigDecimal.ZERO;;
+	private BigDecimal modificado = BigDecimal.ZERO;;
 
-	public Integer getClave() {
+	public String getClave() {
 		return clave;
 	}
 
-	public void setClave(Integer clave) {
+	public void setClave(String clave) {
 		this.clave = clave;
 	}
 

@@ -114,14 +114,14 @@ public class GeneraTxtBSImpl implements GeneraTxtBS {
 		EaepecaldfDTO etiq = new EaepecaldfDTO();
 		Conctb conctb = this.conctbRepository.findByIdsector(idSector);
 
-		String sSql = this.generaArchivoEaepecaldf(idSector, trimestre);
-		List<EaepecaldfDTO> lis = this.jdbcTemplate.query(sSql, new Object[] { idSector, trimestre },
+		String sSql = this.generaQueryTotalNoEtiquetado(idSector, trimestre);
+		List<EaepecaldfDTO> lis = this.jdbcTemplate.query(sSql, new Object[] { idSector },
 				new RowMapper<EaepecaldfDTO>() {
 
 					@Override
 					public EaepecaldfDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
 						EaepecaldfDTO eaepecaldfDTO = new EaepecaldfDTO();
-
+						eaepecaldfDTO.setClave(rs.getString("CLAVE"));
 						eaepecaldfDTO.setTitulo(rs.getString("NOMBRE_CUENTA"));
 						eaepecaldfDTO.setAprobado(rs.getBigDecimal("APROBADO"));
 						eaepecaldfDTO.setPagado(rs.getBigDecimal("PAGADO"));
@@ -133,7 +133,8 @@ public class GeneraTxtBSImpl implements GeneraTxtBS {
 					}
 				});
 		for (EaepecaldfDTO dto : lis) {
-			if ((dto.getClave() >= 101 && dto.getClave() <= 113) && dto.getClave() >= 201 && dto.getClave() <= 202) {
+			if ((dto.getClave().compareTo("101") >= 0 && dto.getClave().compareTo("112") <= 0)
+					&& dto.getClave().compareTo("201") >= 0 && dto.getClave().compareTo("202") >= 202) {
 				noEtiq.setTitulo(NO_ETEQUITADO);
 				noEtiq.setAprobado(noEtiq.getAprobado().add(dto.getAprobado()));
 				noEtiq.setPagado(noEtiq.getPagado().add(dto.getPagado()));
@@ -143,7 +144,8 @@ public class GeneraTxtBSImpl implements GeneraTxtBS {
 				noEtiq.setPorEjercer(noEtiq.getPorEjercer().add(dto.getPorEjercer()));
 				listNoEtiq.add(dto);
 			}
-			if ((dto.getClave() >= 203 && dto.getClave() <= 225) && (dto.getClave() >= 114 && dto.getClave() <= 115)) {
+			if ((dto.getClave().compareTo("203") >= 0 && dto.getClave().compareTo("225") <= 0)
+					&& (dto.getClave().compareTo("114") >= 0 && dto.getClave().compareTo("115") <= 0)) {
 				etiq.setTitulo(ETIQUETADO);
 				etiq.setTitulo(dto.getClave() + " " + dto.getTitulo());
 				etiq.setAprobado(etiq.getAprobado().add(dto.getAprobado()));
@@ -157,9 +159,12 @@ public class GeneraTxtBSImpl implements GeneraTxtBS {
 		}
 		EaepecaldfDTO totales = new EaepecaldfDTO();
 		totales = generarTotales(noEtiq);
+		totales.setTitulo(NO_ETEQUITADO);
 		String hNoEtiq = generarEncabezados(totales);
 		totales = new EaepecaldfDTO();
+		
 		totales = generarTotales(etiq);
+		totales.setTitulo(ETIQUETADO);
 		String hEtiq = generarEncabezados(totales);
 		String datos;
 		FileWriter fw = null;
@@ -183,7 +188,7 @@ public class GeneraTxtBSImpl implements GeneraTxtBS {
 			/***
 			 * GASTO ETIQUETADO
 			 */
-			out.print(noEtiq + "\n");
+			out.print(hEtiq + "\n");
 			for (EaepecaldfDTO etique : listEtiq) {
 				totales = generarTotales(etique);
 				datos = generarEncabezados(totales);
@@ -261,7 +266,7 @@ public class GeneraTxtBSImpl implements GeneraTxtBS {
 				.append(sumPorEjerer.substring(0, sumPorEjerer.length() - 2)).append(") POR_EJERCER").append("\n");
 		sSql.append("FROM  PASO PA\n").append(",\n" + "      NATGAS NA\n").append("WHERE PA.IDSECTOR = NA.IDSECTOR\n")
 				.append("  AND NA.CLVGAS = PA.PARTIDA\n").append("  AND SUBSTR(PA.PARTIDA,4,1) <>  '0'\n")
-				.append("  AND PA.IDSECTOR = 1\n").append("GROUP BY SUBSTR(PA.CLAVE,1,3) ,  NA.NOMGAS ");
+				.append("  AND PA.IDSECTOR = ?\n").append("GROUP BY SUBSTR(PA.CLAVE,1,3) ,  NA.NOMGAS ");
 		return sSql.toString();
 	}
 
