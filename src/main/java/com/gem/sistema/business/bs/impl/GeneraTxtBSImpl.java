@@ -133,7 +133,7 @@ public class GeneraTxtBSImpl implements GeneraTxtBS {
 					}
 				});
 		for (EaepecaldfDTO dto : lis) {
-			if ((dto.getClave().compareTo("101") >= 0 && dto.getClave().compareTo("112") <= 0)
+			if ((dto.getClave().compareTo("101") >= 0 && dto.getClave().compareTo("113") <= 0)
 					&& dto.getClave().compareTo("201") >= 0 && dto.getClave().compareTo("202") >= 202) {
 				noEtiq.setTitulo(NO_ETEQUITADO);
 				noEtiq.setAprobado(noEtiq.getAprobado().add(dto.getAprobado()));
@@ -162,14 +162,14 @@ public class GeneraTxtBSImpl implements GeneraTxtBS {
 		totales.setTitulo(NO_ETEQUITADO);
 		String hNoEtiq = generarEncabezados(totales);
 		totales = new EaepecaldfDTO();
-		
+
 		totales = generarTotales(etiq);
 		totales.setTitulo(ETIQUETADO);
 		String hEtiq = generarEncabezados(totales);
 		String datos;
 		FileWriter fw = null;
 		try {
-			String fileSystem = "/gem/reportes/" + FILE_NAE + conctb.getClave() + conctb.getAnoemp()
+			String fileSystem = "/gem/reportes/" + "EAEPECFLDF" + conctb.getClave() + conctb.getAnoemp()
 					+ StringUtils.leftPad(trimestre.toString(), 2, "0") + TXT;
 			fw = new FileWriter(fileSystem);
 			BufferedWriter bw = new BufferedWriter(fw);
@@ -268,6 +268,144 @@ public class GeneraTxtBSImpl implements GeneraTxtBS {
 				.append("  AND NA.CLVGAS = PA.PARTIDA\n").append("  AND SUBSTR(PA.PARTIDA,4,1) <>  '0'\n")
 				.append("  AND PA.IDSECTOR = ?\n").append("GROUP BY SUBSTR(PA.CLAVE,1,3) ,  NA.NOMGAS ");
 		return sSql.toString();
+	}
+
+	private String generaQueryTotalEaepecfldf(Integer idSector, Integer trimestre) {
+		StringBuilder sSql = new StringBuilder();
+		StringBuilder sumAprobado = new StringBuilder();
+		StringBuilder sumPagado = new StringBuilder();
+		StringBuilder sumDevenagdo = new StringBuilder();
+		StringBuilder sumAmpliacion = new StringBuilder();
+		StringBuilder sumReduccion = new StringBuilder();
+		StringBuilder sumPorEjerer = new StringBuilder();
+		sSql.append("SELECT SUBSTR(PA.PROGRAMA,1,2) PROGRAMA,  NA.NOMGAS NOMBRE_CUENTA,");
+		sumAprobado.append(" SUM(");
+		sumPagado.append("SUM( ");
+		sumDevenagdo.append("SUM(");
+		sumAmpliacion.append("SUM(");
+		sumReduccion.append("SUM(");
+		sumPorEjerer.append("SUM(");
+		int indexMax = trimestre * 3;
+		int indexmin = indexMax - 2;
+
+		for (int i = indexmin; i <= indexMax; i++) {
+			sumAprobado.append("PA.AUTO1_" + i + " + ");
+			sumPagado.append("PA.EJPA1_" + i + " + ");
+			sumDevenagdo.append("PA.EJXPA1_" + i + " + ");
+			sumAmpliacion.append("PA.AMPLI1_" + i + " + ");
+			sumReduccion.append("PA.REDU1_" + i + " + ");
+			sumPorEjerer.append("PA.PORPA1_" + i + " + ");
+		}
+
+		sSql.append(sumAprobado.substring(0, sumAprobado.length() - 2)).append(")APROBADO, ").append("\n")
+				.append(sumPagado.substring(0, sumPagado.length() - 2)).append(") PAGADO,").append("\n")
+				.append(sumDevenagdo.substring(0, sumDevenagdo.length() - 2)).append(") DEVENGADO,").append("\n")
+				.append(sumAmpliacion.substring(0, sumAmpliacion.length() - 2)).append(") AMPLIACION,").append("\n")
+				.append(sumReduccion.substring(0, sumReduccion.length() - 2)).append(") REDUCCION,").append("\n")
+				.append(sumPorEjerer.substring(0, sumPorEjerer.length() - 2)).append(") POR_EJERCER").append("\n");
+		sSql.append("FROM  PASO PA\n").append(",\n" + "      NATGAS NA\n").append("WHERE PA.IDSECTOR = NA.IDSECTOR\n")
+				.append("  AND NA.CLVGAS = PA.PARTIDA\n").append("  AND SUBSTR(PA.PARTIDA,4,1) <>  '0'\n")
+				.append("  AND PA.IDSECTOR = ?\n").append("GROUP BY SELECT SUBSTR(PA.PROGRAMA,1,2) ,  NA.NOMGAS ");
+		return sSql.toString();
+	}
+
+	@Override
+	public String generaArchivoEaepecfldf(Integer idSector, Integer trimestre) {
+		List<EaepecaldfDTO> listNoEtiq = new ArrayList<EaepecaldfDTO>();
+		List<EaepecaldfDTO> listEtiq = new ArrayList<EaepecaldfDTO>();
+		EaepecaldfDTO noEtiq = new EaepecaldfDTO();
+		EaepecaldfDTO etiq = new EaepecaldfDTO();
+		Conctb conctb = this.conctbRepository.findByIdsector(idSector);
+
+		String sSql = this.generaQueryTotalNoEtiquetado(idSector, trimestre);
+		List<EaepecaldfDTO> lis = this.jdbcTemplate.query(sSql, new Object[] { idSector },
+				new RowMapper<EaepecaldfDTO>() {
+
+					@Override
+					public EaepecaldfDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+						EaepecaldfDTO eaepecaldfDTO = new EaepecaldfDTO();
+						eaepecaldfDTO.setClave(rs.getString("CLAVE"));
+						eaepecaldfDTO.setTitulo(rs.getString("NOMBRE_CUENTA"));
+						eaepecaldfDTO.setAprobado(rs.getBigDecimal("APROBADO"));
+						eaepecaldfDTO.setPagado(rs.getBigDecimal("PAGADO"));
+						eaepecaldfDTO.setDevengado(rs.getBigDecimal("DEVENGADO"));
+						eaepecaldfDTO.setAmpliacion(rs.getBigDecimal("AMPLIACION"));
+						eaepecaldfDTO.setReduccion(rs.getBigDecimal("REDUCCION"));
+						eaepecaldfDTO.setPorEjercer(rs.getBigDecimal("POR_EJERCER"));
+						return eaepecaldfDTO;
+					}
+				});
+		for (EaepecaldfDTO dto : lis) {
+			if ((dto.getClave().compareTo("101") >= 0 && dto.getClave().compareTo("113") <= 0)
+					&& dto.getClave().compareTo("201") >= 0 && dto.getClave().compareTo("202") >= 202) {
+				noEtiq.setTitulo(NO_ETEQUITADO);
+				noEtiq.setAprobado(noEtiq.getAprobado().add(dto.getAprobado()));
+				noEtiq.setPagado(noEtiq.getPagado().add(dto.getPagado()));
+				noEtiq.setDevengado(noEtiq.getDevengado().add(dto.getDevengado()));
+				noEtiq.setAmpliacion(noEtiq.getAmpliacion().add(dto.getAmpliacion()));
+				noEtiq.setReduccion(noEtiq.getReduccion().add(dto.getReduccion()));
+				noEtiq.setPorEjercer(noEtiq.getPorEjercer().add(dto.getPorEjercer()));
+				listNoEtiq.add(dto);
+			}
+			if ((dto.getClave().compareTo("203") >= 0 && dto.getClave().compareTo("225") <= 0)
+					&& (dto.getClave().compareTo("114") >= 0 && dto.getClave().compareTo("115") <= 0)) {
+				etiq.setTitulo(ETIQUETADO);
+				etiq.setTitulo(dto.getClave() + " " + dto.getTitulo());
+				etiq.setAprobado(etiq.getAprobado().add(dto.getAprobado()));
+				etiq.setPagado(etiq.getPagado().add(dto.getPagado()));
+				etiq.setDevengado(etiq.getDevengado().add(dto.getDevengado()));
+				etiq.setAmpliacion(etiq.getAmpliacion().add(dto.getAmpliacion()));
+				etiq.setReduccion(etiq.getReduccion().add(dto.getReduccion()));
+				etiq.setPorEjercer(etiq.getPorEjercer().add(dto.getPorEjercer()));
+				listNoEtiq.add(dto);
+			}
+		}
+		EaepecaldfDTO totales = new EaepecaldfDTO();
+		totales = generarTotales(noEtiq);
+		totales.setTitulo(NO_ETEQUITADO);
+		String hNoEtiq = generarEncabezados(totales);
+		totales = new EaepecaldfDTO();
+
+		totales = generarTotales(etiq);
+		totales.setTitulo(ETIQUETADO);
+		String hEtiq = generarEncabezados(totales);
+		String datos;
+		FileWriter fw = null;
+		try {
+			String fileSystem = "/gem/reportes/" + FILE_NAE + conctb.getClave() + conctb.getAnoemp()
+					+ StringUtils.leftPad(trimestre.toString(), 2, "0") + TXT;
+			fw = new FileWriter(fileSystem);
+			BufferedWriter bw = new BufferedWriter(fw);
+			PrintWriter out = new PrintWriter(bw);
+			/***
+			 * GASTO NO ETIQUETADO
+			 */
+			out.print(hNoEtiq + "\n");
+			for (EaepecaldfDTO nEtiq : listNoEtiq) {
+				totales = generarTotales(nEtiq);
+				datos = generarEncabezados(totales);
+				out.print(datos + "\n");
+
+			}
+
+			/***
+			 * GASTO ETIQUETADO
+			 */
+			out.print(hEtiq + "\n");
+			for (EaepecaldfDTO etique : listEtiq) {
+				totales = generarTotales(etique);
+				datos = generarEncabezados(totales);
+				out.print(etique + "\n");
+
+			}
+
+			out.close();
+			return fileSystem;
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
+		return null;
 	}
 
 }

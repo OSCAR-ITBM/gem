@@ -27,9 +27,9 @@ import com.gem.sistema.business.repository.catalogs.TcPeriodoRepositoy;
 import com.gem.sistema.business.service.catalogos.GeneraTxtService;
 import com.gem.sistema.business.service.reportador.ReportValidationException;
 
-@ManagedBean(name = "reporteEaepecaldfMB")
+@ManagedBean(name = "reporteEaepecfldfTxtMB")
 @ViewScoped
-public class ReporteEaepecaldfMB extends BaseDirectReport {
+public class ReporteEaepecfldfTxtMB extends BaseDirectReport {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReporteadorMB.class);
 
@@ -58,7 +58,7 @@ public class ReporteEaepecaldfMB extends BaseDirectReport {
 	}
 
 	public void downloadFileTxt() {
-		String filePath = generaTxtService.generaArchivoEaepecfldf(this.getUserDetails().getIdSector(), trimestre);
+		String filePath = generaTxtService.generaArchivoEaepecaldf(this.getUserDetails().getIdSector(), trimestre);
 		try {
 			stream = new FileInputStream(new File(filePath));
 		} catch (FileNotFoundException e) {

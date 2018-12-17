@@ -30,4 +30,10 @@ public class GeneraTxtServiceImpl implements GeneraTxtService {
 		return this.generaTxtBs.generaArchivoEaepecaldf(idSector, trimestre);
 	}
 
+	@Override
+	public String generaArchivoEaepecfldf(Integer idSector, Integer trimestre) {
+		// TODO Auto-generated method stub
+		return this.generaTxtBs.generaArchivoEaepecfldf(idSector, trimestre);
+	}
+
 }
