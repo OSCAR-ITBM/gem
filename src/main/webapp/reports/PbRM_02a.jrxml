@@ -1,27 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
-<!-- 2017-06-27T11:31:14 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PbRM_02a" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="94e93bb9-a566-4a8d-85a9-d4f5bcd8e22c">
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PbRM_02a" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="94e93bb9-a566-4a8d-85a9-d4f5bcd8e22c">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ServerLinux"/>
-	<parameter name="year" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[2016]]></defaultValueExpression>
-	</parameter>
-	<parameter name="municipioName" class="java.lang.String">
-		<defaultValueExpression><![CDATA["joco"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="municipioClave" class="java.lang.String">
-		<defaultValueExpression><![CDATA["0028"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="pathImage1" class="java.lang.String">
-		<defaultValueExpression><![CDATA["http://www.revistayucatan.com/v1/wp-content/uploads/2009/04/logo-ayuntamiento1.jpg"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="pathImage2" class="java.lang.String">
-		<defaultValueExpression><![CDATA["http://ahome.enerwings.com/570/img/logos/logo_DIF_ahome.jpg"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="idSector" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
-	</parameter>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="server adapter"/>
+	<property name="net.sf.jasperreports.print.create.bookmarks" value="false"/>
+	<parameter name="year" class="java.lang.Integer"/>
+	<parameter name="municipioName" class="java.lang.String"/>
+	<parameter name="municipioClave" class="java.lang.String"/>
+	<parameter name="pathImage1" class="java.lang.String"/>
+	<parameter name="pathImage2" class="java.lang.String"/>
+	<parameter name="idSector" class="java.lang.Integer"/>
 	<parameter name="firmaP1" class="java.lang.String"/>
 	<parameter name="firmaP2" class="java.lang.String"/>
 	<parameter name="firmaP3" class="java.lang.String"/>
@@ -62,7 +50,7 @@ WHERE	CAP.IDSECTOR = MET.IDSECTOR
 	AND SUBSTR(CAP.CLVDEP,1,3)  = CGM.CLAVE
 	AND SUBSTR(CAP.CLVDEP,4,3)  = DAA.CLAVE
 	AND CAP.IDSECTOR = $P{idSector}
-ORDER BY DEP_GENERAL, DEP_AUXILIAR, PROYECTO]]>
+ORDER BY DEP_GENERAL, DEP_AUXILIAR, PROYECTO, CLVMET]]>
 	</queryString>
 	<field name="GRUPO" class="java.lang.String"/>
 	<field name="PROGRAMA" class="java.lang.String"/>

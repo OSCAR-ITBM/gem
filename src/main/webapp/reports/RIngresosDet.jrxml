@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-05-25T12:02:51 -->
+<!-- 2018-11-22T10:44:13 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Ingreso_det" pageWidth="1008" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="998" leftMargin="5" rightMargin="5" topMargin="20" bottomMargin="20" uuid="7dc055f8-d5f2-4332-b793-ba85d8d1608a">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="LOCAL_GEM"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GEM_Adapter"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<style name="Table_TH" mode="Opaque" backcolor="#FFFFFF">
 		<box>
@@ -54,7 +54,8 @@ DECIMAL(I.AUTOI_12,20,2) DIC,
 DECIMAL(I.AUTOI_13,20,2) PRESUPUESTADO 
 FROM INGRESO I
 INNER JOIN CUENTA C ON I.CUENTA = C.CUENTA AND I.SCTA = C.SCTA AND I.SSCTA = C.SSCTA AND I.SSSCTA = C.SSSCTA AND I.SSSSCTA = C.SSSSCTA  AND C.IDSECTOR = I.IDSECTOR 
-WHERE C.IDSECTOR = 1]]>
+WHERE C.IDSECTOR = 1
+ORDER BY 1 ASC]]>
 		</queryString>
 		<field name="CUENTA" class="java.lang.String"/>
 		<field name="CONCEPTO" class="java.lang.String"/>
@@ -109,7 +110,7 @@ WHERE C.IDSECTOR = 1]]>
 				<reportElement x="70" y="0" width="868" height="15" uuid="b7f91fd0-0fb0-4571-bdfa-8fcddcef2308">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sistema de Coordinación Hacendaria de Estado de México con sus Municipios]]></text>
@@ -118,7 +119,7 @@ WHERE C.IDSECTOR = 1]]>
 				<reportElement x="70" y="15" width="868" height="15" uuid="dac80267-5da0-463c-9aa2-7b89d32a7438">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Manual para la Planeación,Programación y Presupuestación Municipal   " + $F{CAMPO3}]]></textFieldExpression>

@@ -3,8 +3,10 @@ package com.gem.sistema.business.repository.catalogs;
 import java.util.List;
 
 import org.springframework.data.annotation.ReadOnlyProperty;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +34,9 @@ public interface FtecnicaDmRepository extends PagingAndSortingRepository<Ftecnic
 	 */
 	@Transactional(timeout = 10)
 	<S extends Ftecnicadm> S save(S entity);
+	
+	@Query("select ft from Ftecnicadm ft where idsector=:idSector order by clvdep asc")
+	List<Ftecnicadm> findAllByIdSector(@Param("idSector") Integer idSector);
 		
 	//List<Ftecnicadm> findByCvetemasAndClvdepAndClvfunAndClvfinAndCveind();
 }

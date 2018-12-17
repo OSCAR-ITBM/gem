@@ -49,8 +49,8 @@ public interface FtecnicaDdRepository
 	 * @return the list
 	 */
 
-	List<Ftecnicadd> findByCvetemasAndClvdepAndClvfunAndClvfinAndCveind(String Cvetemas, String Clvdep, String clvfun,
-			String clvfin, String cveind);
+	List<Ftecnicadd> findByCvetemasAndClvdepAndClvfunAndClvfinAndCveindAndIdsector(String Cvetemas, String Clvdep, String clvfun,
+			String clvfin, String cveind, Integer idsector);
 
 	/**
 	 * Find by F tecnia.

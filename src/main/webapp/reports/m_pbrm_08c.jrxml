@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-06-02T15:56:04 -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="m_pbrm_08c" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="096a305f-f3fe-4393-8c43-3f28db729491">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ServerLinux"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GemAdapter "/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
@@ -49,10 +48,10 @@
 		CDAA.NOMBRE NOMDA,
 		MUN4.CAMPO6 SPG,
 		MUN5.CAMPO6 PROY,
-		SUM(PASO.AUTO1_1 + PASO.AUTO1_2 + PASO.AUTO1_3 + 
-			PASO.AUTO1_4 + PASO.AUTO1_5 + PASO.AUTO1_6 + 
-			PASO.AUTO1_7 + PASO.AUTO1_8 + PASO.AUTO1_9 + 
-			PASO.AUTO1_10 + PASO.AUTO1_11 + PASO.AUTO1_12) AUTO
+		SUM(PASO.AUTO1_1 + PASO.AUTO1_2 + PASO.AUTO1_3 ) AUTO_1,
+		SUM(PASO.AUTO1_4 + PASO.AUTO1_5 + PASO.AUTO1_6 ) AUTO_2,
+		SUM(PASO.AUTO1_7 + PASO.AUTO1_8 + PASO.AUTO1_9 ) AUTO_3,
+		SUM(PASO.AUTO1_10 + PASO.AUTO1_11 + PASO.AUTO1_12) AUTO_4
 	FROM PP_METT PMET 
 		INNER JOIN CATDGM CDGM ON SUBSTR(PMET.CLVDEP,1,3) = CDGM.CLAVE 
 		INNER JOIN CATDAA CDAA ON SUBSTR(PMET.CLVDEP,4,3) = CDAA.CLAVE
@@ -84,30 +83,105 @@ GROUP BY PMET.CLVDEP, PMET.CLVNEP,
 		MUN5.CAMPO6 
 ORDER BY PMET.CLVDEP, PMET.CLVNEP, PMET.CLVMET]]>
 	</queryString>
-	<field name="CLVDEP" class="java.lang.String"/>
-	<field name="CLVNEP" class="java.lang.String"/>
-	<field name="DG" class="java.lang.String"/>
-	<field name="DA" class="java.lang.String"/>
-	<field name="GRUPO" class="java.lang.String"/>
-	<field name="CVEFUN" class="java.lang.String"/>
-	<field name="CVEPROY" class="java.lang.String"/>
-	<field name="CLVMET" class="java.lang.Integer"/>
-	<field name="NOM_IND" class="java.lang.String"/>
-	<field name="UNI_MED" class="java.lang.String"/>
-	<field name="CAN_METI" class="java.math.BigDecimal"/>
-	<field name="PTRIM1" class="java.math.BigDecimal"/>
-	<field name="PTRIM2" class="java.math.BigDecimal"/>
-	<field name="PTRIM3" class="java.math.BigDecimal"/>
-	<field name="PTRIM4" class="java.math.BigDecimal"/>
-	<field name="TRIM1" class="java.math.BigDecimal"/>
-	<field name="TRIM2" class="java.math.BigDecimal"/>
-	<field name="TRIM3" class="java.math.BigDecimal"/>
-	<field name="TRIM4" class="java.math.BigDecimal"/>
-	<field name="NOMDG" class="java.lang.String"/>
-	<field name="NOMDA" class="java.lang.String"/>
-	<field name="SPG" class="java.lang.String"/>
-	<field name="PROY" class="java.lang.String"/>
-	<field name="AUTO" class="java.math.BigDecimal"/>
+	<field name="CLVDEP" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CLVDEP"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PP_METT"/>
+	</field>
+	<field name="CLVNEP" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CLVNEP"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PP_METT"/>
+	</field>
+	<field name="DG" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DG"/>
+	</field>
+	<field name="DA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DA"/>
+	</field>
+	<field name="GRUPO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="GRUPO"/>
+	</field>
+	<field name="CVEFUN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CVEFUN"/>
+	</field>
+	<field name="CVEPROY" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CVEPROY"/>
+	</field>
+	<field name="CLVMET" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="CLVMET"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PP_METT"/>
+	</field>
+	<field name="NOM_IND" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOM_IND"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PP_METT"/>
+	</field>
+	<field name="UNI_MED" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UNI_MED"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PP_METT"/>
+	</field>
+	<field name="CAN_METI" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="CAN_METI"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PP_METT"/>
+	</field>
+	<field name="PTRIM1" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PTRIM1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PP_METT"/>
+	</field>
+	<field name="PTRIM2" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PTRIM2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PP_METT"/>
+	</field>
+	<field name="PTRIM3" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PTRIM3"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PP_METT"/>
+	</field>
+	<field name="PTRIM4" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PTRIM4"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PP_METT"/>
+	</field>
+	<field name="TRIM1" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TRIM1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PP_METT"/>
+	</field>
+	<field name="TRIM2" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TRIM2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PP_METT"/>
+	</field>
+	<field name="TRIM3" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TRIM3"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PP_METT"/>
+	</field>
+	<field name="TRIM4" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TRIM4"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PP_METT"/>
+	</field>
+	<field name="NOMDG" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOMDG"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CATDGM"/>
+	</field>
+	<field name="NOMDA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOMDA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CATDAA"/>
+	</field>
+	<field name="SPG" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SPG"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="MUNINEP"/>
+	</field>
+	<field name="PROY" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PROY"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="MUNINEP"/>
+	</field>
+	<field name="AUTO_1" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="AUTO_1"/>
+	</field>
+	<field name="AUTO_2" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="AUTO_2"/>
+	</field>
+	<field name="AUTO_3" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="AUTO_3"/>
+	</field>
+	<field name="AUTO_4" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="AUTO_4"/>
+	</field>
 	<variable name="programadaTrimestral" class="java.math.BigDecimal">
 		<variableExpression><![CDATA[($P{trimestre} == 1 ) ? $F{PTRIM1} : 
 	($P{trimestre} == 2 ) ? $F{PTRIM2} :
@@ -772,7 +846,7 @@ ORDER BY PMET.CLVDEP, PMET.CLVNEP, PMET.CLVMET]]>
 						<font fontName="Arial" size="8"/>
 						<paragraph rightIndent="1"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{AUTO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{trimestre}==1?$F{AUTO_1} : ($P{trimestre} == 2? $F{AUTO_2} : ($P{trimestre} == 3 ? $F{AUTO_3} : $F{AUTO_4}))]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="784" y="10" width="59" height="15" uuid="d08f431c-105f-4859-bd13-94587e932805"/>

@@ -13,6 +13,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.primefaces.component.datatable.DataTable;
@@ -216,7 +217,7 @@ public class FicTecSegIndEstrategicosMB extends AbstractMB implements Serializab
 	 * @param row the row
 	 */
 	public void cargarIndicadores(Integer row) {
-		encabezadosList = ftecnicasmRepository.findByIdsector(getUserDetails().getIdSector());
+		encabezadosList = ftecnicasmRepository.findByIdsectorOrderByCvetemasAscClvdepAscClvfunAscCveindAsc(getUserDetails().getIdSector());
 		if (encabezadosList == null || encabezadosList.isEmpty()) {
 			logger.debug("No se encontraron registros de encabezado.");
 			encabezadosList = new ArrayList<Ftecnicasm>();
@@ -225,7 +226,12 @@ public class FicTecSegIndEstrategicosMB extends AbstractMB implements Serializab
 		}else {
 			habilitarModificar = false;
 		}
-		inicializarEncabezado(encabezadosList.size() - 1);
+		Integer index = encabezadosList.size()-1;
+		inicializarEncabezado(index);
+		if(CollectionUtils.isNotEmpty(encabezadosList)) {
+			this.cargarDetalles(encabezadosList.get(index).getCvetemas(), encabezadosList.get(index).getClvdep(),
+					encabezadosList.get(index).getClvfun(), encabezadosList.get(index).getCveind());
+		}
 	}
 
 	/**
@@ -370,7 +376,7 @@ public class FicTecSegIndEstrategicosMB extends AbstractMB implements Serializab
 				generateNotificationFront(FacesMessage.SEVERITY_INFO, "La informacion se guardó correctamente", "Salvar Encabezado");
 			} catch (Exception e) {
 				e.printStackTrace();
-				generateNotificationFront(SEVERITY_ERROR, "Ocurrió un error al guardar la información: " + e.getMessage(), "Data Error");
+				generateNotificationFront(SEVERITY_ERROR, "Ocurrió un error al guardar la información: ", "Data Error");
 			}
 		}
 	}
@@ -383,53 +389,53 @@ public class FicTecSegIndEstrategicosMB extends AbstractMB implements Serializab
 	 */
 	private boolean validarEncabezado(Ftecnicasm ft) {
 		if (StringUtils.isEmpty(ft.getCvetemas())) {
-			String msg = "Seleccione Cve Temas. Update cancelled.";
+			String msg = "El Campo Cve Temas es obligatorio.";
 			generateNotificationFront(SEVERITY_ERROR, msg, "Data Error");
 			return false;
 		}
 
 		if (StringUtils.isEmpty(ft.getClvdep())) {
-			String msg = "Seleccione Dependencia. Update cancelled.";
+			String msg = "El Campo Dependencia es obligatorio.";
 			generateNotificationFront(SEVERITY_ERROR, msg, "Data Error");
 			return false;
 		}
 
 		if (StringUtils.isEmpty(ft.getClvfun())) {
-			String msg = "Seleccione Programa. Update cancelled.";
+			String msg = "El Campo Programa es obligatorio.";
 			generateNotificationFront(SEVERITY_ERROR, msg, "Data Error");
 			return false;
 		}
 
 		if (StringUtils.isEmpty(ft.getCveind())) {
-			String msg = "Seleccione Código de Indicador. Update cancelled.";
+			String msg = "El Campo Código de Indicador es obligatorio.";
 			generateNotificationFront(SEVERITY_ERROR, msg, "Data Error");
 			return false;
 		}
 
 		if (StringUtils.isEmpty(ft.getFrecuencia())) {
-			String msg = "Seleccione tipo de Frecuencia. Update cancelled.";
+			String msg = "El Campo Frecuencia es obligatorio.";
 			generateNotificationFront(SEVERITY_ERROR, msg, "Data Error");
 			return false;
 		}
 
 		if (tieneDetalles) {
 			if (!ft.getCvetemas().equals(temaOrig)) {
-				String msg = "No se puede cambiar el tema de desarrollo, tiene detalle... Update cancelled.";
+				String msg = "No se puede cambiar el Campo Cve Temas. Tiene detalles.";
 				generateNotificationFront(SEVERITY_ERROR, msg, "Data Error");
 				return false;
 			}
 			if (!ft.getClvdep().equals(dependenciaOrig)) {
-				String msg = "No se puede cambiar Dependencia, tiene detalle... Update cancelled.";
+				String msg = "No se puede cambiar el Campo Dependencia. Tiene detalles.";
 				generateNotificationFront(SEVERITY_ERROR, msg, "Data Error");
 				return false;
 			}
 			if (!ft.getClvfun().equals(programaOrig)) {
-				String msg = "No se puede cambiar Programa, tiene detalle... Update cancelled.";
+				String msg = "No se puede cambiar el Campo Programa. Tiene detalles.";
 				generateNotificationFront(SEVERITY_ERROR, msg, "Data Error");
 				return false;
 			}
 			if (!ft.getCveind().equals(codIndOrig)) {
-				String msg = "No se puede cambiar Indicador, tiene detalle... Update cancelled.";
+				String msg = "No se puede cambiar el Campo Indicador. Tiene detalles.";
 				generateNotificationFront(SEVERITY_ERROR, msg, "Data Error");
 				return false;
 			}
@@ -448,11 +454,10 @@ public class FicTecSegIndEstrategicosMB extends AbstractMB implements Serializab
 			}
 		}
 		if (duplicado) {
-			String msg = "Ftecnicasm ya existe con Cve Temas \"" + ft.getCvetemas() + "\" "
-					+ "clave  Dependencia \"" + ft.getClvdep() + "\" "
-					+ "Programa \"" + ft.getClvfun() + "\" "
-					+ "Fuente de Financiamiento \"" + ft.getClvfin() +"\" "
-					+ "Codigo de Indicador \"" + ft.getCveind() + "\" (132) Update cancelled.";
+			String msg = "Ficha de Seguimiento ya existe con Cve Temas: \"" + ft.getCvetemas() + "\" "
+					+ "Dependencia: \"" + ft.getClvdep() + "\" "
+					+ "Programa: \"" + ft.getClvfun() + "\" "
+					+ "Codigo de Indicador: \"" + ft.getCveind() + "\".";
 			generateNotificationFront(SEVERITY_ERROR, msg, "Data Error");
 			return false;
 		}

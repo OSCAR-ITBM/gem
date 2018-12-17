@@ -442,7 +442,7 @@
 										</h:panelGroup>
 
 										<h:panelGroup>
-											<h:outputText value="Clave Variable"></h:outputText>
+											<h:outputText value="Nombre Corto de la Variable"></h:outputText>
 											<br />
 											<h:inputText id="varClave" value="#{indDetalle.cvevar}"
 												size="10" maxlength="30"
@@ -654,7 +654,7 @@
 								oncomplete="PF('catalogVariablesDlg').hide();"></p:ajax>
 							<f:facet name="header">Consulta al Cat&aacute;logo de Variables</f:facet>
 
-							<p:column headerText="Clave" width="20%"
+							<p:column headerText="Nombre Corto de la Variable" width="20%"
 								filterMatchMode="contains" filterBy="#{variable.cvevar}">
 								<h:outputText value="#{variable.cvevar}" />
 							</p:column>

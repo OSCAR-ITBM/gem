@@ -315,19 +315,12 @@ public class UploadFileMunicipalMB extends AbstractMB {
 					InputStream  input = new FileInputStream(newFile2);
 					bis = new BufferedInputStream(input);
 					listaFromCSV = csvReadingAndParse(bis);
-					if (bValidaCsv == Boolean.TRUE) {
-
-						bValidaCsv = Boolean.FALSE;
-						this.validate = Boolean.FALSE;
-
-					} else {
-						this.validate = Boolean.TRUE;
-					}
+					
 
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				if (this.validate) {
+				if (this.bValidaCsv == Boolean.TRUE) {
 					Tsueldo tsuldo = tabulador.execuet(newFile2.getName() , getPath("CARG_ARCHIVO"),
 							this.getUserDetails().getUsername(), this.getUserDetails().getIdSector());
 					if (tsuldo.getoCodError() > 0) {
@@ -461,8 +454,9 @@ public class UploadFileMunicipalMB extends AbstractMB {
 			retorno.setAguinaldo(toDouble(p[12]));
 			retorno.setAguinaldoeven(toDouble(p[13]));
 			retorno.setPv(toDouble(p[14]));
-		} else {
 			bValidaCsv = Boolean.TRUE;
+		} else {
+			bValidaCsv = Boolean.FALSE;
 		}
 		// Si son nulls asigna valores default
 		retorno = checkNullsAndSetDefaultValues(retorno);

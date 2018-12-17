@@ -49,36 +49,36 @@ public class ReportadorTxtMB extends AbstractMB {
 
 	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReportadorTxtMB.class);
-	
+
 	/** The reportid. */
 	private int reportid;
-	
+
+	private Boolean dTxt;
+
 	/** The nombre reporte. */
 	private String nombreReporte;
-	
+
 	/** The boton label. */
 	private String botonLabel;
-	
+
 	/** The tc reporte. */
 	private TcReporte tcReporte;
-	
+
 	/** The reportador TXT service. */
 	@ManagedProperty("#{reportadorTXTService}")
 	private ReportadorTXTService reportadorTXTService;
-	
+
 	/** The reportes repository. */
 	@ManagedProperty("#{reportesRepository}")
 	private ReportesRepository reportesRepository;
-	
+
 	/** The reportes log repository. */
 	@ManagedProperty("#{reportesLogRepository}")
 	private ReportesLogRepository reportesLogRepository;
 
-	
 	/** The conctb repository. */
 	@ManagedProperty("#{conctbRepository}")
 	private ConctbRepository conctbRepository;
-	
 
 	/**
 	 * Gets the conctb repository.
@@ -116,8 +116,10 @@ public class ReportadorTxtMB extends AbstractMB {
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage("El id del reporte no se encuentra en la base de datos"));
 		} else {
+
 			this.setNombreReporte(this.tcReporte.getNombreReporte());
 			this.setBotonLabel(this.tcReporte.getBotonLabel());
+
 		}
 
 	}
@@ -132,38 +134,39 @@ public class ReportadorTxtMB extends AbstractMB {
 		reportLog.setUsuario(getUserDetails().getUsername());
 		reportesLogRepository.save(reportLog);
 		String nombreArchivoFormato = this.obtieneNombreArchivoComplete();
-		//List<String> lista = reportadorTXTService.ejecutaQueryNativo(this.tcReporte);
-		/*if (lista.size() == 0) {
+		// List<String> lista = reportadorTXTService.ejecutaQueryNativo(this.tcReporte);
+		/*
+		 * if (lista.size() == 0) { FacesContext context =
+		 * FacesContext.getCurrentInstance(); context.addMessage(null, new
+		 * FacesMessage("No existen registros para generar el reporte")); } else {
+		 */
+		try {
+			// guarda el archivo
+			// reportLog.setCantRegistros(lista.size());
+			// this.sendFileToUser(
+			// reportadorTXTService.saveTxtReport(lista,
+			// tcReporte.getRutaArchivo(), nombreArchivoFormato));
+			String fileNameBuff = FilenameUtils.getBaseName(nombreArchivoFormato) + UUID.randomUUID()
+					+ FilenameUtils.EXTENSION_SEPARATOR_STR + FilenameUtils.getExtension(nombreArchivoFormato);
+			this.sendFileToUser(
+					reportadorTXTService.ejecutaQueryNativo(tcReporte, tcReporte.getRutaArchivo(), fileNameBuff),
+					nombreArchivoFormato);
+		} catch (IOException e) {
+			LOGGER.error(e.getMessage(), e);
 			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(null, new FacesMessage("No existen registros para generar el reporte"));
-		} else {*/
-			try {
-				// guarda el archivo
-				//reportLog.setCantRegistros(lista.size());
-				// this.sendFileToUser(
-				// reportadorTXTService.saveTxtReport(lista,
-				// tcReporte.getRutaArchivo(), nombreArchivoFormato));
-				String fileNameBuff = FilenameUtils.getBaseName(nombreArchivoFormato) + UUID.randomUUID()
-						+ FilenameUtils.EXTENSION_SEPARATOR_STR + FilenameUtils.getExtension(nombreArchivoFormato);
-				this.sendFileToUser(
-						reportadorTXTService.ejecutaQueryNativo(tcReporte, tcReporte.getRutaArchivo(), fileNameBuff),
-						nombreArchivoFormato);
-			} catch (IOException e) {
-				LOGGER.error(e.getMessage(), e);
-				FacesContext context = FacesContext.getCurrentInstance();
-				context.addMessage(null, new FacesMessage("Error al generar reporte"));
-			}
-		//}
+			context.addMessage(null, new FacesMessage("Error al generar reporte"));
+		}
+		// }
 		reportLog.setFechaFin(new Timestamp(Calendar.getInstance().getTimeInMillis()));
 		// guarda en el log
 		reportesLogRepository.save(reportLog);
 	}
-	
+
 	/**
 	 * Genera reporte 2.
 	 */
 	public void generaReporte2() {
-		
+
 		List<String> lista = reportadorTXTService.ejecutaQueryNativo(this.tcReporte);
 		if (lista.size() == 0) {
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -171,15 +174,15 @@ public class ReportadorTxtMB extends AbstractMB {
 		} else {
 			RequestContext.getCurrentInstance().execute("jQuery('#formTable\\\\:hidden2).click();");
 		}
-	
+
 	}
-	
+
 	/**
 	 * Gets the reporte.
 	 *
 	 * @return the reporte
 	 */
-	public StreamedContent  getReporte() {
+	public StreamedContent getReporte() {
 		TrReportesLog reportLog = new TrReportesLog();
 		reportLog.setTcReporte(tcReporte);
 		reportLog.setFechaIni(new Timestamp(Calendar.getInstance().getTimeInMillis()));
@@ -199,18 +202,20 @@ public class ReportadorTxtMB extends AbstractMB {
 				reportLog.setCantRegistros(lista.size());
 				String fileNameBuff = FilenameUtils.getBaseName(nombreArchivoFormato) + UUID.randomUUID()
 						+ FilenameUtils.EXTENSION_SEPARATOR_STR + FilenameUtils.getExtension(nombreArchivoFormato);
-				
-				File fileToSend=reportadorTXTService.ejecutaQueryNativo(tcReporte, tcReporte.getRutaArchivo(), fileNameBuff);
-						
+
+				File fileToSend = reportadorTXTService.ejecutaQueryNativo(tcReporte, tcReporte.getRutaArchivo(),
+						fileNameBuff);
+
 				byte[] ingresoRespFile = new byte[(int) fileToSend.length()];
 				fileInputStream = new FileInputStream(fileToSend);
 				fileInputStream.read(ingresoRespFile);
-				toReturn = new DefaultStreamedContent(fileInputStream, "text/plain", nombreArchivoFormato, ReportadorTXTServiceImpl.CHARSET);
+				toReturn = new DefaultStreamedContent(fileInputStream, "text/plain", nombreArchivoFormato,
+						ReportadorTXTServiceImpl.CHARSET);
 			} catch (IOException e) {
 				LOGGER.error(e.getMessage(), e);
 				FacesContext context = FacesContext.getCurrentInstance();
 				context.addMessage(null, new FacesMessage("Error al generar reporte"));
-			}finally {
+			} finally {
 				if (null != fileInputStream) {
 					try {
 						fileInputStream.close();
@@ -238,7 +243,7 @@ public class ReportadorTxtMB extends AbstractMB {
 	 * Send file to user.
 	 *
 	 * @param fileToSend the file to send
-	 * @param fileName the file name
+	 * @param fileName   the file name
 	 */
 	private void sendFileToUser(File fileToSend, String fileName) {
 		FileInputStream fileInputStream = null;
@@ -291,9 +296,12 @@ public class ReportadorTxtMB extends AbstractMB {
 	public String obtieneNombreArchivoComplete() {
 		Calendar fecha = Calendar.getInstance();
 		String nombreArchivo = this.tcReporte.getNombreArchivo();
-		String cveEntidad = "";//this.getUserDetails().getIdManagementAdmin().toString().substring(0, 1);
-		String entidadMunicipal = conctbRepository.findByIdsector(this.getUserDetails().getIdSector()).getClave();//StringUtils.leftPad(this.getUserDetails().getIdMunicipio().toString(), 3, "0");
-		String anio = Integer.toString(conctbRepository.findByIdsector(this.getUserDetails().getIdSector()).getAnoemp());
+		String cveEntidad = "";// this.getUserDetails().getIdManagementAdmin().toString().substring(0, 1);
+		String entidadMunicipal = conctbRepository.findByIdsector(this.getUserDetails().getIdSector()).getClave();// StringUtils.leftPad(this.getUserDetails().getIdMunicipio().toString(),
+																													// 3,
+																													// "0");
+		String anio = Integer
+				.toString(conctbRepository.findByIdsector(this.getUserDetails().getIdSector()).getAnoemp());
 		return String.format(nombreArchivo, entidadMunicipal, cveEntidad, anio);
 	}
 
@@ -421,6 +429,14 @@ public class ReportadorTxtMB extends AbstractMB {
 	 */
 	public void setTcReporte(TcReporte tcReporte) {
 		this.tcReporte = tcReporte;
+	}
+
+	public Boolean getdTxt() {
+		return dTxt;
+	}
+
+	public void setdTxt(Boolean dTxt) {
+		this.dTxt = dTxt;
 	}
 
 }

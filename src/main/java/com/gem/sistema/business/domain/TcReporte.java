@@ -4,36 +4,35 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
 // TODO: Auto-generated Javadoc
 /**
  * The persistent class for the TC_REPORTES database table.
  * 
  */
 @Entity
-@Table(name="TC_REPORTES")
-@NamedQuery(name="TcReporte.findAll", query="SELECT t FROM TcReporte t")
+@Table(name = "TC_REPORTES")
+@NamedQuery(name = "TcReporte.findAll", query = "SELECT t FROM TcReporte t")
 public class TcReporte implements Serializable {
-	
+
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/** The id reporte. */
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="ID_REPORTE")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID_REPORTE")
 	private long idReporte;
 
 	/** The boton label. */
-	@Column(name="BOTON_LABEL")
+	@Column(name = "BOTON_LABEL")
 	private String botonLabel;
 
 	/** The nombre archivo. */
-	@Column(name="NOMBRE_ARCHIVO")
+	@Column(name = "NOMBRE_ARCHIVO")
 	private String nombreArchivo;
 
 	/** The nombre reporte. */
-	@Column(name="NOMBRE_REPORTE")
+	@Column(name = "NOMBRE_REPORTE")
 	private String nombreReporte;
 
 	/** The qry 1. */
@@ -46,12 +45,15 @@ public class TcReporte implements Serializable {
 	private String qry3;
 
 	/** The ruta archivo. */
-	@Column(name="RUTA_ARCHIVO")
+	@Column(name = "RUTA_ARCHIVO")
 	private String rutaArchivo;
 
+	@Column(name = "TIPO_ARCHIVO")
+	private String tipoArchivo;
+
 	/** The tr reportes logs. */
-	//bi-directional many-to-one association to TrReportesLog
-	@OneToMany(mappedBy="tcReporte")
+	// bi-directional many-to-one association to TrReportesLog
+	@OneToMany(mappedBy = "tcReporte")
 	private List<TrReportesLog> trReportesLogs;
 
 	/**
@@ -246,6 +248,14 @@ public class TcReporte implements Serializable {
 		trReportesLog.setTcReporte(null);
 
 		return trReportesLog;
+	}
+
+	public String getTipoArchivo() {
+		return tipoArchivo;
+	}
+
+	public void setTipoArchivo(String tipoArchivo) {
+		this.tipoArchivo = tipoArchivo;
 	}
 
 }

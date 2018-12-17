@@ -20,7 +20,7 @@ public interface IndicadoresDisenoService {
 	 *
 	 * @return the list
 	 */
-	List<FtecnicadmDTO> llenaListaEncabezado();
+	List<FtecnicadmDTO> llenaListaEncabezado(Integer idSector);
 	
 	/**
 	 * Llena lista detalle.
@@ -81,8 +81,9 @@ public interface IndicadoresDisenoService {
 	 * Salvar diseno.
 	 *
 	 * @param ftecnicadmDTO the ftecnicadm DTO
+	 * @return 
 	 */
-	void salvarDiseno(FtecnicadmDTO ftecnicadmDTO);
+	boolean salvarDiseno(FtecnicadmDTO ftecnicadmDTO);
 	
 	/**
 	 * Salvar diseno modificado.

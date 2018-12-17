@@ -5,425 +5,200 @@ import javax.persistence.*;
 import java.util.Date;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * The persistent class for the ACTIVIDAD database table.
  * 
  */
 @Entity
 @NamedQuery(name="Actividad.findAll", query="SELECT a FROM Actividad a")
-public class Actividad implements Serializable {
-	
-	/** The Constant serialVersionUID. */
+public class Actividad extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	/** The id. */
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="\"ID\"")
-	private long id;
+	
 
-	/** The clvdepg. */
 	private String clvdepg;
 
-	/** The cveact. */
-	private int cveact;
+	private Integer cveact;
 
-	/** The cvecom. */
 	private int cvecom;
 
-	/** The cvefin. */
 	private String cvefin;
 
-	/** The cveind. */
 	private String cveind;
 
-	/** The cveprog. */
 	private String cveprog;
 
-	/** The cvetemas. */
 	private String cvetemas;
 
-	/** The feccap. */
 	@Temporal(TemporalType.DATE)
 	private Date feccap;
 
-	/** The formula. */
 	private String formula;
 
-	/** The frecuencia. */
 	private String frecuencia;
 
-	/** The id ref. */
 	@Column(name="ID_REF")
-	private long idRef;
+	private Long idRef;
 
-	/** The medio. */
 	private String medio;
 
-	/** The nombre. */
 	private String nombre;
 
-	/** The objetivo. */
 	private String objetivo;
 
-	/** The sectorid. */
-	private int sectorid;
+	private Integer sectorid;
 
-	/** The supuesto. */
 	private String supuesto;
 
-	/** The userid. */
 	@Column(name="\"USERID\"")
 	private String userid;
 
-	/** The usuario. */
 	private String usuario;
 
-	/**
-	 * Instantiates a new actividad.
-	 */
 	public Actividad() {
 	}
 
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	public long getId() {
-		return this.id;
-	}
-
-	/**
-	 * Sets the id.
-	 *
-	 * @param id the new id
-	 */
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	/**
-	 * Gets the clvdepg.
-	 *
-	 * @return the clvdepg
-	 */
+	
 	public String getClvdepg() {
 		return this.clvdepg;
 	}
 
-	/**
-	 * Sets the clvdepg.
-	 *
-	 * @param clvdepg the new clvdepg
-	 */
 	public void setClvdepg(String clvdepg) {
 		this.clvdepg = clvdepg;
 	}
 
-	/**
-	 * Gets the cveact.
-	 *
-	 * @return the cveact
-	 */
-	public int getCveact() {
+	public Integer getCveact() {
 		return this.cveact;
 	}
 
-	/**
-	 * Sets the cveact.
-	 *
-	 * @param cveact the new cveact
-	 */
-	public void setCveact(int cveact) {
+	public void setCveact(Integer cveact) {
 		this.cveact = cveact;
 	}
 
-	/**
-	 * Gets the cvecom.
-	 *
-	 * @return the cvecom
-	 */
 	public int getCvecom() {
 		return this.cvecom;
 	}
 
-	/**
-	 * Sets the cvecom.
-	 *
-	 * @param cvecom the new cvecom
-	 */
 	public void setCvecom(int cvecom) {
 		this.cvecom = cvecom;
 	}
 
-	/**
-	 * Gets the cvefin.
-	 *
-	 * @return the cvefin
-	 */
 	public String getCvefin() {
 		return this.cvefin;
 	}
 
-	/**
-	 * Sets the cvefin.
-	 *
-	 * @param cvefin the new cvefin
-	 */
 	public void setCvefin(String cvefin) {
 		this.cvefin = cvefin;
 	}
 
-	/**
-	 * Gets the cveind.
-	 *
-	 * @return the cveind
-	 */
 	public String getCveind() {
 		return this.cveind;
 	}
 
-	/**
-	 * Sets the cveind.
-	 *
-	 * @param cveind the new cveind
-	 */
 	public void setCveind(String cveind) {
 		this.cveind = cveind;
 	}
 
-	/**
-	 * Gets the cveprog.
-	 *
-	 * @return the cveprog
-	 */
 	public String getCveprog() {
 		return this.cveprog;
 	}
 
-	/**
-	 * Sets the cveprog.
-	 *
-	 * @param cveprog the new cveprog
-	 */
 	public void setCveprog(String cveprog) {
 		this.cveprog = cveprog;
 	}
 
-	/**
-	 * Gets the cvetemas.
-	 *
-	 * @return the cvetemas
-	 */
 	public String getCvetemas() {
 		return this.cvetemas;
 	}
 
-	/**
-	 * Sets the cvetemas.
-	 *
-	 * @param cvetemas the new cvetemas
-	 */
 	public void setCvetemas(String cvetemas) {
 		this.cvetemas = cvetemas;
 	}
 
-	/**
-	 * Gets the feccap.
-	 *
-	 * @return the feccap
-	 */
 	public Date getFeccap() {
 		return this.feccap;
 	}
 
-	/**
-	 * Sets the feccap.
-	 *
-	 * @param feccap the new feccap
-	 */
 	public void setFeccap(Date feccap) {
 		this.feccap = feccap;
 	}
 
-	/**
-	 * Gets the formula.
-	 *
-	 * @return the formula
-	 */
 	public String getFormula() {
 		return this.formula;
 	}
 
-	/**
-	 * Sets the formula.
-	 *
-	 * @param formula the new formula
-	 */
 	public void setFormula(String formula) {
 		this.formula = formula;
 	}
 
-	/**
-	 * Gets the frecuencia.
-	 *
-	 * @return the frecuencia
-	 */
 	public String getFrecuencia() {
 		return this.frecuencia;
 	}
 
-	/**
-	 * Sets the frecuencia.
-	 *
-	 * @param frecuencia the new frecuencia
-	 */
 	public void setFrecuencia(String frecuencia) {
 		this.frecuencia = frecuencia;
 	}
 
-	/**
-	 * Gets the id ref.
-	 *
-	 * @return the id ref
-	 */
-	public long getIdRef() {
+	public Long getIdRef() {
 		return this.idRef;
 	}
 
-	/**
-	 * Sets the id ref.
-	 *
-	 * @param idRef the new id ref
-	 */
-	public void setIdRef(long idRef) {
+	public void setIdRef(Long idRef) {
 		this.idRef = idRef;
 	}
 
-	/**
-	 * Gets the medio.
-	 *
-	 * @return the medio
-	 */
 	public String getMedio() {
 		return this.medio;
 	}
 
-	/**
-	 * Sets the medio.
-	 *
-	 * @param medio the new medio
-	 */
 	public void setMedio(String medio) {
 		this.medio = medio;
 	}
 
-	/**
-	 * Gets the nombre.
-	 *
-	 * @return the nombre
-	 */
 	public String getNombre() {
 		return this.nombre;
 	}
 
-	/**
-	 * Sets the nombre.
-	 *
-	 * @param nombre the new nombre
-	 */
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
 
-	/**
-	 * Gets the objetivo.
-	 *
-	 * @return the objetivo
-	 */
 	public String getObjetivo() {
 		return this.objetivo;
 	}
 
-	/**
-	 * Sets the objetivo.
-	 *
-	 * @param objetivo the new objetivo
-	 */
 	public void setObjetivo(String objetivo) {
 		this.objetivo = objetivo;
 	}
 
-	/**
-	 * Gets the sectorid.
-	 *
-	 * @return the sectorid
-	 */
-	public int getSectorid() {
+	public Integer getSectorid() {
 		return this.sectorid;
 	}
 
-	/**
-	 * Sets the sectorid.
-	 *
-	 * @param sectorid the new sectorid
-	 */
-	public void setSectorid(int sectorid) {
+	public void setSectorid(Integer sectorid) {
 		this.sectorid = sectorid;
 	}
 
-	/**
-	 * Gets the supuesto.
-	 *
-	 * @return the supuesto
-	 */
 	public String getSupuesto() {
 		return this.supuesto;
 	}
 
-	/**
-	 * Sets the supuesto.
-	 *
-	 * @param supuesto the new supuesto
-	 */
 	public void setSupuesto(String supuesto) {
 		this.supuesto = supuesto;
 	}
 
-	/**
-	 * Gets the userid.
-	 *
-	 * @return the userid
-	 */
 	public String getUserid() {
 		return this.userid;
 	}
 
-	/**
-	 * Sets the userid.
-	 *
-	 * @param userid the new userid
-	 */
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
 
-	/**
-	 * Gets the usuario.
-	 *
-	 * @return the usuario
-	 */
 	public String getUsuario() {
 		return this.usuario;
 	}
 
-	/**
-	 * Sets the usuario.
-	 *
-	 * @param usuario the new usuario
-	 */
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
