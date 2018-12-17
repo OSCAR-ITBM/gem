@@ -1,8 +1,11 @@
 package com.gem.sistema.web.bean;
 
 import static com.roonin.utils.UtilDate.getDateSystem;
+import static com.roonin.utils.UtilDate.getLastDayByAnoEmp;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -12,21 +15,28 @@ import javax.faces.bean.ViewScoped;
 import org.apache.commons.collections4.CollectionUtils;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.model.StreamedContent;
 
 import com.gem.sistema.business.domain.Balancepre;
 import com.gem.sistema.business.domain.Conctb;
+import com.gem.sistema.business.domain.Firmas;
 import com.gem.sistema.business.domain.TcPeriodo;
+import com.gem.sistema.business.dto.PuestosFirmasDTO;
 import com.gem.sistema.business.repository.catalogs.ConctbRepository;
+import com.gem.sistema.business.repository.catalogs.FirmasRepository;
+import com.gem.sistema.business.repository.catalogs.TcMesRepository;
 import com.gem.sistema.business.repository.catalogs.TcPeriodoRepositoy;
 import com.gem.sistema.business.service.catalogos.BalancepreService;
+import com.gem.sistema.business.service.catalogos.PuestosFirmasService;
+import com.gem.sistema.business.service.reportador.ReportValidationException;
 import com.gem.sistema.web.datamodel.DataModelGeneric;
 
 @ManagedBean(name = "balancePresupuestarioMB")
 @ViewScoped
-public class BalancePresupuestarioMB extends AbstractMB {
+public class BalancePresupuestarioMB extends BaseDirectReport {
 
 	private static final Integer TIPO_PERIODO = 3;
-	
+
 	private static final String VIEW_EDIT_ROW_ACTIVATE_PENCIL = "jQuery('span.ui-icon-pencil').eq(";
 
 	private static final String VIEW_EDIT_ROW_ACTIVATE_PENCIL_COMPLEMENT = ").each(function(){jQuery(this).click()});";
@@ -47,16 +57,19 @@ public class BalancePresupuestarioMB extends AbstractMB {
 
 	private Conctb conctb;
 
+	private PuestosFirmasDTO presidente;
+	private PuestosFirmasDTO tesorero;
+
 	private Integer currentIndex;
-	
+
 	private Integer oldTrimestre;
-	
+
 	private Long oldConsecutivo;
 
 	private Boolean bEdition;
 
 	private Boolean bModifcar;
-	
+
 	private Boolean bAdicionar;
 
 	@ManagedProperty("#{tcPeriodoRepositoy}")
@@ -68,8 +81,19 @@ public class BalancePresupuestarioMB extends AbstractMB {
 	@ManagedProperty("#{balancepreService}")
 	private BalancepreService balancepreService;
 
+	@ManagedProperty("#{puestosFirmasService}")
+	private PuestosFirmasService puestosFirmasService;
+
+	@ManagedProperty("#{firmasRepository}")
+	private FirmasRepository firmasRepository;
+
+	@ManagedProperty("#{tcMesRepository}")
+	private TcMesRepository tcMesRepository;
+
 	@PostConstruct
 	public void init() {
+		jasperReporteName = "BP";
+		endFilename = jasperReporteName + ".pdf";
 		conctb = conctbRepository.findByIdsectorAndIdRef(this.getUserDetails().getIdSector(), 0);
 		listTrimestres = periodoRepository.findByTipoPeriodo(TIPO_PERIODO);
 
@@ -126,8 +150,6 @@ public class BalancePresupuestarioMB extends AbstractMB {
 		if (bModifcar == Boolean.TRUE) {
 
 			balancepreSelected = balancepreService.modify(balancepreSelected, oldTrimestre, oldConsecutivo);
-			//if (balancepreSelected.isbGuardar() == Boolean.TRUE) {
-			//}
 		} else {
 			balancepreSelected.setIndex(lastIndex);
 			balancepreSelected = this.balancepreService.save(balancepreSelected);
@@ -178,7 +200,7 @@ public class BalancePresupuestarioMB extends AbstractMB {
 			}
 		}
 	}
-	
+
 	public void delete(Integer index) {
 		balancepreSelected = this.dataModelBalancepre.getListT().get(index);
 
@@ -241,6 +263,63 @@ public class BalancePresupuestarioMB extends AbstractMB {
 		text.append(" ");
 		text.append(String.format(FOCUS_BY_ROWID, index));
 		RequestContext.getCurrentInstance().execute(text.toString());
+	}
+
+	Map<String, Object> parameters;
+
+	@Override
+	public Map<String, Object> getParametersReports() throws ReportValidationException {
+		Firmas firmas = firmasRepository.findAllByIdsector(this.getUserDetails().getIdSector());
+		this.getFirmas();
+
+		Object[] meses = this.getMonths(trimestre, firmas.getCampo3());
+		parameters = new HashMap<String, Object>();
+
+		parameters.put("pMesInicial", meses[0]);
+		parameters.put("pMesFinal", meses[1]);
+		parameters.put("pLastDay", meses[2]);
+		parameters.put("pYear", firmas.getCampo3());
+		parameters.put("pNombreMunicipio", firmas.getCampo1());
+		parameters.put("pImagen", this.getUserDetails().getPathImgCab1());
+		parameters.put("pTrimestre", trimestre);
+		parameters.put("pIdSector", this.getUserDetails().getIdSector());
+		parameters.put("pL1", this.presidente.getPuesto());
+		parameters.put("pN1", this.presidente.getNombre());
+		parameters.put("pL3", this.tesorero.getPuesto());
+		parameters.put("pN3", this.tesorero.getNombre());
+
+		return parameters;
+	}
+
+	@Override
+	public StreamedContent generaReporteSimple(int type) throws ReportValidationException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void getFirmas() {
+		List<PuestosFirmasDTO> puestosFirmas = puestosFirmasService.listFirmas(this.getUserDetails().getIdSector());
+		for (int y = 0; y < puestosFirmas.size(); y++) {
+			if (puestosFirmas.get(y).getId() == 1) {
+				this.presidente = puestosFirmas.get(y);
+			}
+			if (puestosFirmas.get(y).getId() == 3) {
+				this.tesorero = puestosFirmas.get(y);
+			}
+		}
+	}
+
+	public Object[] getMonths(Integer trimestre, Integer anio) {
+		Integer mesFinal = trimestre * 3;
+		Integer mesInicial = mesFinal - 2;
+		Object[] meses = {
+				tcMesRepository.findByMes(org.apache.commons.lang3.StringUtils.leftPad(mesInicial.toString(), 2, "0"))
+						.getDescripcion(),
+				tcMesRepository.findByMes(org.apache.commons.lang3.StringUtils.leftPad(mesFinal.toString(), 2, "0"))
+						.getDescripcion(),
+				getLastDayByAnoEmp(mesFinal, anio) };
+
+		return meses;
 	}
 
 	public String[] getValue(String data) {
@@ -365,6 +444,38 @@ public class BalancePresupuestarioMB extends AbstractMB {
 
 	public void setCurrentIndex(Integer currentIndex) {
 		this.currentIndex = currentIndex;
+	}
+
+	public FirmasRepository getFirmasRepository() {
+		return firmasRepository;
+	}
+
+	public void setFirmasRepository(FirmasRepository firmasRepository) {
+		this.firmasRepository = firmasRepository;
+	}
+
+	public Map<String, Object> getParameters() {
+		return parameters;
+	}
+
+	public void setParameters(Map<String, Object> parameters) {
+		this.parameters = parameters;
+	}
+
+	public TcMesRepository getTcMesRepository() {
+		return tcMesRepository;
+	}
+
+	public void setTcMesRepository(TcMesRepository tcMesRepository) {
+		this.tcMesRepository = tcMesRepository;
+	}
+
+	public PuestosFirmasService getPuestosFirmasService() {
+		return puestosFirmasService;
+	}
+
+	public void setPuestosFirmasService(PuestosFirmasService puestosFirmasService) {
+		this.puestosFirmasService = puestosFirmasService;
 	}
 
 }
