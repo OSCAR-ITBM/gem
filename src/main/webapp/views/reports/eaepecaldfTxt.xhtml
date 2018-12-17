@@ -27,9 +27,11 @@
 					<p:panelGrid columns="5" styleClass="col-centered ui-noborder">
 
 						<h:outputText value="Mes: " for="mesInputOri" id="lblMesInputOri" />
-						<p:selectOneMenu id="trimestre" value="#{reporteEaepecaldfMB.trimestre}">
-							<f:selectItems value="#{reporteEaepecaldfMB.listPeriodo}" var="trim"
-								itemLabel="#{trim.periodo}" itemValue="0#{trim.periodo}" />
+						<p:selectOneMenu id="trimestre"
+							value="#{reporteEaepecaldfMB.trimestre}">
+							<f:selectItems value="#{reporteEaepecaldfMB.listPeriodo}"
+								var="trim" itemLabel="#{trim.periodo}"
+								itemValue="0#{trim.periodo}" />
 						</p:selectOneMenu>
 						<p:commandButton id="correcto" value="Correcto"
 							actionListener="#{reporteEaepecaldfMB.downloadTxt}"
