@@ -40,5 +40,7 @@
 		<class>com.gem.sistema.business.domain.Polifl</class>
 		<class>com.gem.sistema.business.domain.Eaid</class>
 		<class>com.gem.sistema.business.domain.TcPeriodo</class>
+		<class>com.gem.sistema.business.domain.TcPuesto</class>
+		<class>com.gem.sistema.business.domain.TrPuestoFirma</class>
 	</persistence-unit>
 </persistence>

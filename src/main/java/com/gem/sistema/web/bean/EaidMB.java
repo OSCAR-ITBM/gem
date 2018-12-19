@@ -1,8 +1,11 @@
 package com.gem.sistema.web.bean;
 
 import static com.gem.sistema.util.UtilFront.generateNotificationFront;
+import static com.roonin.utils.UtilDate.getLastDayByAnoEmp;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -14,24 +17,33 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.model.StreamedContent;
 
 import com.gem.sistema.business.domain.Conctb;
 import com.gem.sistema.business.domain.Eaid;
-
+import com.gem.sistema.business.domain.Firmas;
 import com.gem.sistema.business.domain.TcPeriodo;
+import com.gem.sistema.business.dto.PuestosFirmasDTO;
+import com.gem.sistema.business.repository.catalogs.ConctbRepository;
+import com.gem.sistema.business.repository.catalogs.FirmasRepository;
+import com.gem.sistema.business.repository.catalogs.TcMesRepository;
 import com.gem.sistema.business.service.catalogos.EaidService;
+import com.gem.sistema.business.service.catalogos.PuestosFirmasService;
 import com.gem.sistema.business.service.catalogos.TcPeriodoService;
+import com.gem.sistema.business.service.reportador.ReportValidationException;
 import com.gem.sistema.web.datamodel.DataModelGeneric;
 import com.roonin.utils.UtilDate;
 
 @ManagedBean(name = "eaidMB")
 @ViewScoped
-public class EaidMB extends AbstractMB {
+public class EaidMB extends BaseDirectReport {
 
 	private static final Log LOG = LogFactory.getLog(EaidMB.class);
 
 	private static final Boolean FALSE = Boolean.FALSE;
 	private static final Boolean TRUE = Boolean.TRUE;
+	
+	
 
 	private static final Integer TRIMESTRE = 3;
 	/** The Constant VIEW_EDIT_ROW_ACTIVATE_PENCIL. */
@@ -47,12 +59,30 @@ public class EaidMB extends AbstractMB {
 	private static final String UPDATE_OBJETS = "jQuery('#form1\\\\:hiddenUpdate').click();";
 
 	private static final String CLICK_UPDATE = "jQuery('#form1\\\\\\\\:lasPage').click();";
+	
+	private static final String REPORT_NAME = "EAID";
+	
 
 	@ManagedProperty("#{tcPeriodoService}")
 	private TcPeriodoService tcPeriodoService;
 
 	@ManagedProperty("#{eaidService}")
 	private EaidService eaidService;
+	
+	@ManagedProperty("#{puestosFirmasService}")
+	private PuestosFirmasService puestosFirmasService;
+	
+	@ManagedProperty("#{conctbRepository}")
+	private ConctbRepository conctbRepository;
+	
+	@ManagedProperty("#{tcMesRepository}")
+	private TcMesRepository tcMesRepository;
+	
+	@ManagedProperty("#{firmasRepository}")
+	private FirmasRepository firmasRepository;
+	
+	private PuestosFirmasDTO presidente;
+	private PuestosFirmasDTO tesorero;
 
 	private Eaid eaid;
 	private TcPeriodo tcPeriodo;
@@ -83,6 +113,9 @@ public class EaidMB extends AbstractMB {
 	@PostConstruct
 	public void init() {
 		LOG.info("INICIA EL PROCESO DE CAPTURA DE EAID");
+		
+		jasperReporteName = REPORT_NAME;
+		endFilename = jasperReporteName + ".pdf";
 		this.setIdSector(this.getUserDetails().getIdSector());
 		conctb = this.eaidService.getAnioContable(idSector, 0l);
 		eaid = new Eaid();
@@ -469,4 +502,107 @@ public class EaidMB extends AbstractMB {
 		this.trimestre = trimestre;
 	}
 
+	public PuestosFirmasService getPuestosFirmasService() {
+		return puestosFirmasService;
+	}
+
+	public void setPuestosFirmasService(PuestosFirmasService puestosFirmasService) {
+		this.puestosFirmasService = puestosFirmasService;
+	}
+
+	public ConctbRepository getConctbRepository() {
+		return conctbRepository;
+	}
+
+	public void setConctbRepository(ConctbRepository conctbRepository) {
+		this.conctbRepository = conctbRepository;
+	}
+
+	public TcMesRepository getTcMesRepository() {
+		return tcMesRepository;
+	}
+
+	public void setTcMesRepository(TcMesRepository tcMesRepository) {
+		this.tcMesRepository = tcMesRepository;
+	}
+
+	public PuestosFirmasDTO getPresidente() {
+		return presidente;
+	}
+
+	public void setPresidente(PuestosFirmasDTO presidente) {
+		this.presidente = presidente;
+	}
+
+	public PuestosFirmasDTO getTesorero() {
+		return tesorero;
+	}
+
+	public void setTesorero(PuestosFirmasDTO tesorero) {
+		this.tesorero = tesorero;
+	}
+
+	public FirmasRepository getFirmasRepository() {
+		return firmasRepository;
+	}
+
+	public void setFirmasRepository(FirmasRepository firmasRepository) {
+		this.firmasRepository = firmasRepository;
+	}
+
+	@Override
+	public Map<String, Object> getParametersReports() throws ReportValidationException {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		Firmas firmas = firmasRepository.findAllByIdsector(this.getUserDetails().getIdSector());
+		this.getFirmas();
+
+		Object[] meses = this.getMonths(trimestre, firmas.getCampo3());
+
+		parameters.put("pMesInicial", meses[0]);
+		parameters.put("pMesFinal", meses[1]);
+		parameters.put("pLastDay", meses[2]);
+		parameters.put("pYear", firmas.getCampo3());
+		parameters.put("pNombreMunicipio", firmas.getCampo1());
+		parameters.put("pImagen1", this.getUserDetails().getPathImgCab1());
+		parameters.put("trimestre", trimestre);
+		parameters.put("idSector", this.getUserDetails().getIdSector());
+		parameters.put("pL1", this.presidente.getPuesto());
+		parameters.put("pN1", this.presidente.getNombre());
+		parameters.put("pL3", this.tesorero.getPuesto());
+		parameters.put("pN3", this.tesorero.getNombre());
+		parameters.put("idSector", this.getIdSector());
+		parameters.put("trimestre", trimestre);
+		return parameters;
+	}
+
+	@Override
+	public StreamedContent generaReporteSimple(int type) throws ReportValidationException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void getFirmas() {
+		List<PuestosFirmasDTO> puestosFirmas = puestosFirmasService.listFirmas(this.getUserDetails().getIdSector());
+		for (int y = 0; y < puestosFirmas.size(); y++) {
+			if (puestosFirmas.get(y).getId() == 1) {
+				this.presidente = puestosFirmas.get(y);
+			}
+			if (puestosFirmas.get(y).getId() == 3) {
+				this.tesorero = puestosFirmas.get(y);
+			}
+		}
+	}
+
+	public Object[] getMonths(Integer trimestre, Integer anio) {
+		Integer mesFinal = trimestre * 3;
+		Integer mesInicial = mesFinal - 2;
+		Object[] meses = {
+				tcMesRepository.findByMes(org.apache.commons.lang3.StringUtils.leftPad(mesInicial.toString(), 2, "0"))
+						.getDescripcion(),
+				tcMesRepository.findByMes(org.apache.commons.lang3.StringUtils.leftPad(mesFinal.toString(), 2, "0"))
+						.getDescripcion(),
+				getLastDayByAnoEmp(mesFinal, anio) };
+
+		return meses;
+	}
 }

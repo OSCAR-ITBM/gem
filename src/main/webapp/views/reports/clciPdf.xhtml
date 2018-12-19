@@ -7,29 +7,38 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
-
 <h:body>
 	<ui:composition template="/WEB-INF/layout/layout.xhtml">
 		<ui:define name="content">
 			<h:form id="form1">
 				<p:growl id="growlReportador" showDetail="true" sticky="true"></p:growl>
-				<p:panel id="panelReporte"
-					header="Archivo txt de Cuenta P&uacute;blica Estado Anal&iacute;tico de Ingresos"
-					styleClass="green col-md-4 col-centered row-centered shadow-panel">
-
+				<p:panel id="panelReporte" header="Balance Presupuestario"
+					styleClass="green col-md-9 col-centered row-centered shadow-panel">
 					<p:panelGrid columns="3" styleClass="col-centered ui-noborder">
+						<h:outputText value="Trimestre: " for="trimestre" />
+						<p:selectOneMenu id="trimestre" size="18" editable="false"
+							value="#{clciPdfMB.trimestre}">
+							
+							<f:selectItems value="#{clciPdfMB.listTrimestres}" var="trim" itemLabel="#{trim.periodo}" itemValue="#{trim.periodo}"/>
+						</p:selectOneMenu>
 						<p:panelGrid columns="4" styleClass="ui-noborder">
-
-							<p:commandButton value="Correcto" ajax="false" id="correcto"
-								onclick="PrimeFaces.monitorDownload(start, stop);"
-								actionListener="#{eAIngresos219MB.downLoadFile}"
-								update=":form1:growlReportador" icon="ui-icon-arrowthick-1-s">
-								<p:fileDownload value="#{eAIngresos219MB.fileTxt}" />
+							
+							<p:commandButton id="generateportepdf"
+								onstart="PF('blockUIWidget').block()"
+								oncomplete="PF('blockUIWidget').unblock()"
+								action="#{clciPdfMB.createFilePdfInline}"
+								value="Correcto"
+								update="form1:inlinePdf, :form1:growlReportador">
 							</p:commandButton>
-
 						</p:panelGrid>
 					</p:panelGrid>
+					<p:panel id="inlinePdf" style="border:0px"
+						visible="#{clciPdfMB.uuid ne null}">
 
+						<object type="application/pdf"
+							data="#{request.contextPath}/GetFileInline?uuid=#{clciPdfMB.uuid}&amp;filename=#{clciPdfMB.endFilename}"
+							height="380px" width="100%"> </object>
+					</p:panel>
 				</p:panel>
 				<pe:blockUI widgetVar="blockUIWidget" centerX="false">
 					<h:panelGrid columns="2">
@@ -40,7 +49,6 @@
 					</h:panelGrid>
 				</pe:blockUI>
 			</h:form>
-
 		</ui:define>
 	</ui:composition>
 </h:body>
