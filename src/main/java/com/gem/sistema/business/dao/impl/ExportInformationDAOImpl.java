@@ -32,10 +32,10 @@ public class ExportInformationDAOImpl implements ExportInformationDAO {
 	@Override
 	public String exportCuentas(Integer idSector, Integer mes) {
 		StringBuilder sSql = new StringBuilder();
-		sSql.append("SELECT '\"' ||T1.CUENTA||'\" \"'||T1.SCTA||'\" \"'||\r\n")
-				.append("             T1.SSCTA ||'\" \"'||T1.SSSCTA||'\" \"'||\r\n")
-				.append("             T1.SSSSCTA||'\" \"'||TRIM(TO_CHAR(T1.CARGOS, '999999999990.99'))||'\" \"'||\r\n")
-				.append("             TRIM(TO_CHAR(T1.ABONOS, '999999999990.99'))||'\"'\r\n")
+		sSql.append("SELECT T1.CUENTA||'|'||T1.SCTA||'|'||\r\n")
+				.append("             T1.SSCTA ||'|'||T1.SSSCTA||'|'||\r\n")
+				.append("             T1.SSSSCTA||'|'||TRIM(TO_CHAR(T1.CARGOS, '999999999990.99'))||'|'||\r\n")
+				.append("             TRIM(TO_CHAR(T1.ABONOS, '999999999990.99'))\r\n")
 				.append("      FROM (SELECT CU.CUENTA   ,\r\n").append("       			   CU.SCTA     ,\r\n")
 				.append("			       CU.SSCTA    ,\r\n").append("			       CU.SSSCTA   ,\r\n")
 				.append("			       CU.SSSSCTA  ,\r\n").append("			       SUM(CU.CARGOS_").append(mes)
