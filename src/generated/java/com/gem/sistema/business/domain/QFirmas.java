@@ -106,6 +106,14 @@ public class QFirmas extends EntityPathBase<Firmas> {
 
     public final StringPath l30 = createString("l30");
 
+    public final StringPath l31 = createString("l31");
+
+    public final StringPath l32 = createString("l32");
+
+    public final StringPath l33 = createString("l33");
+
+    public final StringPath l34 = createString("l34");
+
     public final StringPath l4 = createString("l4");
 
     public final StringPath l5 = createString("l5");
@@ -165,6 +173,14 @@ public class QFirmas extends EntityPathBase<Firmas> {
     public final StringPath n3 = createString("n3");
 
     public final StringPath n30 = createString("n30");
+
+    public final StringPath n31 = createString("n31");
+
+    public final StringPath n32 = createString("n32");
+
+    public final StringPath n33 = createString("n33");
+
+    public final StringPath n34 = createString("n34");
 
     public final StringPath n4 = createString("n4");
 

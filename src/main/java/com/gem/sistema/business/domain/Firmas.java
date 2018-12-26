@@ -226,6 +226,22 @@ public class Firmas extends AbstractEntity {
 	/** The n 30. */
 	private String n30;
 
+	private String l31;
+
+	private String n31;
+
+	private String l32;
+
+	private String n32;
+
+	private String l33;
+
+	private String n33;
+
+	private String l34;
+
+	private String n34;
+
 	/** The n 4. */
 	private String n4;
 
@@ -266,7 +282,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the campo 1.
 	 *
-	 * @param campo1            the campo1 to set
+	 * @param campo1 the campo1 to set
 	 */
 	public void setCampo1(String campo1) {
 		this.campo1 = campo1;
@@ -284,7 +300,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the campo 10.
 	 *
-	 * @param campo10            the campo10 to set
+	 * @param campo10 the campo10 to set
 	 */
 	public void setCampo10(String campo10) {
 		this.campo10 = campo10;
@@ -302,7 +318,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the campo 11.
 	 *
-	 * @param campo11            the campo11 to set
+	 * @param campo11 the campo11 to set
 	 */
 	public void setCampo11(String campo11) {
 		this.campo11 = campo11;
@@ -320,7 +336,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the campo 12.
 	 *
-	 * @param campo12            the campo12 to set
+	 * @param campo12 the campo12 to set
 	 */
 	public void setCampo12(String campo12) {
 		this.campo12 = campo12;
@@ -338,7 +354,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the campo 13.
 	 *
-	 * @param campo13            the campo13 to set
+	 * @param campo13 the campo13 to set
 	 */
 	public void setCampo13(String campo13) {
 		this.campo13 = campo13;
@@ -356,7 +372,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the campo 14.
 	 *
-	 * @param campo14            the campo14 to set
+	 * @param campo14 the campo14 to set
 	 */
 	public void setCampo14(String campo14) {
 		this.campo14 = campo14;
@@ -374,7 +390,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the campo 15.
 	 *
-	 * @param campo15            the campo15 to set
+	 * @param campo15 the campo15 to set
 	 */
 	public void setCampo15(String campo15) {
 		this.campo15 = campo15;
@@ -392,7 +408,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the campo 2.
 	 *
-	 * @param campo2            the campo2 to set
+	 * @param campo2 the campo2 to set
 	 */
 	public void setCampo2(String campo2) {
 		this.campo2 = campo2;
@@ -410,7 +426,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the campo 3.
 	 *
-	 * @param campo3            the campo3 to set
+	 * @param campo3 the campo3 to set
 	 */
 	public void setCampo3(Integer campo3) {
 		this.campo3 = campo3;
@@ -428,7 +444,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the campo 4.
 	 *
-	 * @param campo4            the campo4 to set
+	 * @param campo4 the campo4 to set
 	 */
 	public void setCampo4(String campo4) {
 		this.campo4 = campo4;
@@ -446,7 +462,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the campo 5.
 	 *
-	 * @param campo5            the campo5 to set
+	 * @param campo5 the campo5 to set
 	 */
 	public void setCampo5(String campo5) {
 		this.campo5 = campo5;
@@ -464,7 +480,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the campo 6.
 	 *
-	 * @param campo6            the campo6 to set
+	 * @param campo6 the campo6 to set
 	 */
 	public void setCampo6(String campo6) {
 		this.campo6 = campo6;
@@ -482,7 +498,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the campo 7.
 	 *
-	 * @param campo7            the campo7 to set
+	 * @param campo7 the campo7 to set
 	 */
 	public void setCampo7(String campo7) {
 		this.campo7 = campo7;
@@ -500,7 +516,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the campo 8.
 	 *
-	 * @param campo8            the campo8 to set
+	 * @param campo8 the campo8 to set
 	 */
 	public void setCampo8(String campo8) {
 		this.campo8 = campo8;
@@ -518,7 +534,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the campo 9.
 	 *
-	 * @param campo9            the campo9 to set
+	 * @param campo9 the campo9 to set
 	 */
 	public void setCampo9(String campo9) {
 		this.campo9 = campo9;
@@ -536,13 +552,11 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the id ref.
 	 *
-	 * @param idRef            the idRef to set
+	 * @param idRef the idRef to set
 	 */
 	public void setIdRef(Long idRef) {
 		this.idRef = idRef;
 	}
-
-	
 
 	/**
 	 * Gets the l1.
@@ -556,7 +570,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l1.
 	 *
-	 * @param l1            the l1 to set
+	 * @param l1 the l1 to set
 	 */
 	public void setL1(String l1) {
 		this.l1 = l1;
@@ -574,7 +588,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l10.
 	 *
-	 * @param l10            the l10 to set
+	 * @param l10 the l10 to set
 	 */
 	public void setL10(String l10) {
 		this.l10 = l10;
@@ -592,7 +606,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l11.
 	 *
-	 * @param l11            the l11 to set
+	 * @param l11 the l11 to set
 	 */
 	public void setL11(String l11) {
 		this.l11 = l11;
@@ -610,7 +624,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l12.
 	 *
-	 * @param l12            the l12 to set
+	 * @param l12 the l12 to set
 	 */
 	public void setL12(String l12) {
 		this.l12 = l12;
@@ -628,7 +642,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l13.
 	 *
-	 * @param l13            the l13 to set
+	 * @param l13 the l13 to set
 	 */
 	public void setL13(String l13) {
 		this.l13 = l13;
@@ -646,7 +660,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l14.
 	 *
-	 * @param l14            the l14 to set
+	 * @param l14 the l14 to set
 	 */
 	public void setL14(String l14) {
 		this.l14 = l14;
@@ -664,7 +678,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l15.
 	 *
-	 * @param l15            the l15 to set
+	 * @param l15 the l15 to set
 	 */
 	public void setL15(String l15) {
 		this.l15 = l15;
@@ -682,7 +696,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l16.
 	 *
-	 * @param l16            the l16 to set
+	 * @param l16 the l16 to set
 	 */
 	public void setL16(String l16) {
 		this.l16 = l16;
@@ -700,7 +714,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l17.
 	 *
-	 * @param l17            the l17 to set
+	 * @param l17 the l17 to set
 	 */
 	public void setL17(String l17) {
 		this.l17 = l17;
@@ -718,7 +732,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l18.
 	 *
-	 * @param l18            the l18 to set
+	 * @param l18 the l18 to set
 	 */
 	public void setL18(String l18) {
 		this.l18 = l18;
@@ -736,7 +750,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l19.
 	 *
-	 * @param l19            the l19 to set
+	 * @param l19 the l19 to set
 	 */
 	public void setL19(String l19) {
 		this.l19 = l19;
@@ -754,7 +768,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l2.
 	 *
-	 * @param l2            the l2 to set
+	 * @param l2 the l2 to set
 	 */
 	public void setL2(String l2) {
 		this.l2 = l2;
@@ -772,7 +786,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l20.
 	 *
-	 * @param l20            the l20 to set
+	 * @param l20 the l20 to set
 	 */
 	public void setL20(String l20) {
 		this.l20 = l20;
@@ -790,7 +804,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l21.
 	 *
-	 * @param l21            the l21 to set
+	 * @param l21 the l21 to set
 	 */
 	public void setL21(String l21) {
 		this.l21 = l21;
@@ -808,7 +822,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l22.
 	 *
-	 * @param l22            the l22 to set
+	 * @param l22 the l22 to set
 	 */
 	public void setL22(String l22) {
 		this.l22 = l22;
@@ -826,7 +840,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l23.
 	 *
-	 * @param l23            the l23 to set
+	 * @param l23 the l23 to set
 	 */
 	public void setL23(String l23) {
 		this.l23 = l23;
@@ -844,7 +858,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l24.
 	 *
-	 * @param l24            the l24 to set
+	 * @param l24 the l24 to set
 	 */
 	public void setL24(String l24) {
 		this.l24 = l24;
@@ -862,7 +876,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l25.
 	 *
-	 * @param l25            the l25 to set
+	 * @param l25 the l25 to set
 	 */
 	public void setL25(String l25) {
 		this.l25 = l25;
@@ -880,7 +894,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l26.
 	 *
-	 * @param l26            the l26 to set
+	 * @param l26 the l26 to set
 	 */
 	public void setL26(String l26) {
 		this.l26 = l26;
@@ -898,7 +912,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l27.
 	 *
-	 * @param l27            the l27 to set
+	 * @param l27 the l27 to set
 	 */
 	public void setL27(String l27) {
 		this.l27 = l27;
@@ -916,7 +930,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l28.
 	 *
-	 * @param l28            the l28 to set
+	 * @param l28 the l28 to set
 	 */
 	public void setL28(String l28) {
 		this.l28 = l28;
@@ -934,7 +948,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l29.
 	 *
-	 * @param l29            the l29 to set
+	 * @param l29 the l29 to set
 	 */
 	public void setL29(String l29) {
 		this.l29 = l29;
@@ -952,7 +966,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l3.
 	 *
-	 * @param l3            the l3 to set
+	 * @param l3 the l3 to set
 	 */
 	public void setL3(String l3) {
 		this.l3 = l3;
@@ -970,7 +984,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l30.
 	 *
-	 * @param l30            the l30 to set
+	 * @param l30 the l30 to set
 	 */
 	public void setL30(String l30) {
 		this.l30 = l30;
@@ -988,7 +1002,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l4.
 	 *
-	 * @param l4            the l4 to set
+	 * @param l4 the l4 to set
 	 */
 	public void setL4(String l4) {
 		this.l4 = l4;
@@ -1006,7 +1020,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l5.
 	 *
-	 * @param l5            the l5 to set
+	 * @param l5 the l5 to set
 	 */
 	public void setL5(String l5) {
 		this.l5 = l5;
@@ -1024,7 +1038,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l6.
 	 *
-	 * @param l6            the l6 to set
+	 * @param l6 the l6 to set
 	 */
 	public void setL6(String l6) {
 		this.l6 = l6;
@@ -1042,7 +1056,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l7.
 	 *
-	 * @param l7            the l7 to set
+	 * @param l7 the l7 to set
 	 */
 	public void setL7(String l7) {
 		this.l7 = l7;
@@ -1060,7 +1074,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l8.
 	 *
-	 * @param l8            the l8 to set
+	 * @param l8 the l8 to set
 	 */
 	public void setL8(String l8) {
 		this.l8 = l8;
@@ -1078,7 +1092,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the l9.
 	 *
-	 * @param l9            the l9 to set
+	 * @param l9 the l9 to set
 	 */
 	public void setL9(String l9) {
 		this.l9 = l9;
@@ -1096,7 +1110,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n1.
 	 *
-	 * @param n1            the n1 to set
+	 * @param n1 the n1 to set
 	 */
 	public void setN1(String n1) {
 		this.n1 = n1;
@@ -1114,7 +1128,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n10.
 	 *
-	 * @param n10            the n10 to set
+	 * @param n10 the n10 to set
 	 */
 	public void setN10(String n10) {
 		this.n10 = n10;
@@ -1132,7 +1146,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n11.
 	 *
-	 * @param n11            the n11 to set
+	 * @param n11 the n11 to set
 	 */
 	public void setN11(String n11) {
 		this.n11 = n11;
@@ -1150,7 +1164,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n12.
 	 *
-	 * @param n12            the n12 to set
+	 * @param n12 the n12 to set
 	 */
 	public void setN12(String n12) {
 		this.n12 = n12;
@@ -1168,7 +1182,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n13.
 	 *
-	 * @param n13            the n13 to set
+	 * @param n13 the n13 to set
 	 */
 	public void setN13(String n13) {
 		this.n13 = n13;
@@ -1186,7 +1200,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n14.
 	 *
-	 * @param n14            the n14 to set
+	 * @param n14 the n14 to set
 	 */
 	public void setN14(String n14) {
 		this.n14 = n14;
@@ -1204,7 +1218,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n15.
 	 *
-	 * @param n15            the n15 to set
+	 * @param n15 the n15 to set
 	 */
 	public void setN15(String n15) {
 		this.n15 = n15;
@@ -1222,7 +1236,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n16.
 	 *
-	 * @param n16            the n16 to set
+	 * @param n16 the n16 to set
 	 */
 	public void setN16(String n16) {
 		this.n16 = n16;
@@ -1240,7 +1254,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n17.
 	 *
-	 * @param n17            the n17 to set
+	 * @param n17 the n17 to set
 	 */
 	public void setN17(String n17) {
 		this.n17 = n17;
@@ -1258,7 +1272,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n18.
 	 *
-	 * @param n18            the n18 to set
+	 * @param n18 the n18 to set
 	 */
 	public void setN18(String n18) {
 		this.n18 = n18;
@@ -1276,7 +1290,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n19.
 	 *
-	 * @param n19            the n19 to set
+	 * @param n19 the n19 to set
 	 */
 	public void setN19(String n19) {
 		this.n19 = n19;
@@ -1294,7 +1308,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n2.
 	 *
-	 * @param n2            the n2 to set
+	 * @param n2 the n2 to set
 	 */
 	public void setN2(String n2) {
 		this.n2 = n2;
@@ -1312,7 +1326,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n20.
 	 *
-	 * @param n20            the n20 to set
+	 * @param n20 the n20 to set
 	 */
 	public void setN20(String n20) {
 		this.n20 = n20;
@@ -1330,7 +1344,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n21.
 	 *
-	 * @param n21            the n21 to set
+	 * @param n21 the n21 to set
 	 */
 	public void setN21(String n21) {
 		this.n21 = n21;
@@ -1348,7 +1362,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n22.
 	 *
-	 * @param n22            the n22 to set
+	 * @param n22 the n22 to set
 	 */
 	public void setN22(String n22) {
 		this.n22 = n22;
@@ -1366,7 +1380,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n23.
 	 *
-	 * @param n23            the n23 to set
+	 * @param n23 the n23 to set
 	 */
 	public void setN23(String n23) {
 		this.n23 = n23;
@@ -1384,7 +1398,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n24.
 	 *
-	 * @param n24            the n24 to set
+	 * @param n24 the n24 to set
 	 */
 	public void setN24(String n24) {
 		this.n24 = n24;
@@ -1402,7 +1416,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n25.
 	 *
-	 * @param n25            the n25 to set
+	 * @param n25 the n25 to set
 	 */
 	public void setN25(String n25) {
 		this.n25 = n25;
@@ -1420,7 +1434,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n26.
 	 *
-	 * @param n26            the n26 to set
+	 * @param n26 the n26 to set
 	 */
 	public void setN26(String n26) {
 		this.n26 = n26;
@@ -1438,7 +1452,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n27.
 	 *
-	 * @param n27            the n27 to set
+	 * @param n27 the n27 to set
 	 */
 	public void setN27(String n27) {
 		this.n27 = n27;
@@ -1456,7 +1470,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n28.
 	 *
-	 * @param n28            the n28 to set
+	 * @param n28 the n28 to set
 	 */
 	public void setN28(String n28) {
 		this.n28 = n28;
@@ -1474,7 +1488,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n29.
 	 *
-	 * @param n29            the n29 to set
+	 * @param n29 the n29 to set
 	 */
 	public void setN29(String n29) {
 		this.n29 = n29;
@@ -1492,7 +1506,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n3.
 	 *
-	 * @param n3            the n3 to set
+	 * @param n3 the n3 to set
 	 */
 	public void setN3(String n3) {
 		this.n3 = n3;
@@ -1510,10 +1524,74 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n30.
 	 *
-	 * @param n30            the n30 to set
+	 * @param n30 the n30 to set
 	 */
 	public void setN30(String n30) {
 		this.n30 = n30;
+	}
+
+	public String getL31() {
+		return l31;
+	}
+
+	public void setL31(String l31) {
+		this.l31 = l31;
+	}
+
+	public String getN31() {
+		return n31;
+	}
+
+	public void setN31(String n31) {
+		this.n31 = n31;
+	}
+
+	public String getL32() {
+		return l32;
+	}
+
+	public void setL32(String l32) {
+		this.l32 = l32;
+	}
+
+	public String getN32() {
+		return n32;
+	}
+
+	public void setN32(String n32) {
+		this.n32 = n32;
+	}
+
+	public String getL33() {
+		return l33;
+	}
+
+	public void setL33(String l33) {
+		this.l33 = l33;
+	}
+
+	public String getN33() {
+		return n33;
+	}
+
+	public void setN33(String n33) {
+		this.n33 = n33;
+	}
+
+	public String getL34() {
+		return l34;
+	}
+
+	public void setL34(String l34) {
+		this.l34 = l34;
+	}
+
+	public String getN34() {
+		return n34;
+	}
+
+	public void setN34(String n34) {
+		this.n34 = n34;
 	}
 
 	/**
@@ -1528,7 +1606,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n4.
 	 *
-	 * @param n4            the n4 to set
+	 * @param n4 the n4 to set
 	 */
 	public void setN4(String n4) {
 		this.n4 = n4;
@@ -1546,7 +1624,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n5.
 	 *
-	 * @param n5            the n5 to set
+	 * @param n5 the n5 to set
 	 */
 	public void setN5(String n5) {
 		this.n5 = n5;
@@ -1564,7 +1642,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n6.
 	 *
-	 * @param n6            the n6 to set
+	 * @param n6 the n6 to set
 	 */
 	public void setN6(String n6) {
 		this.n6 = n6;
@@ -1582,7 +1660,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n7.
 	 *
-	 * @param n7            the n7 to set
+	 * @param n7 the n7 to set
 	 */
 	public void setN7(String n7) {
 		this.n7 = n7;
@@ -1600,7 +1678,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n8.
 	 *
-	 * @param n8            the n8 to set
+	 * @param n8 the n8 to set
 	 */
 	public void setN8(String n8) {
 		this.n8 = n8;
@@ -1618,7 +1696,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the n9.
 	 *
-	 * @param n9            the n9 to set
+	 * @param n9 the n9 to set
 	 */
 	public void setN9(String n9) {
 		this.n9 = n9;
@@ -1636,7 +1714,7 @@ public class Firmas extends AbstractEntity {
 	/**
 	 * Sets the userid.
 	 *
-	 * @param userid            the userid to set
+	 * @param userid the userid to set
 	 */
 	public void setUserid(String userid) {
 		this.userid = userid;
@@ -1660,5 +1738,4 @@ public class Firmas extends AbstractEntity {
 		this.idsector = idsector;
 	}
 
-	
 }
