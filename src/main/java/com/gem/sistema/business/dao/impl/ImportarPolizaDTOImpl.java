@@ -43,16 +43,19 @@ public class ImportarPolizaDTOImpl implements ImportarPolizaDTO {
 
 	/** The jdbc template. */
 	private JdbcTemplate jdbcTemplate;
-	
+
 	/** The data source. */
 	private DataSource dataSource;
-	
+
 	/** The jdbc call. */
 	private SimpleJdbcCall jdbcCall;
-	
+
 	/** The jdbc call reports. */
 	private SimpleJdbcCall jdbcCallReports;
-	
+
+	/** The jdbc call. */
+	private SimpleJdbcCall jdbcCallImport;
+
 	/** The parametros repository. */
 	@Autowired
 	@Qualifier("parametrosRepository")
@@ -74,6 +77,7 @@ public class ImportarPolizaDTOImpl implements ImportarPolizaDTO {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 		this.jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("SP_IMPORTA_POLIZA");
 		this.jdbcCallReports = new SimpleJdbcCall(jdbcTemplate).withProcedureName("SP_EXPORTA_CUENTAS");
+		this.jdbcCallImport = new SimpleJdbcCall(jdbcTemplate).withProcedureName("SP_CARGA_POLIZA");
 
 	}
 
@@ -89,7 +93,7 @@ public class ImportarPolizaDTOImpl implements ImportarPolizaDTO {
 	/**
 	 * Sets the jdbc template.
 	 *
-	 * @param jdbcTemplate            the jdbcTemplate to set
+	 * @param jdbcTemplate the jdbcTemplate to set
 	 */
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
@@ -107,13 +111,11 @@ public class ImportarPolizaDTOImpl implements ImportarPolizaDTO {
 	/**
 	 * Sets the data source.
 	 *
-	 * @param dataSource            the dataSource to set
+	 * @param dataSource the dataSource to set
 	 */
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
-	
-	
 
 	/**
 	 * Gets the parametros repository.
@@ -136,24 +138,32 @@ public class ImportarPolizaDTOImpl implements ImportarPolizaDTO {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.gem.sistema.business.dao.ImportarPolizaDTO#execute(com.gem.sistema.
+	 * @see com.gem.sistema.business.dao.ImportarPolizaDTO#execute(com.gem.sistema.
 	 * business.dto.PolizaImportDTO, java.lang.Integer, java.lang.String)
 	 */
 	@Override
 	public PolizaImportDTO execute(PolizaImportDTO importDTO, Integer idSector, String idUser) {
-		SqlParameterSource in = new MapSqlParameterSource().addValue("i_procesar", importDTO.getiProcesar())
-				.addValue("i_id_user", idUser).addValue("i_id_sector", idSector).addValue("i_id_ref", 0)
-				.addValue("i_file_name", importDTO.getiFileName()).addValue("i_path_file", importDTO.getiPathFile())
-				.addValue("i_momento_c", importDTO.getiBoxes()).addValue("i_mes", importDTO.getiMes())
-				.addValue("i_tipo", importDTO.getiTipoL()).addValue("i_numero", importDTO.getiNumpol())
-				.addValue("i_fecha", importDTO.getiFechaPol()).addValue("i_repetir", importDTO.getRepetirPoliza());
-
-		Map<String, Object> out = jdbcCall.execute(in);
-
+		SqlParameterSource in = null;
+		Map<String, Object> out = null;
 		PolizaImportDTO polizaImportDTO = new PolizaImportDTO();
-		polizaImportDTO.setoPathFile(MapUtils.getString(out, "O_PATH_FILE"));
-		polizaImportDTO.setoFleName(MapUtils.getString(out, "O_FLE_NAME"));
+		if (importDTO.getiBoxes() < 15) {
+			in = new MapSqlParameterSource().addValue("i_procesar", importDTO.getiProcesar())
+					.addValue("i_id_user", idUser).addValue("i_id_sector", idSector).addValue("i_id_ref", 0)
+					.addValue("i_file_name", importDTO.getiFileName()).addValue("i_path_file", importDTO.getiPathFile())
+					.addValue("i_momento_c", importDTO.getiBoxes()).addValue("i_mes", importDTO.getiMes())
+					.addValue("i_tipo", importDTO.getiTipoL()).addValue("i_numero", importDTO.getiNumpol())
+					.addValue("i_fecha", importDTO.getiFechaPol()).addValue("i_repetir", importDTO.getRepetirPoliza());
+			out = jdbcCall.execute(in);
+			polizaImportDTO.setoPathFile(MapUtils.getString(out, "O_PATH_FILE"));
+			polizaImportDTO.setoFleName(MapUtils.getString(out, "O_FLE_NAME"));
+		} else {
+			in = new MapSqlParameterSource().addValue("i_id_sector", idSector)
+					.addValue("i_fecha", importDTO.getiFechaPol())
+					.addValue("i_file_name", importDTO.getiFileName().substring(importDTO.getiFileName().length() - 10))
+					.addValue("i_user", idUser);
+			out = jdbcCallImport.execute(in);
+		}
+
 		polizaImportDTO.setoCodError(MapUtils.getIntValue(out, "O_COD_ERROR", 1));
 		polizaImportDTO.setoMsgError(MapUtils.getString(out, "O_MSG_ERROR"));
 		return polizaImportDTO;
@@ -164,7 +174,7 @@ public class ImportarPolizaDTOImpl implements ImportarPolizaDTO {
 	 * Export reports.
 	 *
 	 * @param importDTO the import DTO
-	 * @param tipo the tipo
+	 * @param tipo      the tipo
 	 * @return the poliza import DTO
 	 */
 	@Override
@@ -195,8 +205,12 @@ public class ImportarPolizaDTOImpl implements ImportarPolizaDTO {
 		return polizaImportDTO;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.gem.sistema.business.dao.ImportarPolizaDTO#generateExcel(com.gem.sistema.business.dto.PolizaImportDTO)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gem.sistema.business.dao.ImportarPolizaDTO#generateExcel(com.gem.sistema.
+	 * business.dto.PolizaImportDTO)
 	 */
 	@Override
 	public PolizaImportDTO generateExcel(PolizaImportDTO importDTO) {
@@ -224,36 +238,35 @@ public class ImportarPolizaDTOImpl implements ImportarPolizaDTO {
 							lisBody.get(i).getCargo(), lisBody.get(i).getAbonos() });
 			contador++;
 		}
-		
+
 		Set<String> keyset = data.keySet();
 		int rownum = 0;
 		for (String key : keyset) {
 			Row row = sheet.createRow(rownum++);
-			Object [] objArr = data.get(key);
+			Object[] objArr = data.get(key);
 			int cellnum = 0;
 			for (Object obj : objArr) {
 				Cell cell = row.createCell(cellnum++);
-				if(obj instanceof Date) 
-					cell.setCellValue((Date)obj);
-				else if(obj instanceof Boolean)
-					cell.setCellValue((Boolean)obj);
-				else if(obj instanceof String)
-					cell.setCellValue((String)obj);
-				else if(obj instanceof Double)
-					cell.setCellValue((Double)obj);
-				
+				if (obj instanceof Date)
+					cell.setCellValue((Date) obj);
+				else if (obj instanceof Boolean)
+					cell.setCellValue((Boolean) obj);
+				else if (obj instanceof String)
+					cell.setCellValue((String) obj);
+				else if (obj instanceof Double)
+					cell.setCellValue((Double) obj);
+
 			}
 		}
 		PolizaImportDTO dto = new PolizaImportDTO();
 		String fileName = this.getPath("TMP_POLIZAS") + File.separator + "polizas.xls";
 		try {
-			FileOutputStream out = 
-					new FileOutputStream(new File( fileName));
+			FileOutputStream out = new FileOutputStream(new File(fileName));
 			dto.setoFleName(fileName);
 			workbook.write(out);
 			out.close();
 			System.out.println("Excel written successfully..");
-			
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -262,8 +275,12 @@ public class ImportarPolizaDTOImpl implements ImportarPolizaDTO {
 		return dto;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.gem.sistema.business.dao.ImportarPolizaDTO#generateHead(com.gem.sistema.business.dto.PolizaImportDTO)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gem.sistema.business.dao.ImportarPolizaDTO#generateHead(com.gem.sistema.
+	 * business.dto.PolizaImportDTO)
 	 */
 	@Override
 	public List<PolizaExcelDTO> generateHead(PolizaImportDTO importDTO) {
@@ -277,8 +294,12 @@ public class ImportarPolizaDTOImpl implements ImportarPolizaDTO {
 		return listHeader;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.gem.sistema.business.dao.ImportarPolizaDTO#generateBody(com.gem.sistema.business.dto.PolizaImportDTO)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gem.sistema.business.dao.ImportarPolizaDTO#generateBody(com.gem.sistema.
+	 * business.dto.PolizaImportDTO)
 	 */
 	@Override
 	public List<PolizaBody> generateBody(PolizaImportDTO importDTO) {
@@ -291,7 +312,9 @@ public class ImportarPolizaDTOImpl implements ImportarPolizaDTO {
 		return listBody;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.gem.sistema.business.dao.ImportarPolizaDTO#getPath(java.lang.String)
 	 */
 	@Override
@@ -299,14 +322,17 @@ public class ImportarPolizaDTOImpl implements ImportarPolizaDTO {
 		return parametrosRepository.getValorByCv(cvePath);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.gem.sistema.business.dao.ImportarPolizaDTO#getMesActivo(java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gem.sistema.business.dao.ImportarPolizaDTO#getMesActivo(java.lang.
+	 * Integer)
 	 */
 	@Override
 	public List<String> getMesActivo(Integer idSector) {
-		String sSql = "SELECT TC.MES FROM TC_MESES TC, CONCTB CO WHERE TC.MES <= LPAD(CO.MESEMP, 2, '0') " +
-                      " AND CO.IDSECTOR = ? ";
-		return this.jdbcTemplate.query(sSql, new ListMes(), new Object[]{idSector} );
+		String sSql = "SELECT TC.MES FROM TC_MESES TC, CONCTB CO WHERE TC.MES <= LPAD(CO.MESEMP, 2, '0') "
+				+ " AND CO.IDSECTOR = ? ";
+		return this.jdbcTemplate.query(sSql, new ListMes(), new Object[] { idSector });
 	}
 
 }
@@ -364,6 +390,6 @@ class BodyExcel implements RowMapper<PolizaBody> {
 class ListMes implements RowMapper<String> {
 	public String mapRow(ResultSet rs, int i) throws SQLException {
 		return rs.getString(1);
-		
+
 	}
 }

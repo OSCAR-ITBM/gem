@@ -57,16 +57,16 @@ import com.gem.sistema.web.util.FrontProperty;
 @ManagedBean(name = "importarPolizaMB")
 @ViewScoped
 public class ImportarPolizaMB extends AbstractMB implements Serializable {
-	
+
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(AfectacionPolizaMB.class);
-	
+
 	/** The Constant charSetISO. */
 	private final static String charSetISO = "ISO-8859-1";
-	
+
 	/** The Constant charSetUFT. */
 	private final static String charSetUFT = "UTF-8";
 
@@ -85,16 +85,16 @@ public class ImportarPolizaMB extends AbstractMB implements Serializable {
 
 	/** The poliza importar DTO. */
 	private PolizaImportDTO polizaImportarDTO;
-	
+
 	/** The file. */
 	private UploadedFile file;
-	
+
 	/** The clave. */
 	private String clave;
 
 	/** The obj disabled. */
 	private boolean objDisabled;
-	
+
 	/** The desabilitar. */
 	private boolean desabilitar;
 
@@ -106,36 +106,38 @@ public class ImportarPolizaMB extends AbstractMB implements Serializable {
 
 	/** The i mes. */
 	private Integer iMes;
-	
+
 	/** The i tipo. */
-	private String iTipo;
-	
+	private String iTipo = "11";
+
 	/** The i numero. */
 	private Integer iNumero;
-	
+
 	/** The i feccha. */
 	private Date iFeccha;
-	
+
 	/** The i boxes. */
 	private Integer iBoxes = 0;
-	
+
 	/** The i procesar. */
 	private String iProcesar;
-	
+
 	/** The size. */
 	private boolean size;
-	
+
 	/** The file name. */
 	private String fileName;
 
 	/** The mes aux. */
 	private Integer mesAux;
-	
+
 	/** The anio aux. */
 	private Integer anioAux;
-	
+
 	/** The repetir poliza. */
 	private boolean repetirPoliza;
+
+	private boolean render = Boolean.TRUE;
 
 	/**
 	 * Checks if is repetir poliza.
@@ -185,7 +187,7 @@ public class ImportarPolizaMB extends AbstractMB implements Serializable {
 	/** The polien repository. */
 	@ManagedProperty("#{polienRepository}")
 	private PolienRepository polienRepository;
-	
+
 	/** The year service. */
 	@ManagedProperty("#{dataYearSystemService}")
 	private DataYearSystemService yearService;
@@ -606,9 +608,7 @@ public class ImportarPolizaMB extends AbstractMB implements Serializable {
 	public void setConctbRepository(ConctbRepository conctbRepository) {
 		this.conctbRepository = conctbRepository;
 	}
-	
-	
-	
+
 	/**
 	 * Gets the year service.
 	 *
@@ -755,7 +755,14 @@ public class ImportarPolizaMB extends AbstractMB implements Serializable {
 		desabilitar = Boolean.TRUE;
 
 	}
-	
+
+	public void renderElements() {
+		render = Boolean.FALSE;
+		if (iBoxes < 15) {
+			render = Boolean.TRUE;
+		}
+	}
+
 	/**
 	 * Upload.
 	 */
@@ -769,18 +776,19 @@ public class ImportarPolizaMB extends AbstractMB implements Serializable {
 		String fileName1 = "";
 		String fileName2 = "";
 		String pathFiles = "";
-		if (mesAux == iMes) {
-			if (anioAux == caledar.get(Calendar.YEAR) ) {
+		if (mesAux == iMes || iBoxes < 16) {
+			if (anioAux == caledar.get(Calendar.YEAR)) {
 				if (file != null) {
 
 					try {
 						if (file.getFileName() != null) {
-							if (file.getFileName().equals(this.getPath("TIPO_POLIZA"))) {
+							if (file.getFileName().equals(this.getPath("TIPO_POLIZA"))
+									|| (file.getFileName().equals("cuenta.txt") && iBoxes == 15)) {
 								pathFiles = getPath("CARG_ARCHIVO");
 								fileName1 = file.getFileName();
-								fileName2 = UUID.randomUUID()+ "-"+ file.getFileName();
-								source  = new File(pathFiles+"/"+fileName1);
-								target  = new File(pathFiles+"/"+fileName2);
+								fileName2 = UUID.randomUUID() + "-" + file.getFileName();
+								source = new File(pathFiles + "/" + fileName1);
+								target = new File(pathFiles + "/" + fileName2);
 								inputFile(fileName1, file.getInputstream());
 								inputFile(fileName2, file.getInputstream());
 								ConvertCharsetUtils.transform(source, charSetISO, target, charSetUFT);
@@ -788,30 +796,29 @@ public class ImportarPolizaMB extends AbstractMB implements Serializable {
 								size = siZeFile(newFile);
 								if (this.size) {
 //									if (this.file.getSize() <= 8000000l) {
-										PolizaImportDTO importDTO = new PolizaImportDTO();
-										importDTO.setiProcesar(iProcesar);
-										importDTO.setiBoxes(iBoxes);
-										importDTO.setiFechaPol(iFeccha);
-										importDTO.setiFileName(fileName2);
-										importDTO.setiPathFile(getPath("CARG_ARCHIVO"));
-										importDTO.setiMes(String.valueOf(iMes));
-										importDTO.setiTipoL(iTipo);
-										importDTO.setiNumpol(iNumero);
-										importDTO.setRepetirPoliza(repetirPoliza ? 1 : 0);
+									PolizaImportDTO importDTO = new PolizaImportDTO();
+									importDTO.setiProcesar(iProcesar);
+									importDTO.setiBoxes(iBoxes);
+									importDTO.setiFechaPol(iFeccha);
+									importDTO.setiFileName(fileName2);
+									importDTO.setiPathFile(getPath("CARG_ARCHIVO"));
+									importDTO.setiMes(String.valueOf(iMes));
+									importDTO.setiTipoL(iTipo);
+									importDTO.setiNumpol(iNumero);
+									importDTO.setRepetirPoliza(repetirPoliza ? 1 : 0);
 
-										PolizaImportDTO impo = importarPolizaService.execuet(importDTO,
-												this.getUserDetails().getIdSector(),
-												this.getUserDetails().getUsername());
-										setFileName(impo.getoFleName());
-										if (impo.getoCodError() > 0) {
-											desabilitar = Boolean.FALSE;
+									PolizaImportDTO impo = importarPolizaService.execuet(importDTO,
+											this.getUserDetails().getIdSector(), this.getUserDetails().getUsername());
+									setFileName(impo.getoFleName());
+									if (impo.getoCodError() > 0) {
+										desabilitar = Boolean.FALSE;
 
-											generateNotificationFront(SEVERITY_INFO, "", impo.getoMsgError());
-										} else {
-											desabilitar = Boolean.TRUE;
+										generateNotificationFront(SEVERITY_INFO, "", impo.getoMsgError());
+									} else {
+										desabilitar = Boolean.TRUE;
 
-											generateNotificationFront(SEVERITY_INFO, "Error", impo.getoMsgError());
-										}
+										generateNotificationFront(SEVERITY_INFO, "Error", impo.getoMsgError());
+									}
 //									} else {
 //										generateNotificationFront(SEVERITY_INFO, "Error",
 //												"El tamaño de archivo revasa el permitido");
@@ -874,7 +881,7 @@ public class ImportarPolizaMB extends AbstractMB implements Serializable {
 	 * Input file.
 	 *
 	 * @param filename the filename
-	 * @param input the input
+	 * @param input    the input
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public void inputFile(String filename, InputStream input) throws IOException {
@@ -907,12 +914,11 @@ public class ImportarPolizaMB extends AbstractMB implements Serializable {
 	 */
 	public void downLoad() {
 		/*
-		 * FileInputStream fileInputStream = null; OutputStream output = null;
-		 * try {
+		 * FileInputStream fileInputStream = null; OutputStream output = null; try {
 		 * 
 		 * File fileToSend = new File(); byte[] ingresoRespFile = new byte[(int)
-		 * fileToSend.length()]; fileInputStream = new
-		 * FileInputStream(fileToSend); fileInputStream.read(ingresoRespFile);
+		 * fileToSend.length()]; fileInputStream = new FileInputStream(fileToSend);
+		 * fileInputStream.read(ingresoRespFile);
 		 * 
 		 * FacesContext facesContext = FacesContext.getCurrentInstance();
 		 * ExternalContext externalContext = facesContext.getExternalContext();
@@ -1080,6 +1086,14 @@ public class ImportarPolizaMB extends AbstractMB implements Serializable {
 		if (iNumero == null) {
 			iNumero = 1;
 		}
+	}
+
+	public boolean isRender() {
+		return render;
+	}
+
+	public void setRender(boolean render) {
+		this.render = render;
 	}
 
 }
