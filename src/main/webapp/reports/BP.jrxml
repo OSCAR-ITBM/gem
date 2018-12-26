@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BP" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="13d12955-0840-41d9-8033-8eab5f5061a1">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BP" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="13d12955-0840-41d9-8033-8eab5f5061a1">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="server adapter"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GemAdapter "/>
 	<property name="com.jaspersoft.studio.report.description" value="Balance Presupuestario"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
@@ -13,62 +13,26 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
-	<subDataset name="Empty Dataset1" uuid="a687b41a-f9e1-46b7-b8c5-e58461d6fbfb"/>
-	<subDataset name="Dataset1" uuid="566f7f62-6f9a-4766-a5a2-84662f354f60">
-		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="server adapter"/>
-		<queryString language="SQL">
-			<![CDATA[SELECT  BP.CONCEPTO,
-		BP.EA "ESTIMADO APROBADO",
-		BP.DEVENGADO,
-		BP.RP "RECAUDADO / PAGADO"
-	 FROM GEMUSER.BALANCEPRE BP
-WHERE BP.ID_SECTOR= 1
-  AND BP.TRIMESTRE= 1]]>
-		</queryString>
-		<field name="CONCEPTO" class="java.lang.String">
-			<property name="com.jaspersoft.studio.field.label" value="CONCEPTO"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="BALANCEPRE"/>
-		</field>
-		<field name="ESTIMADO APROBADO" class="java.math.BigDecimal">
-			<property name="com.jaspersoft.studio.field.label" value="ESTIMADO APROBADO"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="BALANCEPRE"/>
-		</field>
-		<field name="DEVENGADO" class="java.math.BigDecimal">
-			<property name="com.jaspersoft.studio.field.label" value="DEVENGADO"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="BALANCEPRE"/>
-		</field>
-		<field name="RECAUDADO / PAGADO" class="java.math.BigDecimal">
-			<property name="com.jaspersoft.studio.field.label" value="RECAUDADO / PAGADO"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="BALANCEPRE"/>
-		</field>
-		<group name="CONCEPTO">
-			<groupExpression><![CDATA[$F{CONCEPTO}]]></groupExpression>
-		</group>
-		<group name="ESTIMADO APROBADO">
-			<groupExpression><![CDATA[$F{ESTIMADO APROBADO}]]></groupExpression>
-		</group>
-		<group name="DEVENGADO">
-			<groupExpression><![CDATA[$F{DEVENGADO}]]></groupExpression>
-		</group>
-		<group name="RECAUDADO / PAGADO">
-			<groupExpression><![CDATA[$F{RECAUDADO / PAGADO}]]></groupExpression>
-		</group>
-	</subDataset>
-	<parameter name="pMesIncial" class="java.lang.String"/>
+	<parameter name="pMesInicial" class="java.lang.String"/>
 	<parameter name="pMesFinal" class="java.lang.String"/>
 	<parameter name="pLastDay" class="java.lang.Integer"/>
 	<parameter name="pYear" class="java.lang.Integer"/>
 	<parameter name="pNombreMunicipio" class="java.lang.String"/>
 	<parameter name="pImagen" class="java.lang.String"/>
+	<parameter name="pTrimestre" class="java.lang.Integer"/>
+	<parameter name="pIdSector" class="java.lang.Integer"/>
+	<parameter name="pL1" class="java.lang.String"/>
+	<parameter name="pN1" class="java.lang.String"/>
+	<parameter name="pL3" class="java.lang.String"/>
+	<parameter name="pN3" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT  BP.CONCEPTO,
 		BP.EA "ESTIMADO APROBADO",
 		BP.DEVENGADO,
 		BP.RP "RECAUDADO / PAGADO"
 	 FROM GEMUSER.BALANCEPRE BP
-WHERE BP.ID_SECTOR= 1
-  AND BP.TRIMESTRE= 1]]>
+WHERE BP.ID_SECTOR= $P{pIdSector}
+  AND BP.TRIMESTRE= $P{pTrimestre}]]>
 	</queryString>
 	<field name="CONCEPTO" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="CONCEPTO"/>
@@ -98,48 +62,42 @@ WHERE BP.ID_SECTOR= 1
 	<group name="RECAUDADO / PAGADO">
 		<groupExpression><![CDATA[$F{RECAUDADO / PAGADO}]]></groupExpression>
 	</group>
-	<background>
-		<band splitType="Stretch"/>
-	</background>
 	<title>
-		<band height="117" splitType="Stretch">
+		<band height="80" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="30" width="752" height="30" uuid="179fcf23-9e7e-4790-951d-9904a42730cf"/>
-				<textElement textAlignment="Center">
+				<reportElement x="0" y="20" width="752" height="20" uuid="179fcf23-9e7e-4790-951d-9904a42730cf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="12"/>
 				</textElement>
 				<text><![CDATA[Balance Presupuestario - LDF]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="10" y="60" width="752" height="30" uuid="b59cf303-1113-4289-81d7-6c90e2c31090"/>
+				<reportElement x="0" y="40" width="752" height="20" uuid="b59cf303-1113-4289-81d7-6c90e2c31090"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Del 1 de " + $P{pMesIncial} + " Al " + $P{pLastDay} +  " de "  + $P{pMesFinal} +  " de "  + $P{pYear} ]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Del 1 de " + $P{pMesInicial} + " Al " + $P{pLastDay} +  " de "  + $P{pMesFinal} +  " de "  + $P{pYear}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="0" y="0" width="752" height="20" uuid="2c450b79-8298-457e-94be-0d8844c60d9d"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{pNombreMunicipio}]]></textFieldExpression>
 			</textField>
-			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
-				<reportElement x="0" y="0" width="60" height="60" uuid="6a953714-ab70-4578-a49d-2856724c533f"/>
-				<imageExpression><![CDATA[$P{pImagen}]]></imageExpression>
-			</image>
 			<staticText>
-				<reportElement x="318" y="87" width="100" height="30" uuid="f1ace284-53ef-4b2b-a197-8c4215a63dac"/>
-				<textElement>
+				<reportElement x="0" y="60" width="752" height="20" uuid="f1ace284-53ef-4b2b-a197-8c4215a63dac"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="12"/>
 				</textElement>
 				<text><![CDATA[(PESOS)]]></text>
 			</staticText>
+			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement x="0" y="0" width="60" height="60" uuid="6a953714-ab70-4578-a49d-2856724c533f"/>
+				<imageExpression><![CDATA[$P{pImagen}]]></imageExpression>
+			</image>
 		</band>
 	</title>
-	<pageHeader>
-		<band height="15" splitType="Stretch"/>
-	</pageHeader>
 	<columnHeader>
 		<band height="30" splitType="Stretch">
 			<staticText>
@@ -152,6 +110,7 @@ WHERE BP.ID_SECTOR= 1
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[CONCEPTO]]></text>
 			</staticText>
 			<staticText>
@@ -164,6 +123,7 @@ WHERE BP.ID_SECTOR= 1
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[ESTIMADO APROBADO]]></text>
 			</staticText>
 			<staticText>
@@ -176,6 +136,7 @@ WHERE BP.ID_SECTOR= 1
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[DEVENGADO]]></text>
 			</staticText>
 			<staticText>
@@ -188,14 +149,15 @@ WHERE BP.ID_SECTOR= 1
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[RECAUDADO / PAGADO]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="30" splitType="Stretch">
+		<band height="15" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement x="0" y="0" width="188" height="30" uuid="20f95ad9-de35-433c-97f0-8b87184bcacd">
+				<reportElement x="0" y="0" width="188" height="15" uuid="20f95ad9-de35-433c-97f0-8b87184bcacd">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="934e352b-aa62-4358-93fa-9200d82d80a1"/>
 				</reportElement>
 				<box>
@@ -204,10 +166,14 @@ WHERE BP.ID_SECTOR= 1
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+					<paragraph leftIndent="1"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{CONCEPTO}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="188" y="0" width="188" height="30" uuid="4fce5afe-10d0-4d05-8b60-ea8c26d1f751">
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="188" y="0" width="188" height="15" uuid="4fce5afe-10d0-4d05-8b60-ea8c26d1f751">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e80aceb2-6f5f-4318-b7c9-372463bdd62a"/>
 				</reportElement>
 				<box>
@@ -216,10 +182,14 @@ WHERE BP.ID_SECTOR= 1
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+					<paragraph rightIndent="1"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{ESTIMADO APROBADO}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="376" y="0" width="188" height="30" uuid="c929d0d3-ce1e-44ea-a5fd-aa56dc3e8e7a">
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="376" y="0" width="188" height="15" uuid="c929d0d3-ce1e-44ea-a5fd-aa56dc3e8e7a">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a4e6ff45-8fd1-4540-9abd-a852c2f57833"/>
 				</reportElement>
 				<box>
@@ -228,10 +198,14 @@ WHERE BP.ID_SECTOR= 1
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+					<paragraph rightIndent="1"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{DEVENGADO}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="564" y="0" width="188" height="30" uuid="ca0c61a9-48df-4b61-9495-48b87a632e23">
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="564" y="0" width="188" height="15" uuid="ca0c61a9-48df-4b61-9495-48b87a632e23">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1776fd41-2b41-4bf9-904b-619a2340d01f"/>
 				</reportElement>
 				<box>
@@ -240,53 +214,50 @@ WHERE BP.ID_SECTOR= 1
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+					<paragraph rightIndent="1"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{RECAUDADO / PAGADO}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="30" splitType="Stretch">
-			<staticText>
-				<reportElement x="80" y="0" width="200" height="30" uuid="d0d7b512-f3b7-4160-abdd-19644e012560"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="12"/>
-				</textElement>
-				<text><![CDATA[PRESIDENTE MUNICIPAL]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="400" y="0" width="200" height="30" uuid="f7671a34-10b5-490d-9198-1eacd68bf557"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="12"/>
-				</textElement>
-				<text><![CDATA[TESORERO]]></text>
-			</staticText>
-		</band>
-	</columnFooter>
-	<pageFooter>
-		<band height="86" splitType="Stretch">
-			<line>
-				<reportElement x="80" y="40" width="200" height="1" uuid="c3e41a8c-e258-4a5e-9956-78b2ef48d17c"/>
-			</line>
-			<line>
-				<reportElement x="400" y="40" width="200" height="1" uuid="33f5d5fc-8441-4b01-a224-a7b1f8c27c0f"/>
-			</line>
-			<staticText>
-				<reportElement x="79" y="50" width="202" height="30" uuid="bf3daa7e-de6b-4f00-86ce-951917f7afe8"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+	<lastPageFooter>
+		<band height="70">
+			<textField isBlankWhenNull="true">
+				<reportElement x="73" y="10" width="202" height="40" uuid="5a071aaa-51d6-43e3-82bd-afce04ef3f69"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="Arial" size="11"/>
 				</textElement>
-				<text><![CDATA[LIC. MAGADALENA PEÑA MERCADO]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="400" y="50" width="200" height="30" uuid="b032088a-3152-45ff-972d-919ef5972b46"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textFieldExpression><![CDATA[$P{pL1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="477" y="10" width="200" height="40" uuid="61753afb-1e15-4ad3-977d-f134c0a6ef53"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="Arial" size="11"/>
 				</textElement>
-				<text><![CDATA[L.C. EDGAR PLATA ROA]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$P{pL3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="477" y="50" width="200" height="20" uuid="f347daec-1670-4534-ab7b-9a6e7340d195"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{pN3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="73" y="50" width="202" height="20" uuid="bd54d919-8539-4224-9270-38acaff5e2ee"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{pN1}]]></textFieldExpression>
+			</textField>
 		</band>
-	</pageFooter>
-	<summary>
-		<band height="21" splitType="Stretch"/>
-	</summary>
+	</lastPageFooter>
 </jasperReport>
