@@ -11,20 +11,35 @@
 	<parameter name="pAño" class="java.lang.String"/>
 	<parameter name="pDependencia" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT   PASO.PARTIDA,
-         NATGAS.NOMGAS "CONCEPTO",
-        (PASO.AUTO1_1+PASO.AUTO1_2+PASO.AUTO1_3+PASO.AUTO1_4+PASO.AUTO1_5+PASO.AUTO1_6
-         +PASO.AUTO1_7+PASO.AUTO1_8+PASO.AUTO1_9+PASO.AUTO1_10+PASO.AUTO1_11+PASO.AUTO1_12)"APROBADO",
-         (PASO.AUTO1_1 + PASO.AMPLI1_1 - PASO.REDU1_1)"MODIFICADO",
-         PASO.TOEJE "EJERCIDO",
-         (PASO.AUTO1_1 + PASO.AMPLI1_1 - PASO.REDU1_1)"MODIFICADO A",
-        (PASO.TOEJE)"ACUMULADO",
-        ((PASO.AUTO1_1+PASO.AMPLI1_1-PASO.REDU1_1)- PASO.TOEJE)"VARIACION ABSOLUTA",
-        ((PASO.AUTO1_1+PASO.AMPLI1_1-PASO.REDU1_1)- PASO.TOEJE)*100 "VARIACION %"       
-                        
-                      
-	 FROM PASO , NATGAS , CATDAA]]>
+		<![CDATA[SELECT  PA.CLAVE,
+        PA.PARTIDA,
+        NA.NOMGAS "CONCEPTO",
+       (PA.AUTO1_1+PA.AUTO1_2+PA.AUTO1_3+PA.AUTO1_4+PA.AUTO1_5+PA.AUTO1_6
+       +PA.AUTO1_7+PA.AUTO1_8+PA.AUTO1_9+PA.AUTO1_10+PA.AUTO1_11+PA.AUTO1_12)"APROBADO",
+       (PA.AUTO1_1 + PA.AMPLI1_1 - PA.REDU1_1)"MODIFICADO",
+       PA.TOEJE "EJERCIDO",
+       (PA.AUTO1_1+PA.AMPLI1_1-PA.REDU1_1)"MODIFICADO A",
+       (PA.TOEJE)"ACUMULADO",
+       ((PA.AUTO1_1+PA.AMPLI1_1-PA.REDU1_1)- PA.TOEJE)"VARIACION ABSOLUTA",
+       ((PA.AUTO1_1+PA.AMPLI1_1-PA.REDU1_1)- PA.TOEJE)*100 "VARIACION %",
+       CA.CLAVE
+
+
+     FROM PASO PA
+        INNER JOIN NATGAS NA ON PA.PARTIDA=NA.CLVGAS AND
+        PA.IDSECTOR=NA.IDSECTOR
+        INNER JOIN CATDAA CA ON SUBSTR(PA.CLAVE,4,3)=CA.CLAVE
+    
+        
+        
+WHERE
+     PA.IDSECTOR=1     
+ORDER BY PA.PARTIDA ASC]]>
 	</queryString>
+	<field name="CLAVE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CLAVE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PASO"/>
+	</field>
 	<field name="PARTIDA" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="PARTIDA"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="PASO"/>
@@ -55,6 +70,10 @@
 	</field>
 	<field name="VARIACION %" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.label" value="VARIACION %"/>
+	</field>
+	<field name="COLUMN_11" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CLAVE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CATDAA"/>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -186,7 +205,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[ACUMULADO]]></text>
+				<text><![CDATA[EJERCIDO]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="590" y="41" width="76" height="29" backcolor="#DFDFDF" uuid="312fde8e-8c67-4d9e-a721-3aaf69dcd68b">
@@ -280,7 +299,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{CONCEPTO}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
+			<textField pattern="#,##0.00#;(-#,##0.00#)" isBlankWhenNull="true">
 				<reportElement x="220" y="0" width="67" height="30" uuid="b0617ea5-73db-4edc-86ba-f6059de8f8d2">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d56378bb-d84e-48fc-be8e-481d91ab7734"/>
 				</reportElement>
@@ -291,7 +310,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{APROBADO}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
+			<textField pattern="#,##0.00#;(-#,##0.00#)" isBlankWhenNull="true">
 				<reportElement x="286" y="0" width="83" height="30" uuid="a0b2fb54-e920-4d84-88d5-adfe0d3e6564">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6c75db9e-e3f1-4a00-b30c-5eaf80f88ecc"/>
 				</reportElement>
@@ -302,7 +321,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{MODIFICADO}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
+			<textField pattern="#,##0.00#;(-#,##0.00#)" isBlankWhenNull="true">
 				<reportElement x="370" y="0" width="52" height="30" uuid="124dc809-a229-4cf8-8a44-d49ba811fdf2">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d5fc0933-f31a-40cf-a225-a58cfe97f093"/>
 				</reportElement>
@@ -313,7 +332,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{EJERCIDO}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
+			<textField pattern="#,##0.00#;(-#,##0.00#)" isBlankWhenNull="true">
 				<reportElement x="423" y="0" width="82" height="30" uuid="c9c06c73-1132-4db2-a87c-4cabfb20cf86">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="14f46b75-cee5-4fb8-8633-3bcd7e9a2bed"/>
 				</reportElement>
@@ -324,7 +343,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{MODIFICADO A}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
+			<textField pattern="#,##0.00#;(-#,##0.00#)" isBlankWhenNull="true">
 				<reportElement x="506" y="0" width="83" height="30" uuid="e6666288-46ea-48c5-93fb-5ededafa20d6">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="89c36210-547d-45ba-9e75-73011c3581f7"/>
 				</reportElement>
@@ -335,7 +354,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{ACUMULADO}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
+			<textField pattern="#,##0.00#;(-#,##0.00#)" isBlankWhenNull="true">
 				<reportElement x="589" y="0" width="76" height="30" uuid="45ebab10-4e84-497e-9361-0c3bfa5964e9">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="02e82aef-f5de-41e2-b23f-42aba5687d98"/>
 				</reportElement>
@@ -346,7 +365,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{VARIACION ABSOLUTA}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
+			<textField pattern="#,##0.00%" isBlankWhenNull="true">
 				<reportElement x="666" y="0" width="86" height="30" uuid="ab7856d2-27c6-458e-94f2-bd45880cdbfb">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="284a5010-63ee-432a-adcd-6b6b10816eb7"/>
 				</reportElement>
