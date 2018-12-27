@@ -20,7 +20,7 @@ public class ExportInformationDAOImpl implements ExportInformationDAO {
 	private static final String FILE_CUETA = "cuenta.txt";
 	private static final String FILE_PASO = "egrgas.txt";
 	private static final String FILE_POLIZA = "poliza.txt";
-	
+
 	@Autowired
 	private CallSpDAO callSpDAO;
 
@@ -48,8 +48,8 @@ public class ExportInformationDAOImpl implements ExportInformationDAO {
 				.append("				      CU.SSCTA    ,\r\n").append("				      CU.SSSCTA   ,\r\n")
 				.append("				      CU.SSSSCTA\r\n").append("				      ASC\r\n")
 				.append("		    ) T1");
-		parameters = new MapSqlParameterSource().addValue("i_header", StringUtils.EMPTY).addValue("i_query",
-				sSql.toString()).addValue("i_file_name", FILE_CUETA);
+		parameters = new MapSqlParameterSource().addValue("i_header", StringUtils.EMPTY)
+				.addValue("i_query", sSql.toString()).addValue("i_file_name", FILE_CUETA);
 		out = this.callSpDAO.call(NAME_PROCEDURE, parameters);
 		return out.get("O_FULL_FILE_PATH").toString();
 	}
@@ -76,8 +76,8 @@ public class ExportInformationDAOImpl implements ExportInformationDAO {
 				.append("			ORDER BY PA.CLAVE   ,\r\n").append("			       	 PA.PROGRAMA,\r\n")
 				.append("				     PA.PARTIDA\r\n").append("				     ASC\r\n")
 				.append("		   ) T1");
-		parameters = new MapSqlParameterSource().addValue("i_header", StringUtils.EMPTY).addValue("i_query",
-				sSql.toString()).addValue("i_file_name", FILE_PASO);
+		parameters = new MapSqlParameterSource().addValue("i_header", StringUtils.EMPTY)
+				.addValue("i_query", sSql.toString()).addValue("i_file_name", FILE_PASO);
 		out = this.callSpDAO.call(NAME_PROCEDURE, parameters);
 		return out.get("O_FULL_FILE_PATH").toString();
 	}
@@ -108,7 +108,7 @@ public class ExportInformationDAOImpl implements ExportInformationDAO {
 				.append("             AND PE.ANOPOL   = PD.ANOPOL\r\n")
 				.append("             AND PE.IDSECTOR = PD.IDSECTOR\r\n").append("             AND PE.IDSECTOR = ")
 				.append(idSector).append(" \r\n").append("             AND PE.MESPOL   =  ").append(mes).append(" \r\n")
-				.append("             ---AND PE.STAAFE   = 'A'\r\n").append("             AND PE.ANOPOL   = ")
+				.append("             AND PE.STAAFE   = 'A'\r\n").append("             AND PE.ANOPOL   = ")
 				.append(conctb.getAnoemp()).append("\r\n").append("          GROUP BY PD.TIPPOL,\r\n")
 				.append("      	           PD.CONPOL,\r\n").append("	     		   TO_CHAR(PD.FECPOL, 'DD'),\r\n")
 				.append("				   TO_CHAR(PD.FECPOL, 'MM'),\r\n")
@@ -117,8 +117,8 @@ public class ExportInformationDAOImpl implements ExportInformationDAO {
 				.append("				   PD.SSSCTA ,\r\n").append("				   PD.SSSSCTA,\r\n")
 				.append("				   PD.REFPOL ,\r\n").append("				   PD.CONCEP\r\n")
 				.append("          ORDER BY 1, 2\r\n").append("          ) T1\r\n").append("");
-		parameters = new MapSqlParameterSource().addValue("i_header", StringUtils.EMPTY).addValue("i_query",
-				sSql.toString()).addValue("i_file_name", FILE_POLIZA);
+		parameters = new MapSqlParameterSource().addValue("i_header", StringUtils.EMPTY)
+				.addValue("i_query", sSql.toString()).addValue("i_file_name", FILE_POLIZA);
 		out = this.callSpDAO.call(NAME_PROCEDURE, parameters);
 		return out.get("O_FULL_FILE_PATH").toString();
 	}

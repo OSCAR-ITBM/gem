@@ -31,9 +31,9 @@ import com.gem.sistema.business.service.catalogos.PuestosFirmasService;
 import com.gem.sistema.business.service.reportador.ReportValidationException;
 import com.gem.sistema.web.datamodel.DataModelGeneric;
 
-@ManagedBean(name = "balancePresupuestarioMB")
+@ManagedBean(name ="clciPdfMB")
 @ViewScoped
-public class BalancePresupuestarioMB extends BaseDirectReport {
+public class ClciPdfMB extends BaseDirectReport {
 
 	private static final Integer TIPO_PERIODO = 3;
 
@@ -92,7 +92,7 @@ public class BalancePresupuestarioMB extends BaseDirectReport {
 
 	@PostConstruct
 	public void init() {
-		jasperReporteName = "BP";
+		jasperReporteName = "CLCI";
 		endFilename = jasperReporteName + ".pdf";
 		conctb = conctbRepository.findByIdsectorAndIdRef(this.getUserDetails().getIdSector(), 0);
 		listTrimestres = periodoRepository.findByTipoPeriodo(TIPO_PERIODO);
