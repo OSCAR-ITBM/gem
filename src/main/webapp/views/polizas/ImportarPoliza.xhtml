@@ -12,6 +12,10 @@
 		<ui:define name="content">
 			<h:form enctype="multipart/form-data" id="form1">
 				<p:growl id="messages" showDetail="true" sticky="true" />
+
+				<p:remoteCommand name="uppoliza"
+					actionListener="#{importarPolizaMB.renderElements}"
+					update=":form1:momentoContRBG, :form1:mesInputDest, :form1:mesLabel, :form1:lblTipo, :form1:tipoInputDest, :form1:revloadInput,  :form1:panel" />
 				<p:panel id="panel"
 					styleClass="green col-md-11 col-centered row-centered shadow-panel"
 					header="Importar P&oacute;lizas (N&oacute;mina, Ingresos, Otros...)">
@@ -31,15 +35,17 @@
 									<h:inputSecret value="#{importarPolizaMB.clave}"
 										id="claveInput" maxlength="15" size="15" />
 
-									<p:commandButton value="Validar" style="padding: 5px;"
+									<p:commandButton value="Validar"
 										update=":form1:messages, :form1:panel, :form1:mesInputDest, :form1:tipoInputDest"
 										actionListener="#{importarPolizaMB.checkClave}"
 										onstart="PF('blockUIWidget').block()"
 										oncomplete="PF('blockUIWidget').unblock()" />
 
-									<h:outputText value="Mes: " for="mesInputOri"
+									<h:outputText value="Mes: " for="mesInputOri" id="mesLabel"
+										rendered="#{importarPolizaMB.render}"
 										style="padding-left: 30px; padding-right: 10px; margin-top: 30px;" />
 									<p:selectOneMenu id="mesInputDest"
+										rendered="#{importarPolizaMB.render}"
 										value="#{importarPolizaMB.iMes}"
 										disabled="#{importarPolizaMB.objDisabled}">
 										<f:selectItems value="#{importarPolizaMB.listMes}" var="item"
@@ -48,9 +54,11 @@
 											update=":form1:polizaIniInputOri"></p:ajax>
 									</p:selectOneMenu>
 
-									<h:outputText value="Tipo: " for="tipoInputDest"
+									<h:outputText value="Tipo: " for="tipoInputDest" id="lblTipo"
+										rendered="#{importarPolizaMB.render}"
 										style="padding-left: 30px; padding-right: 10px; margin-top: 30px;" />
 									<p:selectOneMenu id="tipoInputDest"
+										rendered="#{importarPolizaMB.render}"
 										value="#{importarPolizaMB.iTipo}"
 										disabled="#{importarPolizaMB.objDisabled}">
 										<f:selectItems value="#{polizaCopiarMB.lisCattpo}"
@@ -61,10 +69,11 @@
 									</p:selectOneMenu>
 
 									<h:outputText value="No. P&oacute;liza: "
-										for="polizaIniInputOri"
+										rendered="#{importarPolizaMB.render}" for="polizaIniInputOri"
 										style="padding-left: 30px; padding-right: 10px; margin-top: 10px;" />
 									<p:inputText id="polizaIniInputOri" maxlength="4" size="8"
-										disabled="true" required="true"
+										rendered="#{importarPolizaMB.render}" disabled="true"
+										required="true"
 										requiredMessage="El numero de poliza es requerido"
 										value="#{importarPolizaMB.iNumero}">
 										<pe:keyFilter for="polizaIniInputOri" mask="pint"></pe:keyFilter>
@@ -86,8 +95,10 @@
 									</p:calendar>
 
 									<h:outputText value="Revisar/Cargar: " for="revloadInput"
+										rendered="#{importarPolizaMB.render}"
 										style="padding-left: 30px; padding-right: 10px; margin-top: 30px;" />
 									<p:selectOneMenu id="revloadInput" size="18"
+										rendered="#{importarPolizaMB.render}"
 										disabled="#{importarPolizaMB.objDisabled}"
 										value="#{importarPolizaMB.iProcesar}">
 										<f:selectItem itemValue="R" itemLabel="R" />
@@ -104,14 +115,7 @@
 										onclick="PF('dlg1').show();"
 										disabled="#{importarPolizaMB.objDisabled}" />
 
-									<!-- <p:confirmDialog widgetVar="confirmFile" id="winget"
-										message="Este proceso puede tardar algunos minutos. Porfavor oprima aceptar y espere"
-										header="Confirmacion" severity="alert">
-										<p:commandButton value="Aceptar" ajax="false" label="Correcto"
-											id="idaceptar" style="margin-top:10px;padding:5px;"
-											actionListener="#{importarPolizaMB.upload}"
-											styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-									</p:confirmDialog> -->
+
 
 
 									<p:commandButton value="Descargar Archivo" ajax="false"
@@ -131,34 +135,8 @@
 											onclick="PrimeFaces.monitorDownload(start, stop);"
 											styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
 									</p:dialog>
-									<!-- <p:commandLink id="pdf"
-										disabled="#{importarPolizaMB.objDisabled}"
-										icon="ui-icon-print" oncomplete="PF('impPoliza').show();"
-										actionListener="#{importarPolizaMB.buttonAction}"
-										update=":formImprimirPoliza:imPoliza, :formImprimirPoliza:pdfContent">
-										<p:graphicImage value="/views/catalogs/pdf.png" width="32" />
-									</p:commandLink>
-									<p:commandLink id="excel"
-										disabled="#{importarPolizaMB.objDisabled}"
-										actionListener="#{importarPolizaMB.excel}">
-										<p:graphicImage value="/views/catalogs/excel.png" width="32" />
-									</p:commandLink>
-									<p:commandLink id="csv"
-										disabled="#{importarPolizaMB.objDisabled}"
-										actionListener="#{importarPolizaMB.csv}">
-										<p:graphicImage value="/views/catalogs/csv.png" width="32" />
-									</p:commandLink>
 
-									<p:commandLink id="txt"
-										disabled="#{importarPolizaMB.objDisabled}"
-										actionListener="#{importarPolizaMB.txt}">
-										<p:graphicImage value="/views/catalogs/txt.gif" width="32" />
-									</p:commandLink> -->
-									<!-- <p:selectBooleanCheckbox id="repetir"
-										itemLabel="Repetir Poliza"
-										disabled="#{importarPolizaMB.objDisabled}"
-										value="#{importarPolizaMB.repetirPoliza}" />
- -->
+
 
 								</p:panelGrid>
 							</p:column>
@@ -170,12 +148,17 @@
 									<p:selectOneRadio id="momentoContRBG" layout="grid" columns="1"
 										disabled="#{importarPolizaMB.objDisabled}" required="true"
 										requiredMessage="Seleccione un Momento Contable"
-										value="#{importarPolizaMB.iBoxes}" >
+										value="#{importarPolizaMB.iBoxes}">
 										<f:selectItem itemLabel="Comprometido, Devengado y Pagado"
 											itemValue="11" />
 										<f:selectItem itemLabel="Devengado y Pagado" itemValue="12" />
 										<f:selectItem itemLabel="Cuotas de Issemym" itemValue="13" />
 										<f:selectItem itemLabel="P&oacute;liza Normal" itemValue="14" />
+										<f:selectItem itemLabel="Crear P&oacute;liza " itemValue="15" />
+										<p:ajax
+											update=":form1:momentoContRBG, :form1:mesInputDest, :form1:mesLabel, :form1:lblTipo, :form1:tipoInputDest, :form1:revloadInput "
+											event="change" listener="#{importarPolizaMB.renderElements}"
+											oncomplete="uppoliza();" />
 									</p:selectOneRadio>
 
 								</p:panel>
@@ -183,30 +166,6 @@
 						</p:row>
 					</p:panelGrid>
 					<p:panelGrid styleClass="col-centered row-centered" id="grid2">
-						<!-- <p:commandButton value="Imprimir Poliza" id="impresion"
-							style="margin-left: 47%; padding: 1px;"
-							actionListener="#{importarPolizaMB.buttonAction}"
-							icon="ui-icon-print" oncomplete="PF('impPoliza').show();"
-							update=":formImprimirPoliza:imPoliza, :formImprimirPoliza:pdfContent" />
-						<p:commandLink id="excel"
-							disabled="#{importarPolizaMB.objDisabled}"
-							actionListener="#{importarPolizaMB.buttonAction}"
-							icon="ui-icon-print" oncomplete="PF('impPoliza').show();"
-							update=":formImprimirPoliza:imPoliza, :formImprimirPoliza:pdfContent">
-							<p:graphicImage value="/views/catalogs/pdf.png" width="32" />
-							
-						</p:commandLink>
-						<p:commandLink id="pdf" disabled="#{importarPolizaMB.objDisabled}">
-							<p:graphicImage value="/views/catalogs/excel.png" width="32" />
-						</p:commandLink>
-						<p:commandLink id="csv" disabled="#{importarPolizaMB.objDisabled}"
-							actionListener="#{importarPolizaMB.exporRetports}">
-							<p:graphicImage value="/views/catalogs/csv.png" width="32" />
-						</p:commandLink>
-						<p:commandLink id="txt" disabled="#{importarPolizaMB.objDisabled}"
-							actionListener="#{importarPolizaMB.exporRetports}">
-							<p:graphicImage value="/views/catalogs/txt.gif" width="32" />
-						</p:commandLink> -->
 
 					</p:panelGrid>
 
