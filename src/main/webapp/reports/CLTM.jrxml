@@ -2,7 +2,7 @@
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CLTM" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ea9af5fd-eb77-4e11-b7d1-7e83d7d5ff9b">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="gemLocal"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="gemServer"/>
 	<parameter name="pLogo" class="java.lang.String"/>
 	<parameter name="pNombreMunicipio" class="java.lang.String"/>
 	<parameter name="pNumMunicipio" class="java.lang.String"/>
@@ -15,8 +15,8 @@
 		<![CDATA[SELECT  TV.ID_ROW,
         MAX(DECODE(TE.NOMBRE, 'SEMESTRE', TV.VALOR, '')) SEMESTRE,
         MAX(DECODE(TE.NOMBRE, 'FECHAING', TV.VALOR, '')) FECHAING,
-        MAX(DECODE(TE.NOMBRE, 'ID_SECTOR', TV.VALOR, '')) ID_SECTOR,
-        MAX(DECODE(TE.NOMBRE, 'ID_ANIO', TV.VALOR, '')) ID_ANIO,
+        MAX(DECODE(TE.NOMBRE, 'IDSECTOR', TV.VALOR, '')) ID_SECTOR,
+        MAX(DECODE(TE.NOMBRE, 'IDANIO', TV.VALOR, '')) ID_ANIO,
         MAX(DECODE(TE.NOMBRE, 'CERTIFICACION', TV.VALOR, '')) CERTIFICACION,
         MAX(DECODE(TE.NOMBRE, 'EXPERIENCIA', TV.VALOR, '')) EXPERIENCIA,
         MAX(DECODE(TE.NOMBRE, 'TITULO', TV.VALOR,'')) TITULO

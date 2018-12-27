@@ -19,9 +19,9 @@ import com.gem.sistema.business.repository.catalogs.TcMesRepository;
 import com.gem.sistema.business.repository.catalogs.TcPeriodoRepositoy;
 import com.gem.sistema.business.service.reportador.ReportValidationException;
 
-@ManagedBean(name = "derechosHumanosMB")
+@ManagedBean(name = "oficialCalificadorMB")
 @ViewScoped
-public class DerechosHumanosMB extends BaseDirectReport {
+public class OficialCalificadorMB extends BaseDirectReport {
 
 	private List<TcPeriodo> listSemestres;
 	private Integer semestre;
@@ -39,7 +39,7 @@ public class DerechosHumanosMB extends BaseDirectReport {
 	@PostConstruct
 	public void init() {
 		listSemestres = tcPeriodoRepositoy.findByTipoPeriodo(6);
-		jasperReporteName = "defensorDerechosHumanos";
+		jasperReporteName = "oficialCalificador";
 		endFilename = jasperReporteName + ".pdf";
 
 		if (!listSemestres.isEmpty()) {
@@ -54,15 +54,15 @@ public class DerechosHumanosMB extends BaseDirectReport {
 
 		firmas = firmasRepository.findAllByIdsector(this.getUserDetails().getIdSector());
 		Object[] meses = getMonthsBySemestre(semestre);
-		
-		parameters.put("municipioName", firmas.getCampo1());
+
+		parameters.put("municipio", firmas.getCampo1());
 		parameters.put("imagen", this.getUserDetails().getPathImgCab1());
-		parameters.put("anio", firmas.getCampo3());
-		parameters.put("mes", meses[1]);
-		parameters.put("dia", meses[2]);
-		parameters.put("firmaL1", firmas.getL31());
-		parameters.put("firmaN1", firmas.getN31());
-		
+		parameters.put("year1", firmas.getCampo3());
+		parameters.put("mes1", meses[1]);
+		parameters.put("dia1", meses[2]);
+		parameters.put("firmaCargo", firmas.getL33());
+		parameters.put("firmaNombre", firmas.getN33());
+
 		return parameters;
 	}
 
@@ -84,14 +84,6 @@ public class DerechosHumanosMB extends BaseDirectReport {
 
 		return meses;
 	}
-	
-	public Integer getSemestre() {
-		return semestre;
-	}
-
-	public void setSemestre(Integer semestre) {
-		this.semestre = semestre;
-	}
 
 	public List<TcPeriodo> getListSemestres() {
 		return listSemestres;
@@ -99,6 +91,14 @@ public class DerechosHumanosMB extends BaseDirectReport {
 
 	public void setListSemestres(List<TcPeriodo> listSemestres) {
 		this.listSemestres = listSemestres;
+	}
+
+	public Integer getSemestre() {
+		return semestre;
+	}
+
+	public void setSemestre(Integer semestre) {
+		this.semestre = semestre;
 	}
 
 	public Firmas getFirmas() {
