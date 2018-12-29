@@ -24,24 +24,17 @@
 								var="trim" itemLabel="#{trim.periodo}"
 								itemValue="#{trim.periodo}"></f:selectItems>
 						</p:selectOneMenu>
+
 						<p:panelGrid columns="4" styleClass="ui-noborder">
-							<p:commandButton id="generateportepdf"
-								onstart="PF('blockUIWidget').block()"
-								oncomplete="PF('blockUIWidget').unblock()"
-								action="#{clasificacionObjGastoMB.createFilePdfInline}"
-								value="Correcto"
-								update="form1:inlinePdf, :form1:growlReportador"
-								styleClass="btn btn-default">
+							<p:commandButton id="txt" value="Correcto"
+								actionListener="#{clasificacionObjGastoMB.downloadCuentaTxt}"
+								update=":form1:growlReportador, :form1:downTxt">
+							</p:commandButton>
+							<p:commandButton style="display: none" id="downTxt" ajax="false">
+								<p:fileDownload value="#{clasificacionObjGastoMB.file}" />
 							</p:commandButton>
 						</p:panelGrid>
 					</p:panelGrid>
-					<p:panel id="inlinePdf" style="border:0px"
-						visible="#{clasificacionObjGastoMB.uuid ne null}">
-						<object type="application/pdf"
-							data="#{request.contextPath}/GetFileInline?uuid=#{clasificacionObjGastoMB.uuid}&amp;filename=#{clasificacionObjGastoMB.endFilename}"
-							height="380px" width="100%"> Tu browser no puede
-							desplegar el PDF. </object>
-					</p:panel>
 				</p:panel>
 				<pe:blockUI widgetVar="blockUIWidget" centerX="false">
 					<h:panelGrid columns="2">
