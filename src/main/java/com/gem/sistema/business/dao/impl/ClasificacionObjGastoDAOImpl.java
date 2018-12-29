@@ -85,7 +85,7 @@ public class ClasificacionObjGastoDAOImpl implements ClasificacionObjGastoDAO {
 				.append("FROM (SELECT NAT.CLVGAS, NAT.NOMGAS, ").append(auto).append(ampli).append(redu).append(ejxpa)
 				.append(ejpa)
 				.append("FROM PASO PA INNER JOIN NATGAS NAT ON NAT.CLVGAS = PA.PARTIDA AND NAT.IDSECTOR = PA.IDSECTOR ")
-				.append("WHERE  PA.IDSECTOR ='1' AND SUBSTR(PA.PARTIDA,4,1)<>'0' AND ")
+				.append("WHERE  PA.IDSECTOR = ").append(idSector).append(" AND SUBSTR(PA.PARTIDA,4,1)<>'0' AND ")
 				.append("SUBSTR(PA.PROGRAMA,13,3)>='203' AND SUBSTR(PA.PROGRAMA,13,3)<='225' OR ")
 				.append("SUBSTR(PA.PROGRAMA,13,3)>='114' AND SUBSTR(PA.PROGRAMA,13,3)<='115' ")
 				.append("GROUP BY NAT.CLVGAS,NAT.NOMGAS ORDER BY NAT.CLVGAS ASC ) T2 UNION ALL ")
@@ -99,13 +99,12 @@ public class ClasificacionObjGastoDAOImpl implements ClasificacionObjGastoDAO {
 				.append("FROM (SELECT	NAT.CLVGAS, NAT.NOMGAS, ").append(auto).append(ampli).append(redu).append(ejxpa)
 				.append(ejpa)
 				.append("FROM PASO PA INNER JOIN NATGAS NAT ON NAT.CLVGAS = PA.PARTIDA AND NAT.IDSECTOR = PA.IDSECTOR ")
-				.append("WHERE  PA.IDSECTOR ='1' AND SUBSTR(PA.PARTIDA,4,1)<>'0' AND ")
+				.append("WHERE  PA.IDSECTOR = ").append(idSector).append(" AND SUBSTR(PA.PARTIDA,4,1)<>'0' AND ")
 				.append("SUBSTR(PA.PROGRAMA,13,3)>='203' AND SUBSTR(PA.PROGRAMA,13,3)<='225' OR ")
 				.append("SUBSTR(PA.PROGRAMA,13,3)>='114' AND SUBSTR(PA.PROGRAMA,13,3)<='115' ")
 				.append("GROUP BY NAT.CLVGAS,NAT.NOMGAS " + "ORDER BY NAT.CLVGAS ASC ) T2 ");
 
-		System.out.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
-		System.out.println(sSql.toString());
+
 		parameters = new MapSqlParameterSource().addValue("i_header", StringUtils.EMPTY)
 				.addValue("i_query", sSql.toString()).addValue("i_file_name", nameFile);
 		out = this.callSpDAO.call(NAME_PROCEDURE, parameters);
