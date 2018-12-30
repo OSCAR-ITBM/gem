@@ -16,12 +16,8 @@ public class TcEtiqueta extends AbstractEntity implements Serializable {
 
 	private String nombre;
 
-	@Column(name = "\"STATUS\"")
+	@Column(name = "STATUS")
 	private Integer status;
-
-	// bi-directional many-to-one association to TrEtiqTabla
-	@OneToMany(mappedBy = "tcEtiqueta")
-	private List<TrEtiqTabla> trEtiqTablas;
 
 	public TcEtiqueta() {
 	}
@@ -40,28 +36,6 @@ public class TcEtiqueta extends AbstractEntity implements Serializable {
 
 	public void setStatus(Integer status) {
 		this.status = status;
-	}
-
-	public List<TrEtiqTabla> getTrEtiqTablas() {
-		return this.trEtiqTablas;
-	}
-
-	public void setTrEtiqTablas(List<TrEtiqTabla> trEtiqTablas) {
-		this.trEtiqTablas = trEtiqTablas;
-	}
-
-	public TrEtiqTabla addTrEtiqTabla(TrEtiqTabla trEtiqTabla) {
-		getTrEtiqTablas().add(trEtiqTabla);
-		trEtiqTabla.setTcEtiqueta(this);
-
-		return trEtiqTabla;
-	}
-
-	public TrEtiqTabla removeTrEtiqTabla(TrEtiqTabla trEtiqTabla) {
-		getTrEtiqTablas().remove(trEtiqTabla);
-		trEtiqTabla.setTcEtiqueta(null);
-
-		return trEtiqTabla;
 	}
 
 }

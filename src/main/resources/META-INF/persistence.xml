@@ -42,5 +42,6 @@
 		<class>com.gem.sistema.business.domain.TcPeriodo</class>
 		<class>com.gem.sistema.business.domain.TcPuesto</class>
 		<class>com.gem.sistema.business.domain.TrPuestoFirma</class>
+		<class>com.gem.sistema.business.domain.TcValores</class>
 	</persistence-unit>
 </persistence>

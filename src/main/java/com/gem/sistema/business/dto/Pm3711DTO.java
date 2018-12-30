@@ -2,25 +2,27 @@ package com.gem.sistema.business.dto;
 
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class Pm3711DTO {
 
-	private Integer idRow;
-	private Integer semestre;
+	private Integer idEtq;
+	private Integer semestre = 1;
 	private Integer idSector;
-	private Integer titulo;
-	private Integer experiencia;
-	private Integer certificacion;
-	private String capturo;
-	private Date fechaIng;
+	private Integer titulo = 0;
+	private Integer experiencia = 0;
+	private Integer certificacion = 0;
+	private String capturo = StringUtils.EMPTY;
+	private String fechaIng;
 	private Long idAnio;
 	private Long idRef;
 
-	public Integer getIdRow() {
-		return idRow;
+	public Integer getIdEtq() {
+		return idEtq;
 	}
 
-	public void setIdRow(Integer idRow) {
-		this.idRow = idRow;
+	public void setIdEtq(Integer idEtq) {
+		this.idEtq = idEtq;
 	}
 
 	public Integer getSemestre() {
@@ -31,11 +33,11 @@ public class Pm3711DTO {
 		this.semestre = semestre;
 	}
 
-	public Date getFechaIng() {
+	public String getFechaIng() {
 		return fechaIng;
 	}
 
-	public void setFechaIng(Date fechaIng) {
+	public void setFechaIng(String fechaIng) {
 		this.fechaIng = fechaIng;
 	}
 

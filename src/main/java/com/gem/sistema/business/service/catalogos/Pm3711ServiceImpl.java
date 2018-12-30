@@ -20,10 +20,10 @@ public class Pm3711ServiceImpl implements Pm3711Service {
 	}
 
 	@Override
-	public List<Pm3711DTO> deletePm3711(Integer idRow) {
+	public List<Pm3711DTO> deletePm3711(Pm3711DTO pm3711dto) {
 
-		this.pm3711BS.deletePm3711(idRow);
-		return this.pm3711BS.findAll();
+		
+		return this.pm3711BS.deletePm3711(pm3711dto); 
 	}
 
 	public Pm3711BS getPm3711BS() {
@@ -32,6 +32,17 @@ public class Pm3711ServiceImpl implements Pm3711Service {
 
 	public void setPm3711BS(Pm3711BS pm3711bs) {
 		pm3711BS = pm3711bs;
+	}
+
+	@Override
+	public List<Pm3711DTO> save(Pm3711DTO pm3711dto) {
+		return this.pm3711BS.save(pm3711dto);
+	}
+
+	@Override
+	public List<Pm3711DTO> modificar(Pm3711DTO pm3711dto) {
+		
+		return this.pm3711BS.modificar(pm3711dto);
 	}
 
 }

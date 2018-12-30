@@ -8,5 +8,9 @@ public interface Pm3711Service {
 
 	List<Pm3711DTO> listAll();
 	
-	List<Pm3711DTO> deletePm3711(Integer idRow);
+	List<Pm3711DTO> deletePm3711(Pm3711DTO pm3711dto);
+	
+	List<Pm3711DTO> save(Pm3711DTO pm3711dto);
+	
+	List<Pm3711DTO> modificar(Pm3711DTO pm3711dto);
 }
