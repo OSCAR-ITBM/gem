@@ -2,13 +2,15 @@ package com.gem.sistema.business.dao.impl;
 
 import static com.gem.sistema.business.utils.GetValuesClassUtils.getFieldNamesAndValues;
 import static com.roonin.utils.UtilDate.formatDate;
+import static com.roonin.utils.UtilDate.converStringToDate;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
-
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -98,10 +100,18 @@ public class Pm3711DAOImpl implements Pm3711DAO {
 				System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
 
 				Long idEt = this.trEtqTablasRepository.findByEtiqueta(entry.getKey().toUpperCase(), 1);
-				if (!entry.getKey().equals("idEtq")) {
 
-					sSql = "DELETE FROM GEMUSER.TC_VALORES TV WHERE TV.VALOR ='" + entry.getValue().toString()
-							+ "' AND TV.ID_ROW = " + idRow + " AND TV.ID_ETIQ_TABLA = " + idEt;
+				if (!entry.getKey().equals("idEtq")) {
+					String convertFecha;
+					String val = entry.getValue().toString();
+					if (entry.getKey().equals("fechaIng")) {
+						convertFecha = converStringToDate("dd/MM/yyyy", entry.getValue().toString());
+						System.out.println("fecha:: " + convertFecha);
+						val = convertFecha;
+					}
+
+					sSql = "DELETE FROM GEMUSER.TC_VALORES TV WHERE TV.VALOR ='" + val + "' AND TV.ID_ROW = " + idRow
+							+ " AND TV.ID_ETIQ_TABLA = " + idEt;
 					jdbcTemplate.update(sSql);
 				}
 
