@@ -21,8 +21,8 @@ public class Pm3711BSImpl implements Pm3711BS {
 	}
 
 	@Override
-	public void deletePm3711(Integer idRow) {
-		this.pm3711dao.deletePm3711(idRow);
+	public List<Pm3711DTO> deletePm3711(Pm3711DTO pm3711dto) {
+		return this.pm3711dao.delete(pm3711dto);
 	}
 
 	public Pm3711DAO getPm3711dao() {
@@ -31,6 +31,18 @@ public class Pm3711BSImpl implements Pm3711BS {
 
 	public void setPm3711dao(Pm3711DAO pm3711dao) {
 		this.pm3711dao = pm3711dao;
+	}
+
+	@Override
+	public List<Pm3711DTO> save(Pm3711DTO pm3711dto) {
+
+		return this.pm3711dao.save(pm3711dto);
+	}
+
+	@Override
+	public List<Pm3711DTO> modificar(Pm3711DTO pm3711dto) {
+
+		return this.pm3711dao.modificar(pm3711dto);
 	}
 
 }

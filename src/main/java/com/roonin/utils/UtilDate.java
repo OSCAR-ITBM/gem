@@ -173,6 +173,17 @@ public class UtilDate {
 		}
 	}
 	
+	public static String formatDate(String formato, String fecha) {
+
+		Date d = new Date(fecha);
+		SimpleDateFormat format = new SimpleDateFormat(formato);
+
+		;
+
+		return format.format(d).toString();
+
+	}
+	
 	/**
 	 * Gets the ano emp.
 	 *
