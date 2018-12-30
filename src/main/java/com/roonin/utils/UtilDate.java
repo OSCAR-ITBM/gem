@@ -1,5 +1,6 @@
 package com.roonin.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -14,21 +15,20 @@ import com.gem.sistema.business.repository.catalogs.ConctbRepository;
  * The Class UtilDate.
  */
 public class UtilDate {
-	
+
 	/** The Constant DAY. */
 	private static final int DAY = 1;
-	
+
 	/** The Constant FORMATE_DATE. */
 	private static final String FORMATE_DATE = "dd/MM/YYYY";
-	
+
 	/** The Constant MONTHS_NAMES. */
-	private static final String[] MONTHS_NAMES={"ENERO","FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMRE", "OCTUBRE", "NOVIEMRBE", "DICIEMBRE"};
-	
+	private static final String[] MONTHS_NAMES = { "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO",
+			"AGOSTO", "SEPTIEMRE", "OCTUBRE", "NOVIEMRBE", "DICIEMBRE" };
+
 	/** The conctb repository. */
 	@Autowired
 	private static ConctbRepository conctbRepository;
-	
-	
 
 	/**
 	 * Gets the conctb repository.
@@ -53,7 +53,7 @@ public class UtilDate {
 	 *
 	 * @return the date
 	 */
-	public static int getDate(){
+	public static int getDate() {
 		return getCalendar().get(Calendar.DAY_OF_MONTH);
 	}
 
@@ -62,8 +62,8 @@ public class UtilDate {
 	 *
 	 * @return the month
 	 */
-	public static int getMonth(){
-		return getCalendar().get(Calendar.MONTH )+1;
+	public static int getMonth() {
+		return getCalendar().get(Calendar.MONTH) + 1;
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class UtilDate {
 	 *
 	 * @return the calendar
 	 */
-	public static Calendar getCalendar(){
+	public static Calendar getCalendar() {
 		Calendar calendar = GregorianCalendar.getInstance();
 		return calendar;
 	}
@@ -81,7 +81,7 @@ public class UtilDate {
 	 *
 	 * @return the date of system
 	 */
-	public static String getDateOfSystem(){
+	public static String getDateOfSystem() {
 		Date date = new Date();
 		String dateSystem = new SimpleDateFormat(FORMATE_DATE).format(date);
 		return dateSystem;
@@ -93,9 +93,9 @@ public class UtilDate {
 	 * @param month the month
 	 * @return the last day
 	 */
-	public static int getLastDay(int month){
-		Calendar calendario=Calendar.getInstance();
-		calendario.set(getYear(), (month-1), DAY);
+	public static int getLastDay(int month) {
+		Calendar calendario = Calendar.getInstance();
+		calendario.set(getYear(), (month - 1), DAY);
 		return calendario.getActualMaximum(Calendar.DAY_OF_MONTH);
 	}
 
@@ -105,12 +105,12 @@ public class UtilDate {
 	 * @param date the date
 	 * @return the last day of month
 	 */
-	public static int getLastDayOfMonth(Date date){
-		Calendar calendario=Calendar.getInstance();
+	public static int getLastDayOfMonth(Date date) {
+		Calendar calendario = Calendar.getInstance();
 		calendario.setTime(date);
-		calendario.set(Calendar.DAY_OF_MONTH,1);
+		calendario.set(Calendar.DAY_OF_MONTH, 1);
 		calendario.add(Calendar.MONTH, 1);
-		calendario.add(Calendar.DAY_OF_MONTH,-1);
+		calendario.add(Calendar.DAY_OF_MONTH, -1);
 		return calendario.get(Calendar.DAY_OF_MONTH);
 	}
 
@@ -129,50 +129,50 @@ public class UtilDate {
 	 * @param month the month
 	 * @return the month name
 	 */
-	public static String getMonthName(int month){
-		if(month<0 || month > 11)
+	public static String getMonthName(int month) {
+		if (month < 0 || month > 11)
 			return "";
-		return MONTHS_NAMES[(month-1)];
+		return MONTHS_NAMES[(month - 1)];
 	}
 
 	/**
 	 * Gets the formated date string.
 	 *
 	 * @param format the format
-	 * @param date the date
+	 * @param date   the date
 	 * @return the formated date string
 	 */
-	public static String getFormatedDateString(String format, Date date){
-		if(date == null )
-				return "";
-		if(format == null)
+	public static String getFormatedDateString(String format, Date date) {
+		if (date == null)
+			return "";
+		if (format == null)
 			return date.toString();
-		try{
-			SimpleDateFormat df=new SimpleDateFormat(format);
+		try {
+			SimpleDateFormat df = new SimpleDateFormat(format);
 			return df.format(date);
-		}catch(Exception e){
-				return "";
-			}
+		} catch (Exception e) {
+			return "";
+		}
 	}
 
 	/**
 	 * Convert string to date.
 	 *
 	 * @param format the format
-	 * @param date the date
+	 * @param date   the date
 	 * @return the date
 	 */
-	public static Date convertStringToDate(String format, String date){
-		if(date == null || format == null)
-				return null;
-		try{
-			SimpleDateFormat df=new SimpleDateFormat(format);
+	public static Date convertStringToDate(String format, String date) {
+		if (date == null || format == null)
+			return null;
+		try {
+			SimpleDateFormat df = new SimpleDateFormat(format);
 			return df.parse(date);
-		}catch(Exception e){
+		} catch (Exception e) {
 			return null;
 		}
 	}
-	
+
 	public static String formatDate(String formato, String fecha) {
 
 		Date d = new Date(fecha);
@@ -183,7 +183,25 @@ public class UtilDate {
 		return format.format(d).toString();
 
 	}
-	
+
+	public static String converStringToDate(String formato, String fecha) {
+
+		SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+
+		Date f = null;
+		try {
+
+			f = formatoDelTexto.parse(fecha);
+
+		} catch (ParseException ex) {
+
+			ex.printStackTrace();
+
+		}
+		return f.toString();
+
+	}
+
 	/**
 	 * Gets the ano emp.
 	 *
@@ -193,20 +211,20 @@ public class UtilDate {
 	public static Integer getAnoEmp(Integer idSector) {
 		return conctbRepository.findByIdsector(idSector).getAnoemp();
 	}
-	
+
 	/**
 	 * Gets the last day by ano emp.
 	 *
 	 * @param month the month
-	 * @param anio the anio
+	 * @param anio  the anio
 	 * @return the last day by ano emp
 	 */
-	public static int getLastDayByAnoEmp(int month,int anio){
-		Calendar calendario=Calendar.getInstance();
-		calendario.set(anio, (month-1), DAY);
+	public static int getLastDayByAnoEmp(int month, int anio) {
+		Calendar calendario = Calendar.getInstance();
+		calendario.set(anio, (month - 1), DAY);
 		return calendario.getActualMaximum(Calendar.DAY_OF_MONTH);
 	}
-	
+
 	public static Date getDateSystem() {
 		return Calendar.getInstance().getTime();
 	}

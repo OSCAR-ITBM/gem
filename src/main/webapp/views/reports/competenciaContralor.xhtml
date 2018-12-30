@@ -123,7 +123,7 @@
 							<p:column colspan="3">
 
 								<h:panelGroup id="pnlBotonesCRUD">
-									<p:commandButton value="Modificar" icon="ui-icon-disk"
+									<p:commandButton value="Modificar" icon="ui-icon-pencil"
 										id="modificar" actionListener="#{pm3711MB.modificar}"
 										rendered="#{!pm3711MB.editando}"
 										disabled="#{pm3711MB.bModificar}"
@@ -140,14 +140,14 @@
 										id="limpiar" disabled="#{!pm3711MB.editando}"
 										actionListener="#{pm3711MB.reset}"
 										update="form1:pnlBotonesCRUD, form1:dataGrid, form1:msgs" />
-									<p:commandButton value="Borrar" icon="ui-icon-circle-plus"
+									<p:commandButton value="Borrar" icon="ui-icon-trash"
 										actionListener="#{pm3711MB.borrar}" id="Borrar"
-										disabled="#{pm3711MB.editando}"
+										disabled="#{pm3711MB.bModificar}"
 										update="form1:pnlBotonesCRUD, form1:dataGrid, form1:msgs" />
 
-									<p:commandButton value="Cancelar" icon="ui-icon-circle-plus"
+									<p:commandButton value="Cancelar" icon="ui-icon-closethick"
 										actionListener="#{pm3711MB.reset}" id="cancelar"
-										disabled="#{!pm3711MB.editando}"
+										disabled="#{pm3711MB.bModificar}"
 										update="form1:pnlBotonesCRUD, form1:dataGrid, form1:msgs" />
 
 								</h:panelGroup>

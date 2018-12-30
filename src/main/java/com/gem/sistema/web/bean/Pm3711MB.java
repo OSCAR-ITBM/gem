@@ -14,6 +14,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.data.PageEvent;
 import org.primefaces.model.StreamedContent;
@@ -105,12 +106,22 @@ public class Pm3711MB extends BaseDirectReport {
 
 	public void reset() {
 		listPm3711 = this.pm3711Service.listAll();
+		if (CollectionUtils.isEmpty(listPm3711)) {
+			listPm3711.add(new Pm3711DTO());
+		}
 		editando = false;
 	}
 
 	public void adicionar() {
 
-		listPm3711.add(listPm3711.size() - 1, new Pm3711DTO());
+		if (null == listPm3711.get(0).getFechaIng()) {
+			for (int i = 0; i < listPm3711.size(); i++) {
+				listPm3711.remove(i);
+			}
+		}
+
+		listPm3711.add(new Pm3711DTO());
+
 		editando = true;
 		if (listPm3711.size() == 2) {
 			RequestContext.getCurrentInstance()
@@ -129,7 +140,7 @@ public class Pm3711MB extends BaseDirectReport {
 
 	public void borrar() {
 
-		currentPage = currentPage > 0 ? currentPage - 1 : 0;
+		pm3711Selected = listPm3711.get(currentPage);
 
 		listPm3711 = this.pm3711Service.deletePm3711(pm3711Selected);
 
@@ -184,7 +195,7 @@ public class Pm3711MB extends BaseDirectReport {
 
 	private void actualizaSeleccionado() {
 		if (CollectionUtils.isNotEmpty(listPm3711)) {
-			pm3711Selected = listPm3711.get(currentPage);
+			pm3711Selected = listPm3711.get(listPm3711.size() - 1);
 			semestre = pm3711Selected.getSemestre();
 		}
 		/*
@@ -199,7 +210,7 @@ public class Pm3711MB extends BaseDirectReport {
 		if (CollectionUtils.isEmpty(listPm3711)) {
 
 			listPm3711 = new ArrayList<Pm3711DTO>();
-			listPm3711.add(dto);
+			listPm3711.add(0, dto);
 		}
 	}
 
