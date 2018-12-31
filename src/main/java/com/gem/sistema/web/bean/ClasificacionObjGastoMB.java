@@ -1,15 +1,23 @@
 package com.gem.sistema.web.bean;
 
+import static com.gem.sistema.util.UtilFront.generateNotificationFront;
 import static com.roonin.utils.UtilDate.getLastDay;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.context.RequestContext;
+import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
 import com.gem.sistema.business.domain.Firmas;
@@ -17,15 +25,21 @@ import com.gem.sistema.business.domain.TcPeriodo;
 import com.gem.sistema.business.repository.catalogs.FirmasRepository;
 import com.gem.sistema.business.repository.catalogs.TcMesRepository;
 import com.gem.sistema.business.repository.catalogs.TcPeriodoRepositoy;
+import com.gem.sistema.business.service.catalogos.ClasificacionObjGastoService;
 import com.gem.sistema.business.service.reportador.ReportValidationException;
 
 @ManagedBean(name = "clasificacionObjGastoMB")
 @ViewScoped
 public class ClasificacionObjGastoMB extends BaseDirectReport {
-
+	private static final String DOWNLOAD_TXT = " jQuery('#form1\\\\:downTxt').click();";
+	
 	private List<TcPeriodo> listTrimestres;
 	private Integer trimestre;
 	private Firmas firmas;
+
+	private String pathName;
+	InputStream stream = null;
+	private StreamedContent file;
 
 	@ManagedProperty("#{tcPeriodoRepositoy}")
 	private TcPeriodoRepositoy tcPeriodoRepositoy;
@@ -35,6 +49,9 @@ public class ClasificacionObjGastoMB extends BaseDirectReport {
 
 	@ManagedProperty("#{tcMesRepository}")
 	private TcMesRepository tcMesRepository;
+
+	@ManagedProperty("#{clasificacionObjGastoService}")
+	private ClasificacionObjGastoService clasificacionObjGastoService;
 
 	@PostConstruct
 	public void init() {
@@ -69,6 +86,31 @@ public class ClasificacionObjGastoMB extends BaseDirectReport {
 		parameters.put("sql", this.generateSQL(trimestre, this.getUserDetails().getIdSector()));
 
 		return parameters;
+	}
+
+	public void downloadCuenta() {
+		pathName = this.clasificacionObjGastoService.generaTxtClasificacionObjGasto(this.getUserDetails().getIdSector(),
+				trimestre);
+		try {
+			stream = new FileInputStream(new File(pathName));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		file = new DefaultStreamedContent(stream, "application/txt", pathName.substring(13));
+		generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!",
+				"Se Generó el Archivo: " + pathName.substring(13));
+
+	}
+	
+	public void downloadCuentaTxt() {
+		try {
+			this.downloadCuenta();
+			RequestContext.getCurrentInstance().execute(DOWNLOAD_TXT);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -185,6 +227,38 @@ public class ClasificacionObjGastoMB extends BaseDirectReport {
 
 	public void setTcMesRepository(TcMesRepository tcMesRepository) {
 		this.tcMesRepository = tcMesRepository;
+	}
+
+	public ClasificacionObjGastoService getClasificacionObjGastoService() {
+		return clasificacionObjGastoService;
+	}
+
+	public void setClasificacionObjGastoService(ClasificacionObjGastoService clasificacionObjGastoService) {
+		this.clasificacionObjGastoService = clasificacionObjGastoService;
+	}
+
+	public String getPathName() {
+		return pathName;
+	}
+
+	public void setPathName(String pathName) {
+		this.pathName = pathName;
+	}
+
+	public InputStream getStream() {
+		return stream;
+	}
+
+	public void setStream(InputStream stream) {
+		this.stream = stream;
+	}
+
+	public StreamedContent getFile() {
+		return file;
+	}
+
+	public void setFile(StreamedContent file) {
+		this.file = file;
 	}
 
 }
