@@ -35,11 +35,10 @@
 									<h:outputText value="Semestre:" />
 								</p:column>
 								<p:column>
-									<h:outputText value="#{entity.semestre}"
+									<h:outputText value="#{entity.semestre}" id="lblSemestre"
 										style="margin-left: 18px;" rendered="#{!pm3711MB.editando}" />
-									<p:selectOneMenu size="18" editable="false"
-										value="#{entity.semestre}"
-										disabled="#{entity.semestre != null}"
+									<p:selectOneMenu size="18" editable="false" id="semestre"
+										value="#{entity.semestre}" disabled="#{!pm3711MB.editando}"
 										rendered="#{pm3711MB.editando}">
 										<f:selectItems value="#{pm3711MB.listSemestres}" var="periodo"
 											itemValue="#{periodo.periodo}" itemLabel="#{periodo.periodo}" />
@@ -51,36 +50,30 @@
 								<p:column style="text-align:right;">
 									<h:outputText value="Fecha de Ingreso al Cargo de Contralor:" />
 								</p:column>
-								<p:column styleClass="col-md-2" style="height:52px;">
-									<h:outputText value="#{entity.fechaIng}"
+								<p:column styleClass="col-md-2">
+									<h:outputText value="#{entity.fechaIng}" id="lblFechaIng"
 										style="margin-left: 18px;" rendered="#{!pm3711MB.editando}">
 										<f:convertDateTime pattern="dd/MM/yyyy" />
 									</h:outputText>
 
-									<p:calendar id="fechaInput" showOn="button" locale="es"
-										rendered="#{pm3711MB.editando}" size="6" pattern="dd/MM/yyyy"
-										mask="true" immediate="true"
-										onkeypress="if (event.keyCode == 13) {return false;}"
-										value="#{entity.fechaIng}"
+									<p:calendar value="#{entity.fechaIng}" id="fechaIng"
+										rendered="#{pm3711MB.editando}" pattern="dd/MM/yyyy"
+										showOn="button" size="10" maxlength="10" mask="true"
 										converterMessage="La fecha debe ser en fomato de dd/MM/aaaa">
 										<f:convertDateTime pattern="dd/MM/yyyy" for="fechaInput" />
-										<p:ajax event="dateSelect" update="fechaInput" />
-										<p:ajax event="change" update="fechaInput" />
 									</p:calendar>
+
 								</p:column>
 
 							</p:row>
-
 							<p:row>
-								<p:column style="text-align:right;">
-									<h:outputText
+								<p:column style="text-align: right;">
+									<p:outputLabel id="idTitulo"
 										value="Título profesional en áreas jurídicas, económicas o contable - administrativas:" />
 								</p:column>
-
-								<p:column style="height:52px;">
-
-									<h:outputText value="#{entity.titulo == 1 ? 'Si': 'No'}"
-										rendered="#{!pm3711MB.editando}" />
+								<p:column>
+									<p:outputLabel value="#{entity.titulo == 1 ? 'Si': 'No'}"
+										id="lbltitulo" rendered="#{!pm3711MB.editando}" />
 
 									<p:selectOneButton value="#{entity.titulo}" id="hasTitulo"
 										rendered="#{pm3711MB.editando}">
@@ -97,7 +90,7 @@
 								</p:column>
 								<p:column>
 									<h:outputText value="#{entity.experiencia == 1 ? 'Si': 'No'}"
-										rendered="#{!pm3711MB.editando}" />
+										id="lblExperiencia" rendered="#{!pm3711MB.editando}" />
 									<p:selectOneButton value="#{entity.experiencia}"
 										id="hasExperiencia" rendered="#{pm3711MB.editando}">
 										<f:selectItem itemLabel="Si" itemValue="1" />
@@ -113,7 +106,7 @@
 								</p:column>
 								<p:column>
 									<h:outputText value="#{entity.certificacion == 1 ? 'Si': 'No'}"
-										rendered="#{!pm3711MB.editando}" />
+										id="lblCertificado" rendered="#{!pm3711MB.editando}" />
 									<p:selectOneButton value="#{entity.certificacion}"
 										id="hasCertficacion" rendered="#{pm3711MB.editando}">
 										<f:selectItem itemLabel="Si" itemValue="1" />
@@ -121,6 +114,7 @@
 									</p:selectOneButton>
 								</p:column>
 							</p:row>
+
 						</p:panelGrid>
 					</p:dataGrid>
 					<p:panelGrid id="idForm"
@@ -129,33 +123,32 @@
 							<p:column colspan="3">
 
 								<h:panelGroup id="pnlBotonesCRUD">
-
-									<p:commandButton value="Salvar" icon="ui-icon-disk"
-										style="padding: 5px; width:100px" action="#{pm3711MB.salvar}"
-										rendered="#{pm3711MB.editando}"
-										update="form1:pnlBotonesCRUD, form1:dataGrid" />
-									<p:commandButton value="Modificar" icon="ui-icon-tag"
-										style="padding: 5px; width:100px"
-										action="#{pm3711MB.modificar}"
-										disabled="#{pm3711MB.pm3711Selected.semestre == null}"
+									<p:commandButton value="Modificar" icon="ui-icon-pencil"
+										id="modificar" actionListener="#{pm3711MB.modificar}"
 										rendered="#{!pm3711MB.editando}"
+										disabled="#{pm3711MB.bModificar}"
 										update="form1:pnlBotonesCRUD, form1:dataGrid" />
-									<p:commandButton value="Limpiar"
-										actionListener="#{pm3711MB.reset}"
-										style="padding: 5px; width:100px"
-										disabled="#{!pm3711MB.editando}"
-										icon="ui-icon-arrowreturnthick-1-n" />
+									<p:commandButton value="Salvar" icon="ui-icon-disk" id="salvar"
+										action="#{pm3711MB.salvar}" rendered="#{pm3711MB.editando}"
+										update="form1:pnlBotonesCRUD, form1:dataGrid" />
+
 									<p:commandButton value="Adicionar" icon="ui-icon-circle-plus"
-										style="padding: 5px; width:100px"
-										action="#{pm3711MB.adicionar}" disabled="#{pm3711MB.editando}"
+										id="adicionar" actionListener="#{pm3711MB.adicionar}"
+										disabled="#{pm3711MB.editando}"
+										update="form1:pnlBotonesCRUD, form1:dataGrid, form1:msgs" />
+									<p:commandButton value="Limpiar" icon="ui-icon-circle-plus"
+										id="limpiar" disabled="#{!pm3711MB.editando}"
+										actionListener="#{pm3711MB.reset}"
 										update="form1:pnlBotonesCRUD, form1:dataGrid, form1:msgs" />
 									<p:commandButton value="Borrar" icon="ui-icon-trash"
-										style="padding: 5px; width:100px"
-										onclick="PF('confirmFileDeleteMeta').show();"
-										disabled="#{pm3711MB.pm3711Selected.semestre == null or pm3711MB.editando}" />
-									<p:commandButton value="Cancelar " icon="ui-icon-circle-close"
-										style="padding: 5px; width:100px"
-										action="#{pm3711MB.cancelar}" disabled="#{!pm3711MB.editando}" />
+										actionListener="#{pm3711MB.borrar}" id="Borrar"
+										disabled="#{pm3711MB.bModificar}"
+										update="form1:pnlBotonesCRUD, form1:dataGrid, form1:msgs" />
+
+									<p:commandButton value="Cancelar" icon="ui-icon-closethick"
+										actionListener="#{pm3711MB.reset}" id="cancelar"
+										disabled="#{pm3711MB.bModificar}"
+										update="form1:pnlBotonesCRUD, form1:dataGrid, form1:msgs" />
 
 								</h:panelGroup>
 
@@ -163,7 +156,7 @@
 						</p:row>
 					</p:panelGrid>
 
-					<h:panelGrid columns="5"
+					<!-- <h:panelGrid columns="5"
 						styleClass="col-centered row-centered ui-noborder">
 						<h:outputText value="Semestre: " for="mesInputOri" />
 						<p:spacer />
@@ -177,10 +170,10 @@
 							onstart="PF('blockUIWidget').block()"
 							action="#{pm3711MB.createFilePdfInline}" value="Correcto"
 							oncomplete="PF('blockUIWidget').unblock(); " style="padding:2px;">
-							<!-- update="form1:inlinePdf :form1:growlReportador"
-											style="padding:2px;"> -->
+							update="form1:inlinePdf :form1:growlReportador"
+											style="padding:2px;">
 						</p:commandButton>
-					</h:panelGrid>
+					</h:panelGrid> -->
 
 
 					<pe:blockUI widgetVar="blockUIWidget" centerX="false">

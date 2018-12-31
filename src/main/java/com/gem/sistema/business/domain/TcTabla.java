@@ -15,12 +15,8 @@ public class TcTabla extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String nombre;
-	
-	private String descripcion;
 
-	// bi-directional many-to-one association to TrEtiqTabla
-	@OneToMany(mappedBy = "tcTabla")
-	private List<TrEtiqTabla> trEtiqTablas;
+	private String descripcion;
 
 	public TcTabla() {
 	}
@@ -39,28 +35,6 @@ public class TcTabla extends AbstractEntity implements Serializable {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
-	}
-
-	public List<TrEtiqTabla> getTrEtiqTablas() {
-		return this.trEtiqTablas;
-	}
-
-	public void setTrEtiqTablas(List<TrEtiqTabla> trEtiqTablas) {
-		this.trEtiqTablas = trEtiqTablas;
-	}
-
-	public TrEtiqTabla addTrEtiqTabla(TrEtiqTabla trEtiqTabla) {
-		getTrEtiqTablas().add(trEtiqTabla);
-		trEtiqTabla.setTcTabla(this);
-
-		return trEtiqTabla;
-	}
-
-	public TrEtiqTabla removeTrEtiqTabla(TrEtiqTabla trEtiqTabla) {
-		getTrEtiqTablas().remove(trEtiqTabla);
-		trEtiqTabla.setTcTabla(null);
-
-		return trEtiqTabla;
 	}
 
 }
