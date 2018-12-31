@@ -13,5 +13,7 @@ public interface TcPeriodoRepositoy
 		extends PagingAndSortingRepository<TcPeriodo, Long>, QueryDslPredicateExecutor<TcPeriodo> {
 	
 	List<TcPeriodo> findByTipoPeriodo(Integer tipoPeriodo);
+	
+	TcPeriodo findByTipoPeriodoAndPeriodo(Integer tipoPeriodo, Integer periodo);
 
 }
