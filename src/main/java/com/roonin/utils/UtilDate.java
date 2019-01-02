@@ -87,6 +87,12 @@ public class UtilDate {
 		return dateSystem;
 	}
 
+	public static String getFormatDate(String fecha) {
+		SimpleDateFormat formatoDelTexto = new SimpleDateFormat(FORMATE_DATE);
+		Date f = new Date(fecha);
+		return formatoDelTexto.format(f);
+	}
+
 	/**
 	 * Gets the last day.
 	 *
