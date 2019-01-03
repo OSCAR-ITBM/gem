@@ -24,7 +24,7 @@ public class ReporteGenericoDAOImpl implements ReporteGenericoDAO {
 
 	@Autowired
 	private ReportesRepository reportesRepository;
-	
+
 	SqlParameterSource parameters;
 	Map<String, Object> out;
 
@@ -32,9 +32,18 @@ public class ReporteGenericoDAOImpl implements ReporteGenericoDAO {
 	public String generaFileTXTWithIdSector(Integer idSector, Integer idReporte, String nameFile) {
 		TcReporte reporte = reportesRepository.findOne(TcReportesPredicate.findById(idReporte));
 		String sSql = String.format(reporte.getQry1(), idSector);
+
+		parameters = new MapSqlParameterSource().addValue("i_header", StringUtils.EMPTY).addValue("i_query", sSql)
+				.addValue("i_file_name", nameFile);
+		out = this.callSpDAO.call(NAME_PROCEDURE, parameters);
+		return out.get("O_FULL_FILE_PATH").toString();
+	}
+
+	@Override
+	public String generateFileTxtWithSql(String sql, String nameFile) {
+		parameters = new MapSqlParameterSource().addValue("i_header", StringUtils.EMPTY).addValue("i_query", sql)
+				.addValue("i_file_name", nameFile);
 		
-		parameters = new MapSqlParameterSource().addValue("i_header", StringUtils.EMPTY)
-				.addValue("i_query", sSql).addValue("i_file_name", nameFile);
 		out = this.callSpDAO.call(NAME_PROCEDURE, parameters);
 		return out.get("O_FULL_FILE_PATH").toString();
 	}
