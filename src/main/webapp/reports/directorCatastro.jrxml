@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DirectorCatastro" pageWidth="900" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="860" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="04883281-39d9-46a6-9eb9-bef1a5c2af65">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="gemLocal"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="gemServer"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="firmaN1" class="java.lang.String"/>
 	<parameter name="firmaL1" class="java.lang.String"/>
@@ -10,22 +10,40 @@
 	<parameter name="anio" class="java.lang.Integer"/>
 	<parameter name="imagen" class="java.lang.String"/>
 	<parameter name="municipio" class="java.lang.String"/>
+	<parameter name="semestre" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[SELECT 	VAL.ID_ROW,
-		MAX(DECODE(ETI.NOMBRE, 'TITULO',VAL.VALOR)) TITULO,
-		MAX(DECODE(ETI.NOMBRE, 'EXPERIENCIA',VAL.VALOR)) EXPERIENCIA,
-		MAX(DECODE(ETI.NOMBRE, 'CERTIFICACION'  ,VAL.VALOR)) CERTIFICACION,
-		MAX(DECODE(ETI.NOMBRE, 'FECHAING',VAL.VALOR)) FECHA	
-FROM GEMUSER.TC_TABLAS TAB
-		INNER JOIN GEMUSER.TR_ETIQ_TABLAS ETAB ON TAB.ID=ETAB.ID_TABLA  
-		INNER JOIN GEMUSER.TC_ETIQUETAS   ETI  ON ETAB.ID_ETIQUETA=ETI.ID
-		INNER JOIN GEMUSER.TC_VALORES     VAL  ON ETAB.ID=VAL.ID_ETIQ_TABLA 
-WHERE TAB.ID=6  
-GROUP BY VAL.ID_ROW]]>
+		<![CDATA[SELECT * FROM(
+	SELECT 	TV.ID_ROW,
+			MAX(DECODE(TE.NOMBRE, 'SEMESTRE', TV.VALOR, NULL))SEMESTRE,
+        	MAX(DECODE(TE.NOMBRE, 'FECHAING', TV.VALOR, NULL))FECHAING,
+         	MAX(DECODE(TE.NOMBRE, 'TITULO', TV.VALOR, NULL))TITULO,
+         	MAX(DECODE(TE.NOMBRE, 'EXPERIENCIA', TV.VALOR, NULL))EXPERIENCIA,
+         	MAX(DECODE(TE.NOMBRE, 'CERTIFICACION', TV.VALOR, NULL))CERTIFICACION,
+         	MAX(DECODE(TE.NOMBRE, 'CAPTURO', TV.VALOR, NULL))CAPTURO,
+         	MAX(DECODE(TE.NOMBRE, 'IDANIO', TV.VALOR, NULL))IDANIO,
+         	MAX(DECODE(TE.NOMBRE, 'IDSECTOR', TV.VALOR, NULL))IDSECTOR
+		FROM GEMUSER.TC_VALORES TV,
+		 	 GEMUSER.TR_ETIQ_TABLAS TR,
+         	 GEMUSER.TC_ETIQUETAS TE,
+         	 GEMUSER.TC_TABLAS TC
+	WHERE TV.ID_ETIQ_TABLA = TR.ID  AND 
+			TR.ID_ETIQUETA   = TE.ID AND 
+           	TR.ID_TABLA      = TC.ID  AND 
+           	TE.STATUS        = 1 AND 
+           	TC.NOMBRE        = 'pm5911'
+    GROUP BY TV.ID_ROW
+    )T1 
+WHERE T1.SEMESTRE = $P{semestre}]]>
 	</queryString>
 	<field name="ID_ROW" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="ID_ROW"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="TC_VALORES"/>
+	</field>
+	<field name="SEMESTRE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SEMESTRE"/>
+	</field>
+	<field name="FECHAING" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="FECHAING"/>
 	</field>
 	<field name="TITULO" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="TITULO"/>
@@ -36,8 +54,14 @@ GROUP BY VAL.ID_ROW]]>
 	<field name="CERTIFICACION" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="CERTIFICACION"/>
 	</field>
-	<field name="FECHA" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="FECHA"/>
+	<field name="CAPTURO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CAPTURO"/>
+	</field>
+	<field name="IDANIO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="IDANIO"/>
+	</field>
+	<field name="IDSECTOR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="IDSECTOR"/>
 	</field>
 	<pageHeader>
 		<band height="90" splitType="Stretch">
@@ -46,7 +70,7 @@ GROUP BY VAL.ID_ROW]]>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["FECHA DE INGRESO AL CARGO: " + $F{FECHA}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["FECHA DE INGRESO AL CARGO: " + $F{FECHAING}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="0" y="75" width="465" height="15" uuid="f222fd01-78aa-4c7a-9116-c19ad00c8fd9"/>
