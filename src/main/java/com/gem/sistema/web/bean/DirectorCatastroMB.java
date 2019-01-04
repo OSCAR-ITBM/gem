@@ -56,6 +56,7 @@ public class DirectorCatastroMB extends BaseDirectReport {
 		parameters.put("dia", getLastDayByAnoEmp(mesFinal, firmas.getCampo3()));
 		parameters.put("firmaL1", firmas.getL22());
 		parameters.put("firmaN1", firmas.getN22());
+		parameters.put("semestre",semestreSelected);
 
 		return parameters;
 	}
