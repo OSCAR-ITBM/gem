@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -22,6 +24,8 @@ import com.gem.sistema.business.utils.GetValuesClassUtils;
 
 @Repository
 public class Pm5911DAOImpl implements Pm5911DAO {
+
+	private static final Log LOGGER = LogFactory.getLog(Pm4911DAOImpl.class);
 
 	private static final String TABLE_NAME = "pm5911";
 
@@ -40,9 +44,9 @@ public class Pm5911DAOImpl implements Pm5911DAO {
 
 	@Override
 	public List<Pm5911DTO> save(Pm5911DTO pm5911dto) {
-
+		String sSql;
 		tcValores = new TcValores();
-		max = this.tcValoresRepository.findByidTable(1);
+		max = this.tcValoresRepository.findByidTable(TABLE_NAME);
 
 		if (null != max && max > 0L) {
 			max = max + 1;
@@ -54,17 +58,21 @@ public class Pm5911DAOImpl implements Pm5911DAO {
 			map = GetValuesClassUtils.getFieldNamesAndValues(pm5911dto, false);
 			for (Map.Entry<String, Object> entry : map.entrySet()) {
 				System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
+				if (!entry.getKey().equals("idRow")) {
+					Long idEt = this.trEtqTablasRepository.findByEtiquetaAndTableName(entry.getKey().toUpperCase(),
+							TABLE_NAME);
 
-				Long idEt = this.trEtqTablasRepository.findByEtiqueta(entry.getKey().toUpperCase(), 1);
+					tcValores.setIdRow(max.intValue());
+					tcValores.setValor(entry.getValue().toString());
+					tcValores.setIdEtiqTabla(idEt);
+					if (entry.getKey().equals("fechaIng")) {
+						tcValores.setValor(getFormatDate(entry.getValue().toString()));
+					}
 
-				tcValores.setIdRow(max.intValue());
-				tcValores.setValor(entry.getValue().toString());
-				tcValores.setIdEtiqTabla(idEt);
-				if (entry.getKey().equals("fechaIng")) {
-					tcValores.setValor(getFormatDate(entry.getValue().toString()));
+					sSql = "INSERT INTO TC_VALORES (VALOR, ID_ROW, ID_ETIQ_TABLA) VALUES (?, ?, ?) ";
+					jdbcTemplate.update(sSql,
+							new Object[] { tcValores.getValor(), tcValores.getIdRow(), tcValores.getIdEtiqTabla() });
 				}
-
-				tcValoresRepository.save(tcValores);
 
 			}
 		} catch (IllegalArgumentException | IllegalAccessException e) {
@@ -76,40 +84,37 @@ public class Pm5911DAOImpl implements Pm5911DAO {
 
 	@Override
 	public List<Pm5911DTO> findByTableName(String tableName) {
-		Pm5911DTO pm5911dto = new Pm5911DTO();
-
 		String sSql = "SELECT TV.ID_ROW,\n" + "       MAX(DECODE(TE.NOMBRE, 'SEMESTRE', TV.VALOR, NULL))SEMESTRE,\n"
 				+ "       MAX(DECODE(TE.NOMBRE, 'FECHAING', TV.VALOR, NULL))FECHAING,\n"
 				+ "       MAX(DECODE(TE.NOMBRE, 'TITULO', TV.VALOR, NULL))TITULO,\n"
 				+ "       MAX(DECODE(TE.NOMBRE, 'EXPERIENCIA', TV.VALOR, NULL))EXPERIENCIA,\n"
 				+ "       MAX(DECODE(TE.NOMBRE, 'CERTIFICACION', TV.VALOR, NULL))CERTIFICACION,\n"
-				+ "       MAX(DECODE(TE.NOMBRE, 'CAPTURO', TV.VALOR, '')),CAPTURO\n"
-				+ "       MAX(DECODE(TE.NOMBRE, 'IDANIO', TV.VALOR, NULL)),IDANIO\n"
-				+ "       MAX(DECODE(TE.NOMBRE, 'IDREF', TV.VALOR, NULL)),IDREF\n"
+				+ "       MAX(DECODE(TE.NOMBRE, 'CAPTURO', TV.VALOR, NULL))CAPTURO,\n"
+				+ "       MAX(DECODE(TE.NOMBRE, 'IDANIO', TV.VALOR, NULL))IDANIO,\n"
 				+ "       MAX(DECODE(TE.NOMBRE, 'IDSECTOR', TV.VALOR, NULL))IDSECTOR\n"
 				+ "     FROM GEMUSER.TC_VALORES TV    ,\n" + "          GEMUSER.TR_ETIQ_TABLAS TR,\n"
 				+ "          GEMUSER.TC_ETIQUETAS TE  ,\n" + "          GEMUSER.TC_TABLAS TC\n"
 				+ "WHERE TV.ID_ETIQ_TABLA = TR.ID\n" + "  AND TR.ID_ETIQUETA   = TE.ID\n"
-				+ "  AND TR.ID_TABLA      = TC.ID\n" + "  AND TE.STATUS        = 1\n" + "  AND TC.NOMBRE        = '"
-				+ tableName + "'\n" + "GROUP BY TV.ID_ROW";
+				+ "  AND TR.ID_TABLA      = TC.ID\n" + "  AND TE.STATUS        = 1 AND TC.NOMBRE        = '" + tableName
+				+ "'  GROUP BY TV.ID_ROW";
 		List<Pm5911DTO> listValores = this.jdbcTemplate.query(sSql, new RowMapper<Pm5911DTO>() {
 
 			@Override
 			public Pm5911DTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Pm5911DTO pm5911DTO = new Pm5911DTO();
-				pm5911DTO.setIdRow(rs.getInt("ID_ROW"));
-				pm5911DTO.setFechaIng(rs.getString("FECHAING"));
+				Pm5911DTO pm5911dto = new Pm5911DTO();
+				pm5911dto.setIdRow(rs.getInt("ID_ROW"));
+				pm5911dto.setSemestre(rs.getInt("SEMESTRE"));
+				pm5911dto.setFechaIng(rs.getString("FECHAING"));
 				pm5911dto.setTitulo(rs.getString("TITULO"));
-				pm5911DTO.setExperencia(rs.getString("EXPERIENCIA"));
-				pm5911DTO.setCertificacion(rs.getString("CERTIFICACION"));
+				pm5911dto.setExperiencia(rs.getString("EXPERIENCIA"));
+				pm5911dto.setCertificacion(rs.getString("CERTIFICACION"));
 				pm5911dto.setCapturo(rs.getString("CAPTURO"));
 				pm5911dto.setIdAnio(rs.getInt("IDANIO"));
-				pm5911dto.setIdRef(rs.getInt("IDREF"));
-				pm5911DTO.setIdSector(rs.getInt("IDSECTOR"));
-				return pm5911DTO;
+				pm5911dto.setIdSector(rs.getInt("IDSECTOR"));
+				return pm5911dto;
 			}
-		});
 
+		});
 		return listValores;
 	}
 
@@ -117,26 +122,28 @@ public class Pm5911DAOImpl implements Pm5911DAO {
 	public List<Pm5911DTO> modify(Pm5911DTO pm5911dto) {
 		tcValores = new TcValores();
 		String sSql;
-		Integer idRow = trEtqTablasRepository.getIdRow(pm5911dto.getSemestre().toString());
+		Integer idRow = trEtqTablasRepository.getIdRow(pm5911dto.getSemestre().toString(), TABLE_NAME);
 		try {
 			map = GetValuesClassUtils.getFieldNamesAndValues(pm5911dto, false);
 			for (Map.Entry<String, Object> entry : map.entrySet()) {
 				System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
+				if (!entry.getKey().equals("idRow")) {
+					Long idEt = this.trEtqTablasRepository.findByEtiquetaAndTableName(entry.getKey().toUpperCase(),
+							TABLE_NAME);
 
-				Long idEt = this.trEtqTablasRepository.findByEtiqueta(entry.getKey().toUpperCase(), 1);
+					tcValores.setValor(entry.getValue().toString());
+					tcValores.setIdEtiqTabla(idEt);
+					if (entry.getKey().equals("fechaIng")) {
+						tcValores.setValor(getFormatDate(entry.getValue().toString()));
+					}
 
-				tcValores.setValor(entry.getValue().toString());
-				tcValores.setIdEtiqTabla(idEt);
-				if (entry.getKey().equals("fechaIng")) {
-					tcValores.setValor(getFormatDate(entry.getValue().toString()));
+					tcValores.setIdRow(idRow);
+
+					sSql = " UPDATE TC_VALORES \n" + "      SET VALOR = '" + tcValores.getValor() + "'\n"
+							+ "    WHERE ID_ETIQ_TABLA = " + tcValores.getIdEtiqTabla() + "\n" + "      AND ID_ROW = "
+							+ tcValores.getIdRow();
+					jdbcTemplate.update(sSql);
 				}
-
-				tcValores.setIdRow(idRow);
-
-				sSql = " UPDATE TC_VALORES \n" + "      SET VALOR = '" + tcValores.getValor() + "'\n"
-						+ "    WHERE ID_ETIQ_TABLA = " + tcValores.getIdEtiqTabla() + "\n" + "      AND ID_ROW = "
-						+ tcValores.getIdRow() + +tcValores.getIdRow();
-				jdbcTemplate.update(sSql);
 
 			}
 		} catch (IllegalArgumentException | IllegalAccessException e) {
@@ -149,23 +156,27 @@ public class Pm5911DAOImpl implements Pm5911DAO {
 	@Override
 	public List<Pm5911DTO> delete(Pm5911DTO pm5911dto) {
 		String sSql;
-		Integer idRow = trEtqTablasRepository.getIdRow(pm5911dto.getSemestre().toString());
+		tcValores = new TcValores();
+		Integer idRow = trEtqTablasRepository.getIdRow(pm5911dto.getSemestre().toString(), TABLE_NAME);
 		try {
 			map = GetValuesClassUtils.getFieldNamesAndValues(pm5911dto, false);
 			for (Map.Entry<String, Object> entry : map.entrySet()) {
 				System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
+				if (!entry.getKey().equals("idRow")) {
+					Long idEt = this.trEtqTablasRepository.findByEtiquetaAndTableName(entry.getKey().toUpperCase(),
+							TABLE_NAME);
+					tcValores.setValor(entry.getValue().toString());
+					tcValores.setIdEtiqTabla(idEt);
+					if (entry.getKey().equals("fechaIng")) {
+						tcValores.setValor(entry.getValue().toString());
+					}
 
-				Long idEt = this.trEtqTablasRepository.findByEtiqueta(entry.getKey().toUpperCase(), 1);
-				tcValores.setValor(entry.getValue().toString());
-				tcValores.setIdEtiqTabla(idEt);
-				if (entry.getKey().equals("fechaIng")) {
-					tcValores.setValor(getFormatDate(entry.getValue().toString()));
+					tcValores.setIdRow(idRow);
+					sSql = "DELETE FROM GEMUSER.TC_VALORES TV WHERE TV.VALOR ='" + tcValores.getValor()
+							+ "' AND TV.ID_ROW = " + tcValores.getIdRow() + " AND TV.ID_ETIQ_TABLA = "
+							+ tcValores.getIdEtiqTabla();
+					jdbcTemplate.update(sSql);
 				}
-
-				tcValores.setIdRow(idRow);
-				sSql = "DELETE FROM GEMUSER.TC_VALORES TV WHERE TV.VALOR ='" + tcValores.getValor() + "' AND TV.ID_ROW = " + tcValores.getIdRow()
-						+ " AND TV.ID_ETIQ_TABLA = " + tcValores.getIdEtiqTabla();
-				jdbcTemplate.update(sSql);
 
 			}
 		} catch (IllegalArgumentException | IllegalAccessException e) {

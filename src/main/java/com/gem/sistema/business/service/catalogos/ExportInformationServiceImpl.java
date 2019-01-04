@@ -1,5 +1,7 @@
 package com.gem.sistema.business.service.catalogos;
 
+import java.io.File;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,17 @@ public class ExportInformationServiceImpl implements ExportInformationService{
 
 	public void setExportInformationDAO(ExportInformationDAO exportInformationDAO) {
 		this.exportInformationDAO = exportInformationDAO;
+	}
+
+	@Override
+	public String exportCuentaMes(Integer idSector, Integer mes) {
+		
+		return this.exportInformationDAO.exportCuentaMes(idSector, mes);
+	}
+
+	@Override
+	public String zipFile(File[] inputFile, String zipFilePath) {
+		return this.exportInformationDAO.zipFile(inputFile, zipFilePath);
 	}
 	
 	
