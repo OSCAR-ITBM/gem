@@ -122,6 +122,7 @@ public class ClasificacionObjGastoMB extends BaseDirectReport {
 				.append("SUBSTR(PA.PROGRAMA,13,3)>='203' AND SUBSTR(PA.PROGRAMA,13,3)<='225' OR ")
 				.append("SUBSTR(PA.PROGRAMA,13,3)>='114' AND SUBSTR(PA.PROGRAMA,13,3)<='115' ")
 				.append("GROUP BY NAT.CLVGAS,NAT.NOMGAS ORDER BY NAT.CLVGAS ASC) T1 ORDER BY GRUP, CLVGAS");
+		System.out.println(sql.toString());
 
 		return sql.toString();
 	}

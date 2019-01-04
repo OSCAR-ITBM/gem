@@ -1,44 +1,40 @@
 package com.gem.sistema.business.dto;
 
+import java.math.BigInteger;
+
 import org.apache.commons.lang3.StringUtils;
 
 import com.ibm.icu.math.BigDecimal;
 
 public class Pm5911DTO {
 
-	private Integer idRow;
+	private Integer idRow = BigInteger.ZERO.intValue();
 	private Integer semestre = 0;
 	private String fechaIng = StringUtils.EMPTY;
 	private String titulo = BigDecimal.ZERO.toString();
-	private String experencia = BigDecimal.ZERO.toString();
+	private String experiencia = BigDecimal.ZERO.toString();
 	private String certificacion = BigDecimal.ZERO.toString();
-	private String capturo = BigDecimal.ZERO.toString();
-	private Integer idAnio;
-	private Integer idRef;
+	private String capturo = StringUtils.EMPTY;
+	private Integer idAnio = BigInteger.ZERO.intValue();
 	private Integer idSector = BigDecimal.ONE.intValue();
 
 	public Pm5911DTO() {
 	}
 
-	@Override
-	public String toString() {
-		return "Pm5911DTO [idRow=" + idRow + ", semestre=" + semestre + ", fechaIng=" + fechaIng + ", titulo=" + titulo
-				+ ", experencia=" + experencia + ", certificacion=" + certificacion + ", capturo=" + capturo
-				+ ", idAnio=" + idAnio + ", idRef=" + idRef + ", idSector=" + idSector + "]";
-	}
+	
 
-	public Pm5911DTO(Integer idRow, Integer semestre, String fechaIng, String titulo, String experencia,
-			String certificacion, String capturo, Integer idAnio, Integer idRef, Integer idSector) {
+	public Pm5911DTO(Integer idRow, Integer semestre, String fechaIng, String titulo, String experiencia,
+			String certificacion, String capturo, Integer idAnio, Integer idSector) {
 		super();
 		this.idRow = idRow;
 		this.semestre = semestre;
 		this.fechaIng = fechaIng;
 		this.titulo = titulo;
-		this.experencia = experencia;
+		this.experiencia = experiencia;
 		this.certificacion = certificacion;
 		this.capturo = capturo;
 		this.idAnio = idAnio;
-		this.idRef = idRef;
+
 		this.idSector = idSector;
 	}
 
@@ -74,13 +70,7 @@ public class Pm5911DTO {
 		this.titulo = titulo;
 	}
 
-	public String getExperencia() {
-		return experencia;
-	}
-
-	public void setExperencia(String experencia) {
-		this.experencia = experencia;
-	}
+	
 
 	public String getCertificacion() {
 		return certificacion;
@@ -102,17 +92,19 @@ public class Pm5911DTO {
 		return idAnio;
 	}
 
+	public String getExperiencia() {
+		return experiencia;
+	}
+
+	public void setExperiencia(String experiencia) {
+		this.experiencia = experiencia;
+	}
+
 	public void setIdAnio(Integer idAnio) {
 		this.idAnio = idAnio;
 	}
 
-	public Integer getIdRef() {
-		return idRef;
-	}
-
-	public void setIdRef(Integer idRef) {
-		this.idRef = idRef;
-	}
+	
 
 	public Integer getIdSector() {
 		return idSector;
