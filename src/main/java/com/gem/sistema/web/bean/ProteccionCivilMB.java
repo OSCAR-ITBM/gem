@@ -2,7 +2,6 @@ package com.gem.sistema.web.bean;
 
 import static com.gem.sistema.util.UtilFront.generateNotificationFront;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -18,19 +17,21 @@ import org.primefaces.event.data.PageEvent;
 
 import com.gem.sistema.business.domain.TcPeriodo;
 import com.gem.sistema.business.dto.Pm5911DTO;
+import com.gem.sistema.business.dto.ProteccionCivilDTO;
 import com.gem.sistema.business.repository.catalogs.TcPeriodoRepositoy;
 import com.gem.sistema.business.repository.catalogs.TrEtqTablasRepository;
 import com.gem.sistema.business.service.catalogos.Pm5911Service;
+import com.gem.sistema.business.service.catalogos.ProteccionCivilService;
 
-@ManagedBean(name = "pm5911MB")
+@ManagedBean(name = "proteccionCivilMB")
 @ViewScoped
-public class Pm5911MB extends AbstractMB {
+public class ProteccionCivilMB extends AbstractMB {
 
-	private static final String TABLE_NAME = "pm5911";
+	private static final String TABLE_NAME = "PROTECCION";
 	private static final Integer SEMESTRE = 6;
 
-	@ManagedProperty("#{pm5911Service}")
-	private Pm5911Service pm5911Service;
+	@ManagedProperty("#{proteccionCivilService}")
+	private ProteccionCivilService proteccionCivilService;
 
 	@ManagedProperty("#{tcPeriodoRepositoy}")
 	private TcPeriodoRepositoy tcPeriodoRepositoy;
@@ -38,9 +39,9 @@ public class Pm5911MB extends AbstractMB {
 	@ManagedProperty("#{trEtqTablasRepository}")
 	private TrEtqTablasRepository trEtqTablasRepository;
 
-	private Pm5911DTO pm5911dto;
+	private ProteccionCivilDTO proteccionCivilDTO;
 
-	private List<Pm5911DTO> listPmDTO;
+	private List<ProteccionCivilDTO> listProteccion;
 
 	private Integer semestre;
 
@@ -63,11 +64,11 @@ public class Pm5911MB extends AbstractMB {
 		this.findAll();
 
 		listSemestre = tcPeriodoRepositoy.findByTipoPeriodo(SEMESTRE);
-		pm5911dto = new Pm5911DTO();
-		pm5911dto.setCapturo(this.getUserDetails().getUsername());
-		pm5911dto.setIdSector(this.getUserDetails().getIdSector());
+		proteccionCivilDTO = new ProteccionCivilDTO();
+		proteccionCivilDTO.setCapturo(this.getUserDetails().getUsername());
+		proteccionCivilDTO.setIdSector(this.getUserDetails().getIdSector());
 		semestre = listSemestre.get(0).getPeriodo();
-		if (CollectionUtils.isEmpty(listPmDTO))
+		if (CollectionUtils.isEmpty(listProteccion))
 			createNewElement(0);
 
 	}
@@ -83,18 +84,19 @@ public class Pm5911MB extends AbstractMB {
 
 	public void save() {
 
-		pm5911dto = listPmDTO.get(currentPage);
-		Integer existe = this.trEtqTablasRepository.validaSemestre(pm5911dto.getSemestre().toString(), TABLE_NAME);
-		pm5911dto.setIdAnio(0);
+		proteccionCivilDTO = listProteccion.get(currentPage);
+		Integer existe = this.trEtqTablasRepository.validaSemestre(proteccionCivilDTO.getSemestre().toString(),
+				TABLE_NAME);
+		proteccionCivilDTO.setIdAnio(0);
 
-		pm5911dto.setIdSector(this.getUserDetails().getIdSector());
-		pm5911dto.setCapturo(this.getUserDetails().getUsername());
+		proteccionCivilDTO.setIdSector(this.getUserDetails().getIdSector());
+		proteccionCivilDTO.setCapturo(this.getUserDetails().getUsername());
 		bAdicionar = true;
 		if (existe == 0 && !bUpdate) {
 
 			bAdicionar = false;
 
-			listPmDTO = this.pm5911Service.save(pm5911dto);
+			listProteccion = this.proteccionCivilService.save(proteccionCivilDTO);
 			bBorrar = true;
 			bCancelar = false;
 			bModificar = true;
@@ -103,8 +105,8 @@ public class Pm5911MB extends AbstractMB {
 			generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!", "Se ha guardado con exito el registro");
 
 		} else if (bUpdate) {
-			pm5911dto = listPmDTO.get(currentPage);
-			listPmDTO = this.pm5911Service.modify(pm5911dto);
+			proteccionCivilDTO = listProteccion.get(currentPage);
+			listProteccion = this.proteccionCivilService.modify(proteccionCivilDTO);
 			bAdicionar = false;
 			bUpdate = false;
 			bCancelar = false;
@@ -114,7 +116,7 @@ public class Pm5911MB extends AbstractMB {
 			bLimpiar = false;
 			generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!", "!Se ha modificado con exito el registro!");
 		} else {
-			listPmDTO.set(currentPage, pm5911dto);
+			listProteccion.set(currentPage, proteccionCivilDTO);
 			generateNotificationFront(FacesMessage.SEVERITY_WARN, "Error!", "!El semestre ya existe!");
 			bAdicionar = true;
 			bCancelar = true;
@@ -127,17 +129,17 @@ public class Pm5911MB extends AbstractMB {
 		bModificar = false;
 		bCancelar = true;
 		bLimpiar = true;
-		listPmDTO = (List<Pm5911DTO>) this.pm5911Service.findByTableName(TABLE_NAME);
-		if (CollectionUtils.isNotEmpty(listPmDTO)) {
-			if (StringUtils.isNotBlank(listPmDTO.get(0).getFechaIng())) {
+		listProteccion = this.proteccionCivilService.findByTableName(TABLE_NAME);
+		if (CollectionUtils.isNotEmpty(listProteccion)) {
+			if (StringUtils.isNotBlank(listProteccion.get(0).getFechaIng())) {
 				bBorrar = true;
 				bModificar = true;
 			}
 		} else {
-			listPmDTO.add(new Pm5911DTO());
+			listProteccion.add(new ProteccionCivilDTO());
 		}
 
-		if (listPmDTO.size() > 1) {
+		if (listProteccion.size() > 1) {
 			bAdicionar = false;
 			bBorrar = true;
 		}
@@ -153,33 +155,33 @@ public class Pm5911MB extends AbstractMB {
 		bCancelar = true;
 		bBorrar = false;
 		bLimpiar = true;
-		listPmDTO.add(new Pm5911DTO());
-		if (StringUtils.isEmpty(listPmDTO.get(0).getFechaIng())) {
-			for (int i = 0; i < listPmDTO.size(); i++) {
-				listPmDTO.remove(i);
+		listProteccion.add(new ProteccionCivilDTO());
+		if (StringUtils.isEmpty(listProteccion.get(0).getFechaIng())) {
+			for (int i = 0; i < listProteccion.size(); i++) {
+				listProteccion.remove(i);
 			}
 
 		}
 
-		if (listPmDTO.size() == 2) {
+		if (listProteccion.size() == 2) {
 			RequestContext.getCurrentInstance()
-					.execute("PF('dataGrid').paginator.setPage(" + (listPmDTO.size() - 1) + ");");
-			listPmDTO.set(1, new Pm5911DTO());
+					.execute("PF('dataGrid').paginator.setPage(" + (listProteccion.size() - 1) + ");");
+			listProteccion.set(1, new ProteccionCivilDTO());
 
 		} else {
-			listPmDTO.add(0, pm5911dto);
+			listProteccion.add(0, proteccionCivilDTO);
 		}
 
 	}
 
 	public void createNewElement(Integer index) {
 
-		listPmDTO.add(index, pm5911dto);
+		listProteccion.add(index, proteccionCivilDTO);
 	}
 
 	public void borrar() {
-		pm5911dto = listPmDTO.get(currentPage);
-		pm5911Service.delete(pm5911dto);
+		proteccionCivilDTO = listProteccion.get(currentPage);
+		proteccionCivilService.delete(proteccionCivilDTO);
 		this.findAll();
 		generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!", "!Se borro con exito el registro!");
 
@@ -194,14 +196,6 @@ public class Pm5911MB extends AbstractMB {
 		bCancelar = false;
 	}
 
-	public Pm5911Service getPm5911Service() {
-		return pm5911Service;
-	}
-
-	public void setPm5911Service(Pm5911Service pm5911Service) {
-		this.pm5911Service = pm5911Service;
-	}
-
 	public TcPeriodoRepositoy getTcPeriodoRepositoy() {
 		return tcPeriodoRepositoy;
 	}
@@ -210,20 +204,28 @@ public class Pm5911MB extends AbstractMB {
 		this.tcPeriodoRepositoy = tcPeriodoRepositoy;
 	}
 
-	public Pm5911DTO getPm5911dto() {
-		return pm5911dto;
+	public ProteccionCivilService getProteccionCivilService() {
+		return proteccionCivilService;
 	}
 
-	public void setPm5911dto(Pm5911DTO pm5911dto) {
-		this.pm5911dto = pm5911dto;
+	public void setProteccionCivilService(ProteccionCivilService proteccionCivilService) {
+		this.proteccionCivilService = proteccionCivilService;
 	}
 
-	public List<Pm5911DTO> getListPmDTO() {
-		return listPmDTO;
+	public ProteccionCivilDTO getProteccionCivilDTO() {
+		return proteccionCivilDTO;
 	}
 
-	public void setListPmDTO(List<Pm5911DTO> listPmDTO) {
-		this.listPmDTO = listPmDTO;
+	public void setProteccionCivilDTO(ProteccionCivilDTO proteccionCivilDTO) {
+		this.proteccionCivilDTO = proteccionCivilDTO;
+	}
+
+	public List<ProteccionCivilDTO> getListProteccion() {
+		return listProteccion;
+	}
+
+	public void setListProteccion(List<ProteccionCivilDTO> listProteccion) {
+		this.listProteccion = listProteccion;
 	}
 
 	public Integer getSemestre() {

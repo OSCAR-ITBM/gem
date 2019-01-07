@@ -29,6 +29,14 @@ public interface TrEtqTablasRepository
 			+ "    AND TE.NOMBRE        = 'SEMESTRE'\n" + "    AND TV.VALOR         = :semestre")
 	Integer validaSemestre(@Param("semestre") String semestre);
 	
+	@Query(nativeQuery = true, value = "SELECT COUNT(1)\n" + "       FROM GEMUSER.TC_VALORES TV,\n"
+			+ "            GEMUSER.TR_ETIQ_TABLAS TR,\n" + "            GEMUSER.TC_ETIQUETAS TE,\n"
+			+ "            GEMUSER.TC_TABLAS TT\n" + "  WHERE TV.ID_ETIQ_TABLA = TR.ID\n"
+			+ "    AND TR.ID_ETIQUETA   = TE.ID\n" + "    AND TR.ID_TABLA      = TT.ID\n"
+			+ "    AND TR.STATUS        = 1\n" + "    AND TT.NOMBRE            = :tableName\n"
+			+ "    AND TE.NOMBRE        = 'SEMESTRE'\n" + "    AND TV.VALOR         = :semestre")
+	Integer validaSemestre(@Param("semestre") String semestre, @Param("tableName")String tableName);
+	
 	
 	@Query(nativeQuery = true, value = "SELECT  TV.ID_ROW\n" + "       FROM GEMUSER.TC_VALORES TV,\n"
 			+ "            GEMUSER.TR_ETIQ_TABLAS TR,\n" + "            GEMUSER.TC_ETIQUETAS TE,\n"
