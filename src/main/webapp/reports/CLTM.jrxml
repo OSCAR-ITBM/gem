@@ -11,48 +11,37 @@
 	<parameter name="pAnio" class="java.lang.Integer"/>
 	<parameter name="pL3" class="java.lang.String"/>
 	<parameter name="pN3" class="java.lang.String"/>
+	<parameter name="pIdSector" class="java.lang.Integer"/>
+	<parameter name="pSemestre" class="java.lang.Integer"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT  TV.ID_ROW,
-        MAX(DECODE(TE.NOMBRE, 'SEMESTRE', TV.VALOR, '')) SEMESTRE,
-        MAX(DECODE(TE.NOMBRE, 'FECHAING', TV.VALOR, '')) FECHAING,
-        MAX(DECODE(TE.NOMBRE, 'IDSECTOR', TV.VALOR, '')) ID_SECTOR,
-        MAX(DECODE(TE.NOMBRE, 'IDANIO', TV.VALOR, '')) ID_ANIO,
-        MAX(DECODE(TE.NOMBRE, 'CERTIFICACION', TV.VALOR, '')) CERTIFICACION,
-        MAX(DECODE(TE.NOMBRE, 'EXPERIENCIA', TV.VALOR, '')) EXPERIENCIA,
-        MAX(DECODE(TE.NOMBRE, 'TITULO', TV.VALOR,'')) TITULO
-    FROM TR_ETIQ_TABLAS AS ET
-        INNER JOIN TC_ETIQUETAS AS TE ON ET.ID_ETIQUETA = TE.ID
-        INNER JOIN TC_TABLAS AS TT ON ET.ID_TABLA = TT.ID
-        LEFT JOIN TC_VALORES AS TV ON ET.ID = TV.ID_ETIQ_TABLA
-WHERE 1=1
-    AND ET.STATUS = 1
-    AND TT.NOMBRE = 'PM3511'
-GROUP BY TV.ID_ROW]]>
+		<![CDATA[SELECT 	SEMES,
+		FECING,
+		GRADO TITULO,
+		EXPERI EXPERIENCIA,
+		ESTSUP CERTIFICACION
+	FROM PM3511
+WHERE IDSECTOR=$P{pIdSector} AND
+		SEMES = $P{pSemestre}]]>
 	</queryString>
-	<field name="ID_ROW" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="ID_ROW"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="TC_VALORES"/>
+	<field name="SEMES" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="SEMES"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PM3511"/>
 	</field>
-	<field name="SEMESTRE" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="SEMESTRE"/>
-	</field>
-	<field name="FECHAING" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="FECHAING"/>
-	</field>
-	<field name="ID_SECTOR" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="ID_SECTOR"/>
-	</field>
-	<field name="ID_ANIO" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="ID_ANIO"/>
-	</field>
-	<field name="CERTIFICACION" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="CERTIFICACION"/>
-	</field>
-	<field name="EXPERIENCIA" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="EXPERIENCIA"/>
+	<field name="FECING" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="FECING"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PM3511"/>
 	</field>
 	<field name="TITULO" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="TITULO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PM3511"/>
+	</field>
+	<field name="EXPERIENCIA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="EXPERIENCIA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PM3511"/>
+	</field>
+	<field name="CERTIFICACION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CERTIFICACION"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PM3511"/>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -82,21 +71,21 @@ GROUP BY TV.ID_ROW]]>
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement verticalAlignment="Bottom">
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{pNombreMunicipio}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="70" width="70" height="20" uuid="8d8495a6-591f-42e6-b81d-8eb74b5d392d"/>
-				<textElement textAlignment="Center" verticalAlignment="Bottom">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="12"/>
 				</textElement>
 				<text><![CDATA[Municipio: ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="480" y="70" width="58" height="20" uuid="00d0796a-6ba5-4f85-93f7-ab89a48db9e2"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="12"/>
 				</textElement>
 				<text><![CDATA[Num:]]></text>
@@ -106,31 +95,31 @@ GROUP BY TV.ID_ROW]]>
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement verticalAlignment="Bottom">
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{pNumMunicipio}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="0" y="101" width="400" height="20" uuid="c35c4e61-a0fa-45e7-bcb7-db8e0522c5aa"/>
-				<textElement verticalAlignment="Bottom">
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" AL " + $P{pDiaUltimo} + " DE " + $P{pNombreMes} + " DE " + $P{pAnio}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="630" y="101" width="122" height="20" uuid="cba2b239-fc8a-48e4-a7f8-b315363dcf2b"/>
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement verticalAlignment="Bottom">
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{FECHAING}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{FECING}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="490" y="101" width="140" height="20" uuid="2fe050b4-b865-4781-a3e7-9fe3064ea318"/>
-				<textElement verticalAlignment="Bottom">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="12"/>
 				</textElement>
 				<text><![CDATA[FECHA DE INGRESO:]]></text>
@@ -142,9 +131,10 @@ GROUP BY TV.ID_ROW]]>
 			<staticText>
 				<reportElement mode="Opaque" x="0" y="0" width="280" height="50" backcolor="#DFDFDF" uuid="859de8e0-a39a-473a-94f6-9ceef3f77555"/>
 				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="12"/>
@@ -156,9 +146,10 @@ Favor de identificar si cuenta con los siguientes aspectos de evaluación:
 			<staticText>
 				<reportElement mode="Opaque" x="280" y="0" width="100" height="15" backcolor="#DFDFDF" uuid="58aac2fa-d0f4-4e1d-b585-24b2b676905d"/>
 				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="Arial" size="12"/>
@@ -188,11 +179,12 @@ Favor de identificar si cuenta con los siguientes aspectos de evaluación:
 				<text><![CDATA[NO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="380" y="0" width="371" height="50" backcolor="#DFDFDF" uuid="4c4c1e67-cd4d-496d-91c8-cc8ddc570cf1"/>
+				<reportElement mode="Opaque" x="380" y="0" width="372" height="50" backcolor="#DFDFDF" uuid="4c4c1e67-cd4d-496d-91c8-cc8ddc570cf1"/>
 				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[OBSERVACIONES]]></text>
@@ -201,21 +193,6 @@ Favor de identificar si cuenta con los siguientes aspectos de evaluación:
 	</columnHeader>
 	<detail>
 		<band height="113" splitType="Stretch">
-			<rectangle>
-				<reportElement positionType="FixRelativeToBottom" x="330" y="35" width="50" height="35" uuid="32c27f54-1344-4d32-86a0-6f4a8928e1a2"/>
-			</rectangle>
-			<rectangle>
-				<reportElement positionType="FixRelativeToBottom" x="280" y="70" width="50" height="43" uuid="fb1e5058-4e68-4c6d-9def-0ad7287d9d65"/>
-			</rectangle>
-			<rectangle>
-				<reportElement positionType="FixRelativeToBottom" x="330" y="70" width="50" height="43" uuid="bed7a476-a7f4-41cf-8c51-d2a17f56d2a5"/>
-			</rectangle>
-			<rectangle>
-				<reportElement positionType="FixRelativeToBottom" x="280" y="35" width="50" height="35" uuid="f7929d87-0ac6-4d2a-8d08-e773feb8ab98"/>
-			</rectangle>
-			<rectangle>
-				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="330" y="0" width="50" height="35" uuid="43fa6153-7fb9-4671-a8fe-ed319f764f14"/>
-			</rectangle>
 			<staticText>
 				<reportElement x="0" y="0" width="280" height="35" uuid="c16709c8-6e0f-41b5-b870-7ffeb494f4ac">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4a8204de-d6e7-4913-a275-48c2d1a40974"/>
@@ -226,8 +203,9 @@ Favor de identificar si cuenta con los siguientes aspectos de evaluación:
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
+					<paragraph firstLineIndent="0" leftIndent="5"/>
 				</textElement>
 				<text><![CDATA[Titulo Profesional en áreas jurídicas, ecónomicas o contable-administrativas.]]></text>
 			</staticText>
@@ -241,8 +219,9 @@ Favor de identificar si cuenta con los siguientes aspectos de evaluación:
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
+					<paragraph firstLineIndent="0" leftIndent="5"/>
 				</textElement>
 				<text><![CDATA[Experiencia mínima de un año en la materia.]]></text>
 			</staticText>
@@ -256,137 +235,132 @@ Favor de identificar si cuenta con los siguientes aspectos de evaluación:
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
+					<paragraph firstLineIndent="0" leftIndent="5"/>
 				</textElement>
-				<text><![CDATA[Ceertificación en Competencia Laboral expedida por el Instituto Hacendario del Estado de México.]]></text>
+				<text><![CDATA[Certificación en Competencia Laboral expedida por el Instituto Hacendario del Estado de México.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="381" y="0" width="370" height="35" uuid="a9faec11-0776-4645-b53f-1ab627f05d6c"/>
+				<reportElement x="380" y="0" width="372" height="35" uuid="a9faec11-0776-4645-b53f-1ab627f05d6c"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="12"/>
+					<paragraph leftIndent="5"/>
 				</textElement>
 				<text><![CDATA[Remitir fotocopia legible del mismo.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="381" y="35" width="370" height="35" uuid="2d1cedf1-da1a-4e98-92e2-89e6bcc63f04"/>
+				<reportElement x="380" y="35" width="372" height="35" uuid="2d1cedf1-da1a-4e98-92e2-89e6bcc63f04"/>
 				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
+					<paragraph leftIndent="5"/>
 				</textElement>
 				<text><![CDATA[Adjuntar a éste formatola documentación que avala la experiencia para ocupar el puesto. (Por ejemplo: Nombramiento en Administraciones Municipales anteriores).]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="380" y="70" width="371" height="43" uuid="5c35d501-3f51-4a6a-ba17-54b34cca07cd"/>
+				<reportElement x="380" y="70" width="372" height="43" uuid="5c35d501-3f51-4a6a-ba17-54b34cca07cd"/>
 				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
+					<paragraph leftIndent="5"/>
 				</textElement>
 				<text><![CDATA[Remitir fotocopia legible de la misma. Cabe señalar que, de conformidad con el árticulo 7 del Reglamento de la COCERTEM, la vigencia de la certificación en competencia laboral es de 3 años.]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="330" y="35" width="50" height="35" uuid="5202696b-312d-4ba7-bfd2-de3372b6644f">
+			<textField>
+				<reportElement x="330" y="35" width="50" height="35" uuid="a0a954e7-5b64-4d0c-a589-f5c5893621c5">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a499a634-7835-48c1-91ac-fcef22504ed4"/>
-					<printWhenExpression><![CDATA[!$F{EXPERIENCIA}.equals("1")]]></printWhenExpression>
 				</reportElement>
 				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[X]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="280" y="35" width="50" height="35" uuid="1cca6a1f-d015-4fd3-a86f-d8c4e9ec7a80">
+				<textFieldExpression><![CDATA[!$F{EXPERIENCIA}.equals("1")?"X":""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="35" width="50" height="35" uuid="985c5ffc-54f3-4f62-8679-1afd7502687c">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a499a634-7835-48c1-91ac-fcef22504ed4"/>
-					<printWhenExpression><![CDATA[$F{EXPERIENCIA}.equals("1")]]></printWhenExpression>
 				</reportElement>
 				<box topPadding="0">
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[X]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="280" y="70" width="50" height="43" uuid="b2dba949-7e45-4bb2-90d1-b6b92cf1683c">
+				<textFieldExpression><![CDATA[$F{EXPERIENCIA}.equals("1")?"X":""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="70" width="50" height="43" uuid="3b680fca-513f-4774-95fc-4b94e9055bc1">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="52b69092-4235-488e-a4bb-9e5de03cc31f"/>
-					<printWhenExpression><![CDATA[$F{CERTIFICACION}.equals("1")]]></printWhenExpression>
 				</reportElement>
 				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[X]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Opaque" x="330" y="0" width="50" height="35" backcolor="#FFFFFF" uuid="71f4be09-8193-4d4f-9c26-6503582e94e1">
+				<textFieldExpression><![CDATA[$F{CERTIFICACION}.equals("1")?"X":""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="330" y="0" width="50" height="35" backcolor="#FFFFFF" uuid="2872e510-dc79-4a2d-8ed5-32b26b9e5f78">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4a8204de-d6e7-4913-a275-48c2d1a40974"/>
-					<printWhenExpression><![CDATA[!$F{TITULO}.equals("1")]]></printWhenExpression>
 				</reportElement>
 				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[X]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="330" y="70" width="50" height="43" uuid="3ea1118e-bc3f-4bff-91bb-aad94408eb54">
+				<textFieldExpression><![CDATA[!$F{TITULO}.equals("1")?"X":""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="70" width="50" height="43" uuid="b1c50825-5614-44e8-9dd7-9bb46e33a139">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="52b69092-4235-488e-a4bb-9e5de03cc31f"/>
-					<printWhenExpression><![CDATA[!$F{CERTIFICACION}.equals("1")]]></printWhenExpression>
 				</reportElement>
 				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[X]]></text>
-			</staticText>
-			<rectangle>
-				<reportElement positionType="FixRelativeToBottom" x="280" y="0" width="50" height="35" uuid="90534d1d-fb94-4d72-8f0a-bd7fc90812f2"/>
-			</rectangle>
-			<staticText>
-				<reportElement x="280" y="0" width="50" height="35" uuid="846fa6a5-d5fb-43c9-982c-b07dc62f4728">
+				<textFieldExpression><![CDATA[$F{CERTIFICACION}.equals("0")?"X":""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="0" width="50" height="35" uuid="31454923-85f6-4cd2-bfbd-b64142b9f7b2">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="52b69092-4235-488e-a4bb-9e5de03cc31f"/>
-					<printWhenExpression><![CDATA[!$F{CERTIFICACION}.equals("1")]]></printWhenExpression>
 				</reportElement>
 				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[X]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$F{TITULO}.equals("1")?"X":""]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<lastPageFooter>

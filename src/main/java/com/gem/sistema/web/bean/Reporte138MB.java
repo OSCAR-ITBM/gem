@@ -756,12 +756,10 @@ public class Reporte138MB extends BaseDirectReport {
 		parameters.put("pNumMunicipio", conctb.getClave());
 		parameters.put("pDiaUltimo", getLastDay(Integer.valueOf(mesArray[1])));
 		parameters.put("pNombreMes", tcMesRepository.findByMes(mesArray[1]).getDescripcion());
-		//parameters.put("mesFinName", tcMesRepository.findByMes(mesArray[1]).getDescripcion());
 		parameters.put("pAnio", conctb.getAnoemp());
 		parameters.put("pLogo", getUserDetails().getPathImgCab1());
-		//parameters.put("semestre", Integer.valueOf(conTrim));
-		//parameters.put("idSector", getUserDetails().getIdSector());
-		parameters.put("pL3", firmas.getL3());
+		parameters.put("pSemestre", Integer.valueOf(conTrim));
+		parameters.put("pIdSector", getUserDetails().getIdSector());
 		parameters.put("pN3", firmas.getN3());
 		return parameters;
 	}
