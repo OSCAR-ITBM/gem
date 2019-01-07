@@ -306,7 +306,7 @@ WHERE	SEMES = $P{semestre}
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{GRADO}.equals( "NO" )?"X":""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{GRADO}.equals( "0" )?"X":""]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="483" y="0" width="269" height="50" uuid="e94f1644-fe74-487a-8221-26ed892532cc"/>
@@ -335,7 +335,7 @@ WHERE	SEMES = $P{semestre}
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{EXPERI}.equals("SI")?"X":""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{EXPERI}.equals("1")?"X":""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="379" y="50" width="104" height="55" uuid="1d20c8c3-24a7-41e0-b906-d345a2bdd8bd"/>
@@ -349,7 +349,7 @@ WHERE	SEMES = $P{semestre}
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{EXPERI}.equals( "NO" )?"X":""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{EXPERI}.equals( "0" )?"X":""]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="483" y="50" width="269" height="55" uuid="76e4fe95-c0bf-4d14-a233-b972667bcb6e"/>
@@ -392,7 +392,7 @@ WHERE	SEMES = $P{semestre}
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{DOCU}.equals( "NO" )?"X":""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{DOCU}.equals( "0" )?"X":""]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="483" y="105" width="269" height="55" uuid="33928796-c571-4580-a820-39908e023292"/>
@@ -421,7 +421,7 @@ WHERE	SEMES = $P{semestre}
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{GRADO}.equals("SI")?"X":""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{GRADO}.equals("1")?"X":""]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -487,11 +487,11 @@ WHERE	SEMES = $P{semestre}
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
 					<paragraph leftIndent="10"/>
 				</textElement>
-				<text><![CDATA[NOTA: 	// Anexar el texto de la "NOTA" //]]></text>
+				<text><![CDATA[NOTA: Deberá remitir en fotocopia simple evidencia de la Constancia de No Inhabilitación, el Certificado de No Antecedentes Penales, el Alta en ISSEMYM y el Nombramiento del servidor Público que ocupa el cargo referido.]]></text>
 			</staticText>
 		</band>
 	</summary>
