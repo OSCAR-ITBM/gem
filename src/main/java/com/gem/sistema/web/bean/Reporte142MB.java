@@ -43,7 +43,7 @@ public class Reporte142MB extends BaseDirectReport {
 	private static final String NO = "NO";
 	
 	/** The Constant REPORTE_142. */
-	private static final String REPORTE_142 = "reporte142";
+	private static final String REPORTE_142 = "directorDesarrolloEconomico";
 	
 	/** The Constant PDF. */
 	private static final String PDF = ".pdf";
