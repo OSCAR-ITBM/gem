@@ -200,20 +200,22 @@
 								</p:inputMask>
 
 								<!-- -->
-								<pe:inputNumber id="clvfteMun" value="#{object.clvfte}"
+								<p:inputText id="clvfteMun" value="#{object.clvfte}"
 									disabled="#{catalogFinancialSourcesMB.activeLiga}"
 									rendered="#{catalogFinancialSourcesMB.municipal}"
 									style="width:100%" maxlength="5" required="false"
 									requiredMessage="El campo Clave es requerido"
 									onkeypress="if(event.keyCode == 27) {cancelRow(); return false;}"
-									decimalPlaces="2" decimalSeparator="." minValue="0"
-									maxValue="99.99" onchange="actualizarValor();">
-								</pe:inputNumber>
+									onchange="actualizarValor();">
+									<p:ajax event="blur" update="clvfteMun2"></p:ajax>
+								</p:inputText>
 
 								<p:inputText id="clvfteMun2" value="#{object.clvfte}"
 									rendered="#{catalogFinancialSourcesMB.municipal}"
+									maxlength="6"
 									style="width:100%;display:none;" required="true"
 									requiredMessage="El campo Clave es requerido">
+									
 								</p:inputText>
 
 								<!-- 
