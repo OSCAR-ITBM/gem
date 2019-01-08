@@ -26,7 +26,7 @@
         LEFT JOIN TC_VALORES AS TV ON ET.ID = TV.ID_ETIQ_TABLA
 WHERE 1=1
     AND ET.STATUS = 1
-    AND TT.NOMBRE = 'PM3711'
+    AND TT.NOMBRE = 'MEDIADOR'
 GROUP BY TV.ID_ROW) T1 WHERE SEMESTRE=$P{pSemestre}]]>
 	</queryString>
 	<field name="SEMESTRE" class="java.lang.String">
@@ -189,7 +189,7 @@ GROUP BY TV.ID_ROW) T1 WHERE SEMESTRE=$P{pSemestre}]]>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{TITULO}.equals("1")?"X":""]]></textFieldExpression>
