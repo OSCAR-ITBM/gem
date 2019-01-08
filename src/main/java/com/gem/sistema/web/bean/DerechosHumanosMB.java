@@ -33,7 +33,7 @@ import com.gem.sistema.business.service.reportador.ReportValidationException;
 @ViewScoped
 public class DerechosHumanosMB extends BaseDirectReport {
 
-	private static final String TABLE_NAME = "PROTECCION";
+	private static final String TABLE_NAME = "DEFENSOR";
 
 	private DefensorDTO defensorDTO;
 	private List<DefensorDTO> listDefensor;
@@ -209,6 +209,8 @@ public class DerechosHumanosMB extends BaseDirectReport {
 		bCancelar = true;
 		bBorrar = false;
 		bLimpiar = true;
+		bMostrarAdd = false;
+		bModificar = false;
 		listDefensor.add(new DefensorDTO());
 		if (StringUtils.isEmpty(listDefensor.get(0).getFechaIng())) {
 			for (int i = 0; i < listDefensor.size(); i++) {

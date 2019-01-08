@@ -155,6 +155,7 @@ public class ProteccionCivilMB extends AbstractMB {
 		bCancelar = true;
 		bBorrar = false;
 		bLimpiar = true;
+		bMostrarAdd = false;
 		listProteccion.add(new ProteccionCivilDTO());
 		if (StringUtils.isEmpty(listProteccion.get(0).getFechaIng())) {
 			for (int i = 0; i < listProteccion.size(); i++) {
