@@ -97,14 +97,16 @@ public class Pm3611MB extends BaseDirectReport {
 		Firmas firmas = firmasRepository.findAllByIdsector(this.getUserDetails().getIdSector());
 		TcPeriodo mes = tcPeriodoRepositoy.findByTipoPeriodoAndPeriodo(1, month);
 
-		parameters.put("pImagen", this.getUserDetails().getPathImgCab1());
-		parameters.put("pMunicipio", firmas.getCampo1());
-		parameters.put("pMes", mes.getDescripcion());
-		parameters.put("pDay", getLastDayByAnoEmp(month, firmas.getCampo3()));
-		parameters.put("pYear", firmas.getCampo3());
-		parameters.put("pSemestre", semestre);
-		parameters.put("firmaL32", firmas.getL32());
-		parameters.put("firmaN32", firmas.getN32());
+		parameters.put("imagen", this.getUserDetails().getPathImgCab1());
+		parameters.put("municipio", firmas.getCampo1());
+		parameters.put("numero", this.getUserDetails().getIdMunicipio().toString());
+		parameters.put("mes", mes.getDescripcion());
+		parameters.put("dia", getLastDayByAnoEmp(month, firmas.getCampo3()));
+		parameters.put("year", firmas.getCampo3());
+		parameters.put("idSector", this.getUserDetails().getIdSector());
+		parameters.put("semestre", semestre);
+		parameters.put("firmaL1", firmas.getL2());
+		parameters.put("firmaN1", firmas.getN2());
 
 		return parameters;
 	}
