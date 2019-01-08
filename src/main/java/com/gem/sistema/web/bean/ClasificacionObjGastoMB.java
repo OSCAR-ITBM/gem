@@ -156,7 +156,7 @@ public class ClasificacionObjGastoMB extends BaseDirectReport {
 				.append("GROUP BY NAT.CLVGAS,NAT.NOMGAS ORDER BY NAT.CLVGAS ASC ) T1 UNION ALL ")
 				.append("SELECT 2 GRUP, T1.CLVGAS, T1.NOMGAS, T1.APROBADO, (T1.AMPLIACION -T1.REDUCCIONES) AMPL_REDU, ")
 				.append("(T1.APROBADO + T1.AMPLIACION -T1.REDUCCIONES) MODIFICADO, T1.DEVENGADO, T1.PAGADO, ")
-				.append("(T1.APROBADO + T1.AMPLIACION -T1.REDUCCIONES) - T1.DEVENGADO SUBEJERCICIO\n"
+				.append("(T1.APROBADO + T1.AMPLIACION -T1.REDUCCIONES) - T1.DEVENGADO SUBEJERCICIO "
 						+ "FROM (SELECT NAT.CLVGAS, NAT.NOMGAS, ")
 				.append(auto).append(ampli).append(redu).append(ejxpa).append(ejpa)
 				.append("FROM PASO PA INNER JOIN NATGAS NAT ON NAT.CLVGAS = PA.PARTIDA AND NAT.IDSECTOR = PA.IDSECTOR ")
@@ -164,7 +164,6 @@ public class ClasificacionObjGastoMB extends BaseDirectReport {
 				.append("SUBSTR(PA.PROGRAMA,13,3)>='203' AND SUBSTR(PA.PROGRAMA,13,3)<='225' OR ")
 				.append("SUBSTR(PA.PROGRAMA,13,3)>='114' AND SUBSTR(PA.PROGRAMA,13,3)<='115' ")
 				.append("GROUP BY NAT.CLVGAS,NAT.NOMGAS ORDER BY NAT.CLVGAS ASC) T1 ORDER BY GRUP, CLVGAS");
-		System.out.println(sql.toString());
 
 		return sql.toString();
 	}
