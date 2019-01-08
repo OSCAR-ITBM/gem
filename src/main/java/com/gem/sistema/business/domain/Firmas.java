@@ -260,6 +260,18 @@ public class Firmas extends AbstractEntity {
 	/** The n 9. */
 	private String n9;
 
+	private String l35;
+
+	private String n35;
+
+	private String l36;
+
+	private String n36;
+
+	private String l37;
+
+	private String n37;
+
 	/** The userid. */
 	@Column(name = "USERID")
 	private String userid;
@@ -1736,6 +1748,54 @@ public class Firmas extends AbstractEntity {
 	 */
 	public void setIdsector(Integer idsector) {
 		this.idsector = idsector;
+	}
+
+	public String getL35() {
+		return l35;
+	}
+
+	public void setL35(String l35) {
+		this.l35 = l35;
+	}
+
+	public String getN35() {
+		return n35;
+	}
+
+	public void setN35(String n35) {
+		this.n35 = n35;
+	}
+
+	public String getL36() {
+		return l36;
+	}
+
+	public void setL36(String l36) {
+		this.l36 = l36;
+	}
+
+	public String getN36() {
+		return n36;
+	}
+
+	public void setN36(String n36) {
+		this.n36 = n36;
+	}
+
+	public String getL37() {
+		return l37;
+	}
+
+	public void setL37(String l37) {
+		this.l37 = l37;
+	}
+
+	public String getN37() {
+		return n37;
+	}
+
+	public void setN37(String n37) {
+		this.n37 = n37;
 	}
 
 }
