@@ -13,13 +13,12 @@
 		<ui:define name="content">
 			<h:form id="form1">
 				<p:growl id="msgs" showDetail="true" />
-
 				<p:panel id="panel"
-					header="Competencia Laboral del Oficial Mediador Conciliador"
+					header="Reportes de Indicadores Semestral Competencia Laboral del Oficial Mediador Conciliador"
 					styleClass="green col-md-9 col-centered row-centered shadow-panel">
-					<!-- 
+
 					<p:dataGrid id="dataGrid" var="entity"
-						value="#{oficialMediadorMB.listPm3711}"
+						value="#{oficialMediadorMB.listMediador}"
 						styleClass="et_datatable col-md-12 no-border"
 						emptyMessage="Cargando información..." paginator="true" rows="1"
 						columns="1"
@@ -35,30 +34,39 @@
 									<h:outputText value="Semestre:" />
 								</p:column>
 								<p:column>
+									<h:inputHidden value="#{entity.capturo}" />
+
+									<h:inputHidden value="#{entity.idSector}" />
 									<h:outputText value="#{entity.semestre}" id="lblSemestre"
-										style="margin-left: 18px;" rendered="#{!oficialMediadorMB.editando}" />
+										style="margin-left: 18px;"
+										rendered="#{!oficialMediadorMB.bAdicionar}" />
 									<p:selectOneMenu size="18" editable="false" id="semestre"
-										value="#{entity.semestre}" disabled="#{!oficialMediadorMB.editando}"
-										rendered="#{oficialMediadorMB.editando}">
-										<f:selectItems value="#{oficialMediadorMB.listSemestres}" var="periodo"
-											itemValue="#{periodo.periodo}" itemLabel="#{periodo.periodo}" />
+										value="#{entity.semestre}"
+										disabled="#{!oficialMediadorMB.bAdicionar}"
+										rendered="#{oficialMediadorMB.bAdicionar}">
+										<f:selectItems value="#{oficialMediadorMB.listSeme}"
+											var="periodo" itemValue="#{periodo.periodo}"
+											itemLabel="#{periodo.periodo}" />
 									</p:selectOneMenu>
 
 								</p:column>
 							</p:row>
 							<p:row>
 								<p:column style="text-align:right;">
-									<h:outputText value="Fecha de Ingreso como Oficial Mediador Conciliador:" />
+									<h:outputText
+										value="Fecha de Ingreso como Oficial Mediador Calificador:" />
 								</p:column>
 								<p:column styleClass="col-md-2">
 									<h:outputText value="#{entity.fechaIng}" id="lblFechaIng"
-										style="margin-left: 18px;" rendered="#{!oficialMediadorMB.editando}">
+										style="margin-left: 18px;"
+										rendered="#{!oficialMediadorMB.bAdicionar}">
 										<f:convertDateTime pattern="dd/MM/yyyy" />
 									</h:outputText>
 
 									<p:calendar value="#{entity.fechaIng}" id="fechaIng"
-										rendered="#{oficialMediadorMB.editando}" pattern="dd/MM/yyyy"
-										showOn="button" size="10" maxlength="10" mask="true"
+										rendered="#{oficialMediadorMB.bAdicionar}"
+										pattern="dd/MM/yyyy" showOn="button" size="10" maxlength="10"
+										mask="true"
 										converterMessage="La fecha debe ser en fomato de dd/MM/aaaa">
 										<f:convertDateTime pattern="dd/MM/yyyy" for="fechaInput" />
 									</p:calendar>
@@ -69,14 +77,14 @@
 							<p:row>
 								<p:column style="text-align: right;">
 									<p:outputLabel id="idTitulo"
-										value="Título de Licenciatura en Derecho, Psicología, Sociología, Antropología, Trabajo Social o Comunicaciones:" />
+										value="Título de Licenciatura en Derecho, Psicología, Sociología, Antropología, Trabajo Social o Cumunicaciones:" />
 								</p:column>
 								<p:column>
 									<p:outputLabel value="#{entity.titulo == 1 ? 'Si': 'No'}"
-										id="lbltitulo" rendered="#{!oficialMediadorMB.editando}" />
+										id="lbltitulo" rendered="#{!oficialMediadorMB.bAdicionar}" />
 
 									<p:selectOneButton value="#{entity.titulo}" id="hasTitulo"
-										rendered="#{oficialMediadorMB.editando}">
+										rendered="#{oficialMediadorMB.bAdicionar}">
 										<f:selectItem itemLabel="Si" itemValue="1" />
 										<f:selectItem itemLabel="No" itemValue="0" />
 									</p:selectOneButton>
@@ -85,34 +93,39 @@
 
 							<p:row>
 								<p:column style="text-align:right;">
-									<h:outputText
-										value="Estudios en materia de Mediación:" />
+									<h:outputText value="Estudios en Materia de Medición:" />
 								</p:column>
 								<p:column>
-									<h:outputText value="#{entity.experiencia == 1 ? 'Si': 'No'}"
-										id="lblExperiencia" rendered="#{!oficialMediadorMB.editando}" />
-									<p:selectOneButton value="#{entity.experiencia}"
-										id="hasExperiencia" rendered="#{oficialMediadorMB.editando}">
+									<h:outputText value="#{entity.estudios == 1 ? 'Si': 'No'}"
+										id="lblExperiencia"
+										rendered="#{!oficialMediadorMB.bAdicionar}" />
+									<p:selectOneButton value="#{entity.estudios}"
+										id="hasExperiencia" rendered="#{oficialMediadorMB.bAdicionar}">
 										<f:selectItem itemLabel="Si" itemValue="1" />
 										<f:selectItem itemLabel="No" itemValue="0" />
 									</p:selectOneButton>
 								</p:column>
 
 							</p:row>
+
+
 							<p:row>
 								<p:column style="text-align:right;">
 									<h:outputText
-										value="Certificación por el Centro de Mediación, Conciliación y Juscticia Restaurativa del Poder Judicial del Estado de México:" />
+										value="Certificación por el Centro de Mediación, Consolidación y Justicia Restaurativa del Poder Judicial del Estado de México:" />
 								</p:column>
 								<p:column>
 									<h:outputText value="#{entity.certificacion == 1 ? 'Si': 'No'}"
-										id="lblCertificado" rendered="#{!oficialMediadorMB.editando}" />
+										id="lblCertificacion"
+										rendered="#{!oficialMediadorMB.bAdicionar}" />
 									<p:selectOneButton value="#{entity.certificacion}"
-										id="hasCertficacion" rendered="#{oficialMediadorMB.editando}">
+										id="hasCertificacion"
+										rendered="#{oficialMediadorMB.bAdicionar}">
 										<f:selectItem itemLabel="Si" itemValue="1" />
 										<f:selectItem itemLabel="No" itemValue="0" />
 									</p:selectOneButton>
 								</p:column>
+
 							</p:row>
 
 						</p:panelGrid>
@@ -125,29 +138,32 @@
 								<h:panelGroup id="pnlBotonesCRUD">
 									<p:commandButton value="Modificar" icon="ui-icon-pencil"
 										id="modificar" actionListener="#{oficialMediadorMB.modificar}"
-										rendered="#{!oficialMediadorMB.editando}"
-										disabled="#{oficialMediadorMB.bModificar}"
+										rendered="#{oficialMediadorMB.bModificar}"
+										disabled="#{oficialMediadorMB.bUpdate}"
 										update="form1:pnlBotonesCRUD, form1:dataGrid" />
 									<p:commandButton value="Salvar" icon="ui-icon-disk" id="salvar"
-										action="#{oficialMediadorMB.salvar}" rendered="#{oficialMediadorMB.editando}"
+										actionListener="#{oficialMediadorMB.save}"
+										rendered="#{oficialMediadorMB.bAdicionar}"
 										update="form1:pnlBotonesCRUD, form1:dataGrid" />
 
 									<p:commandButton value="Adicionar" icon="ui-icon-circle-plus"
-										id="adicionar" actionListener="#{oficialMediadorMB.adicionar}"
-										disabled="#{oficialMediadorMB.editando}"
+										id="adicionar"
+										actionListener="#{oficialMediadorMB.addElement}"
+										rendered="#{oficialMediadorMB.bMostrarAdd}"
+										disabled="#{oficialMediadorMB.bEditar}"
 										update="form1:pnlBotonesCRUD, form1:dataGrid, form1:msgs" />
 									<p:commandButton value="Limpiar" icon="ui-icon-circle-plus"
-										id="limpiar" disabled="#{!oficialMediadorMB.editando}"
+										id="limpiar" disabled="#{oficialMediadorMB.bLimpiar}"
 										actionListener="#{oficialMediadorMB.reset}"
 										update="form1:pnlBotonesCRUD, form1:dataGrid, form1:msgs" />
 									<p:commandButton value="Borrar" icon="ui-icon-trash"
 										actionListener="#{oficialMediadorMB.borrar}" id="Borrar"
-										disabled="#{oficialMediadorMB.bModificar}"
+										disabled="#{!oficialMediadorMB.bBorrar}"
 										update="form1:pnlBotonesCRUD, form1:dataGrid, form1:msgs" />
 
 									<p:commandButton value="Cancelar" icon="ui-icon-closethick"
 										actionListener="#{oficialMediadorMB.reset}" id="cancelar"
-										disabled="#{oficialMediadorMB.bModificar}"
+										disabled="#{oficialMediadorMB.bCancelar}"
 										update="form1:pnlBotonesCRUD, form1:dataGrid, form1:msgs" />
 
 								</h:panelGroup>
@@ -155,25 +171,25 @@
 							</p:column>
 						</p:row>
 					</p:panelGrid>
-					-->
-					 <h:panelGrid columns="5"
+					<h:panelGrid columns="5"
 						styleClass="col-centered row-centered ui-noborder">
 						<h:outputText value="Semestre: " for="mesInputOri" />
 						<p:spacer />
 						<p:selectOneMenu id="mesInputOri" size="18" editable="false"
 							value="#{oficialMediadorMB.semestre}">
-							<f:selectItems value="#{oficialMediadorMB.listSemestres}" var="periodo"
-								itemLabel="#{periodo.periodo}" itemValue="#{periodo.periodo}" />
+							<f:selectItems value="#{oficialMediadorMB.listSemestres}"
+								var="periodo" itemLabel="#{periodo.periodo}"
+								itemValue="#{periodo.periodo}" />
 						</p:selectOneMenu>
 						<p:spacer />
 						<p:commandButton id="generateportepdf"
 							onstart="PF('blockUIWidget').block()"
-							action="#{oficialMediadorMB.createFilePdfInline}" value="Correcto"
-							oncomplete="PF('blockUIWidget').unblock(); " update="form1:inlinePdf :form1:msgs"
-											style="padding:2px;">
+							action="#{oficialMediadorMB.createFilePdfInline}"
+							value="Correcto" oncomplete="PF('blockUIWidget').unblock(); "
+							update="form1:inlinePdf :form1:msgs" style="padding:2px;">
 						</p:commandButton>
-					</h:panelGrid> 
-<p:panel id="inlinePdf" style="border:0px"
+					</h:panelGrid>
+					<p:panel id="inlinePdf" style="border:0px"
 						visible="#{oficialMediadorMB.uuid ne null}">
 						<object type="application/pdf"
 							data="#{request.contextPath}/GetFileInline?uuid=#{oficialMediadorMB.uuid}&amp;filename=#{oficialMediadorMB.endFilename}"
