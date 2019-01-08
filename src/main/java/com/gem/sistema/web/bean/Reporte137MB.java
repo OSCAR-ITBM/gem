@@ -613,12 +613,12 @@ public class Reporte137MB extends BaseDirectReport {
 		parameters.put("pathImage", getUserDetails().getPathImgCab1());
 		parameters.put("semestre", Integer.valueOf(conTrim));
 		parameters.put("idSector", getUserDetails().getIdSector());
-		parameters.put("firmaP1", firmas.getL4());
-		parameters.put("firmaP2", firmas.getL30());
-		parameters.put("firmaP3", firmas.getL23());
-		parameters.put("firmaN1", firmas.getN4());
-		parameters.put("firmaN2", firmas.getN30());
-		parameters.put("firmaN3", firmas.getN23());
+		parameters.put("pL4", firmas.getL4());
+		parameters.put("pL5", firmas.getL5());
+		parameters.put("pL3", "");//Agregar Firma UIPE
+		parameters.put("pN4", firmas.getN4());
+		parameters.put("pN5", firmas.getN5());
+		parameters.put("pN3", "");//Agregar firma UIPE
 
 		return parameters;
 	}
