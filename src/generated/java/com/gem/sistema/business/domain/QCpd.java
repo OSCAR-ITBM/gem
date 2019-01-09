@@ -34,6 +34,8 @@ public class QCpd extends EntityPathBase<Cpd> {
 
     public final StringPath pe = createString("pe");
 
+    public final StringPath subTema = createString("subTema");
+
     public final StringPath tema = createString("tema");
 
     public final StringPath usuario = createString("usuario");

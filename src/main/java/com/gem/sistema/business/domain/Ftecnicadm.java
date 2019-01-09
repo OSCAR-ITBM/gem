@@ -5,13 +5,12 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
-
 /**
  * The persistent class for the FTECNICADM database table.
  * 
  */
 @Entity
-@NamedQuery(name="Ftecnicadm.findAll", query="SELECT f FROM Ftecnicadm f")
+@NamedQuery(name = "Ftecnicadm.findAll", query = "SELECT f FROM Ftecnicadm f")
 public class Ftecnicadm extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -42,10 +41,10 @@ public class Ftecnicadm extends AbstractEntity implements Serializable {
 
 	private String frecuencia;
 
-	@Column(name="ID_REF")
+	@Column(name = "ID_REF")
 	private Long idRef;
 
-	//private int idsector;
+	// private int idsector;
 
 	private String interpretacion;
 
@@ -75,15 +74,18 @@ public class Ftecnicadm extends AbstractEntity implements Serializable {
 
 	private BigDecimal trim4e;
 
-	@Column(name="USERID")
+	@Column(name = "USERID")
 	private String userid;
 
 	private String usuario;
 
 	private String valido;
-	
-	@Column(name="IDSECTOR")
+
+	@Column(name = "IDSECTOR")
 	private Integer idSector;
+
+	@Column(name = "LINEA_BASE")
+	private String lineaBase;
 
 	public Ftecnicadm() {
 	}
@@ -200,14 +202,11 @@ public class Ftecnicadm extends AbstractEntity implements Serializable {
 		this.idRef = idRef;
 	}
 
-	/*public int getIdsector() {
-		return this.idsector;
-	}
-
-	public void setIdsector(int idsector) {
-		this.idsector = idsector;
-	}
-*/
+	/*
+	 * public int getIdsector() { return this.idsector; }
+	 * 
+	 * public void setIdsector(int idsector) { this.idsector = idsector; }
+	 */
 	public String getInterpretacion() {
 		return this.interpretacion;
 	}
@@ -350,6 +349,14 @@ public class Ftecnicadm extends AbstractEntity implements Serializable {
 
 	public void setIdSector(Integer idSector) {
 		this.idSector = idSector;
+	}
+
+	public String getLineaBase() {
+		return lineaBase;
+	}
+
+	public void setLineaBase(String lineaBase) {
+		this.lineaBase = lineaBase;
 	}
 
 }

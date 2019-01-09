@@ -119,7 +119,7 @@ public class CatalogThemeGrowthMB extends CommonCatalogMB<Cpd> implements Serial
 		setListNew(new ArrayList<Cpd>());
 		this.reportNameTextPlain = REPORT_NAME_PLAIN_TEXT;
 		sSqlCsv = QUERY_STRUCTURA;
-		AND_ID_SECTOR= "";
+		AND_ID_SECTOR = "";
 		this.headersReportTextPlain = HEADERS_REPORT_TEXT_PLAIN;
 	}
 
@@ -143,7 +143,8 @@ public class CatalogThemeGrowthMB extends CommonCatalogMB<Cpd> implements Serial
 		if (isValidFieldNoPeAndTema(catalog.getNope(), catalog.getTema(), errorMsg) && validateSaveOrUpdate(catalog)) {
 
 			catalog.setCvetemas((StringUtils.isEmpty(catalog.getPe()) ? EMPTY : catalog.getPe()) + catalog.getNope()
-					+ (StringUtils.isEmpty(catalog.getTema()) ? EMPTY : catalog.getTema()));
+					+ (StringUtils.isEmpty(catalog.getTema()) ? EMPTY : catalog.getTema())
+					+ (StringUtils.isEmpty(catalog.getSubTema()) ? EMPTY : catalog.getSubTema()));
 
 			executeOperationSaveOrUpdate(catalog, cpdRepository);
 		} else {
@@ -160,8 +161,8 @@ public class CatalogThemeGrowthMB extends CommonCatalogMB<Cpd> implements Serial
 	/**
 	 * Checks if is valid field no pe and tema.
 	 *
-	 * @param nope the nope
-	 * @param tema the tema
+	 * @param nope     the nope
+	 * @param tema     the tema
 	 * @param errorMsg the error msg
 	 * @return true, if is valid field no pe and tema
 	 */
@@ -265,8 +266,12 @@ public class CatalogThemeGrowthMB extends CommonCatalogMB<Cpd> implements Serial
 
 	}
 
-	/* (non-Javadoc)
-	 * @see com.gem.sistema.web.bean.CommonCatalogMB#onRowCancel(org.primefaces.event.RowEditEvent)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gem.sistema.web.bean.CommonCatalogMB#onRowCancel(org.primefaces.event.
+	 * RowEditEvent)
 	 */
 	@Override
 	public void onRowCancel(RowEditEvent event) {
@@ -294,7 +299,7 @@ public class CatalogThemeGrowthMB extends CommonCatalogMB<Cpd> implements Serial
 
 	/** The stream. */
 	InputStream stream = null;
-	
+
 	/** The out. */
 	Map<String, Object> out;
 
