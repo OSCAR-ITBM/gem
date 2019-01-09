@@ -212,13 +212,13 @@ public class ServPersByCategoriaMB extends BaseDirectReport {
 		devengado = devengado.substring(0, devengado.length() - 2) + " ) DEVENGADO, ";
 		ampliacion = ampliacion.substring(0, ampliacion.length() - 2) + " ) AMPLIACION, ";
 
-		sSql.append("SELECT '\"'||'Gasto Etiquetado'||'\"|\"'||")
+		sSql.append("SELECT TEXT FROM( SELECT 1 CON, '\"'||'Gasto No Etiquetado'||'\"|\"'||")
 				.append("TRIM(TO_CHAR(SUM(T1.APROBADO),'999999999999990.99'))||'\"|\"'|| ")
 				.append("TRIM(TO_CHAR(SUM((T1.AMPLIACION -T1.REDUCCIONES)),'999999999999990.99'))||'\"|\"'|| ")
 				.append("TRIM(TO_CHAR(SUM((T1.APROBADO + T1.AMPLIACION -T1.REDUCCIONES)),'999999999999990.99'))||'\"|\"'|| ")
 				.append("TRIM(TO_CHAR(SUM(T1.DEVENGADO),'999999999999990.99'))||'\"|\"'|| ")
 				.append("TRIM(TO_CHAR(SUM(T1.PAGADO),'999999999999990.99'))||'\"|\"'|| ")
-				.append("TRIM(TO_CHAR(SUM((T1.APROBADO + T1.AMPLIACION -T1.REDUCCIONES) - T1.DEVENGADO),'999999999999990.99'))||'\"' ")
+				.append("TRIM(TO_CHAR(SUM((T1.APROBADO + T1.AMPLIACION -T1.REDUCCIONES) - T1.DEVENGADO),'999999999999990.99'))||'\"' TEXT ")
 				.append("FROM (SELECT NAT.CLVGAS,NAT.NOMGAS, ").append(aprobado).append(ampliacion).append(reduccion)
 				.append(devengado).append(pagado)
 				.append("FROM PASO PA INNER JOIN NATGAS NAT ON NAT.CLVGAS = PA.PARTIDA AND NAT.IDSECTOR = PA.IDSECTOR ")
@@ -227,7 +227,7 @@ public class ServPersByCategoriaMB extends BaseDirectReport {
 				.append("SUBSTR(PA.PROGRAMA,13,3)>='101' AND SUBSTR(PA.PROGRAMA,13,3)<='113' OR ")
 				.append("SUBSTR(PA.PROGRAMA,13,3)>='201' AND SUBSTR(PA.PROGRAMA,13,3)<='202' ")
 				.append("GROUP BY NAT.CLVGAS,NAT.NOMGAS ORDER BY NAT.CLVGAS ASC	) T1 UNION ALL ")
-				.append("SELECT '\"'||T1.CLVGAS|| ' ' ||T1.NOMGAS||'\"|\"'|| ")
+				.append("SELECT 2, '\"'||T1.CLVGAS|| ' ' ||T1.NOMGAS||'\"|\"'|| ")
 				.append("TRIM( TO_CHAR(T1.APROBADO,'999999999999990.99'))||'\"|\"'|| ")
 				.append("TRIM(TO_CHAR((T1.AMPLIACION -T1.REDUCCIONES),'999999999999990.99'))||'\"|\"'|| ")
 				.append("TRIM(TO_CHAR((T1.APROBADO + T1.AMPLIACION -T1.REDUCCIONES),'999999999999990.99'))||'\"|\"'|| ")
@@ -242,7 +242,7 @@ public class ServPersByCategoriaMB extends BaseDirectReport {
 				.append("SUBSTR(PA.PROGRAMA,13,3)>='101' AND SUBSTR(PA.PROGRAMA,13,3)<='113' OR ")
 				.append("SUBSTR(PA.PROGRAMA,13,3)>='201' AND SUBSTR(PA.PROGRAMA,13,3)<='202' ")
 				.append("GROUP BY NAT.CLVGAS,NAT.NOMGAS ORDER BY NAT.CLVGAS ASC	) T1 UNION ALL ")
-				.append("SELECT '\"'||'Gasto No Etiquetado'||'\"|\"'||")
+				.append("SELECT 3, '\"'||'Gasto Etiquetado'||'\"|\"'||")
 				.append("TRIM(TO_CHAR(SUM(T2.APROBADO),'999999999999990.99'))||'\"|\"'|| ")
 				.append("TRIM(TO_CHAR(SUM((T2.AMPLIACION -T2.REDUCCIONES)),'999999999999990.99'))||'\"|\"'|| ")
 				.append("TRIM(TO_CHAR(SUM((T2.APROBADO + T2.AMPLIACION -T2.REDUCCIONES)),'999999999999990.99'))||'\"|\"'|| ")
@@ -257,7 +257,7 @@ public class ServPersByCategoriaMB extends BaseDirectReport {
 				.append("SUBSTR(PA.PROGRAMA,13,3)>='203' AND SUBSTR(PA.PROGRAMA,13,3)<='225' OR ")
 				.append("SUBSTR(PA.PROGRAMA,13,3)>='114' AND SUBSTR(PA.PROGRAMA,13,3)<='115' ")
 				.append("GROUP BY NAT.CLVGAS,NAT.NOMGAS	ORDER BY NAT.CLVGAS ASC	) T2 UNION ALL ")
-				.append("SELECT '\"'||T2.CLVGAS|| ' ' ||T2.NOMGAS||'\"|\"'||")
+				.append("SELECT 4, '\"'||T2.CLVGAS|| ' ' ||T2.NOMGAS||'\"|\"'||")
 				.append("TRIM( TO_CHAR(T2.APROBADO,'999999999999990.99'))||'\"|\"'||")
 				.append("TRIM(TO_CHAR((T2.AMPLIACION -T2.REDUCCIONES),'999999999999990.99'))||'\"|\"'||")
 				.append("TRIM(TO_CHAR((T2.APROBADO + T2.AMPLIACION -T2.REDUCCIONES),'999999999999990.99'))||'\"|\"'||")
@@ -271,7 +271,7 @@ public class ServPersByCategoriaMB extends BaseDirectReport {
 				.append(" AND SUBSTR(PA.PARTIDA,4,1)<>'0' AND SUBSTR(FU.CLVFTE,1,1)='2' AND ")
 				.append("SUBSTR(PA.PROGRAMA,13,3)>='203' AND SUBSTR(PA.PROGRAMA,13,3)<='225' OR ")
 				.append("SUBSTR(PA.PROGRAMA,13,3)>='114' AND SUBSTR(PA.PROGRAMA,13,3)<='115' ")
-				.append("GROUP BY NAT.CLVGAS,NAT.NOMGAS ORDER BY NAT.CLVGAS ASC ) T2");
+				.append("GROUP BY NAT.CLVGAS,NAT.NOMGAS ORDER BY NAT.CLVGAS ASC ) T2 ) TAB ORDER BY CON");
 
 		return sSql.toString();
 	}
