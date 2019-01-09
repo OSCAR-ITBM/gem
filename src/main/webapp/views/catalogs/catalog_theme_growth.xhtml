@@ -58,9 +58,7 @@
 
 							<p:commandButton value="Buscar" style="padding: 5px;"
 								update=":form1:messagesEdit, :form1:objects"
-								actionListener="#{catalogThemeGrowthMB.findValuesCatalog}"
-								
-								 />
+								actionListener="#{catalogThemeGrowthMB.findValuesCatalog}" />
 
 							<p:commandButton value="Limpiar"
 								style="padding: 5px; margin-left: 15px;"
@@ -81,7 +79,7 @@
 					selectionMode="single" rowKey="#{objects.id}">
 
 					<f:facet name="header">Cat&aacute;logo de Temas de Desarrollo</f:facet>
-					
+
 					<p:ajax event="rowEdit"
 						listener="#{catalogThemeGrowthMB.onRowEdit}"
 						update=":form1:messagesEdit" />
@@ -177,8 +175,8 @@
 								<h:outputText value="#{objects.nope}" />
 							</f:facet>
 							<f:facet name="input">
-								<p:inputText id="nope" value="#{objects.nope}" style="width:100%"
-									maxlength="4" required="true"
+								<p:inputText id="nope" value="#{objects.nope}"
+									style="width:100%" maxlength="4" required="true"
 									requiredMessage="El campo No. Pilar/Eje es requerido"
 									validatorMessage="No. Pilar/Eje solo permite valores alfanum&eacute;ricos">
 
@@ -201,8 +199,8 @@
 								<h:outputText value="#{objects.tema}" />
 							</f:facet>
 							<f:facet name="input">
-								<p:inputText id="tema" value="#{objects.tema}" style="width:100%"
-									maxlength="45" required="true"
+								<p:inputText id="tema" value="#{objects.tema}"
+									style="width:100%" maxlength="45" required="true"
 									requiredMessage="El campo Tema es requerido"
 									validatorMessage="Tema solo permite valores alfanum&eacute;ricos">
 									<f:validateRegex pattern="^\s*([0-9a-zA-Z _-]*)\s*$" for="tema" />
@@ -210,10 +208,30 @@
 							</f:facet>
 						</p:cellEditor>
 					</p:column>
-					
-					
-					
-<!-- 					<p:column headerText="Borrar" style="width:5%" exportable="false"> 
+
+					<p:column headerText="Sub Tema" visible="false" width="0"
+						exportable="true">
+						<h:outputText value="#{objects.subTema}" />
+					</p:column>
+
+					<p:column headerText="Sub Tema" exportable="false" style="width:5%">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{objects.subTema}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText id="subtema" value="#{objects.subTema}"
+									style="width:100%" maxlength="45"
+									requiredMessage="El campo Sub Tema es requerido">
+									<f:validateRegex pattern="^\s*([0-9a-zA-Z _-]*)\s*$" for="tema" />
+								</p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+
+
+					<!-- 					<p:column headerText="Borrar" style="width:5%" exportable="false"> 
 						<p:commandLink
 							update=":form1:objects, :form1:messagesEdit, :form1:panelDelete"
 							oncomplete="PF('confirmDeleteDlg').show()"
@@ -244,10 +262,11 @@
 							<p:fileDownload value="#{catalogThemeGrowthMB.filePdf}" />
 						</h:commandLink>
 
-						<h:commandLink onclick="PrimeFaces.monitorDownload(start, stop);" actionListener="#{catalogThemeGrowthMB.getFileCsvPl}">
+						<h:commandLink onclick="PrimeFaces.monitorDownload(start, stop);"
+							actionListener="#{catalogThemeGrowthMB.getFileCsvPl}">
 							<p:graphicImage value="csv.png" width="24" />
-							<p:fileDownload value="#{catalogThemeGrowthMB.csvByPl}"/>
-							
+							<p:fileDownload value="#{catalogThemeGrowthMB.csvByPl}" />
+
 							<!-- <p:dataExporter encoding="ISO-8859-1" type="csv" target="objects"
 								fileName="TemasDesarrollo" pageOnly="false" /> -->
 						</h:commandLink>

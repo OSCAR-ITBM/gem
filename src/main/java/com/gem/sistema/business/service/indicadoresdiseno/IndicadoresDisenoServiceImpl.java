@@ -3,6 +3,7 @@ package com.gem.sistema.business.service.indicadoresdiseno;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -16,6 +17,7 @@ import com.gem.sistema.business.domain.Mir;
 import com.gem.sistema.business.domain.Variables;
 import com.gem.sistema.business.dto.FtecnicaddDTO;
 import com.gem.sistema.business.dto.FtecnicadmDTO;
+import com.gem.sistema.business.predicates.CpdPredicate;
 import com.gem.sistema.business.predicates.FtecnicaDmPredicate;
 import com.gem.sistema.business.repository.catalogos.VariablesRepository;
 import com.gem.sistema.business.repository.catalogs.CatdepRepository;
@@ -98,7 +100,7 @@ public class IndicadoresDisenoServiceImpl implements IndicadoresDisenoService {
 	 * @param ftecnicadmDTO the ftecnicadm DTO
 	 */
 	public boolean salvarDiseno(FtecnicadmDTO ftecnicadmDTO) {
-		
+
 		Ftecnicadm aux = this.disenoDTO2Entity(ftecnicadmDTO);
 		Ftecnicadm ftecnicadm = ftecnicaDmRepository.findOne(FtecnicaDmPredicate.validaFichaTecnicaDiseno(aux));
 		if (null == ftecnicadm) {
@@ -198,6 +200,8 @@ public class IndicadoresDisenoServiceImpl implements IndicadoresDisenoService {
 		ftecnicadm.setUserid(ftecnicadmDTO.getUserid());
 		ftecnicadm.setUsuario(ftecnicadmDTO.getUsuario() != null ? ftecnicadmDTO.getUsuario() : "");
 		ftecnicadm.setValido(ftecnicadmDTO.getValido() != null ? ftecnicadmDTO.getValido() : "");
+		ftecnicadm.setLineaBase(
+				StringUtils.isEmpty(ftecnicadmDTO.getLineaBase()) ? StringUtils.EMPTY : ftecnicadmDTO.getLineaBase());
 
 		return ftecnicadm;
 	}
@@ -244,6 +248,8 @@ public class IndicadoresDisenoServiceImpl implements IndicadoresDisenoService {
 		ftecnicadm.setUserid(ftecnicadmDTO.getUserid());
 		ftecnicadm.setUsuario(ftecnicadmDTO.getUsuario() != null ? ftecnicadmDTO.getUsuario() : "");
 		ftecnicadm.setValido(ftecnicadmDTO.getValido() != null ? ftecnicadmDTO.getValido() : "");
+		ftecnicadm.setLineaBase(
+				StringUtils.isEmpty(ftecnicadmDTO.getLineaBase()) ? StringUtils.EMPTY : ftecnicadmDTO.getLineaBase());
 
 		return ftecnicadm;
 	}
@@ -291,7 +297,7 @@ public class IndicadoresDisenoServiceImpl implements IndicadoresDisenoService {
 			ftecnicadmDTO.setUserid(ftecnicadm.getUserid());
 			ftecnicadmDTO.setUsuario(ftecnicadm.getUsuario());
 			ftecnicadmDTO.setValido(ftecnicadm.getValido());
-
+			ftecnicadmDTO.setLineaBase(ftecnicadm.getLineaBase());
 			listaEncabezadoDTO.add(ftecnicadmDTO);
 		}
 		return listaEncabezadoDTO;
@@ -416,9 +422,10 @@ public class IndicadoresDisenoServiceImpl implements IndicadoresDisenoService {
 	@Override
 	public List<FtecnicaddDTO> llenaListaDetalle(FtecnicadmDTO ftecnicadmDTO) {
 		List<FtecnicaddDTO> listaMetas = new ArrayList<FtecnicaddDTO>();
-		listaMetas = this.entitiesDetalle2DTO(ftecnicaDdRepository.findByCvetemasAndClvdepAndClvfunAndClvfinAndCveindAndIdsector(
-				ftecnicadmDTO.getCvetemas(), ftecnicadmDTO.getClvdep(), ftecnicadmDTO.getClvfun(),
-				ftecnicadmDTO.getClvfin(), ftecnicadmDTO.getCveind(), ftecnicadmDTO.getIdsector()));
+		listaMetas = this
+				.entitiesDetalle2DTO(ftecnicaDdRepository.findByCvetemasAndClvdepAndClvfunAndClvfinAndCveindAndIdsector(
+						ftecnicadmDTO.getCvetemas(), ftecnicadmDTO.getClvdep(), ftecnicadmDTO.getClvfun(),
+						ftecnicadmDTO.getClvfin(), ftecnicadmDTO.getCveind(), ftecnicadmDTO.getIdsector()));
 		return listaMetas;
 	}
 
@@ -502,9 +509,10 @@ public class IndicadoresDisenoServiceImpl implements IndicadoresDisenoService {
 	 */
 	@Override
 	public boolean tieneDetalle(FtecnicadmDTO ftecnicadmDTO) {
-		List<Ftecnicadd> listaDetalle = ftecnicaDdRepository.findByCvetemasAndClvdepAndClvfunAndClvfinAndCveindAndIdsector(
-				ftecnicadmDTO.getCvetemas(), ftecnicadmDTO.getClvdep(), ftecnicadmDTO.getClvfun(),
-				ftecnicadmDTO.getClvfin(), ftecnicadmDTO.getCveind(), ftecnicadmDTO.getIdsector());
+		List<Ftecnicadd> listaDetalle = ftecnicaDdRepository
+				.findByCvetemasAndClvdepAndClvfunAndClvfinAndCveindAndIdsector(ftecnicadmDTO.getCvetemas(),
+						ftecnicadmDTO.getClvdep(), ftecnicadmDTO.getClvfun(), ftecnicadmDTO.getClvfin(),
+						ftecnicadmDTO.getCveind(), ftecnicadmDTO.getIdsector());
 		if (!listaDetalle.isEmpty()) {
 			return true;
 		} else {
@@ -661,5 +669,11 @@ public class IndicadoresDisenoServiceImpl implements IndicadoresDisenoService {
 	 */
 	public List<Catdep> buscaDescDependencia(String clvDep, Integer sectorId) {
 		return catdepRepository.findByClvdepAndIdsector(clvDep, sectorId);
+	}
+
+	@Override
+	public List<Cpd> llenaComboVariablesLength() {
+
+		return (List<Cpd>) this.cpdRepository.findAll(CpdPredicate.findByCveTemasLength());
 	}
 }
