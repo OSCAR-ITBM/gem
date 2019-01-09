@@ -46,32 +46,35 @@
 	<field name="SUBEJERCICIO" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.label" value="SUBEJERCICIO"/>
 	</field>
-	<variable name="APROBADO1" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
-		<variableExpression><![CDATA[$F{APROBADO}]]></variableExpression>
-	</variable>
-	<variable name="total_Ampli_Reduc" class="java.math.BigDecimal" calculation="Sum">
+	<variable name="total_Ampli_Reduc" class="java.math.BigDecimal" resetType="Group" resetGroup="Etiquetado" calculation="Sum">
 		<variableExpression><![CDATA[$F{AMPL_REDU}]]></variableExpression>
+		<initialValueExpression><![CDATA[BigDecimal.ZERO]]></initialValueExpression>
 	</variable>
-	<variable name="total_Devengado" class="java.math.BigDecimal" calculation="Sum">
+	<variable name="total_Devengado" class="java.math.BigDecimal" resetType="Group" resetGroup="Etiquetado" calculation="Sum">
 		<variableExpression><![CDATA[$F{DEVENGADO}]]></variableExpression>
+		<initialValueExpression><![CDATA[BigDecimal.ZERO]]></initialValueExpression>
 	</variable>
-	<variable name="total_Apro_AmplReduc" class="java.math.BigDecimal" calculation="Sum">
+	<variable name="total_Apro_AmplReduc" class="java.math.BigDecimal" resetType="Group" resetGroup="Etiquetado" calculation="Sum">
 		<variableExpression><![CDATA[$F{APROBADO}.add($F{AMPL_REDU})]]></variableExpression>
+		<initialValueExpression><![CDATA[BigDecimal.ZERO]]></initialValueExpression>
 	</variable>
-	<variable name="total_Pagado" class="java.math.BigDecimal" calculation="Sum">
+	<variable name="total_Pagado" class="java.math.BigDecimal" resetType="Group" resetGroup="Etiquetado" calculation="Sum">
 		<variableExpression><![CDATA[$F{PAGADO}]]></variableExpression>
+		<initialValueExpression><![CDATA[BigDecimal.ZERO]]></initialValueExpression>
 	</variable>
-	<variable name="total_Subejercicio" class="java.math.BigDecimal" calculation="Sum">
+	<variable name="total_Subejercicio" class="java.math.BigDecimal" resetType="Group" resetGroup="Etiquetado" calculation="Sum">
 		<variableExpression><![CDATA[$F{SUBEJERCICIO}]]></variableExpression>
+		<initialValueExpression><![CDATA[BigDecimal.ZERO]]></initialValueExpression>
 	</variable>
-	<variable name="totalAprovado" class="java.math.BigDecimal" calculation="Sum">
+	<variable name="totalAprovado" class="java.math.BigDecimal" resetType="Group" resetGroup="Etiquetado" calculation="Sum">
 		<variableExpression><![CDATA[$F{APROBADO}]]></variableExpression>
+		<initialValueExpression><![CDATA[BigDecimal.ZERO]]></initialValueExpression>
 	</variable>
 	<group name="Etiquetado">
 		<groupExpression><![CDATA[$F{GRUP}]]></groupExpression>
 		<groupHeader>
 			<band height="12">
-				<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,##0.00">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="Etiquetado" pattern="#,##0.00">
 					<reportElement x="292" y="0" width="70" height="12" uuid="fa23650b-665a-4253-ae0f-e34de7645fff"/>
 					<box>
 						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -85,7 +88,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalAprovado}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Report" pattern="#,##0.00">
+				<textField evaluationTime="Group" evaluationGroup="Etiquetado" pattern="#,##0.00">
 					<reportElement x="362" y="0" width="80" height="12" uuid="eeabfe5c-4d5d-485d-a4a0-4b40894e90dd"/>
 					<box>
 						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -99,7 +102,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{total_Ampli_Reduc}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Report" pattern="#,##0.00">
+				<textField evaluationTime="Group" evaluationGroup="Etiquetado" pattern="#,##0.00">
 					<reportElement x="442" y="0" width="80" height="12" uuid="a3d314e5-838f-44a6-aab8-02496ca405e9"/>
 					<box>
 						<topPen lineWidth="1.0"/>
@@ -111,7 +114,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{total_Apro_AmplReduc}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Report" pattern="#,##0.00">
+				<textField evaluationTime="Group" evaluationGroup="Etiquetado" pattern="#,##0.00">
 					<reportElement x="522" y="0" width="70" height="12" uuid="3b1b49c0-0bfb-4a4d-9995-2a1bd98e48de"/>
 					<box>
 						<topPen lineWidth="1.0"/>
@@ -123,7 +126,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{total_Devengado}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Report" pattern="#,##0.00">
+				<textField evaluationTime="Group" evaluationGroup="Etiquetado" pattern="#,##0.00">
 					<reportElement x="592" y="0" width="60" height="12" uuid="08db25f5-1334-4257-ba0e-54daafd8ed88"/>
 					<box>
 						<topPen lineWidth="1.0"/>
@@ -135,7 +138,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{total_Pagado}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Report" pattern="#,##0.00">
+				<textField evaluationTime="Group" evaluationGroup="Etiquetado" pattern="#,##0.00">
 					<reportElement x="652" y="0" width="100" height="12" uuid="57ed7871-e493-44f6-a0e4-a8ee4f182cf6"/>
 					<box>
 						<topPen lineWidth="1.0"/>
@@ -159,7 +162,7 @@
 						<font fontName="Arial" size="8" isBold="true"/>
 						<paragraph leftIndent="3" spacingBefore="1"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{GRUP}==1?"Gasto Etiquetado":"Gasto No Etiquetado"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{GRUP}==2?"Gasto Etiquetado":"Gasto No Etiquetado"]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
