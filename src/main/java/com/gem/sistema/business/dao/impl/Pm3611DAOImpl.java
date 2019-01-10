@@ -1,6 +1,5 @@
 package com.gem.sistema.business.dao.impl;
 
-
 import static com.roonin.utils.UtilDate.getFormatDate;
 
 import java.sql.ResultSet;
@@ -15,11 +14,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-
 import com.gem.sistema.business.dao.Pm3611DAO;
 import com.gem.sistema.business.domain.TcValores;
 import com.gem.sistema.business.dto.Pm3611DTO;
-
 import com.gem.sistema.business.repository.catalogs.TcValoresRepository;
 import com.gem.sistema.business.repository.catalogs.TrEtqTablasRepository;
 import com.gem.sistema.business.utils.GetValuesClassUtils;
@@ -90,6 +87,7 @@ public class Pm3611DAOImpl implements Pm3611DAO {
 				+ "       MAX(DECODE(TE.NOMBRE, 'FECHAING', TV.VALOR, NULL))FECHAING,\n"
 				+ "       MAX(DECODE(TE.NOMBRE, 'TITULO', TV.VALOR, NULL))TITULO,\n"
 				+ "       MAX(DECODE(TE.NOMBRE, 'CERTIFICACION', TV.VALOR, NULL))CERTIFICACION,\n"
+				+ "       MAX(DECODE(TE.NOMBRE, 'EXPERIENCIA', TV.VALOR, NULL))EXPERIENCIA,\n"
 				+ "       MAX(DECODE(TE.NOMBRE, 'IDANIO', TV.VALOR, NULL))IDANIO,\n"
 				+ "       MAX(DECODE(TE.NOMBRE, 'CAPTURO', TV.VALOR, NULL))CAPTURO,\n"
 				+ "       MAX(DECODE(TE.NOMBRE, 'IDSECTOR', TV.VALOR, NULL))IDSECTOR\n"
@@ -102,17 +100,17 @@ public class Pm3611DAOImpl implements Pm3611DAO {
 
 			@Override
 			public Pm3611DTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Pm3611DTO Pm3611DTO = new Pm3611DTO();
-				Pm3611DTO.setIdRow(rs.getInt("ID_ROW"));
-				Pm3611DTO.setSemestre(rs.getInt("SEMESTRE"));
-				Pm3611DTO.setFechaIng(rs.getString("FECHAING"));
-				Pm3611DTO.setTitulo(rs.getString("TITULO"));
-				Pm3611DTO.setCertificacion(rs.getString("CERTIFICACION"));
+				Pm3611DTO p3611DTO = new Pm3611DTO();
+				p3611DTO.setIdRow(rs.getInt("ID_ROW"));
+				p3611DTO.setSemestre(rs.getInt("SEMESTRE"));
+				p3611DTO.setFechaIng(rs.getString("FECHAING"));
+				p3611DTO.setTitulo(rs.getString("TITULO"));
+				p3611DTO.setCertificacion(rs.getString("CERTIFICACION"));
+				p3611DTO.setExperiencia(rs.getString("EXPERIENCIA"));
+				p3611DTO.setCapturo(rs.getString("CAPTURO"));
+				p3611DTO.setIdSector(rs.getInt("IDSECTOR"));
 
-				Pm3611DTO.setCapturo(rs.getString("CAPTURO"));
-				Pm3611DTO.setIdSector(rs.getInt("IDSECTOR"));
-
-				return Pm3611DTO;
+				return p3611DTO;
 			}
 
 		});

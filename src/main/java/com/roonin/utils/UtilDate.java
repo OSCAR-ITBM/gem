@@ -114,10 +114,9 @@ public class UtilDate {
 	public static int getLastDayOfMonth(Date date) {
 		Calendar calendario = Calendar.getInstance();
 		calendario.setTime(date);
-		calendario.set(Calendar.DAY_OF_MONTH, 1);
-		calendario.add(Calendar.MONTH, 1);
-		calendario.add(Calendar.DAY_OF_MONTH, -1);
+
 		return calendario.get(Calendar.DAY_OF_MONTH);
+
 	}
 
 	/**
