@@ -812,10 +812,13 @@ public class ImportarPolizaMB extends AbstractMB implements Serializable {
 									setFileName(impo.getoFleName());
 									if (impo.getoCodError() > 0) {
 										desabilitar = Boolean.FALSE;
-
 										generateNotificationFront(SEVERITY_INFO, "", impo.getoMsgError());
 									} else {
 										desabilitar = Boolean.TRUE;
+										if (file.getFileName().equals("cuenta.txt")) {
+											this.setFileName(impo.getoMsgError());
+											desabilitar = Boolean.FALSE;
+										}
 
 										generateNotificationFront(SEVERITY_INFO, "Error", impo.getoMsgError());
 									}
