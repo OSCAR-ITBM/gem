@@ -9,7 +9,8 @@ import javax.faces.bean.ViewScoped;
 
 import org.primefaces.model.StreamedContent;
 
-import com.gem.sistema.business.repository.catalogs.ConctbRepository;
+import com.gem.sistema.business.domain.Firmas;
+import com.gem.sistema.business.repository.catalogs.FirmasRepository;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -19,27 +20,10 @@ import com.gem.sistema.business.repository.catalogs.ConctbRepository;
 @ViewScoped
 public class PbrmO1dMB extends BaseDirectReport {
 	
-	/** The conctb repository. */
-	@ManagedProperty("#{conctbRepository}")
-	private ConctbRepository conctbRepository;
+	@ManagedProperty("#{firmasRepository}")
+	private FirmasRepository firmasRepository;
 	
-	/**
-	 * Gets the conctb repository.
-	 *
-	 * @return the conctb repository
-	 */
-	public ConctbRepository getConctbRepository() {
-		return conctbRepository;
-	}
-
-	/**
-	 * Sets the conctb repository.
-	 *
-	 * @param conctbRepository the new conctb repository
-	 */
-	public void setConctbRepository(ConctbRepository conctbRepository) {
-		this.conctbRepository = conctbRepository;
-	}
+	
 
 	/**
 	 * Inits the.
@@ -49,7 +33,7 @@ public class PbrmO1dMB extends BaseDirectReport {
 		LOGGER.info(":: En postconsruct PbrmO1dMB ");
 		//reportId = 2;
 		//tcReporte = reportesRepository.findOne(reportId);
-		jasperReporteName = "ficha_tecnica_de_diseño_de_indicadores_(pbrm_01d)";
+		jasperReporteName = "PbRM_01d";
 		endFilename = jasperReporteName + ".pdf";
 	}
 	
@@ -57,10 +41,16 @@ public class PbrmO1dMB extends BaseDirectReport {
 	 * @see com.gem.sistema.web.bean.BaseDirectReport#getParametersReports()
 	 */
 	public Map<String, Object> getParametersReports() {
-		//int year = getCurrentYear();
 		Map<String, Object> paramsReport = new java.util.HashMap<String, Object>();
-		paramsReport.put("AN", conctbRepository.findByIdsector(getUserDetails().getIdSector()).getAnoemp());
-		paramsReport.put("LOGO_A", getUserDetails().getPathImgCab1());
+		Firmas firmas = firmasRepository.findAllByIdsector(this.getUserDetails().getIdSector());
+		
+		paramsReport.put("anio", firmas.getCampo3());
+		paramsReport.put("imagen", this.getUserDetails().getPathImgCab1());
+		paramsReport.put("firmaCargo1", firmas.getL4());
+		paramsReport.put("firmaCargo2", firmas.getL25());
+		paramsReport.put("firmaNombre1", firmas.getN4());
+		paramsReport.put("firmaNombre2", firmas.getN25());
+		
 		return paramsReport;
 	}
 	
@@ -75,4 +65,14 @@ public class PbrmO1dMB extends BaseDirectReport {
 		return reporteadorDirectoImpl.getFileReport(tcReporte,paramsQuery, reporteName,type);
 		*/
 	}
+
+	public FirmasRepository getFirmasRepository() {
+		return firmasRepository;
+	}
+
+	public void setFirmasRepository(FirmasRepository firmasRepository) {
+		this.firmasRepository = firmasRepository;
+	}
+	
+	
 }
