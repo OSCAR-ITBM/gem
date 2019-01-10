@@ -129,7 +129,9 @@ public class ExportInformationDAOImpl implements ExportInformationDAO {
 				.append("				   PD.SSSCTA ,\r\n").append("				   PD.SSSSCTA,\r\n")
 				.append("				   PD.REFPOL ,\r\n").append("				   PD.CONCEP\r\n")
 				.append("          ORDER BY 1, 2\r\n").append("          ) T1\r\n").append("");
-		String fileName = FILE_POLIZA + getLastDayOfMonth(Calendar.getInstance().getTime()) + "" + getYear() + TXT;
+		String fileName = FILE_POLIZA
+				+ StringUtils.leftPad(String.valueOf(getLastDayOfMonth(Calendar.getInstance().getTime())), 2, '0') + ""
+				+ getYear() + TXT;
 		parameters = new MapSqlParameterSource().addValue("i_header", StringUtils.EMPTY)
 				.addValue("i_query", sSql.toString()).addValue("i_file_name", fileName);
 		out = this.callSpDAO.call(NAME_PROCEDURE, parameters);
@@ -168,7 +170,9 @@ public class ExportInformationDAOImpl implements ExportInformationDAO {
 				.append("WHERE IDSECTOR = ").append(idSector).append("\r\n")
 				.append("ORDER BY CUENTA, SCTA, SSCTA, SSSCTA, SSSSCTA");
 
-		String fileName = CUENTA_EXPORT + getLastDayOfMonth(Calendar.getInstance().getTime()) + "" + getYear() + TXT;
+		String fileName = CUENTA_EXPORT
+				+ StringUtils.leftPad(String.valueOf(getLastDayOfMonth(Calendar.getInstance().getTime())), 2, '0') + ""
+				+ getYear() + TXT;
 		parameters = new MapSqlParameterSource().addValue("i_header", StringUtils.EMPTY)
 				.addValue("i_query", sSql.toString()).addValue("i_file_name", fileName);
 		out = this.callSpDAO.call(NAME_PROCEDURE, parameters);
