@@ -22,6 +22,7 @@ import com.gem.sistema.business.dto.PuestosFirmasDTO;
 import com.gem.sistema.business.repository.catalogs.ConctbRepository;
 import com.gem.sistema.business.repository.catalogs.FirmasRepository;
 import com.gem.sistema.business.repository.catalogs.TcMesRepository;
+import com.gem.sistema.business.repository.catalogs.TcPeriodoRepositoy;
 import com.gem.sistema.business.service.catalogos.ComparativoEgresosService;
 import com.gem.sistema.business.service.catalogos.EaidService;
 import com.gem.sistema.business.service.catalogos.PuestosFirmasService;
@@ -40,6 +41,9 @@ public class ComparativoEgresosMB extends BaseDirectReport {
 
 	@ManagedProperty("#{tcPeriodoService}")
 	private TcPeriodoService tcPeriodoService;
+	
+	@ManagedProperty("#{tcPeriodoRepositoy}")
+	private TcPeriodoRepositoy tcPeriodoRepositoy;
 
 	@ManagedProperty("#{eaidService}")
 	private EaidService eaidService;
@@ -86,6 +90,14 @@ public class ComparativoEgresosMB extends BaseDirectReport {
 		this.listPeriodo = this.tcPeriodoService.findByPeriodo(1);
 		trimestre = listPeriodo.get(0).getPeriodo();
 
+	}
+
+	public TcPeriodoRepositoy getTcPeriodoRepositoy() {
+		return tcPeriodoRepositoy;
+	}
+
+	public void setTcPeriodoRepositoy(TcPeriodoRepositoy tcPeriodoRepositoy) {
+		this.tcPeriodoRepositoy = tcPeriodoRepositoy;
 	}
 
 	public EaidService getEaidService() {
@@ -216,13 +228,12 @@ public class ComparativoEgresosMB extends BaseDirectReport {
 	public Map<String, Object> getParametersReports() throws ReportValidationException {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		Firmas firmas = firmasRepository.findAllByIdsector(this.getUserDetails().getIdSector());
-		this.getFirmas();
+		TcPeriodo periodo = tcPeriodoRepositoy.findByTipoPeriodoAndPeriodo(1, trimestre);
 
-		Object[] meses = this.getMonths(trimestre, firmas.getCampo3());
 		String sSql = this.comparativoEgresosService.generaQueryCompartivo(idSector, trimestre);
-		parameters.put("mes", meses[0]);
-		parameters.put("pMesFinal", meses[1]);
-		parameters.put("dia1", meses[2]);
+		parameters.put("mes", "Enero");
+		parameters.put("pMesFinal", periodo.getDescripcion());
+		parameters.put("dia1", getLastDayByAnoEmp(trimestre, firmas.getCampo3()));
 		parameters.put("year", firmas.getCampo3());
 		parameters.put("municipio", firmas.getCampo1());
 		parameters.put("imagen", this.getUserDetails().getPathImgCab1());
@@ -254,19 +265,6 @@ public class ComparativoEgresosMB extends BaseDirectReport {
 				this.tesorero = puestosFirmas.get(y);
 			}
 		}
-	}
-
-	public Object[] getMonths(Integer trimestre, Integer anio) {
-		Integer mesFinal = trimestre * 3;
-		Integer mesInicial = mesFinal - 2;
-		Object[] meses = {
-				tcMesRepository.findByMes(org.apache.commons.lang3.StringUtils.leftPad(mesInicial.toString(), 2, "0"))
-						.getDescripcion(),
-				tcMesRepository.findByMes(org.apache.commons.lang3.StringUtils.leftPad(mesFinal.toString(), 2, "0"))
-						.getDescripcion(),
-				getLastDayByAnoEmp(mesFinal, anio) };
-
-		return meses;
 	}
 
 	public ComparativoEgresosService getComparativoEgresosService() {
