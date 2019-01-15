@@ -200,6 +200,34 @@
 						onclick="PF('confirmFileDeleteMeta').hide();"
 						styleClass="ui-confirmdialog-no" icon="ui-icon-check" />
 				</p:confirmDialog>
+				<p:panel id="panelReporte"
+					styleClass="green col-md-9 col-centered row-centered shadow-panel">
+					<p:panelGrid columns="3" styleClass="col-centered ui-noborder">
+						<h:outputText value="Trimestre: " for="trimestre" />
+						<p:selectOneMenu id="trimestre" size="18" editable="false"
+							value="#{clciPdfMB.trimestre}">
+
+							<f:selectItems value="#{clciPdfMB.listTrimestres}" var="trim"
+								itemLabel="#{trim.periodo}" itemValue="#{trim.periodo}" />
+						</p:selectOneMenu>
+						<p:panelGrid columns="4" styleClass="ui-noborder">
+
+							<p:commandButton id="generateportepdf"
+								onstart="PF('blockUIWidget').block()"
+								oncomplete="PF('blockUIWidget').unblock()"
+								action="#{clciPdfMB.createFilePdfInline}" value="Correcto"
+								update="form1:inlinePdf, :form1:msgs">
+							</p:commandButton>
+						</p:panelGrid>
+					</p:panelGrid>
+					<p:panel id="inlinePdf" style="border:0px"
+						visible="#{clciPdfMB.uuid ne null}">
+
+						<object type="application/pdf"
+							data="#{request.contextPath}/GetFileInline?uuid=#{clciPdfMB.uuid}&amp;filename=#{clciPdfMB.endFilename}"
+							height="380px" width="100%"> </object>
+					</p:panel>
+				</p:panel>
 			</h:form>
 		</ui:define>
 	</ui:composition>
