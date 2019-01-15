@@ -280,10 +280,7 @@
 				<textFieldExpression><![CDATA["Del" + " " + $P{dia1} + " " + "de Enero"  + " " + "al" + $P{dia2} + " "+"de"+ " " +$P{mes} +" "+ "de" +" "+$P{year}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="80" y="104" width="100" height="13" uuid="2850b36a-3ac7-4f07-a2c9-02cc808c31db"/>
-				<textElement>
-					<font fontName="Arial"/>
-				</textElement>
+				<reportElement x="80" y="104" width="240" height="16" uuid="2850b36a-3ac7-4f07-a2c9-02cc808c31db"/>
 				<textFieldExpression><![CDATA[$F{CLAVE} + " "+$F{NOMBRE}]]></textFieldExpression>
 			</textField>
 		</band>
