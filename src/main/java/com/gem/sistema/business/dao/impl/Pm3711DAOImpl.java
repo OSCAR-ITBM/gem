@@ -2,6 +2,7 @@ package com.gem.sistema.business.dao.impl;
 
 import static com.gem.sistema.business.utils.GetValuesClassUtils.getFieldNamesAndValues;
 import static com.roonin.utils.UtilDate.formatDate;
+import static com.roonin.utils.UtilDate.getFormatDate;
 import static com.roonin.utils.UtilDate.converStringToDate;
 
 import java.lang.reflect.InvocationTargetException;
@@ -102,12 +103,11 @@ public class Pm3711DAOImpl implements Pm3711DAO {
 				Long idEt = this.trEtqTablasRepository.findByEtiqueta(entry.getKey().toUpperCase(), 1);
 
 				if (!entry.getKey().equals("idEtq")) {
-					String convertFecha;
+
 					String val = entry.getValue().toString();
 					if (entry.getKey().equals("fechaIng")) {
-						convertFecha = converStringToDate("dd/MM/yyyy", entry.getValue().toString());
-						System.out.println("fecha:: " + convertFecha);
-						val = convertFecha;
+
+						val = getFormatDate(entry.getValue().toString());
 					}
 
 					sSql = "DELETE FROM GEMUSER.TC_VALORES TV WHERE TV.VALOR ='" + val + "' AND TV.ID_ROW = " + idRow
