@@ -143,7 +143,7 @@ ORDER BY MA.CLVDEPG,
 					<text><![CDATA[Tema de Desarrollo:]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
-					<reportElement x="190" y="10" width="534" height="15" uuid="9e64e487-491e-4e89-a807-35b32d1c7d49">
+					<reportElement x="190" y="10" width="560" height="15" uuid="9e64e487-491e-4e89-a807-35b32d1c7d49">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement verticalAlignment="Middle">
@@ -152,7 +152,7 @@ ORDER BY MA.CLVDEPG,
 					<textFieldExpression><![CDATA[$F{PROGRAMA}  + " " + $F{CAMPO6}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="190" y="25" width="534" height="15" uuid="c0b13111-69f9-4fa6-997d-752f3f24b45a">
+					<reportElement x="190" y="25" width="560" height="15" uuid="c0b13111-69f9-4fa6-997d-752f3f24b45a">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement verticalAlignment="Middle">
@@ -161,7 +161,7 @@ ORDER BY MA.CLVDEPG,
 					<textFieldExpression><![CDATA[$F{OBJETIVO}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="190" y="40" width="534" height="15" uuid="585ef272-99b8-4d6b-99f5-3287d16569f7">
+					<reportElement x="190" y="40" width="560" height="15" uuid="585ef272-99b8-4d6b-99f5-3287d16569f7">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement verticalAlignment="Middle">
@@ -170,7 +170,7 @@ ORDER BY MA.CLVDEPG,
 					<textFieldExpression><![CDATA[$F{CLVDEPG} + " " +  $F{NOMBRE}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="190" y="55" width="534" height="15" uuid="f6ef8971-8284-4df5-aabb-3d89c5116ffa">
+					<reportElement x="190" y="55" width="560" height="15" uuid="f6ef8971-8284-4df5-aabb-3d89c5116ffa">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement verticalAlignment="Middle">
@@ -179,7 +179,7 @@ ORDER BY MA.CLVDEPG,
 					<textFieldExpression><![CDATA[$F{PTEMATICO}+ " " +  $F{NOMPILAR}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="190" y="70" width="534" height="15" uuid="dc1e4ccd-74c2-425f-bddc-d27408c3609e">
+					<reportElement x="190" y="70" width="560" height="15" uuid="dc1e4ccd-74c2-425f-bddc-d27408c3609e">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement verticalAlignment="Middle">
@@ -284,7 +284,7 @@ ORDER BY MA.CLVDEPG,
 					<text><![CDATA[SUPUESTOS	 ]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
-					<reportElement x="190" y="85" width="534" height="15" uuid="c7358afe-a77a-43e2-bc69-2daba363e5d9">
+					<reportElement x="190" y="85" width="560" height="15" uuid="c7358afe-a77a-43e2-bc69-2daba363e5d9">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement verticalAlignment="Middle">
