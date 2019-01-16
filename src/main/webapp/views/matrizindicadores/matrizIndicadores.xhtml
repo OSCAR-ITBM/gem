@@ -173,7 +173,9 @@
 							        		&nbsp;&nbsp;
 							        		<h:outputText value="Num. Indicador:"></h:outputText>&nbsp;
 							        		<h:inputText id="numIndicadorF" value="#{fin.cvefinal}"
-																size="7" disabled="true"></h:inputText>
+																size="7" disabled="true">
+																<f:convertNumber pattern="0000" />
+															</h:inputText>
 														</h:panelGroup>
 													</p:panelGrid>
 													<br />
@@ -341,7 +343,9 @@
 								        		&nbsp;&nbsp;
 								        		<h:outputText value="Num. Indicador:"></h:outputText>&nbsp;
 								        		<h:inputText id="numIndicadorP" value="#{pro.cvepro}"
-																size="7" disabled="true"></h:inputText>
+																size="7" disabled="true">
+																<f:convertNumber pattern="0000" />
+															</h:inputText>
 								        		&nbsp;&nbsp;
 										</h:panelGroup>
 													</p:panelGrid>
@@ -516,7 +520,9 @@
 							        		&nbsp;&nbsp;
 							        		<h:outputText value="Num. Indicador:"></h:outputText>&nbsp;
 							        		<h:inputText id="numIndicadorC" value="#{com.cvecom}"
-																size="7" disabled="true"></h:inputText>
+																size="7" disabled="true">
+																<f:convertNumber pattern="0000" />
+															</h:inputText>
 														</h:panelGroup>
 													</p:panelGrid>
 													<br />
@@ -685,12 +691,16 @@
 																		disabled="true"></h:inputText>
 									        		&nbsp;&nbsp;
 									        		<h:outputText value="Num. del Componente:"></h:outputText>&nbsp;
-									        		<h:inputText value="#{act.cvecom}" size="3"
-																		disabled="true"></h:inputText>
+									        		<h:inputText value="#{act.cvecom}" size="4"
+																		disabled="true">
+																		<f:convertNumber pattern="0000" />
+																	</h:inputText>
 									        		&nbsp;&nbsp;
 									        		<h:outputText value="Num. Indicador:"></h:outputText>&nbsp;
 									        		<h:inputText id="numIndicadorA" value="#{act.cveact}"
-																		size="3" disabled="true"></h:inputText>
+																		size="4" disabled="true">
+																		<f:convertNumber pattern="0000" />
+																	</h:inputText>
 																</h:panelGroup>
 															</p:panelGrid>
 															<br />
