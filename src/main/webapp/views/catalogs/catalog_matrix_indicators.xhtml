@@ -243,7 +243,7 @@
 					<p:column headerText="Consec." visible="false" width="0"
 						exportable="true">
 						<h:outputText value="#{object.consec}">
-							<f:convertNumber pattern="000" />
+							<f:convertNumber pattern="0000" />
 						</h:outputText>
 
 					</p:column>
@@ -252,12 +252,12 @@
 						<p:cellEditor>
 							<f:facet name="output">
 								<h:outputText value="#{object.consec}">
-									<f:convertNumber pattern="000" />
+									<f:convertNumber pattern="0000" />
 								</h:outputText>
 							</f:facet>
 							<f:facet name="input">
 								<p:inputText id="consec" value="#{object.consec}"
-									required="true" style="width:100%" maxlength="3"
+									required="true" style="width:100%" maxlength="4"
 									converterMessage="Consec. debe ser num&eacute;rico"
 									validatorMessage="Consec. debe ser mayor a cero"
 									requiredMessage="Consec. debe ser num&eacute;rico"
