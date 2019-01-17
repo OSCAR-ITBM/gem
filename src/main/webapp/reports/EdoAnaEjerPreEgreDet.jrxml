@@ -219,7 +219,7 @@
 						<font fontName="Arial" size="10" isBold="true"/>
 						<paragraph leftIndent="2"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{GRUPO_GASTO} + " " + $F{NOMBRE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{GRUPO_GASTO}  == null ? "" :$F{GRUPO_GASTO}  + " " + $F{NOMBRE} == null ? "" : $F{NOMBRE} ]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="212" y="0" width="90" height="15" uuid="0947b5da-30e7-44b8-b07a-7abb1c1ce103"/>
