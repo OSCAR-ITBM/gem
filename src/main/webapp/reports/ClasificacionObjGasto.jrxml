@@ -150,7 +150,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{total_Subejercicio}]]></textFieldExpression>
 				</textField>
-				<textField>
+				<textField isBlankWhenNull="true">
 					<reportElement x="0" y="0" width="292" height="12" uuid="a0b986c3-3949-43d9-9305-b155438bbc78"/>
 					<box>
 						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
