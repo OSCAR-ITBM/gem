@@ -45,8 +45,7 @@ public class Pbrm08DetailDAOImpl implements Pbrm08DetailDAO {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.gem.sistema.business.dao.Pbrm08DetailDAO#executeQueryHead(java.lang.
+	 * @see com.gem.sistema.business.dao.Pbrm08DetailDAO#executeQueryHead(java.lang.
 	 * Integer, java.lang.Integer)
 	 */
 	@Override
@@ -67,9 +66,9 @@ public class Pbrm08DetailDAOImpl implements Pbrm08DetailDAO {
 				.append(" FT.CLVFIN,").append(" FT.OBJETIVO,").append(" NVL(FT.NOMIND,'') NOMIND,")
 				.append(" NVL(FT.FORMULA,'')FORMULA,").append(" NVL(FT.INTERPRETACION,'')INTERPRETACION,")
 				.append(" NVL(FT.DIMENSION,'')DIMENSION,").append(" NVL(FT.DESCFAC,'') DESFAC,")
-				.append(" NVL(FT.AMBITO1,'') AMBITO1,").append(" NVL(FT.AMBITO2,'') AMBITO,")
+				.append(" NVL(FT.AMBITO1,'') AMBITO1,").append(" FT.AMBITO2 AMBITO,")
 				.append(" NVL(FT.COBERTURA,'')COBERTURA,").append(" NVL(FT.DESCRIPCION,'')DESCRIPCION,")
-				.append(" NVL(FT.EVALUACION,'')EVALUACION,").append(" NVL(FT.CVETEMAS,'')CVTEMAS,")
+				.append(" NVL(FT.EVALUACION,'')EVALUACION,").append(" CPD1.CVETEMAS CVTEMAS,")
 				.append(" COALESCE(FT.METANUALE_" + trim + ",0.00) METAANULE,")
 				.append(" (FT.SEMAFORO1_" + trim + ") SEMAFORO1,").append(" (FT.SEMAFORO2_" + trim + ") SEMAFORO2,")
 				.append(" COALESCE(FT.PROGE_" + trim + ",0.00)PROGE,")
@@ -86,17 +85,17 @@ public class Pbrm08DetailDAOImpl implements Pbrm08DetailDAO {
 				.append(" CASE WHEN  COALESCE(").append(progracumulado.substring(1, progracumulado.length() - 1))
 				.append(",0.00) =0.00 THEN 0.00 ").append(" ELSE (")
 				.append(alcanacum.substring(1, alcanacum.length() - 1)).append(")*100/(")
-				.append(progracumulado.substring(1, progracumulado.length() - 1)).append(")").append(" END EF2")
+				.append(progracumulado.substring(1, progracumulado.length() - 1)).append(")").append(" END EF2,")
+				.append("	DECODE(LENGTH(FT.CVETEMAS) , 8, FT.CVETEMAS) SUBTEMA,\n"
+						+ "	DECODE(LENGTH(FT.CVETEMAS) , 8, CPD2.DESCRIPCION) NOM_TEMA")
 				.append(" FROM FTECNICASM FT").append(" JOIN CPD CPD1 ON SUBSTR(FT.CVETEMAS,1,4) = CPD1.CVETEMAS")
-				.append(" JOIN CPD CPD2 ON SUBSTR(FT.CVETEMAS,1,6) = CPD2.CVETEMAS")
+				.append(" JOIN CPD CPD2 ON SUBSTR(FT.CVETEMAS,1,8) = CPD2.CVETEMAS")
 				.append(" JOIN MUNINEP MN1 ON MN1.IDSECTOR = FT.IDSECTOR AND SUBSTR(FT.CLVFUN,1,8) = MN1.CAMPO7")
 				.append(" JOIN MUNINEP MN2 ON MN2.IDSECTOR = FT.IDSECTOR AND SUBSTR(FT.CLVFUN,1,12) = MN2.CAMPO7")
 				.append(" JOIN CATDGM DG ON SUBSTR (FT.CLVDEP,1,3) = DG.CLAVE")
 				.append(" JOIN CATDAA DA ON SUBSTR( FT.CLVDEP,4,3) = DA.CLAVE")
 				.append(" JOIN MIR M ON FT.CVEIND = M.CODIGO ").append(" WHERE FT.IDSECTOR=" + idsector)
 				.append(" ORDER BY FT.CLVDEP");
-		
-		
 
 		return sSql.toString();
 	}
@@ -109,24 +108,27 @@ public class Pbrm08DetailDAOImpl implements Pbrm08DetailDAO {
 	 * com.gem.sistema.business.dao.Pbrm08DetailDAO#executeQueryDetail(java.lang
 	 * .String, java.lang.Integer, java.lang.Integer)
 	 */
-	String grupoQuery; 
-	
-	/* (non-Javadoc)
-	 * @see com.gem.sistema.business.dao.Pbrm08DetailDAO#executeQueryDetail(java.lang.Integer, java.lang.Integer)
+	String grupoQuery;
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gem.sistema.business.dao.Pbrm08DetailDAO#executeQueryDetail(java.lang.
+	 * Integer, java.lang.Integer)
 	 */
 	@Override
-	public String executeQueryDetail( Integer idsector, Integer trim) {
+	public String executeQueryDetail(Integer idsector, Integer trim) {
 		StringBuilder sSql2 = new StringBuilder();
 		StringBuilder pgacum = new StringBuilder();
 		StringBuilder alum = new StringBuilder();
-		
 
 		for (int i = 1; i <= trim; i++) {
 			pgacum.append(" FD.PROG_" + i + "+");
 			alum.append(" FD.ALCAN_" + i + "+");
 
 		}
-	//	grupoQuery=this.executeQuery(idsector, trim);
+		// grupoQuery=this.executeQuery(idsector, trim);
 		sSql2.append("SELECT SUBSTR(FD.CLVFUN,1,8) CLVFUN,").append(" FD.CLVDEP,").append(" FD.CLVFUN,")
 				.append("FD.CODIGO,").append("UPPER(FD.VARIABLES),").append("FD.UNIMED,").append("FD.OPERACION,")
 				.append("FD.METANUAL,").append("FD.CVETEMAS,").append("FD.CVEVAR,")
@@ -141,8 +143,12 @@ public class Pbrm08DetailDAOImpl implements Pbrm08DetailDAO {
 		return sSql2.toString();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.gem.sistema.business.dao.Pbrm08DetailDAO#executeQueryGroup(java.lang.Integer, java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gem.sistema.business.dao.Pbrm08DetailDAO#executeQueryGroup(java.lang.
+	 * Integer, java.lang.Integer)
 	 */
 	@Override
 	public String executeQueryGroup(Integer idsector, Integer trim) {
@@ -160,25 +166,30 @@ public class Pbrm08DetailDAOImpl implements Pbrm08DetailDAO {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see com.gem.sistema.business.dao.Pbrm08DetailDAO#executeQuery(java.lang.Integer, java.lang.Integer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gem.sistema.business.dao.Pbrm08DetailDAO#executeQuery(java.lang.Integer,
+	 * java.lang.Integer)
 	 */
 	@Override
 	public String executeQuery(Integer idsector, Integer trim) {
-		StringBuilder input= new StringBuilder(); 
+		StringBuilder input = new StringBuilder();
 		List<String> listGroup = this.jdbcTemplate.query(this.executeQueryGroup(idsector, trim), new GroupRowMaper());
-		for (int i =0; i<listGroup.size();i++){
-			input.append("'"+listGroup.get(i)+"',");
+		for (int i = 0; i < listGroup.size(); i++) {
+			input.append("'" + listGroup.get(i) + "',");
 		}
-		return input.substring(0,input.length()-1).toString();
+		return input.substring(0, input.length() - 1).toString();
 	}
 
 }
-class GroupRowMaper implements RowMapper<String>{
+
+class GroupRowMaper implements RowMapper<String> {
 
 	@Override
 	public String mapRow(ResultSet rs, int arg1) throws SQLException {
 		return rs.getString("GRUPO");
 	}
-	
+
 }
