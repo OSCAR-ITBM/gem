@@ -74,7 +74,7 @@
 		<groupExpression><![CDATA[$F{GRUP}]]></groupExpression>
 		<groupHeader>
 			<band height="15">
-				<textField isStretchWithOverflow="true">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement x="0" y="0" width="270" height="15" uuid="3252dd23-4d8c-41e3-9d51-c5313128c7a2"/>
 					<box>
 						<topPen lineWidth="1.0"/>
@@ -183,7 +183,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Clasificación Administrativa]]></text>
+				<text><![CDATA[Clasificación Administrativa1]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="0" y="45" width="752" height="15" uuid="1542f1d5-71e5-42a3-b930-c1a00ee41f2c"/>
@@ -347,7 +347,7 @@
 				<box>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" markup="none">
 					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
