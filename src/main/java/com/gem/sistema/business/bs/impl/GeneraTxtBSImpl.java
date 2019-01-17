@@ -115,6 +115,7 @@ public class GeneraTxtBSImpl implements GeneraTxtBS {
 		Conctb conctb = this.conctbRepository.findByIdsector(idSector);
 
 		String sSql = this.generaQueryTotalNoEtiquetado(idSector, trimestre);
+		System.out.println(sSql);
 		List<EaepecaldfDTO> lis = this.jdbcTemplate.query(sSql, new Object[] { idSector },
 				new RowMapper<EaepecaldfDTO>() {
 
@@ -134,7 +135,7 @@ public class GeneraTxtBSImpl implements GeneraTxtBS {
 				});
 		for (EaepecaldfDTO dto : lis) {
 			if ((dto.getClave().compareTo("101") >= 0 && dto.getClave().compareTo("113") <= 0)
-					&& dto.getClave().compareTo("201") >= 0 && dto.getClave().compareTo("202") >= 202) {
+					|| dto.getClave().compareTo("201") >= 0 && dto.getClave().compareTo("202") >= 202) {
 				noEtiq.setTitulo(NO_ETEQUITADO);
 				noEtiq.setAprobado(noEtiq.getAprobado().add(dto.getAprobado()));
 				noEtiq.setPagado(noEtiq.getPagado().add(dto.getPagado()));
@@ -145,7 +146,7 @@ public class GeneraTxtBSImpl implements GeneraTxtBS {
 				listNoEtiq.add(dto);
 			}
 			if ((dto.getClave().compareTo("203") >= 0 && dto.getClave().compareTo("225") <= 0)
-					&& (dto.getClave().compareTo("114") >= 0 && dto.getClave().compareTo("115") <= 0)) {
+					|| (dto.getClave().compareTo("114") >= 0 && dto.getClave().compareTo("115") <= 0)) {
 				etiq.setTitulo(ETIQUETADO);
 				etiq.setTitulo(dto.getClave() + " " + dto.getTitulo());
 				etiq.setAprobado(etiq.getAprobado().add(dto.getAprobado()));
@@ -318,6 +319,7 @@ public class GeneraTxtBSImpl implements GeneraTxtBS {
 		Conctb conctb = this.conctbRepository.findByIdsector(idSector);
 
 		String sSql = this.generaQueryTotalNoEtiquetado(idSector, trimestre);
+		System.out.println(sSql);
 		List<EaepecaldfDTO> lis = this.jdbcTemplate.query(sSql, new Object[] { idSector },
 				new RowMapper<EaepecaldfDTO>() {
 
@@ -337,7 +339,7 @@ public class GeneraTxtBSImpl implements GeneraTxtBS {
 				});
 		for (EaepecaldfDTO dto : lis) {
 			if ((dto.getClave().compareTo("101") >= 0 && dto.getClave().compareTo("113") <= 0)
-					&& dto.getClave().compareTo("201") >= 0 && dto.getClave().compareTo("202") >= 202) {
+					|| dto.getClave().compareTo("201") >= 0 && dto.getClave().compareTo("202") >= 202) {
 				noEtiq.setTitulo(NO_ETEQUITADO);
 				noEtiq.setAprobado(noEtiq.getAprobado().add(dto.getAprobado()));
 				noEtiq.setPagado(noEtiq.getPagado().add(dto.getPagado()));
@@ -348,7 +350,7 @@ public class GeneraTxtBSImpl implements GeneraTxtBS {
 				listNoEtiq.add(dto);
 			}
 			if ((dto.getClave().compareTo("203") >= 0 && dto.getClave().compareTo("225") <= 0)
-					&& (dto.getClave().compareTo("114") >= 0 && dto.getClave().compareTo("115") <= 0)) {
+					|| (dto.getClave().compareTo("114") >= 0 && dto.getClave().compareTo("115") <= 0)) {
 				etiq.setTitulo(ETIQUETADO);
 				etiq.setTitulo(dto.getClave() + " " + dto.getTitulo());
 				etiq.setAprobado(etiq.getAprobado().add(dto.getAprobado()));

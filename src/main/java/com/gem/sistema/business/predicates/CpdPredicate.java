@@ -8,7 +8,7 @@ import com.mysema.query.types.Predicate;
  * The Class CpdPredicate.
  */
 public class CpdPredicate {
-	
+
 	/**
 	 * Find by cve tema.
 	 *
@@ -17,6 +17,10 @@ public class CpdPredicate {
 	 */
 	public static Predicate findByCveTema(String cveTema) {
 		return QCpd.cpd.cvetemas.eq(cveTema);
+	}
+
+	public static Predicate findByCveTemasLength() {
+		return QCpd.cpd.cvetemas.length().eq(8);
 	}
 
 }

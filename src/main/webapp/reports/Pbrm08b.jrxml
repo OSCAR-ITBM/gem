@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
-<!-- 2017-06-29T09:27:13 -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Pbrm08b" pageWidth="792" pageHeight="612" whenNoDataType="AllSectionsNoDetail" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="694b3de3-32d7-4180-a4f3-e9405235a54f">
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
@@ -11,7 +10,7 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="server adapter"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="pImg1" class="java.lang.String"/>
 	<parameter name="pImg2" class="java.lang.String"/>
@@ -27,45 +26,148 @@
 	<queryString>
 		<![CDATA[$P!{pSsql1}]]>
 	</queryString>
-	<field name="GRUPO" class="java.lang.String"/>
-	<field name="CLVF" class="java.lang.String"/>
-	<field name="PILAR" class="java.lang.String"/>
-	<field name="PROYECTO" class="java.lang.String"/>
-	<field name="CLVDEP" class="java.lang.String"/>
-	<field name="CLVFUN" class="java.lang.String"/>
-	<field name="CLVFIN" class="java.lang.String"/>
-	<field name="OBJETIVO" class="java.lang.String"/>
-	<field name="NOMIND" class="java.lang.String"/>
-	<field name="FORMULA" class="java.lang.String"/>
-	<field name="INTERPRETACION" class="java.lang.String"/>
-	<field name="DIMENSION" class="java.lang.String"/>
-	<field name="DESFAC" class="java.lang.String"/>
-	<field name="AMBITO1" class="java.lang.String"/>
-	<field name="AMBITO" class="java.math.BigDecimal"/>
-	<field name="COBERTURA" class="java.lang.String"/>
-	<field name="DESCRIPCION" class="java.lang.String"/>
-	<field name="EVALUACION" class="java.lang.String"/>
-	<field name="CVTEMAS" class="java.lang.String"/>
-	<field name="METAANULE" class="java.math.BigDecimal"/>
-	<field name="SEMAFORO1" class="java.lang.String"/>
-	<field name="SEMAFORO2" class="java.lang.String"/>
-	<field name="PROGE" class="java.math.BigDecimal"/>
-	<field name="ALCANE" class="java.math.BigDecimal"/>
-	<field name="NOMPILAR" class="java.lang.String"/>
-	<field name="NOMTEMA" class="java.lang.String"/>
-	<field name="NOMPROG" class="java.lang.String"/>
-	<field name="NOMPOY" class="java.lang.String"/>
-	<field name="DG" class="java.lang.String"/>
-	<field name="NOMGRAL" class="java.lang.String"/>
-	<field name="NOMAUX" class="java.lang.String"/>
-	<field name="DA" class="java.lang.String"/>
-	<field name="NOMIN" class="java.lang.String"/>
-	<field name="FREC" class="java.lang.String"/>
-	<field name="MTIP" class="java.lang.String"/>
-	<field name="EF1" class="java.math.BigDecimal"/>
-	<field name="PROACUMULADO" class="java.math.BigDecimal"/>
-	<field name="ALCANACUM" class="java.math.BigDecimal"/>
-	<field name="EF2" class="java.math.BigDecimal"/>
+	<field name="GRUPO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="GRUPO"/>
+	</field>
+	<field name="CLVF" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CLVF"/>
+	</field>
+	<field name="PILAR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PILAR"/>
+	</field>
+	<field name="PROYECTO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PROYECTO"/>
+	</field>
+	<field name="CLVDEP" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CLVDEP"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="FTECNICASM"/>
+	</field>
+	<field name="CLVFUN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CLVFUN"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="FTECNICASM"/>
+	</field>
+	<field name="CLVFIN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CLVFIN"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="FTECNICASM"/>
+	</field>
+	<field name="OBJETIVO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="OBJETIVO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="FTECNICASM"/>
+	</field>
+	<field name="NOMIND" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOMIND"/>
+	</field>
+	<field name="FORMULA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="FORMULA"/>
+	</field>
+	<field name="INTERPRETACION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="INTERPRETACION"/>
+	</field>
+	<field name="DIMENSION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DIMENSION"/>
+	</field>
+	<field name="DESFAC" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DESFAC"/>
+	</field>
+	<field name="AMBITO1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="AMBITO1"/>
+	</field>
+	<field name="AMBITO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="AMBITO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="FTECNICASM"/>
+	</field>
+	<field name="COBERTURA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="COBERTURA"/>
+	</field>
+	<field name="DESCRIPCION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DESCRIPCION"/>
+	</field>
+	<field name="EVALUACION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="EVALUACION"/>
+	</field>
+	<field name="CVTEMAS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CVTEMAS"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CPD"/>
+	</field>
+	<field name="METAANULE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="METAANULE"/>
+	</field>
+	<field name="SEMAFORO1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SEMAFORO1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="FTECNICASM"/>
+	</field>
+	<field name="SEMAFORO2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SEMAFORO2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="FTECNICASM"/>
+	</field>
+	<field name="PROGE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PROGE"/>
+	</field>
+	<field name="ALCANE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="ALCANE"/>
+	</field>
+	<field name="NOMPILAR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOMPILAR"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CPD"/>
+	</field>
+	<field name="NOMTEMA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOMTEMA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CPD"/>
+	</field>
+	<field name="NOMPROG" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOMPROG"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="MUNINEP"/>
+	</field>
+	<field name="NOMPOY" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOMPOY"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="MUNINEP"/>
+	</field>
+	<field name="DG" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DG"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CATDGM"/>
+	</field>
+	<field name="NOMGRAL" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOMGRAL"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CATDGM"/>
+	</field>
+	<field name="NOMAUX" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOMAUX"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CATDAA"/>
+	</field>
+	<field name="DA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CATDAA"/>
+	</field>
+	<field name="NOMIN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOMIN"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="MIR"/>
+	</field>
+	<field name="FREC" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="FREC"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="MIR"/>
+	</field>
+	<field name="MTIP" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="MTIP"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="MIR"/>
+	</field>
+	<field name="EF1" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="EF1"/>
+	</field>
+	<field name="PROACUMULADO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PROACUMULADO"/>
+	</field>
+	<field name="ALCANACUM" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="ALCANACUM"/>
+	</field>
+	<field name="EF2" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="EF2"/>
+	</field>
+	<field name="SUBTEMA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SUBTEMA"/>
+	</field>
+	<field name="NOM_TEMA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOM_TEMA"/>
+	</field>
 	<variable name="vFrecuencia" class="java.lang.String">
 		<variableExpression><![CDATA[($F{FREC}.toUpperCase().equals("S"))?("Semestral"):(
 	($F{FREC}.toUpperCase().equals("A"))?("Anual"):(
@@ -81,17 +183,17 @@
 	<group name="Grupo" isStartNewColumn="true">
 		<groupExpression><![CDATA[$F{GRUPO}]]></groupExpression>
 		<groupHeader>
-			<band height="211">
-				<textField>
-					<reportElement x="40" y="0" width="180" height="10" uuid="516618da-b86e-4f48-85b4-ffe1b0fb0aba">
+			<band height="231">
+				<staticText>
+					<reportElement x="40" y="0" width="180" height="10" uuid="590213a8-e677-430d-88ff-d8dcc8890386">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement>
 						<font fontName="Arial" size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Pilar Tématico / Eje Transversal:"]]></textFieldExpression>
-				</textField>
+					<text><![CDATA[Pilar Tématico / Eje Transversal:]]></text>
+				</staticText>
 				<textField>
 					<reportElement x="40" y="10" width="180" height="10" uuid="bbc699d3-b22f-470c-bed9-53b4322f25e5">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
@@ -103,7 +205,7 @@
 					<textFieldExpression><![CDATA["Tema de Desarrollo:"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="40" y="20" width="180" height="10" uuid="70e83f20-9b42-480b-8c52-77339cfc383e">
+					<reportElement x="40" y="32" width="180" height="10" uuid="70e83f20-9b42-480b-8c52-77339cfc383e">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
@@ -113,7 +215,7 @@
 					<textFieldExpression><![CDATA["Programa Presupuestario:"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="40" y="30" width="180" height="10" uuid="a8d0c5df-e780-45e2-93f4-c98eb189efd1">
+					<reportElement x="40" y="42" width="180" height="10" uuid="a8d0c5df-e780-45e2-93f4-c98eb189efd1">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
@@ -123,7 +225,7 @@
 					<textFieldExpression><![CDATA["Proyecto Presupuestario:"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="40" y="40" width="180" height="20" uuid="330ff78b-1c8a-4684-87af-268ba9e854a5">
+					<reportElement x="40" y="52" width="180" height="20" uuid="330ff78b-1c8a-4684-87af-268ba9e854a5">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
@@ -133,7 +235,7 @@
 					<textFieldExpression><![CDATA["Objetivo del Programa Presupuestario:"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="40" y="60" width="180" height="10" uuid="50c0cb99-e9ad-4ca7-914f-27d554afacd2">
+					<reportElement x="40" y="72" width="180" height="10" uuid="50c0cb99-e9ad-4ca7-914f-27d554afacd2">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
@@ -143,7 +245,7 @@
 					<textFieldExpression><![CDATA["Dependencia General:"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="40" y="70" width="180" height="11" uuid="91e6c863-7e8e-4ba2-a408-2c38b258f7ee">
+					<reportElement x="40" y="82" width="180" height="11" uuid="91e6c863-7e8e-4ba2-a408-2c38b258f7ee">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
@@ -153,7 +255,7 @@
 					<textFieldExpression><![CDATA["Dependencia Auxiliar:"]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement mode="Opaque" x="0" y="81" width="752" height="20" backcolor="#BFBFBF" uuid="4a725c7d-79e7-487b-b7e4-a91185cc343d">
+					<reportElement mode="Opaque" x="0" y="95" width="752" height="20" backcolor="#BFBFBF" uuid="4a725c7d-79e7-487b-b7e4-a91185cc343d">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
@@ -169,7 +271,7 @@
 					<textFieldExpression><![CDATA["ESTRUCTURA DEL INDICADOR"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="40" y="101" width="180" height="10" uuid="9c6f9315-2b5d-4b84-826c-89171dbe6276">
+					<reportElement x="40" y="117" width="180" height="10" uuid="9c6f9315-2b5d-4b84-826c-89171dbe6276">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
@@ -179,7 +281,7 @@
 					<textFieldExpression><![CDATA["Nombre del indicador:"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="40" y="111" width="180" height="20" uuid="bd8f2e07-a636-470c-a24e-14ccc634303b">
+					<reportElement x="40" y="129" width="180" height="20" uuid="bd8f2e07-a636-470c-a24e-14ccc634303b">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
@@ -189,7 +291,7 @@
 					<textFieldExpression><![CDATA["Formula de calculo:"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="40" y="131" width="180" height="20" uuid="6d4ebd4f-8ceb-47f7-bc05-48347fee9613">
+					<reportElement x="40" y="149" width="180" height="20" uuid="6d4ebd4f-8ceb-47f7-bc05-48347fee9613">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
@@ -200,7 +302,7 @@
 					<textFieldExpression><![CDATA["Interpretación:"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="40" y="151" width="180" height="10" uuid="dd78ae72-f314-420e-8c10-50899c75fb66">
+					<reportElement x="40" y="169" width="180" height="10" uuid="dd78ae72-f314-420e-8c10-50899c75fb66">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
@@ -212,7 +314,7 @@
 					<textFieldExpression><![CDATA["Dimensión que atender:"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="40" y="161" width="180" height="10" uuid="c6b4fb03-bda2-4175-84bf-a214dd44a25a">
+					<reportElement x="40" y="179" width="180" height="10" uuid="c6b4fb03-bda2-4175-84bf-a214dd44a25a">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
@@ -224,7 +326,7 @@
 					<textFieldExpression><![CDATA["Descripción del Factor de comparación:"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="40" y="171" width="180" height="10" uuid="718f76a1-bd9d-4eb0-aa79-c726541289e7">
+					<reportElement x="40" y="189" width="180" height="10" uuid="718f76a1-bd9d-4eb0-aa79-c726541289e7">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
@@ -236,7 +338,7 @@
 					<textFieldExpression><![CDATA["Ambito Geográfico:"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="40" y="181" width="180" height="10" uuid="b98198c1-4e5d-4c13-a6a4-2a89eff79b33">
+					<reportElement x="40" y="199" width="180" height="10" uuid="b98198c1-4e5d-4c13-a6a4-2a89eff79b33">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
@@ -248,7 +350,7 @@
 					<textFieldExpression><![CDATA["Cobertura:"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement mode="Opaque" x="0" y="191" width="752" height="20" backcolor="#BFBFBF" uuid="5cceffb4-acf9-4616-a952-7efa94f53814">
+					<reportElement mode="Opaque" x="0" y="211" width="752" height="20" backcolor="#BFBFBF" uuid="5cceffb4-acf9-4616-a952-7efa94f53814">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
@@ -266,7 +368,7 @@
 					<textFieldExpression><![CDATA["COMPORTAMIENTO DE LAS VARIABLES DURANTE EL TRIMESTRE"]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement positionType="Float" x="310" y="60" width="442" height="10" uuid="44d10578-995b-4c3e-a562-a81b19dc8ee3">
+					<reportElement positionType="Float" x="310" y="72" width="442" height="10" uuid="44d10578-995b-4c3e-a562-a81b19dc8ee3">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
@@ -278,7 +380,7 @@
 					<textFieldExpression><![CDATA[$F{NOMGRAL}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="310" y="70" width="442" height="11" uuid="26c8c578-e5d1-4f22-8e30-c81fab2dca67">
+					<reportElement x="310" y="82" width="442" height="11" uuid="26c8c578-e5d1-4f22-8e30-c81fab2dca67">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
@@ -290,7 +392,7 @@
 					<textFieldExpression><![CDATA[$F{NOMAUX}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="220" y="60" width="90" height="10" uuid="5e0f8d1a-18d3-408d-9526-ef351941c5d2">
+					<reportElement x="220" y="72" width="90" height="10" uuid="5e0f8d1a-18d3-408d-9526-ef351941c5d2">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
@@ -300,7 +402,7 @@
 					<textFieldExpression><![CDATA[$F{DG}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="220" y="70" width="90" height="11" uuid="51837645-fec1-41d4-80ab-b42328b32663">
+					<reportElement x="220" y="82" width="90" height="11" uuid="51837645-fec1-41d4-80ab-b42328b32663">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
@@ -329,7 +431,7 @@
 					<textFieldExpression><![CDATA[$F{NOMTEMA}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="310" y="20" width="442" height="10" uuid="da8593bf-2c0b-4a34-b494-6462b354064c">
+					<reportElement x="310" y="32" width="442" height="10" uuid="da8593bf-2c0b-4a34-b494-6462b354064c">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
@@ -349,7 +451,7 @@
 					<textFieldExpression><![CDATA[$F{NOMPILAR}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="310" y="30" width="442" height="10" uuid="4442af24-da3c-4201-b5c4-33d601261eaf">
+					<reportElement x="310" y="42" width="442" height="10" uuid="4442af24-da3c-4201-b5c4-33d601261eaf">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
@@ -359,7 +461,7 @@
 					<textFieldExpression><![CDATA[$F{NOMPOY}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="220" y="40" width="532" height="20" uuid="e78033db-3028-4dea-b2ea-5aa01e64e8bd">
+					<reportElement x="220" y="52" width="532" height="20" uuid="e78033db-3028-4dea-b2ea-5aa01e64e8bd">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
@@ -369,17 +471,17 @@
 					<textFieldExpression><![CDATA[$F{OBJETIVO}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="220" y="101" width="532" height="10" uuid="989a690d-6da5-402a-a456-1bb5752c8e59">
+					<reportElement x="220" y="117" width="532" height="10" uuid="989a690d-6da5-402a-a456-1bb5752c8e59">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
 					<textElement>
 						<font fontName="Arial" size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{NOMIN}.toUpperCase()]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{NOMIND}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="220" y="111" width="532" height="20" uuid="a3ddc488-2561-45d6-8b68-66fbeed87022">
+					<reportElement x="220" y="129" width="532" height="20" uuid="a3ddc488-2561-45d6-8b68-66fbeed87022">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
 					<textElement>
@@ -388,7 +490,7 @@
 					<textFieldExpression><![CDATA[$F{FORMULA}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="220" y="131" width="532" height="20" uuid="70515091-3b18-41ab-90ca-2f0170704aa7">
+					<reportElement x="220" y="149" width="532" height="20" uuid="70515091-3b18-41ab-90ca-2f0170704aa7">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
 					<textElement>
@@ -397,7 +499,7 @@
 					<textFieldExpression><![CDATA[$F{INTERPRETACION}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="220" y="151" width="532" height="10" uuid="459680ec-b240-416a-a525-2008414b4542">
+					<reportElement x="220" y="169" width="532" height="10" uuid="459680ec-b240-416a-a525-2008414b4542">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
@@ -407,7 +509,7 @@
 					<textFieldExpression><![CDATA[$F{DIMENSION}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="220" y="161" width="289" height="10" uuid="e1165093-9bce-4ad7-91fe-4ff81ead3267">
+					<reportElement x="220" y="179" width="289" height="10" uuid="e1165093-9bce-4ad7-91fe-4ff81ead3267">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement>
@@ -416,7 +518,7 @@
 					<textFieldExpression><![CDATA[$F{DESFAC}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Report" isBlankWhenNull="true">
-					<reportElement x="589" y="161" width="163" height="10" uuid="da254541-5e33-46e3-bff8-3cb6ed90fb21">
+					<reportElement x="589" y="179" width="163" height="10" uuid="da254541-5e33-46e3-bff8-3cb6ed90fb21">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement>
@@ -425,7 +527,7 @@
 					<textFieldExpression><![CDATA[$V{vFrecuencia}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="220" y="171" width="532" height="10" uuid="84d954e5-ae4d-4a43-a2ce-67e99db65978">
+					<reportElement x="220" y="189" width="532" height="10" uuid="84d954e5-ae4d-4a43-a2ce-67e99db65978">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
@@ -435,7 +537,7 @@
 					<textFieldExpression><![CDATA[$F{AMBITO1}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="220" y="181" width="532" height="10" uuid="82aa77bd-5578-4fa4-b0a7-c6f6c1d3e09b">
+					<reportElement x="220" y="199" width="532" height="10" uuid="82aa77bd-5578-4fa4-b0a7-c6f6c1d3e09b">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
@@ -445,7 +547,7 @@
 					<textFieldExpression><![CDATA[$F{COBERTURA}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="220" y="20" width="90" height="10" uuid="962bd5a3-a83d-474b-a56b-f07913b13415">
+					<reportElement x="220" y="32" width="90" height="10" uuid="962bd5a3-a83d-474b-a56b-f07913b13415">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
@@ -462,10 +564,10 @@
 					<textElement>
 						<font fontName="Arial" size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{PILAR}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{NOMPILAR}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="220" y="30" width="90" height="10" uuid="7b5132b9-88d9-443f-91a3-c3d2c52257e9">
+					<reportElement x="220" y="42" width="90" height="10" uuid="7b5132b9-88d9-443f-91a3-c3d2c52257e9">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
@@ -475,12 +577,33 @@
 					<textFieldExpression><![CDATA[$F{PROYECTO}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="509" y="161" width="80" height="10" uuid="03600e5b-a802-4075-9245-555df036b43e"/>
+					<reportElement x="509" y="179" width="80" height="10" uuid="03600e5b-a802-4075-9245-555df036b43e"/>
 					<textElement>
 						<font fontName="Arial" size="7"/>
 					</textElement>
 					<text><![CDATA[Frecuencia de Medición:]]></text>
 				</staticText>
+				<staticText>
+					<reportElement x="40" y="20" width="180" height="12" uuid="fd8565b6-0500-4399-81ab-fc8e4759f37a"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[Subtema de Desarrollo : ]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="310" y="20" width="442" height="12" uuid="9bc99216-cc2e-4c7a-85dd-883622d5d7ab"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{NOM_TEMA}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="220" y="20" width="90" height="12" uuid="b08e247b-944c-4ed0-8c2e-381574265020"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{SUBTEMA}]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupHeader>
 		<groupFooter>

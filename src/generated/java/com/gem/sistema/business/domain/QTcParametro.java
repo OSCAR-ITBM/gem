@@ -21,6 +21,8 @@ public class QTcParametro extends EntityPathBase<TcParametro> {
 
     public final StringPath cveParametro = createString("cveParametro");
 
+    public final StringPath dataType = createString("dataType");
+
     public final StringPath descripcion = createString("descripcion");
 
     public final StringPath valor = createString("valor");

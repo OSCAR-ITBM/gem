@@ -13,21 +13,31 @@ import javax.persistence.*;
 public class TcValores extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@JoinColumn(name = "ID_ETIQ_TABLA")
-	@ManyToOne
-	private TrEtiqTabla trEtiqTabla;
+	@Column(name = "ID_ETIQ_TABLA")
+	private long idEtiqTabla;
+
+	@Column(name = "ID_ROW")
+	private Integer idRow;
 
 	private String valor;
 
 	public TcValores() {
 	}
 
-	public TrEtiqTabla getTrEtiqTabla() {
-		return trEtiqTabla;
+	public long getIdEtiqTabla() {
+		return this.idEtiqTabla;
 	}
 
-	public void setTrEtiqTabla(TrEtiqTabla trEtiqTabla) {
-		this.trEtiqTabla = trEtiqTabla;
+	public void setIdEtiqTabla(long idEtiqTabla) {
+		this.idEtiqTabla = idEtiqTabla;
+	}
+
+	public Integer getIdRow() {
+		return this.idRow;
+	}
+
+	public void setIdRow(Integer idRow) {
+		this.idRow = idRow;
 	}
 
 	public String getValor() {

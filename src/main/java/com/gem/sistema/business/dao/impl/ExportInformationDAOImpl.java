@@ -1,6 +1,16 @@
 package com.gem.sistema.business.dao.impl;
 
+import static com.roonin.utils.UtilDate.getLastDayOfMonth;
+import static com.roonin.utils.UtilDate.getYear;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Calendar;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +29,9 @@ public class ExportInformationDAOImpl implements ExportInformationDAO {
 	private static final String NAME_PROCEDURE = "SP_EXPORTA_CUENTAS";
 	private static final String FILE_CUETA = "cuenta.txt";
 	private static final String FILE_PASO = "egrgas.txt";
-	private static final String FILE_POLIZA = "poliza.txt";
+	private static final String FILE_POLIZA = "p";
+	private static final String CUENTA_EXPORT = "c";
+	private static final String TXT = ".txt";
 
 	@Autowired
 	private CallSpDAO callSpDAO;
@@ -117,8 +129,11 @@ public class ExportInformationDAOImpl implements ExportInformationDAO {
 				.append("				   PD.SSSCTA ,\r\n").append("				   PD.SSSSCTA,\r\n")
 				.append("				   PD.REFPOL ,\r\n").append("				   PD.CONCEP\r\n")
 				.append("          ORDER BY 1, 2\r\n").append("          ) T1\r\n").append("");
+		String fileName = FILE_POLIZA
+				+ StringUtils.leftPad(String.valueOf(getLastDayOfMonth(Calendar.getInstance().getTime())), 2, '0') + ""
+				+ getYear() + TXT;
 		parameters = new MapSqlParameterSource().addValue("i_header", StringUtils.EMPTY)
-				.addValue("i_query", sSql.toString()).addValue("i_file_name", FILE_POLIZA);
+				.addValue("i_query", sSql.toString()).addValue("i_file_name", fileName);
 		out = this.callSpDAO.call(NAME_PROCEDURE, parameters);
 		return out.get("O_FULL_FILE_PATH").toString();
 	}
@@ -137,6 +152,74 @@ public class ExportInformationDAOImpl implements ExportInformationDAO {
 
 	public void setConctbRepository(ConctbRepository conctbRepository) {
 		this.conctbRepository = conctbRepository;
+	}
+
+	@Override
+	public String exportCuentaMes(Integer idSector, Integer mes) {
+		StringBuilder sSql = new StringBuilder();
+		sSql.append("SELECT  '\"'||CUENTA||\r\n").append("		SCTA||\r\n").append("		SSCTA||\r\n")
+				.append("		SSSCTA||\r\n").append("		SSSSCTA||'\"|\"'||\r\n")
+				.append("		NOMCTA||'\"|\"'||\r\n").append("		DECODE(XNICTA,1,CUENTA,'')||\r\n")
+				.append("		DECODE(XNICTA,2,CUENTA,'')||\r\n").append("		DECODE(XNICTA,3,CUENTA||SCTA,'')||\r\n")
+				.append("		DECODE(XNICTA,4,CUENTA||SCTA||SSCTA,'')||\r\n")
+				.append("		DECODE(XNICTA,5,CUENTA||SCTA||SSCTA||SSSCTA,'')||'\"|\"'||\r\n")
+				.append("		XNICTA||'\"|\"'||\r\n").append("		STACTA||'\"|\"'||\r\n")
+				.append("		DECODE(XNICTA,4,'R','A')||'\"|\"'||\r\n")
+				.append("		DECODE(SUBSTR(CUENTA,1,1),5,'E','A')||'\"|\"'||\r\n")
+				.append("		FN_GET_FORMAT_NUMBER(CARGOS_1 - ABONOS_1)||'\"'\r\n").append("	FROM CUENTA\r\n")
+				.append("WHERE IDSECTOR = ").append(idSector).append("\r\n")
+				.append("ORDER BY CUENTA, SCTA, SSCTA, SSSCTA, SSSSCTA");
+
+		String fileName = CUENTA_EXPORT
+				+ StringUtils.leftPad(String.valueOf(getLastDayOfMonth(Calendar.getInstance().getTime())), 2, '0') + ""
+				+ getYear() + TXT;
+		parameters = new MapSqlParameterSource().addValue("i_header", StringUtils.EMPTY)
+				.addValue("i_query", sSql.toString()).addValue("i_file_name", fileName);
+		out = this.callSpDAO.call(NAME_PROCEDURE, parameters);
+		return out.get("O_FULL_FILE_PATH").toString();
+	}
+
+	@Override
+	public String zipFile(File[] inputFile, String zipFilePath) {
+
+		try {
+
+			// Wrap a FileOutputStream around a ZipOutputStream
+			// to store the zip stream to a file. Note that this is
+			// not absolutely necessary
+			FileOutputStream fileOutputStream = new FileOutputStream(zipFilePath);
+			ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream);
+
+			// a ZipEntry represents a file entry in the zip archive
+			// We name the ZipEntry after the original file's name
+			for (int i = 0; i < inputFile.length; i++) {
+				ZipEntry zipEntry = new ZipEntry(inputFile[i].getName());
+				zipOutputStream.putNextEntry(zipEntry);
+
+				FileInputStream fileInputStream = new FileInputStream(inputFile[i]);
+				byte[] buf = new byte[1024];
+				int bytesRead;
+
+				// Read the input file by chucks of 1024 bytes
+				// and write the read bytes to the zip stream
+				while ((bytesRead = fileInputStream.read(buf)) > 0) {
+					zipOutputStream.write(buf, 0, bytesRead);
+				}
+
+				// close ZipEntry to store the stream to the file
+				if (i == inputFile.length) {
+					zipOutputStream.closeEntry();
+
+					zipOutputStream.close();
+					fileOutputStream.close();
+				}
+
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return zipFilePath;
 	}
 
 }

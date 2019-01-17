@@ -10,156 +10,156 @@ import java.util.Date;
  * 
  */
 public class FtecnicadmDTO implements Serializable {
-	
+
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/** The id. */
 	private long id;
-	
+
 	/** The clvdep. */
 	private String clvdep;
-	
+
 	/** The clvfin. */
 	private String clvfin;
-	
+
 	/** The clvfun. */
 	private String clvfun;
-	
+
 	/** The cveind. */
 	private String cveind;
-	
+
 	/** The cvetemas. */
 	private String cvetemas;
-	
+
 	/** The descanual. */
 	private String descanual;
-	
+
 	/** The descfac. */
 	private String descfac;
-	
+
 	/** The dimension. */
 	private String dimension;
-	
+
 	/** The elaboro. */
 	private String elaboro;
-	
+
 	/** The factor. */
 	private BigDecimal factor;
-	
+
 	/** The feccap. */
 	private Date feccap;
-	
+
 	/** The formula. */
 	private String formula;
-	
+
 	/** The frecuencia. */
 	private String frecuencia;
-	
+
 	/** The id ref. */
 	private long idRef;
-	
+
 	/** The idsector. */
 	private int idsector;
-	
+
 	/** The interpretacion. */
 	private String interpretacion;
-	
+
 	/** The medios. */
 	private String medios;
-	
+
 	/** The metanuale. */
 	private BigDecimal metanuale = new BigDecimal(0.00);
-	
+
 	/** The metasact. */
 	private String metasact;
-	
+
 	/** The nomind. */
 	private String nomind;
-	
+
 	/** The nope. */
 	private String nope;
-	
+
 	/** The objetivo. */
 	private String objetivo;
-	
+
 	/** The pe. */
 	private String pe;
-	
+
 	/** The tema. */
 	private String tema;
-	
+
 	/** The tipo. */
 	private String tipo;
-	
+
 	/** The trim 1 e. */
 	private BigDecimal trim1e = new BigDecimal(0.00);
-	
+
 	/** The trim 2 e. */
 	private BigDecimal trim2e = new BigDecimal(0.00);
-	
+
 	/** The trim 3 e. */
 	private BigDecimal trim3e = new BigDecimal(0.00);
-	
+
 	/** The trim 4 e. */
 	private BigDecimal trim4e = new BigDecimal(0.00);
-	
+
 	/** The userid. */
 	private String userid;
-	
+
 	/** The usuario. */
 	private String usuario;
-	
+
 	/** The valido. */
 	private String valido;
-	
+
 	/** The desc temas. */
 	private String descTemas;
-	
+
 	/** The desc dependencias. */
 	private String descDependencias;
-	
+
 	/** The desc programas. */
 	private String descProgramas;
-	
-	
+
+	private String lineaBase;
 
 	/**
 	 * Instantiates a new ftecnicadm DTO.
 	 *
-	 * @param id the id
-	 * @param clvdep the clvdep
-	 * @param clvfin the clvfin
-	 * @param clvfun the clvfun
-	 * @param cveind the cveind
-	 * @param cvetemas the cvetemas
-	 * @param descanual the descanual
-	 * @param descfac the descfac
-	 * @param dimension the dimension
-	 * @param elaboro the elaboro
-	 * @param factor the factor
-	 * @param feccap the feccap
-	 * @param formula the formula
-	 * @param frecuencia the frecuencia
-	 * @param idRef the id ref
-	 * @param idsector the idsector
+	 * @param id             the id
+	 * @param clvdep         the clvdep
+	 * @param clvfin         the clvfin
+	 * @param clvfun         the clvfun
+	 * @param cveind         the cveind
+	 * @param cvetemas       the cvetemas
+	 * @param descanual      the descanual
+	 * @param descfac        the descfac
+	 * @param dimension      the dimension
+	 * @param elaboro        the elaboro
+	 * @param factor         the factor
+	 * @param feccap         the feccap
+	 * @param formula        the formula
+	 * @param frecuencia     the frecuencia
+	 * @param idRef          the id ref
+	 * @param idsector       the idsector
 	 * @param interpretacion the interpretacion
-	 * @param medios the medios
-	 * @param metanuale the metanuale
-	 * @param metasact the metasact
-	 * @param nomind the nomind
-	 * @param nope the nope
-	 * @param objetivo the objetivo
-	 * @param pe the pe
-	 * @param tema the tema
-	 * @param tipo the tipo
-	 * @param trim1e the trim 1 e
-	 * @param trim2e the trim 2 e
-	 * @param trim3e the trim 3 e
-	 * @param trim4e the trim 4 e
-	 * @param userid the userid
-	 * @param usuario the usuario
-	 * @param valido the valido
+	 * @param medios         the medios
+	 * @param metanuale      the metanuale
+	 * @param metasact       the metasact
+	 * @param nomind         the nomind
+	 * @param nope           the nope
+	 * @param objetivo       the objetivo
+	 * @param pe             the pe
+	 * @param tema           the tema
+	 * @param tipo           the tipo
+	 * @param trim1e         the trim 1 e
+	 * @param trim2e         the trim 2 e
+	 * @param trim3e         the trim 3 e
+	 * @param trim4e         the trim 4 e
+	 * @param userid         the userid
+	 * @param usuario        the usuario
+	 * @param valido         the valido
 	 */
 	public FtecnicadmDTO(long id, String clvdep, String clvfin, String clvfun, String cveind, String cvetemas,
 			String descanual, String descfac, String dimension, String elaboro, BigDecimal factor, Date feccap,
@@ -815,7 +815,7 @@ public class FtecnicadmDTO implements Serializable {
 	/**
 	 * Sets the desc temas.
 	 *
-	 * @param descTemas            the descTemas to set
+	 * @param descTemas the descTemas to set
 	 */
 	public void setDescTemas(String descTemas) {
 		this.descTemas = descTemas;
@@ -855,6 +855,14 @@ public class FtecnicadmDTO implements Serializable {
 	 */
 	public void setDescProgramas(String descProgramas) {
 		this.descProgramas = descProgramas;
+	}
+
+	public String getLineaBase() {
+		return lineaBase;
+	}
+
+	public void setLineaBase(String lineaBase) {
+		this.lineaBase = lineaBase;
 	}
 
 }

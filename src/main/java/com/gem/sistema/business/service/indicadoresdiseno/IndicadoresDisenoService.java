@@ -138,4 +138,14 @@ public interface IndicadoresDisenoService {
 	 */
 	List<Catdep> buscaDescDependencia(String clvDep, Integer sectorId);
 	
+	
+	/**
+	 * Llena combo variables.
+	 *
+	 * @return the list
+	 */
+	List<Cpd> llenaComboVariablesLength();
+	
+	
+	
 }

@@ -8,23 +8,22 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-
 // TODO: Auto-generated Javadoc
 /**
  * The persistent class for the TC_PARAMETROS database table.
  * 
  */
 @Entity
-@Table(name="TC_PARAMETROS")
-@NamedQuery(name="TcParametro.findAll", query="SELECT t FROM TcParametro t")
+@Table(name = "TC_PARAMETROS")
+@NamedQuery(name = "TcParametro.findAll", query = "SELECT t FROM TcParametro t")
 public class TcParametro implements Serializable {
-	
+
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	
+
 	/** The cve parametro. */
 	@Id
-	@Column(name="CVE_PARAMETRO")
+	@Column(name = "CVE_PARAMETRO")
 	private String cveParametro;
 
 	/** The descripcion. */
@@ -32,6 +31,9 @@ public class TcParametro implements Serializable {
 
 	/** The valor. */
 	private String valor;
+
+	@Column(name = "DATA_TYPE")
+	private String dataType;
 
 	/**
 	 * Instantiates a new tc parametro.
@@ -91,6 +93,14 @@ public class TcParametro implements Serializable {
 	 */
 	public void setValor(String valor) {
 		this.valor = valor;
+	}
+
+	public String getDataType() {
+		return dataType;
+	}
+
+	public void setDataType(String dataType) {
+		this.dataType = dataType;
 	}
 
 }
