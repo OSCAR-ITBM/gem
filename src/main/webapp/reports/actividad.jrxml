@@ -1,18 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
-<!-- 2017-06-27T13:53:23 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="actividad" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="790" leftMargin="1" rightMargin="1" topMargin="1" bottomMargin="1" uuid="e617134d-4100-4c6b-b684-d73b84c0625e">
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="actividad" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="792" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e617134d-4100-4c6b-b684-d73b84c0625e">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GEMUSER"/>
-	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="p_Programa" class="java.lang.String"/>
 	<parameter name="p_Idsector" class="java.lang.Integer"/>
 	<queryString>
@@ -54,13 +44,10 @@ ORDER BY A.CVEACT ASC]]>
 	<field name="CVEPROGMA" class="java.lang.String"/>
 	<field name="CVEDEPMA" class="java.lang.String"/>
 	<field name="TEMAMA" class="java.lang.String"/>
-	<background>
-		<band splitType="Stretch"/>
-	</background>
 	<columnHeader>
 		<band height="10">
 			<staticText>
-				<reportElement x="0" y="0" width="770" height="10" uuid="80cd275a-ff2c-45ff-8561-d7ada3f60d71">
+				<reportElement x="0" y="0" width="750" height="10" uuid="80cd275a-ff2c-45ff-8561-d7ada3f60d71">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -71,9 +58,9 @@ ORDER BY A.CVEACT ASC]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="60">
+		<band height="15">
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="0" y="0" width="30" height="60" uuid="b0aa275e-8aaf-4d4e-b125-30e7dd8115d6">
+				<reportElement positionType="Float" stretchType="ElementGroupBottom" x="0" y="0" width="30" height="15" uuid="b0aa275e-8aaf-4d4e-b125-30e7dd8115d6">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box>
@@ -88,8 +75,8 @@ ORDER BY A.CVEACT ASC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{CVECOM}+"   "+$F{CVEACT}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="30" y="0" width="123" height="60" uuid="17dbd47e-e148-406c-8114-e20f2e488e74">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="ElementGroupBottom" x="30" y="0" width="120" height="15" uuid="17dbd47e-e148-406c-8114-e20f2e488e74">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
@@ -100,13 +87,13 @@ ORDER BY A.CVEACT ASC]]>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font fontName="Arial" size="6"/>
-					<paragraph leftIndent="3" rightIndent="3"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{OBJETIVO}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="153" y="0" width="123" height="60" uuid="7a88c9a1-4b75-4577-ba3b-f5937c4dc109">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="ElementGroupBottom" x="150" y="0" width="120" height="15" uuid="7a88c9a1-4b75-4577-ba3b-f5937c4dc109">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<box>
@@ -116,13 +103,13 @@ ORDER BY A.CVEACT ASC]]>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font fontName="Arial" size="6"/>
-					<paragraph leftIndent="3" rightIndent="3"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="276" y="0" width="123" height="60" uuid="1db4dc98-7eb8-44c8-ace4-a432222f6d8c">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="ElementGroupBottom" x="270" y="0" width="120" height="15" uuid="1db4dc98-7eb8-44c8-ace4-a432222f6d8c">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<box>
@@ -132,13 +119,13 @@ ORDER BY A.CVEACT ASC]]>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font fontName="Arial" size="6"/>
-					<paragraph leftIndent="3" rightIndent="3"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{FORMULA}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="399" y="0" width="123" height="60" uuid="fc357d25-7960-4815-8ca7-72e787c6a4f4">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="ElementGroupBottom" x="390" y="0" width="120" height="15" uuid="fc357d25-7960-4815-8ca7-72e787c6a4f4">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<box>
@@ -148,13 +135,13 @@ ORDER BY A.CVEACT ASC]]>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font fontName="Arial" size="6"/>
-					<paragraph leftIndent="3" rightIndent="3"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{FRECUENCIA}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="522" y="0" width="123" height="60" uuid="d8cc3dfa-d7f5-4645-81ef-18b8edb9b36c">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="ElementGroupBottom" x="510" y="0" width="120" height="15" uuid="d8cc3dfa-d7f5-4645-81ef-18b8edb9b36c">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<box>
@@ -164,13 +151,13 @@ ORDER BY A.CVEACT ASC]]>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font fontName="Arial" size="6"/>
-					<paragraph leftIndent="3" rightIndent="3"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{MEDIO}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="645" y="0" width="123" height="60" uuid="fd54b9ff-5753-4ea7-8595-1546648c387e">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="ElementGroupBottom" x="630" y="0" width="120" height="15" uuid="fd54b9ff-5753-4ea7-8595-1546648c387e">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
@@ -181,8 +168,8 @@ ORDER BY A.CVEACT ASC]]>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font fontName="Arial" size="6"/>
-					<paragraph leftIndent="3" rightIndent="3"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{SUPUESTO}]]></textFieldExpression>
 			</textField>
