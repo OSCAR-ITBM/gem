@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="defensorDerechosHumanos" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="04883281-39d9-46a6-9eb9-bef1a5c2af65">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<parameter name="firmaN1" class="java.lang.String"/>
-	<parameter name="firmaL1" class="java.lang.String"/>
+	<parameter name="pN31" class="java.lang.String"/>
+	<parameter name="pL31" class="java.lang.String"/>
 	<parameter name="dia" class="java.lang.Integer"/>
 	<parameter name="mes" class="java.lang.String"/>
 	<parameter name="anio" class="java.lang.Integer"/>
@@ -59,6 +59,7 @@ GROUP BY VAL.ID_ROW]]>
 				<reportElement x="590" y="90" width="162" height="20" uuid="3219ec01-9ab6-4643-b82b-017c27f02b68"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="12" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{FECHA}]]></textFieldExpression>
 			</textField>
@@ -87,7 +88,7 @@ GROUP BY VAL.ID_ROW]]>
 				<reportElement x="0" y="0" width="60" height="60" uuid="574a030d-682f-460b-9695-4ec270d2160d"/>
 				<imageExpression><![CDATA[$P{imagen}]]></imageExpression>
 			</image>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="80" y="70" width="672" height="20" uuid="a17b5367-1536-45f0-a6c0-8a7260e4e1fa"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="12"/>
@@ -285,7 +286,7 @@ GROUP BY VAL.ID_ROW]]>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="Arial" size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{firmaL1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{pL31}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="272" y="40" width="209" height="20" uuid="afaf960b-52db-41bf-aec9-4b41c38062f7"/>
@@ -298,7 +299,7 @@ GROUP BY VAL.ID_ROW]]>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="Arial" size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{firmaN1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{pN31}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

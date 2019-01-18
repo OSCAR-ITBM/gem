@@ -22,10 +22,10 @@
 	<parameter name="pL6" class="java.lang.String"/>
 	<parameter name="pN6" class="java.lang.String"/>
 	<parameter name="pMes" class="java.lang.String"/>
-	<parameter name="pAño" class="java.lang.Integer"/>
+	<parameter name="pAnio" class="java.lang.Integer"/>
 	<parameter name="pDayI" class="java.lang.String"/>
 	<parameter name="pMesI" class="java.lang.String"/>
-	<parameter name="pAñoI" class="java.lang.String"/>
+	<parameter name="pAnioI" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT FECING, EXPLAB, CERT, ESTSUP,TITINGOARQ,IDSECTOR
      FROM GEMUSER.PM3811
@@ -117,10 +117,10 @@ WHERE PM3811.IDSECTOR=1 AND
 				<textElement textAlignment="Left" verticalAlignment="Bottom">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[" AL " + $P{pDay}+ " DE " + $P{pMes} + " DE " + $P{pAño}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" AL " + $P{pDay}+ " DE " + $P{pMes} + " DE " + $P{pAnio}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="330" y="91" width="160" height="20" uuid="39c0303f-c7ab-4271-9187-1cff48ed5733"/>
+				<reportElement x="290" y="91" width="170" height="20" uuid="39c0303f-c7ab-4271-9187-1cff48ed5733"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom">
 					<font fontName="Arial"/>
 				</textElement>
@@ -376,7 +376,9 @@ Hacendario del Estado de México.]]></text>
 		<band height="69">
 			<textField isBlankWhenNull="true">
 				<reportElement x="280" y="13" width="200" height="29" uuid="96f3494e-e7e6-4c0f-921e-772e53b8c2ab"/>
-				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{pL6}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -384,7 +386,9 @@ Hacendario del Estado de México.]]></text>
 				<box>
 					<topPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{pN6}]]></textFieldExpression>
 			</textField>
 		</band>
