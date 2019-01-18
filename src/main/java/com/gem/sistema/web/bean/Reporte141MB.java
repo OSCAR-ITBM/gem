@@ -815,8 +815,8 @@ public class Reporte141MB extends BaseDirectReport {
 		
 		
 		String[] mesArray = this.getMonths(Integer.valueOf(conTrim)).split(",");
-		parameters.put("municipioName", firmas.getCampo1());
-		parameters.put("municipioClave", conctb.getClave());
+		parameters.put("pMunicipio", this.getUserDetails().getMunicipio());
+		parameters.put("pNum", conctb.getClave());
 		parameters.put("pDay", getLastDay(Integer.valueOf(conTrim)) );
 		parameters.put("pMes", mesArray[1]);
 		parameters.put("pAnio", conctb.getAnoemp());
