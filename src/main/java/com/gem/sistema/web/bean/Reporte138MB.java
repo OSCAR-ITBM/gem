@@ -760,6 +760,7 @@ public class Reporte138MB extends BaseDirectReport {
 		parameters.put("pLogo", getUserDetails().getPathImgCab1());
 		parameters.put("pSemestre", Integer.valueOf(conTrim));
 		parameters.put("pIdSector", getUserDetails().getIdSector());
+		parameters.put("pL3", firmas.getL3());
 		parameters.put("pN3", firmas.getN3());
 		return parameters;
 	}

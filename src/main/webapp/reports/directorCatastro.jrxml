@@ -67,13 +67,6 @@ WHERE T1.SEMESTRE = $P{semestre}]]>
 	<pageHeader>
 		<band height="105" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement x="743" y="75" width="117" height="15" uuid="c1aad96c-3bc9-46e1-b097-52c1f19e1411"/>
-				<textElement verticalAlignment="Bottom">
-					<font fontName="Arial" size="12" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{pFechaIngreso}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
 				<reportElement x="0" y="75" width="465" height="15" uuid="f222fd01-78aa-4c7a-9116-c19ad00c8fd9"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="false"/>
