@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ClasificacionServiciosPersonalesPorCategoria" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c844df4c-daf4-42f0-9478-8d5cbbdfaf36">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="gemLocal"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
@@ -105,7 +105,7 @@
 		<groupExpression><![CDATA[$F{GRUP}]]></groupExpression>
 		<groupHeader>
 			<band height="15">
-				<textField>
+				<textField isBlankWhenNull="true">
 					<reportElement x="0" y="0" width="140" height="15" uuid="903fac5e-2c68-4292-8ba4-9cc367915970"/>
 					<box>
 						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -118,7 +118,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[($F{GRUP} == 1)? "Gasto no Etiqutado": "Gasto Etiquetado"]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="Group1" pattern="#,##0.00">
+				<textField evaluationTime="Group" evaluationGroup="Group1" pattern="#,##0.00" isBlankWhenNull="true">
 					<reportElement x="140" y="0" width="100" height="15" uuid="1560dc7e-cedc-47f7-879f-bf8c5c199554"/>
 					<box>
 						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -131,7 +131,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{aprobado}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="Group1" pattern="#,##0.00">
+				<textField evaluationTime="Group" evaluationGroup="Group1" pattern="#,##0.00" isBlankWhenNull="true">
 					<reportElement x="240" y="0" width="105" height="15" uuid="f790c0bd-724c-4140-b5e0-d768bc5f767c"/>
 					<box>
 						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -144,7 +144,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ampliacionReduccion}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="Group1" pattern="#,##0.00">
+				<textField evaluationTime="Group" evaluationGroup="Group1" pattern="#,##0.00" isBlankWhenNull="true">
 					<reportElement x="345" y="0" width="105" height="15" uuid="9df4e7b7-953f-4880-91e4-16598298b2b3"/>
 					<box>
 						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -157,7 +157,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{modificado}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="Group1" pattern="#,##0.00">
+				<textField evaluationTime="Group" evaluationGroup="Group1" pattern="#,##0.00" isBlankWhenNull="true">
 					<reportElement x="450" y="0" width="105" height="15" uuid="997d3937-5860-44b9-b52f-9b80922184bc"/>
 					<box>
 						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -170,7 +170,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{devengado}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="Group1" pattern="#,##0.00">
+				<textField evaluationTime="Group" evaluationGroup="Group1" pattern="#,##0.00" isBlankWhenNull="true">
 					<reportElement x="555" y="0" width="105" height="15" uuid="8c176ca4-cdda-49c5-ae80-1d7b60cd9fea"/>
 					<box>
 						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -183,7 +183,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{pagado}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="Group1" pattern="#,##0.00">
+				<textField evaluationTime="Group" evaluationGroup="Group1" pattern="#,##0.00" isBlankWhenNull="true">
 					<reportElement x="660" y="0" width="92" height="15" uuid="bf803665-cfd6-48bc-be62-73d087a79e2e"/>
 					<box>
 						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -345,7 +345,7 @@
 	</columnHeader>
 	<detail>
 		<band height="15" splitType="Stretch">
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="0" y="0" width="140" height="15" uuid="955b9271-0b61-43eb-a024-eb51564ad0a4"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -358,7 +358,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{CONCEPTO}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement stretchType="ContainerBottom" x="140" y="0" width="100" height="15" isPrintWhenDetailOverflows="true" uuid="50b7fc28-beed-4076-b180-b1a55b40c052"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -371,7 +371,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{APROBADO}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement stretchType="ContainerBottom" x="660" y="0" width="92" height="15" isPrintWhenDetailOverflows="true" uuid="b407db82-b6a5-4d11-88d2-08d155a53683"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -384,7 +384,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{SUBEJERCICIO}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement stretchType="ContainerBottom" x="555" y="0" width="105" height="15" isPrintWhenDetailOverflows="true" uuid="9928b48e-1768-44cf-a1bf-6f928ab96783"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -397,7 +397,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PAGADO}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement stretchType="ContainerBottom" x="450" y="0" width="105" height="15" isPrintWhenDetailOverflows="true" uuid="6347490d-7d30-498d-8e9d-a1daccbb39c4"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -410,7 +410,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DEVENGADO}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement stretchType="ContainerBottom" x="345" y="0" width="105" height="15" isPrintWhenDetailOverflows="true" uuid="ec5b19de-a982-440f-86a2-1768b1be1323"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -423,7 +423,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{MODIFICADO}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement stretchType="ContainerBottom" x="240" y="0" width="105" height="15" isPrintWhenDetailOverflows="true" uuid="71d7c16a-aca9-4481-9d4f-1ad2b4c2799d"/>
 				<box>
 					<pen lineColor="#FFFCFC"/>
@@ -491,7 +491,7 @@
 				</textElement>
 				<text><![CDATA[Total de Egresos]]></text>
 			</staticText>
-			<textField evaluationTime="Report" pattern="#,##0.00">
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="140" y="0" width="100" height="15" uuid="c81c48b9-19e3-4876-8fe7-a1b186369658"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -504,7 +504,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$V{totalAprobado}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" pattern="#,##0.00">
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="240" y="0" width="105" height="15" uuid="353830cc-105d-4438-bf8f-400ac9141165"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -517,7 +517,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$V{totalAmpRed}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" pattern="#,##0.00">
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="345" y="0" width="105" height="15" uuid="fe943878-3516-45ce-be69-9ab49b1e0262"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -530,7 +530,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$V{totalModificado}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" pattern="#,##0.00">
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="450" y="0" width="105" height="15" uuid="76f57e37-0e77-48be-ad17-8f6f691c51ad"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -543,7 +543,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$V{totalDevengado}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" pattern="#,##0.00">
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="555" y="0" width="105" height="15" uuid="b8a0f8b2-d655-4ee9-8c4f-cf945bb74130"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -556,7 +556,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$V{totalPagado}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" pattern="#,##0.00">
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="660" y="0" width="92" height="15" uuid="faa77c12-f6b9-49ce-88ec-2486260539d7"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
