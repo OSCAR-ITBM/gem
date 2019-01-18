@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CordinadorProteccionCivil" pageWidth="900" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="860" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="04883281-39d9-46a6-9eb9-bef1a5c2af65">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<parameter name="firmaN1" class="java.lang.String"/>
-	<parameter name="firmaL1" class="java.lang.String"/>
+	<parameter name="pN34" class="java.lang.String"/>
+	<parameter name="pL34" class="java.lang.String"/>
 	<parameter name="dia" class="java.lang.Integer"/>
 	<parameter name="mes" class="java.lang.String"/>
 	<parameter name="anio" class="java.lang.Integer"/>
@@ -59,7 +59,7 @@ GROUP BY VAL.ID_ROW]]>
 				</textElement>
 				<textFieldExpression><![CDATA["Al " +$P{dia} +" de " +$P{mes} +"  del "+$P{anio}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="0" y="60" width="860" height="15" uuid="ed47f0a5-74bd-4e30-a2f4-58a7be7ffeae"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="true"/>
@@ -373,7 +373,7 @@ GROUP BY VAL.ID_ROW]]>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="Arial" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{firmaL1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{pL34}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="340" y="40" width="180" height="20" uuid="6b103e93-6379-4234-ac6d-ef04ea5bbd7e"/>
@@ -386,7 +386,7 @@ GROUP BY VAL.ID_ROW]]>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="Arial" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{firmaN1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{pN34}]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>
