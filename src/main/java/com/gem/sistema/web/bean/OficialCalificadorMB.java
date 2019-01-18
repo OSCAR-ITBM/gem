@@ -106,6 +106,7 @@ public class OficialCalificadorMB extends BaseDirectReport {
 		parameters.put("year1", firmas.getCampo3());
 		parameters.put("mes1", meses[1]);
 		parameters.put("dia1", meses[2]);
+		parameters.put("semestre", semestre);
 		parameters.put("firmaCargo", firmas.getL33());
 		parameters.put("firmaNombre", firmas.getN33());
 

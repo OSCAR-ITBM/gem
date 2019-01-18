@@ -234,7 +234,7 @@ public class EaidMB extends BaseDirectReport {
 			this.setbAdicionar(FALSE);
 
 		} else if (this.getbAdicionar() && lastTrimestre == obj.getTrimestre() && lastConse == obj.getConsecutivo()) {
-			this.eaidService.save(obj);
+			this.eaidService.update(obj);
 			this.setbAdicionar(FALSE);
 			generateNotificationFront(FacesMessage.SEVERITY_INFO, "Información!",
 					"Los Datos se Modificaron Correctamente");

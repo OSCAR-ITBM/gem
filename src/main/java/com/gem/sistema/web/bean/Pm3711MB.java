@@ -38,6 +38,8 @@ public class Pm3711MB extends BaseDirectReport {
 	private boolean editando = false;
 	private boolean bModificar = false;
 	private boolean bUpdate = false;
+	private boolean bBorrar;
+	private boolean bCancelar;
 	private int currentPage = 0;
 
 	@ManagedProperty("#{pm3711Service}")
@@ -53,15 +55,21 @@ public class Pm3711MB extends BaseDirectReport {
 	public void init() {
 		listPm3711 = pm3711Service.listAll();
 		listSemestres = periodoRepository.findByTipoPeriodo(6);
-
+		bBorrar = false;
 		if (CollectionUtils.isNotEmpty(listSemestres)) {
 			semestre = listSemestres.get(0).getPeriodo();
+
 		}
+
+		if (CollectionUtils.isEmpty(listPm3711))
+			bBorrar = true;
 		bModificar = true;
 		if (CollectionUtils.isNotEmpty(listPm3711))
 			bModificar = false;
 		editando = false;
 		currentPage = 0;
+		bCancelar = true;
+
 		actualizaSeleccionado();
 		this.addElement();
 	}
@@ -80,6 +88,8 @@ public class Pm3711MB extends BaseDirectReport {
 
 				listPm3711 = this.pm3711Service.save(nuevo);
 				bModificar = false;
+				bCancelar = true;
+				bBorrar = false;
 
 				generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!", "Se ha guardado con exito el registro");
 			}
@@ -87,6 +97,8 @@ public class Pm3711MB extends BaseDirectReport {
 			listPm3711 = this.pm3711Service.modificar(nuevo);
 			bModificar = false;
 			editando = false;
+			bCancelar = true;
+			bBorrar = false;
 
 			generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!", "!Se ha modificado con exito el registro!");
 		} else {
@@ -102,6 +114,9 @@ public class Pm3711MB extends BaseDirectReport {
 
 		editando = true;
 		bUpdate = true;
+		bCancelar = false;
+
+		bBorrar = true;
 	}
 
 	public void reset() {
@@ -123,6 +138,7 @@ public class Pm3711MB extends BaseDirectReport {
 		listPm3711.add(new Pm3711DTO());
 
 		editando = true;
+		bCancelar = false;
 		if (listPm3711.size() == 2) {
 			RequestContext.getCurrentInstance()
 					.execute("PF('dataGrid').paginator.setPage(" + (listPm3711.size() - 1) + ");");
@@ -139,6 +155,9 @@ public class Pm3711MB extends BaseDirectReport {
 	}
 
 	public void borrar() {
+		if(listPm3711.size() == 1) {
+			currentPage = 0;
+		}
 
 		pm3711Selected = listPm3711.get(currentPage);
 
@@ -146,6 +165,8 @@ public class Pm3711MB extends BaseDirectReport {
 
 		if (this.listPm3711.isEmpty()) {
 			this.listPm3711.add(this.createEmptyPm3711());
+			if (StringUtils.isEmpty(listPm3711.get(0).getFechaIng()))
+				bBorrar = true;
 		}
 
 		this.actualizaSeleccionado();
@@ -198,6 +219,7 @@ public class Pm3711MB extends BaseDirectReport {
 			pm3711Selected = listPm3711.get(listPm3711.size() - 1);
 			semestre = pm3711Selected.getSemestre();
 		}
+
 		/*
 		 * else { inicializar(); }
 		 */
@@ -207,6 +229,12 @@ public class Pm3711MB extends BaseDirectReport {
 		Pm3711DTO dto = new Pm3711DTO();
 		dto.setCapturo(this.getUserDetails().getUsername());
 		dto.setIdSector(this.getUserDetails().getIdSector());
+		salida: for (Pm3711DTO pm : listPm3711) {
+			if (StringUtils.isEmpty(pm.getFechaIng())) {
+				listPm3711.remove(pm);
+				break salida;
+			}
+		}
 		if (CollectionUtils.isEmpty(listPm3711)) {
 
 			listPm3711 = new ArrayList<Pm3711DTO>();
@@ -292,6 +320,30 @@ public class Pm3711MB extends BaseDirectReport {
 
 	public void setTrEtqTablasRepository(TrEtqTablasRepository trEtqTablasRepository) {
 		this.trEtqTablasRepository = trEtqTablasRepository;
+	}
+
+	public boolean isbUpdate() {
+		return bUpdate;
+	}
+
+	public void setbUpdate(boolean bUpdate) {
+		this.bUpdate = bUpdate;
+	}
+
+	public boolean isbCancelar() {
+		return bCancelar;
+	}
+
+	public void setbCancelar(boolean bCancelar) {
+		this.bCancelar = bCancelar;
+	}
+
+	public boolean isbBorrar() {
+		return bBorrar;
+	}
+
+	public void setbBorrar(boolean bBorrar) {
+		this.bBorrar = bBorrar;
 	}
 
 }
