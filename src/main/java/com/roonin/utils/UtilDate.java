@@ -182,9 +182,6 @@ public class UtilDate {
 
 		Date d = new Date(fecha);
 		SimpleDateFormat format = new SimpleDateFormat(formato);
-
-		;
-
 		return format.format(d).toString();
 
 	}

@@ -26,7 +26,8 @@
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
 						widgetVar="dataGrid" paginatorPosition="bottom"
 						rowIndexVar="rowIndexCaptura">
-						<p:ajax event="page" listener="#{oficialCalificadorMB.cambiarPagina}"
+						<p:ajax event="page"
+							listener="#{oficialCalificadorMB.cambiarPagina}"
 							process="dataGrid" />
 
 						<p:panelGrid style="width: 100%;">
@@ -36,7 +37,7 @@
 								</p:column>
 								<p:column>
 									<h:inputHidden value="#{entity.capturo}" />
-									
+
 									<h:inputHidden value="#{entity.idSector}" />
 									<h:outputText value="#{entity.semestre}" id="lblSemestre"
 										style="margin-left: 18px;"
@@ -92,10 +93,10 @@
 								</p:column>
 							</p:row>
 
-							
-							
 
-						
+
+
+
 
 						</p:panelGrid>
 					</p:dataGrid>
@@ -106,14 +107,15 @@
 
 								<h:panelGroup id="pnlBotonesCRUD">
 									<p:commandButton value="Modificar" icon="ui-icon-pencil"
-										id="modificar" actionListener="#{oficialCalificadorMB.modificar}"
+										id="modificar"
+										actionListener="#{oficialCalificadorMB.modificar}"
 										rendered="#{oficialCalificadorMB.bModificar}"
 										disabled="#{oficialCalificadorMB.bUpdate}"
-										update="form1:pnlBotonesCRUD, form1:dataGrid" />
+										update="form1:pnlBotonesCRUD, form1:dataGrid, :form1:msgs" />
 									<p:commandButton value="Salvar" icon="ui-icon-disk" id="salvar"
 										actionListener="#{oficialCalificadorMB.save}"
 										rendered="#{oficialCalificadorMB.bAdicionar}"
-										update="form1:pnlBotonesCRUD, form1:dataGrid" />
+										update="form1:pnlBotonesCRUD, form1:dataGrid, :form1:msgs" />
 
 									<p:commandButton value="Adicionar" icon="ui-icon-circle-plus"
 										id="adicionar"
@@ -151,14 +153,31 @@
 								style="white-space: nowrap;" />
 						</h:panelGrid>
 					</pe:blockUI>
+					<p:panelGrid columns="3" styleClass="col-centered ui-noborder">
+						<h:outputText value="Trimestre: " for="mesInputOri" />
+						<p:selectOneMenu id="mesInputOri" size="18" editable="false"
+							value="#{oficialCalificadorMB.semestre}">
+							<f:selectItems value="#{oficialCalificadorMB.listSemestres}"
+								var="trim" itemLabel="#{trim.periodo}"
+								itemValue="#{trim.periodo}"></f:selectItems>
+						</p:selectOneMenu>
+						<p:panelGrid columns="4" styleClass="ui-noborder">
+							<p:commandButton id="generateportepdf"
+								onstart="PF('blockUIWidget').block()"
+								oncomplete="PF('blockUIWidget').unblock()"
+								action="#{oficialCalificadorMB.createFilePdfInline}"
+								value="Correcto"
+								update="form1:inlinePdf, :form1:msgs"
+								styleClass="btn btn-default">
+							</p:commandButton>
+						</p:panelGrid>
+					</p:panelGrid>
 					<p:panel id="inlinePdf" style="border:0px"
 						visible="#{oficialCalificadorMB.uuid ne null}">
-
 						<object type="application/pdf"
 							data="#{request.contextPath}/GetFileInline?uuid=#{oficialCalificadorMB.uuid}&amp;filename=#{oficialCalificadorMB.endFilename}"
 							height="380px" width="100%"> Tu browser no puede
 							desplegar el PDF. </object>
-
 					</p:panel>
 				</p:panel>
 				<!-- 
