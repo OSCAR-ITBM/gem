@@ -70,7 +70,7 @@ WHERE T1.SEMESTRE = $P{semestre}]]>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["FECHA DE INGRESO AL CARGO: " + $F{FECHAING}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["FECHA DE INGRESO AL CARGO: " + ($F{FECHAING} == null ? "" : $F{FECHAING}) ]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="0" y="75" width="465" height="15" uuid="f222fd01-78aa-4c7a-9116-c19ad00c8fd9"/>

@@ -664,7 +664,7 @@ public class Reporte141MB extends BaseDirectReport {
 	/**
 	 * Gets the tc mes repository.
 	 *
-	 * @return the tc mes repository
+	 * @return the tc mes repositoryini
 	 */
 	public TcMesRepository getTcMesRepository() {
 		return tcMesRepository;
@@ -811,10 +811,16 @@ public class Reporte141MB extends BaseDirectReport {
 
 		firmas = firmasRepository.findAllByIdsector(this.getUserDetails().getIdSector());
 		conctb = conctbRepository.findByIdsector(getUserDetails().getIdSector());
+		
+		
+		
 		String[] mesArray = this.getMonths(Integer.valueOf(conTrim)).split(",");
-
 		parameters.put("municipioName", firmas.getCampo1());
 		parameters.put("municipioClave", conctb.getClave());
+		parameters.put("pDay", getLastDay(Integer.valueOf(conTrim)) );
+		parameters.put("pMes", mesArray[1]);
+		parameters.put("pAño", conctb.getAnoemp());
+		
 		parameters.put("lastDayOfMonth", getLastDay(Integer.valueOf(mesArray[1])));
 		parameters.put("mesInicioName", tcMesRepository.findByMes(mesArray[0]).getDescripcion());
 		parameters.put("mesFinName", tcMesRepository.findByMes(mesArray[1]).getDescripcion());

@@ -17,12 +17,12 @@
 	</parameter>
 	<parameter name="pNum" class="java.lang.String"/>
 	<parameter name="pImage" class="java.lang.String"/>
-	<parameter name="pDay" class="java.lang.String"/>
+	<parameter name="pDay" class="java.lang.Integer"/>
 	<parameter name="pFecha Ingreso" class="java.lang.String"/>
 	<parameter name="pL6" class="java.lang.String"/>
 	<parameter name="pN6" class="java.lang.String"/>
 	<parameter name="pMes" class="java.lang.String"/>
-	<parameter name="pAño" class="java.lang.String"/>
+	<parameter name="pAño" class="java.lang.Integer"/>
 	<parameter name="pDayI" class="java.lang.String"/>
 	<parameter name="pMesI" class="java.lang.String"/>
 	<parameter name="pAñoI" class="java.lang.String"/>
@@ -30,8 +30,7 @@
 		<![CDATA[SELECT FECING, EXPLAB, CERT, ESTSUP,TITINGOARQ,IDSECTOR
      FROM GEMUSER.PM3811
 WHERE PM3811.IDSECTOR=1 AND
-     PM3811.SEMESTRAL =1
-]]>
+     PM3811.SEMESTRAL =1]]>
 	</queryString>
 	<field name="FECING" class="java.sql.Date">
 		<property name="com.jaspersoft.studio.field.label" value="FECING"/>
@@ -127,7 +126,7 @@ WHERE PM3811.IDSECTOR=1 AND
 				</textElement>
 				<text><![CDATA[FECHA DE INGREOS AL CARGO:]]></text>
 			</staticText>
-			<textField isBlankWhenNull="true">
+			<textField pattern="DD/MM/YYYY" isBlankWhenNull="true">
 				<reportElement x="491" y="92" width="259" height="19" uuid="68aa036f-cddf-40d7-b7a5-6d5f5014be8e"/>
 				<box>
 					<bottomPen lineWidth="1.0"/>
@@ -135,7 +134,7 @@ WHERE PM3811.IDSECTOR=1 AND
 				<textElement textAlignment="Left" verticalAlignment="Bottom">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[" DEL " + $P{pDayI} + " DE " + $P{pMesI} + " DE " + $P{pAñoI}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{FECING}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
