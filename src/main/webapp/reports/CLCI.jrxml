@@ -2,7 +2,7 @@
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CLCI" printOrder="Horizontal" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5ef3d49b-0cf7-4624-a3c6-046dd312f059">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="server adapter"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
@@ -10,26 +10,32 @@
 	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixl"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="pImage" class="java.lang.String"/>
 	<parameter name="pLastDay" class="java.lang.Integer"/>
 	<parameter name="pMesName" class="java.lang.String"/>
-	<parameter name="pAño" class="java.lang.Integer"/>
+	<parameter name="pAnio" class="java.lang.Integer"/>
 	<parameter name="pMunicipioName" class="java.lang.String"/>
 	<parameter name="pNum" class="java.lang.String"/>
 	<parameter name="pDateIngreso" class="java.lang.String"/>
 	<parameter name="pL16" class="java.lang.String"/>
 	<parameter name="pN16" class="java.lang.String"/>
+	<parameter name="semestre" class="java.lang.Integer"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT  TV.ID_ROW,
-        MAX(DECODE(TE.NOMBRE, 'SEMESTRE', TV.VALOR, '')) SEMESTRE,
-        MAX(DECODE(TE.NOMBRE, 'ID_REF', TV.VALOR, '')) ID_REF,
-        MAX(DECODE(TE.NOMBRE, 'ID_SECTOR', TV.VALOR, '')) ID_SECTOR,
-        MAX(DECODE(TE.NOMBRE, 'ID_ANIO', TV.VALOR, '')) ID_ANIO,
-        MAX(DECODE(TE.NOMBRE, 'CERTIFICACION', TV.VALOR, '')) CERTIFICACION,
-        MAX(DECODE(TE.NOMBRE, 'EXPERIENCIA', TV.VALOR, '')) EXPERIENCIA,
-        MAX(DECODE(TE.NOMBRE, 'TITULO', TV.VALOR,'')) TITULO
+		<![CDATA[SELECT T1.CERTIFICACION,
+       T1.EXPERIENCIA,
+       T1.TITULO,
+       FECHAING
+      FROM (
+SELECT  TV.ID_ROW,
+        MAX(DECODE(TE.NOMBRE, 'SEMESTRE', TV.VALOR, NULL)) SEMESTRE,
+        MAX(DECODE(TE.NOMBRE, 'ID_REF', TV.VALOR, NULL)) ID_REF,
+        MAX(DECODE(TE.NOMBRE, 'ID_SECTOR', TV.VALOR, NULL)) ID_SECTOR,
+        MAX(DECODE(TE.NOMBRE, 'FECHAING', TV.VALOR, NULL)) FECHAING,
+        MAX(DECODE(TE.NOMBRE, 'CERTIFICACION', TV.VALOR, NULL)) CERTIFICACION,
+        MAX(DECODE(TE.NOMBRE, 'EXPERIENCIA', TV.VALOR, NULL)) EXPERIENCIA,
+        MAX(DECODE(TE.NOMBRE, 'TITULO', TV.VALOR, NULL)) TITULO
     FROM TR_ETIQ_TABLAS AS ET
         INNER JOIN TC_ETIQUETAS AS TE ON ET.ID_ETIQUETA = TE.ID
         INNER JOIN TC_TABLAS AS TT ON ET.ID_TABLA = TT.ID
@@ -37,16 +43,22 @@
 WHERE 1=1
     AND ET.STATUS = 1
     AND TT.NOMBRE = 'PM3711'
-GROUP BY TV.ID_ROW]]>
+GROUP BY TV.ID_ROW
+) T1
+
+WHERE T1.SEMESTRE = $P{semestre}]]>
 	</queryString>
-	<field name="TITULO" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="TITULO"/>
+	<field name="CERTIFICACION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CERTIFICACION"/>
 	</field>
 	<field name="EXPERIENCIA" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="EXPERIENCIA"/>
 	</field>
-	<field name="CERTIFICACION" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="CERTIFICACION"/>
+	<field name="TITULO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="TITULO"/>
+	</field>
+	<field name="FECHAING" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="FECHAING"/>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -97,7 +109,7 @@ GROUP BY TV.ID_ROW]]>
 				<textElement>
 					<font fontName="Arial" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[" Al "+ $P{pLastDay} + " DE " + $P{pMesName} + " DE " + $P{pAño}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" Al "+ $P{pLastDay} + " DE " + $P{pMesName} + " DE " + $P{pAnio}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="543" y="83" width="40" height="15" uuid="100b09fa-731c-4d5a-afa9-94150d72022e"/>
@@ -107,11 +119,13 @@ GROUP BY TV.ID_ROW]]>
 				<text><![CDATA[NÚM:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="584" y="83" width="90" height="15" uuid="56cca71a-4711-4dd8-a276-5d0793addf6f"/>
+				<reportElement x="586" y="83" width="90" height="15" uuid="56cca71a-4711-4dd8-a276-5d0793addf6f"/>
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement verticalAlignment="Bottom"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" size="12"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{pNum}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -121,12 +135,15 @@ GROUP BY TV.ID_ROW]]>
 				</textElement>
 				<text><![CDATA[FECHA DE INGRESO:]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="620" y="112" width="100" height="19" uuid="2c49c948-2506-4f9e-a6b2-9a89ed438506"/>
+			<textField pattern="MM/dd/yyyy" isBlankWhenNull="true">
+				<reportElement x="623" y="112" width="100" height="19" uuid="2c49c948-2506-4f9e-a6b2-9a89ed438506"/>
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textFieldExpression><![CDATA[$P{pDateIngreso}]]></textFieldExpression>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHAING}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -303,7 +320,7 @@ GROUP BY TV.ID_ROW]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{TITULO}.equals("1")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{TITULO}.equals("1")  ? "X" : ""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="230" y="0" width="50" height="30" uuid="f98c2250-0daa-4e43-8f97-bc729a34a51e">
@@ -315,7 +332,7 @@ GROUP BY TV.ID_ROW]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[!$F{TITULO}.equals("1")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{TITULO}.equals("0") ? "X" : ""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="180" y="30" width="50" height="30" uuid="3ef0fd53-3349-4209-9f2d-1c8172d2f365">
@@ -326,7 +343,7 @@ GROUP BY TV.ID_ROW]]>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{EXPERIENCIA}.equals("1")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{EXPERIENCIA}.equals("1")?"X":""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="180" y="60" width="50" height="30" uuid="dae92b9f-63da-42f3-a4a6-29b9d91ecbc3">
@@ -337,7 +354,7 @@ GROUP BY TV.ID_ROW]]>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{CERTIFICACION}.equals("1")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CERTIFICACION}.equals("1")?"X":""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="230" y="30" width="50" height="30" uuid="b8278fc9-93db-498d-9325-02f9096e012b">
@@ -347,7 +364,7 @@ GROUP BY TV.ID_ROW]]>
 					<bottomPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[!$F{EXPERIENCIA}.equals("1")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{EXPERIENCIA}.equals("0")?"X":""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="230" y="60" width="50" height="30" uuid="2ff2be85-f0a6-44c1-9322-c134a0e20c65">
@@ -357,7 +374,7 @@ GROUP BY TV.ID_ROW]]>
 					<bottomPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[!$F{CERTIFICACION}.equals("1")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CERTIFICACION}.equals("0")?"X":""]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

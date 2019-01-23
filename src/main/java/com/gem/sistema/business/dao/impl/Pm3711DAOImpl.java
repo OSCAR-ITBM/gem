@@ -2,6 +2,7 @@ package com.gem.sistema.business.dao.impl;
 
 import static com.gem.sistema.business.utils.GetValuesClassUtils.getFieldNamesAndValues;
 import static com.roonin.utils.UtilDate.formatDate;
+import static com.roonin.utils.UtilDate.getFormatDate;
 import static com.roonin.utils.UtilDate.converStringToDate;
 
 import java.lang.reflect.InvocationTargetException;
@@ -79,7 +80,7 @@ public class Pm3711DAOImpl implements Pm3711DAO {
 				pm3711.setCertificacion(Integer.valueOf(rs.getString("CERTIFICACION")));
 				pm3711.setExperiencia(Integer.valueOf(rs.getString("EXPERIENCIA")));
 				pm3711.setTitulo(Integer.valueOf(rs.getString("TITULO")));
-				pm3711.setFechaIng(formatDate("dd/MM/yyyy", rs.getString("FECHAING")));
+				pm3711.setFechaIng(rs.getString("FECHAING"));
 				pm3711.setCapturo(rs.getString("CAPTURO"));
 
 				return pm3711;
@@ -102,12 +103,11 @@ public class Pm3711DAOImpl implements Pm3711DAO {
 				Long idEt = this.trEtqTablasRepository.findByEtiqueta(entry.getKey().toUpperCase(), 1);
 
 				if (!entry.getKey().equals("idEtq")) {
-					String convertFecha;
+
 					String val = entry.getValue().toString();
 					if (entry.getKey().equals("fechaIng")) {
-						convertFecha = converStringToDate("dd/MM/yyyy", entry.getValue().toString());
-						System.out.println("fecha:: " + convertFecha);
-						val = convertFecha;
+
+						val = entry.getValue().toString();
 					}
 
 					sSql = "DELETE FROM GEMUSER.TC_VALORES TV WHERE TV.VALOR ='" + val + "' AND TV.ID_ROW = " + idRow
@@ -164,6 +164,10 @@ public class Pm3711DAOImpl implements Pm3711DAO {
 				if (!entry.getKey().equals("idEtq")) {
 
 					tcValores.setValor(entry.getValue().toString());
+					
+					if (entry.getKey().equals("fechaIng")) {
+						tcValores.setValor(getFormatDate(entry.getValue().toString()));
+					}
 					tcValores.setIdRow(max.intValue());
 
 					tcValores.setIdEtiqTabla(idEt);

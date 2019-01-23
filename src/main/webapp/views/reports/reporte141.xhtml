@@ -201,6 +201,25 @@
 
 													</p:column>
 												</p:row>
+												<p:row>
+													<p:column colspan="4" style="text-align: left;">
+														<p:outputLabel
+															value="certificación en competencia laboral expedida por el instituto hacendario del estado de México" />
+													</p:column>
+
+													<p:column>
+														<p:outputLabel id="lblsn5" value="#{objects.cert}"
+															rendered="#{reporte141mb.blbl}" />
+														<p:selectOneRadio id="radios4"
+															rendered="#{reporte141mb.btxt}" value="#{objects.cert}">
+															<f:selectItem itemLabel="SI" itemValue="SI" />
+															<f:selectItem itemLabel="NO" itemValue="NO" />
+															<p:ajax event="change"
+																listener="#{reporte141mb.activetxt(rowindex, 'cert')}"
+																update=":form1:object" />
+														</p:selectOneRadio>
+													</p:column>
+												</p:row>
 
 												<!-- <p:row>
 													<p:column colspan="4" style="text-align: left;">
@@ -331,25 +350,9 @@
 														</p:inputtextarea>
 													</p:column>
 												</p:row>
-												<p:row>
-													<p:column colspan="4" style="text-align: left;">
-														<p:outputlabel
-															value="certificación en competencia laboral expedida por el instituto hacendario del estado de néxico" />
-													</p:column>
-													<p:column>
-														<p:outputlabel id="lblsn5" value="#{objects.cert}"
-															rendered="#{reporte141mb.blbl}" />
-														<p:selectoneradio id="radios4"
-															rendered="#{reporte141mb.btxt}" value="#{objects.cert}">
-															<f:selectitem itemlabel="si" itemvalue="si" />
-															<f:selectitem itemlabel="no" itemvalue="no" />
-															<p:ajax event="change"
-																listener="#{reporte141mb.activetxt(rowindex, 'cert')}"
-																update=":form1:object" />
-														</p:selectoneradio>
-													</p:column>
+												-->
 
-												</p:row>
+												<!--
 												<p:row>
 													<p:column style="background-color:#bfbfbf" />
 													<p:column colspan="8" style="background-color:#bfbfbf">
@@ -357,7 +360,8 @@
 															value="si su respuesta es positiva ¿cuáles, en que institución, y documento que lo avala?" />
 													</p:column>
 												</p:row>
-												<p:row>
+												-->
+												<!-- <p:row>
 													<p:column colspan="9">
 														<p:outputlabel id="lblcertificacion"
 															value="#{objects.espcert}"
