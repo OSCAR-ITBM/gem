@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DirectorCatastro" pageWidth="900" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="860" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="04883281-39d9-46a6-9eb9-bef1a5c2af65">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="pN27" class="java.lang.String"/>
 	<parameter name="pL27" class="java.lang.String"/>
@@ -81,7 +81,7 @@ WHERE T1.SEMESTRE = $P{semestre}]]>
 				<textFieldExpression><![CDATA[$P{municipio}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="60" y="0" width="740" height="60" uuid="54c773b7-5c6b-4c8b-b283-62b64eec43d2"/>
+				<reportElement positionType="Float" x="60" y="0" width="800" height="60" uuid="54c773b7-5c6b-4c8b-b283-62b64eec43d2"/>
 				<box>
 					<bottomPen lineWidth="2.5"/>
 				</box>
@@ -95,7 +95,7 @@ WHERE T1.SEMESTRE = $P{semestre}]]>
 				<imageExpression><![CDATA[$P{imagen}]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="533" y="75" width="210" height="15" uuid="8dda400e-4e1d-4b4f-be86-20587ba06650"/>
+				<reportElement x="533" y="75" width="207" height="15" uuid="8dda400e-4e1d-4b4f-be86-20587ba06650"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom">
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
@@ -108,6 +108,13 @@ WHERE T1.SEMESTRE = $P{semestre}]]>
 				</textElement>
 				<text><![CDATA[MUNICIPIO: ]]></text>
 			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="740" y="75" width="120" height="14" uuid="02b5f406-676f-4150-9f58-226245c95e2c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{pFechaIngreso}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -162,7 +169,7 @@ WHERE T1.SEMESTRE = $P{semestre}]]>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="15"/>
 				</textElement>
-				<text><![CDATA[Favor de identificar si cuenta con los siguientes aspectos de evaluación]]></text>
+				<text><![CDATA[Favor de identificar si cuenta con los siguientes aspectos de evaluación:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="325" y="40" width="70" height="40" uuid="b5b54154-6fee-4ff3-8b23-5a93cb7d7180"/>
@@ -218,7 +225,7 @@ WHERE T1.SEMESTRE = $P{semestre}]]>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="15"/>
 				</textElement>
-				<text><![CDATA[Titulo Profesional de educación]]></text>
+				<text><![CDATA[ Título Profesional de educación superior.]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement x="325" y="0" width="70" height="22" uuid="832bbde7-24d4-4ee7-a432-6d3f1c9b65bc"/>
@@ -257,7 +264,7 @@ WHERE T1.SEMESTRE = $P{semestre}]]>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="15"/>
 				</textElement>
-				<text><![CDATA[Experiencia minima de una año]]></text>
+				<text><![CDATA[Experiencia minima de una año en la materia]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement x="325" y="22" width="70" height="57" uuid="780d0efa-964c-458e-aeeb-b35ea36078a3"/>
@@ -348,7 +355,7 @@ WHERE T1.SEMESTRE = $P{semestre}]]>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="15"/>
 				</textElement>
-				<text><![CDATA[Certificación en Competencia Laboral vigente expedida por la Comisión Certificadora de Competencia Laboral]]></text>
+				<text><![CDATA[Certificación en Competencia Laboral vigente expedida por la Comisión Certificadora de Competencia Laboral de los Servidores Públicos del Estado de México.]]></text>
 			</staticText>
 		</band>
 	</detail>
