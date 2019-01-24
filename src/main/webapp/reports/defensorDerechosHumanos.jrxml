@@ -10,18 +10,29 @@
 	<parameter name="anio" class="java.lang.Integer"/>
 	<parameter name="imagen" class="java.lang.String"/>
 	<parameter name="municipioName" class="java.lang.String"/>
+	<parameter name="semestre" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[SELECT 	VAL.ID_ROW,
-		MAX(DECODE(ETI.NOMBRE, 'SEMESTRE',VAL.VALOR)) SEMESTRE,
-		MAX(DECODE(ETI.NOMBRE, 'FECHAING',VAL.VALOR)) FECHA,
-		MAX(DECODE(ETI.NOMBRE, 'TITULO'  ,VAL.VALOR)) TITULO,
-		MAX(DECODE(ETI.NOMBRE, 'ESTUDIOS',VAL.VALOR)) ESTUDIOS	
-FROM TC_TABLAS TAB
-		INNER JOIN TR_ETIQ_TABLAS ETAB ON TAB.ID=ETAB.ID_TABLA  
-		INNER JOIN TC_ETIQUETAS   ETI  ON ETAB.ID_ETIQUETA=ETI.ID
-		INNER JOIN TC_VALORES     VAL  ON ETAB.ID=VAL.ID_ETIQ_TABLA 
-WHERE TAB.ID=2  
-GROUP BY VAL.ID_ROW]]>
+		<![CDATA[SELECT T1.ID_ROW,
+       T1.FECHA,
+       T1.TITULO,
+       T1.ESTUDIOS,
+       SEMESTRE
+      FROM(SELECT VAL.ID_ROW,
+ 		          MAX(DECODE(ETI.NOMBRE, 'SEMESTRE',VAL.VALOR)) SEMESTRE,
+		          MAX(DECODE(ETI.NOMBRE, 'FECHAING',VAL.VALOR)) FECHA,
+		          MAX(DECODE(ETI.NOMBRE, 'TITULO'  ,VAL.VALOR)) TITULO,
+  		          MAX(DECODE(ETI.NOMBRE, 'ESTUDIOS',VAL.VALOR)) ESTUDIOS	
+                 FROM TC_TABLAS TAB
+		         INNER JOIN TR_ETIQ_TABLAS ETAB 
+		              ON TAB.ID=ETAB.ID_TABLA  
+		         INNER JOIN TC_ETIQUETAS ETI  
+		              ON ETAB.ID_ETIQUETA=ETI.ID
+		         INNER JOIN TC_VALORES VAL
+		              ON ETAB.ID=VAL.ID_ETIQ_TABLA 
+           WHERE TAB.ID=2  
+           GROUP BY VAL.ID_ROW
+           ) T1
+WHERE T1.SEMESTRE = $P{semestre}]]>
 	</queryString>
 	<field name="ID_ROW" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="ID_ROW"/>
