@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="defensorDerechosHumanos" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="04883281-39d9-46a6-9eb9-bef1a5c2af65">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="pN31" class="java.lang.String"/>
 	<parameter name="pL31" class="java.lang.String"/>
@@ -38,9 +38,6 @@ WHERE T1.SEMESTRE = $P{semestre}]]>
 		<property name="com.jaspersoft.studio.field.label" value="ID_ROW"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="TC_VALORES"/>
 	</field>
-	<field name="SEMESTRE" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="SEMESTRE"/>
-	</field>
 	<field name="FECHA" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="FECHA"/>
 	</field>
@@ -49,6 +46,9 @@ WHERE T1.SEMESTRE = $P{semestre}]]>
 	</field>
 	<field name="ESTUDIOS" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="ESTUDIOS"/>
+	</field>
+	<field name="SEMESTRE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SEMESTRE"/>
 	</field>
 	<pageHeader>
 		<band height="110" splitType="Stretch">
@@ -59,21 +59,6 @@ WHERE T1.SEMESTRE = $P{semestre}]]>
 				</textElement>
 				<text><![CDATA[MUNICIPIO:]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="390" y="90" width="200" height="20" uuid="171e49f7-753b-408d-850e-489ce0225e77"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Arial" size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[FECHA DE INGRESO AL CARGO:]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="590" y="90" width="162" height="20" uuid="3219ec01-9ab6-4643-b82b-017c27f02b68"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="12" isBold="true"/>
-					<paragraph lineSpacing="Single"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{FECHA}]]></textFieldExpression>
-			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="0" y="90" width="390" height="20" uuid="f222fd01-78aa-4c7a-9116-c19ad00c8fd9"/>
 				<textElement>
@@ -105,6 +90,13 @@ WHERE T1.SEMESTRE = $P{semestre}]]>
 					<font fontName="Arial" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{municipioName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="410" y="90" width="342" height="20" uuid="678d2f61-8e96-4c71-808b-41a93cdd8990"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["FECHA DE INGRESO AL CARGO: "+DAY($F{FECHA})+" DEL "+MONTH($F{FECHA}) +" DEL "+YEAR($F{FECHA} )]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
