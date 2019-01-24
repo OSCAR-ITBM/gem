@@ -106,6 +106,7 @@ public class DerechosHumanosMB extends BaseDirectReport {
 		parameters.put("dia", meses[2]);
 		parameters.put("firmaL1", firmas.getL31());
 		parameters.put("firmaN1", firmas.getN31());
+		parameters.put("semestre", semestre);
 
 		return parameters;
 	}
