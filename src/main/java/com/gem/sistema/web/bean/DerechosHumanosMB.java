@@ -89,7 +89,14 @@ public class DerechosHumanosMB extends BaseDirectReport {
 		semestre = listSeme.get(0).getPeriodo();
 		if (CollectionUtils.isEmpty(listDefensor))
 			createNewElement(0);
+		this.bloquearAdd();
+	}
 
+	public void bloquearAdd() {
+		if (listDefensor.size() == 2)
+			bEditar = true;
+		else
+			bEditar = false;
 	}
 
 	@Override
@@ -157,6 +164,7 @@ public class DerechosHumanosMB extends BaseDirectReport {
 			bModificar = true;
 			bMostrarAdd = true;
 			bLimpiar = false;
+			this.bloquearAdd();
 			generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!", "Se ha guardado con exito el registro");
 
 		} else if (bUpdate) {
@@ -169,6 +177,7 @@ public class DerechosHumanosMB extends BaseDirectReport {
 			bMostrarAdd = true;
 			bBorrar = true;
 			bLimpiar = false;
+			this.bloquearAdd();
 			generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!", "!Se ha modificado con exito el registro!");
 		} else {
 			listDefensor.set(currentPage, defensorDTO);
@@ -207,15 +216,16 @@ public class DerechosHumanosMB extends BaseDirectReport {
 
 	public void addElement() {
 		bAdicionar = true;
-		bCancelar = true;
+		bCancelar = false;
 		bBorrar = false;
 		bLimpiar = true;
 		bMostrarAdd = false;
 		bModificar = false;
 		listDefensor.add(new DefensorDTO());
-		if (StringUtils.isEmpty(listDefensor.get(0).getFechaIng())) {
-			for (int i = 0; i < listDefensor.size(); i++) {
+		salida: for (int i = 0; i <= listDefensor.size(); i++) {
+			if (StringUtils.isEmpty(listDefensor.get(i).getFechaIng())) {
 				listDefensor.remove(i);
+				break salida;
 			}
 
 		}
@@ -226,7 +236,7 @@ public class DerechosHumanosMB extends BaseDirectReport {
 			listDefensor.set(1, new DefensorDTO());
 
 		} else {
-			listDefensor.add(0, defensorDTO);
+			listDefensor.add(defensorDTO);
 		}
 
 	}
@@ -240,6 +250,7 @@ public class DerechosHumanosMB extends BaseDirectReport {
 		defensorDTO = listDefensor.get(currentPage);
 		defensorService.delete(defensorDTO);
 		this.findAll();
+		bloquearAdd();
 		generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!", "!Se borro con exito el registro!");
 
 	}
