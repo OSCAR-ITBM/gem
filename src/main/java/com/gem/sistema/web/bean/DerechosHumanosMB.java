@@ -87,8 +87,11 @@ public class DerechosHumanosMB extends BaseDirectReport {
 		defensorDTO.setCapturo(this.getUserDetails().getUsername());
 		defensorDTO.setIdSector(this.getUserDetails().getIdSector());
 		semestre = listSeme.get(0).getPeriodo();
+		bLimpiar = true;
+		this.deleteList();
 		if (CollectionUtils.isEmpty(listDefensor))
 			createNewElement(0);
+
 		this.bloquearAdd();
 	}
 
@@ -146,6 +149,17 @@ public class DerechosHumanosMB extends BaseDirectReport {
 
 	}
 
+	public void deleteList() {
+		bLimpiar = false;
+		salida: for (int i = 0; i < listDefensor.size(); i++) {
+			if (StringUtils.isEmpty(listDefensor.get(i).getFechaIng())) {
+				listDefensor.remove(i);
+				break salida;
+			}
+
+		}
+	}
+
 	public void save() {
 
 		defensorDTO = listDefensor.get(currentPage);
@@ -153,6 +167,7 @@ public class DerechosHumanosMB extends BaseDirectReport {
 
 		defensorDTO.setIdSector(this.getUserDetails().getIdSector());
 		defensorDTO.setCapturo(this.getUserDetails().getUsername());
+
 		bAdicionar = true;
 		if (existe == 0 && !bUpdate) {
 
@@ -164,6 +179,7 @@ public class DerechosHumanosMB extends BaseDirectReport {
 			bModificar = true;
 			bMostrarAdd = true;
 			bLimpiar = false;
+			this.deleteList();
 			this.bloquearAdd();
 			generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!", "Se ha guardado con exito el registro");
 
@@ -177,6 +193,7 @@ public class DerechosHumanosMB extends BaseDirectReport {
 			bMostrarAdd = true;
 			bBorrar = true;
 			bLimpiar = false;
+			this.deleteList();
 			this.bloquearAdd();
 			generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!", "!Se ha modificado con exito el registro!");
 		} else {
@@ -221,23 +238,11 @@ public class DerechosHumanosMB extends BaseDirectReport {
 		bLimpiar = true;
 		bMostrarAdd = false;
 		bModificar = false;
+
+		this.deleteList();
+		Integer lastIndex = listDefensor.size() == 0 ? 0 : 1;
+		RequestContext.getCurrentInstance().execute("PF('dataGrid').paginator.setPage(" + lastIndex + ");");
 		listDefensor.add(new DefensorDTO());
-		salida: for (int i = 0; i <= listDefensor.size(); i++) {
-			if (StringUtils.isEmpty(listDefensor.get(i).getFechaIng())) {
-				listDefensor.remove(i);
-				break salida;
-			}
-
-		}
-
-		if (listDefensor.size() == 2) {
-			RequestContext.getCurrentInstance()
-					.execute("PF('dataGrid').paginator.setPage(" + (listDefensor.size() - 1) + ");");
-			listDefensor.set(1, new DefensorDTO());
-
-		} else {
-			listDefensor.add(defensorDTO);
-		}
 
 	}
 
@@ -247,9 +252,13 @@ public class DerechosHumanosMB extends BaseDirectReport {
 	}
 
 	public void borrar() {
+		if (listDefensor.size() < 2)
+			currentPage = 0;
 		defensorDTO = listDefensor.get(currentPage);
+
 		defensorService.delete(defensorDTO);
 		this.findAll();
+		this.deleteList();
 		bloquearAdd();
 		generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!", "!Se borro con exito el registro!");
 
