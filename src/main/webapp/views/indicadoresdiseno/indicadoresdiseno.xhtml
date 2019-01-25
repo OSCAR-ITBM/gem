@@ -186,7 +186,7 @@
 												<h:outputLabel value="Código Indicador:"></h:outputLabel>
 												<h:panelGroup>
 													<h:inputText id="varIndic" value="#{varDiseno.cveind}"
-														disabled="#{indicadoresDisenoMB.deshabilitadoEditables}">
+														disabled="#{indicadoresDisenoMB.deshabilitadoEditables}" maxlength="14">
 														<p:ajax
 															update="varIndic,descIndicator,growlIndicadoresDiseno"
 															event="change"
@@ -587,7 +587,7 @@
 
 							<p:column headerText="Código" width="20%"
 								filterMatchMode="contains" filterBy="#{indicador.codigo}"
-								filterMaxLength="13">
+								filterMaxLength="14">
 								<h:outputText value="#{indicador.codigo}" />
 							</p:column>
 

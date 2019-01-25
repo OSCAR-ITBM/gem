@@ -719,7 +719,7 @@ public class IndicadoresDisenoMB extends AbstractMB {
 	 */
 	public void llenarCombos() {
 		for (Cpd cpd : indicadoresDisenoService.llenaComboTemas()) {
-			if (!cpd.getTema().equals("")) {
+			if (cpd.getCvetemas().length() == 8) {
 				listaTemas.add(cpd);
 			}
 		}

@@ -10,26 +10,31 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gem.sistema.business.domain.TcParametro;
-
+import com.gem.sistema.business.domain.TcValores;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Interface ParametrosRepository.
  */
 @Repository("parametrosRepository")
-public interface ParametrosRepository extends PagingAndSortingRepository<TcParametro, String>, QueryDslPredicateExecutor<TcParametro>{
-    
-    /* (non-Javadoc)
-     * @see org.springframework.data.repository.CrudRepository#findAll()
-     */
-    List<TcParametro> findAll();
-	
-	/* (non-Javadoc)
+public interface ParametrosRepository
+		extends PagingAndSortingRepository<TcParametro, String>, QueryDslPredicateExecutor<TcParametro> {
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.data.repository.CrudRepository#findAll()
+	 */
+	List<TcParametro> findAll();
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.springframework.data.repository.CrudRepository#save(S)
 	 */
 	@Transactional(timeout = 10)
 	<S extends TcParametro> S save(S entity);
-	
+
 	/**
 	 * Gets the valor by cv.
 	 *
@@ -37,5 +42,7 @@ public interface ParametrosRepository extends PagingAndSortingRepository<TcParam
 	 * @return the valor by cv
 	 */
 	@Query("select valor from TcParametro where cveParametro = :cveParametro")
-	String getValorByCv(@Param("cveParametro")String cveParametro);
+	String getValorByCv(@Param("cveParametro") String cveParametro);
+
+	
 }

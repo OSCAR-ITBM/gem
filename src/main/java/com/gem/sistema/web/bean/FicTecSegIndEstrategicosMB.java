@@ -282,7 +282,7 @@ public class FicTecSegIndEstrategicosMB extends AbstractMB implements Serializab
 		clvTemasList = new ArrayList<String>();
 		List<Cpd> temas = cpdRepository.findAll();
 		for(Cpd tema : temas) {
-			if (!StringUtils.isEmpty(tema.getTema()) && tema.getCvetemas().length() == 6) {
+			if (!StringUtils.isEmpty(tema.getTema()) && tema.getCvetemas().length() == 8) {
 				clvTemasList.add(tema.getCvetemas());
 			}
 		}

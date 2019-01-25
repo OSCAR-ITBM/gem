@@ -56,11 +56,22 @@
 										<f:convertDateTime pattern="dd/MM/yyyy" />
 									</h:outputText>
 
-									<p:calendar value="#{entity.fechaIng}" id="fechaIng"
+								<!-- 	<p:calendar value="#{entity.fechaIng}" id="fechaIng"
 										rendered="#{pm3711MB.editando}" pattern="dd/MM/yyyy"
 										showOn="button" size="10" maxlength="10" mask="true"
 										converterMessage="La fecha debe ser en fomato de dd/MM/aaaa">
-										<f:convertDateTime pattern="dd/MM/yyyy" for="fechaInput" />
+										<p:ajax event="dateSelect" update="fechaIng" />
+										<p:ajax event="change" update="fechaIng" />
+										<f:convertDateTime pattern="dd/MM/yyyy" for="fechaIng" />
+									</p:calendar> -->
+									
+									<p:calendar id="fechaIng" showOn="button" locale="es" rendered="#{pm3711MB.editando}"
+										size="10" pattern="dd/MM/yyyy" mask="true" maxlength="10"
+										required="true"
+										requiredMessage="Seleccione una fecha"
+										value="#{entity.fechaIng}"
+										converterMessage="La fecha debe ser en fomato de dd/MM/aaaa">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
 									</p:calendar>
 
 								</p:column>
@@ -142,12 +153,12 @@
 										update="form1:pnlBotonesCRUD, form1:dataGrid, form1:msgs" />
 									<p:commandButton value="Borrar" icon="ui-icon-trash"
 										actionListener="#{pm3711MB.borrar}" id="Borrar"
-										disabled="#{pm3711MB.bModificar}"
+										disabled="#{pm3711MB.bBorrar}"
 										update="form1:pnlBotonesCRUD, form1:dataGrid, form1:msgs" />
 
 									<p:commandButton value="Cancelar" icon="ui-icon-closethick"
 										actionListener="#{pm3711MB.reset}" id="cancelar"
-										disabled="#{pm3711MB.bModificar}"
+										disabled="#{pm3711MB.bCancelar}"
 										update="form1:pnlBotonesCRUD, form1:dataGrid, form1:msgs" />
 
 								</h:panelGroup>
@@ -200,6 +211,34 @@
 						onclick="PF('confirmFileDeleteMeta').hide();"
 						styleClass="ui-confirmdialog-no" icon="ui-icon-check" />
 				</p:confirmDialog>
+				<p:panel id="panelReporte"
+					styleClass="green col-md-9 col-centered row-centered shadow-panel">
+					<p:panelGrid columns="3" styleClass="col-centered ui-noborder">
+						<h:outputText value="Trimestre: " for="trimestre" />
+						<p:selectOneMenu id="trimestre" size="18" editable="false"
+							value="#{clciPdfMB.trimestre}">
+
+							<f:selectItems value="#{clciPdfMB.listTrimestres}" var="trim"
+								itemLabel="#{trim.periodo}" itemValue="#{trim.periodo}" />
+						</p:selectOneMenu>
+						<p:panelGrid columns="4" styleClass="ui-noborder">
+
+							<p:commandButton id="generateportepdf"
+								onstart="PF('blockUIWidget').block()"
+								oncomplete="PF('blockUIWidget').unblock()"
+								action="#{clciPdfMB.createFilePdfInline}" value="Correcto"
+								update="form1:inlinePdf, :form1:msgs">
+							</p:commandButton>
+						</p:panelGrid>
+					</p:panelGrid>
+					<p:panel id="inlinePdf" style="border:0px"
+						visible="#{clciPdfMB.uuid ne null}">
+
+						<object type="application/pdf"
+							data="#{request.contextPath}/GetFileInline?uuid=#{clciPdfMB.uuid}&amp;filename=#{clciPdfMB.endFilename}"
+							height="380px" width="100%"> </object>
+					</p:panel>
+				</p:panel>
 			</h:form>
 		</ui:define>
 	</ui:composition>

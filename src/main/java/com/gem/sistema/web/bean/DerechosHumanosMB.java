@@ -87,9 +87,19 @@ public class DerechosHumanosMB extends BaseDirectReport {
 		defensorDTO.setCapturo(this.getUserDetails().getUsername());
 		defensorDTO.setIdSector(this.getUserDetails().getIdSector());
 		semestre = listSeme.get(0).getPeriodo();
+		bLimpiar = true;
+		this.deleteList();
 		if (CollectionUtils.isEmpty(listDefensor))
 			createNewElement(0);
 
+		this.bloquearAdd();
+	}
+
+	public void bloquearAdd() {
+		if (listDefensor.size() == 2)
+			bEditar = true;
+		else
+			bEditar = false;
 	}
 
 	@Override
@@ -106,6 +116,7 @@ public class DerechosHumanosMB extends BaseDirectReport {
 		parameters.put("dia", meses[2]);
 		parameters.put("firmaL1", firmas.getL31());
 		parameters.put("firmaN1", firmas.getN31());
+		parameters.put("semestre", semestre);
 
 		return parameters;
 	}
@@ -138,6 +149,17 @@ public class DerechosHumanosMB extends BaseDirectReport {
 
 	}
 
+	public void deleteList() {
+		bLimpiar = false;
+		salida: for (int i = 0; i < listDefensor.size(); i++) {
+			if (StringUtils.isEmpty(listDefensor.get(i).getFechaIng())) {
+				listDefensor.remove(i);
+				break salida;
+			}
+
+		}
+	}
+
 	public void save() {
 
 		defensorDTO = listDefensor.get(currentPage);
@@ -145,6 +167,7 @@ public class DerechosHumanosMB extends BaseDirectReport {
 
 		defensorDTO.setIdSector(this.getUserDetails().getIdSector());
 		defensorDTO.setCapturo(this.getUserDetails().getUsername());
+
 		bAdicionar = true;
 		if (existe == 0 && !bUpdate) {
 
@@ -156,6 +179,8 @@ public class DerechosHumanosMB extends BaseDirectReport {
 			bModificar = true;
 			bMostrarAdd = true;
 			bLimpiar = false;
+			this.deleteList();
+			this.bloquearAdd();
 			generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!", "Se ha guardado con exito el registro");
 
 		} else if (bUpdate) {
@@ -168,6 +193,8 @@ public class DerechosHumanosMB extends BaseDirectReport {
 			bMostrarAdd = true;
 			bBorrar = true;
 			bLimpiar = false;
+			this.deleteList();
+			this.bloquearAdd();
 			generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!", "!Se ha modificado con exito el registro!");
 		} else {
 			listDefensor.set(currentPage, defensorDTO);
@@ -206,27 +233,16 @@ public class DerechosHumanosMB extends BaseDirectReport {
 
 	public void addElement() {
 		bAdicionar = true;
-		bCancelar = true;
+		bCancelar = false;
 		bBorrar = false;
 		bLimpiar = true;
 		bMostrarAdd = false;
 		bModificar = false;
+
+		this.deleteList();
+		Integer lastIndex = listDefensor.size() == 0 ? 0 : 1;
+		RequestContext.getCurrentInstance().execute("PF('dataGrid').paginator.setPage(" + lastIndex + ");");
 		listDefensor.add(new DefensorDTO());
-		if (StringUtils.isEmpty(listDefensor.get(0).getFechaIng())) {
-			for (int i = 0; i < listDefensor.size(); i++) {
-				listDefensor.remove(i);
-			}
-
-		}
-
-		if (listDefensor.size() == 2) {
-			RequestContext.getCurrentInstance()
-					.execute("PF('dataGrid').paginator.setPage(" + (listDefensor.size() - 1) + ");");
-			listDefensor.set(1, new DefensorDTO());
-
-		} else {
-			listDefensor.add(0, defensorDTO);
-		}
 
 	}
 
@@ -236,9 +252,14 @@ public class DerechosHumanosMB extends BaseDirectReport {
 	}
 
 	public void borrar() {
+		if (listDefensor.size() < 2)
+			currentPage = 0;
 		defensorDTO = listDefensor.get(currentPage);
+
 		defensorService.delete(defensorDTO);
 		this.findAll();
+		this.deleteList();
+		bloquearAdd();
 		generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!", "!Se borro con exito el registro!");
 
 	}
