@@ -905,7 +905,7 @@ public class MatrizIndicadoresMB extends AbstractMB {
 		LOGGER.debug("Llenando lista TEMAS MB");
 		clvTemaList.clear();
 		for (Cpd tema : matrizIndicadoresService.findAllTemasMatrizInd()) {
-			if (tema.getCvetemas().trim().length() >= 6) {
+			if (tema.getCvetemas().trim().length() >= 8) {
 				clvTemaList.add(tema.getCvetemas());
 			}
 		}

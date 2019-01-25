@@ -40,100 +40,100 @@ public class Reporte141MB extends BaseDirectReport {
 
 	/** The Constant SI. */
 	private static final String SI = "SI";
-	
+
 	/** The Constant NO. */
 	private static final String NO = "NO";
-	
+
 	/** The Constant REPORTE_141. */
 	private static final String REPORTE_141 = "reporte141";
-	
+
 	/** The Constant PDF. */
 	private static final String PDF = ".pdf";
 
 	/** The firmas. */
 	private Firmas firmas;
-	
+
 	/** The conctb. */
 	private Conctb conctb;
-	
+
 	/** The semestre. */
 	private String semestre;
-	
+
 	/** The listsemestre. */
 	private List<String> listsemestre;
-	
+
 	/** The capturo. */
 	private String capturo;
-	
+
 	/** The fecha cap. */
 	private Date fechaCap;
 
 	/** The pm 3811. */
 	private Pm3811 pm3811;
-	
+
 	/** The select pm 3811. */
 	private Pm3811 selectPm3811;
-	
+
 	/** The list pm 3811. */
 	private List<Pm3811> listPm3811;
 
 	/** The con trim. */
 	private String conTrim;
-	
+
 	/** The combo tri. */
 	private List<Pm3811> comboTri;
 
 	/** The b lblsemestre. */
 	private boolean bLblsemestre = Boolean.TRUE;
-	
+
 	/** The b combo tri. */
 	private boolean bComboTri = Boolean.FALSE;
-	
+
 	/** The b lbl. */
 	private boolean bLbl = Boolean.TRUE;
-	
+
 	/** The b txt. */
 	private boolean bTxt = Boolean.FALSE;
-	
+
 	/** The b V save. */
 	private boolean bVSave = Boolean.FALSE;
-	
+
 	/** The b V modificar. */
 	private boolean bVModificar = Boolean.TRUE;
-	
+
 	/** The b btn moficar. */
 	private boolean bBtnMoficar = Boolean.TRUE;
-	
+
 	/** The b modificar. */
 	private boolean bModificar = Boolean.FALSE;
-	
+
 	/** The b borrar. */
 	private boolean bBorrar = Boolean.TRUE;
-	
+
 	/** The b add. */
 	private boolean bAdd = Boolean.FALSE;
-	
+
 	/** The b lbl sec pub. */
 	private boolean bLblSecPub = Boolean.TRUE;
-	
+
 	/** The b lbl est sup. */
 	private boolean bLblEstSup = Boolean.TRUE;
-	
+
 	/** The b lbl est sup 2. */
 	private boolean bLblEstSup2 = Boolean.TRUE;
-	
+
 	/** The b lbl certf. */
 	private boolean bLblCertf = Boolean.TRUE;
-	
+
 	/** The b sec pub. */
 	private boolean bSecPub = Boolean.FALSE;
-	
+
 	/** The b est sup. */
 	private boolean bEstSup = Boolean.FALSE;
-	
+
 	/** The b est sup 2. */
 	private boolean bEstSup2 = Boolean.FALSE;
-	
+
 	/** The b certf. */
 	private boolean bCertf = Boolean.FALSE;
 
@@ -811,29 +811,21 @@ public class Reporte141MB extends BaseDirectReport {
 
 		firmas = firmasRepository.findAllByIdsector(this.getUserDetails().getIdSector());
 		conctb = conctbRepository.findByIdsector(getUserDetails().getIdSector());
-		
-		
-		
+
+
+
 		String[] mesArray = this.getMonths(Integer.valueOf(conTrim)).split(",");
-		parameters.put("pMunicipio", this.getUserDetails().getMunicipio());
+		parameters.put("pMunicipio", firmas.getCampo1());
 		parameters.put("pNum", conctb.getClave());
-		parameters.put("pDay", getLastDay(Integer.valueOf(conTrim)) );
-		parameters.put("pMes", mesArray[1]);
+		parameters.put("pDay", getLastDay(Integer.valueOf(mesArray[1])) );
+		parameters.put("pMes", tcMesRepository.findByMes(mesArray[1]).getDescripcion());
 		parameters.put("pAnio", conctb.getAnoemp());
-		
-		parameters.put("lastDayOfMonth", getLastDay(Integer.valueOf(mesArray[1])));
-		parameters.put("mesInicioName", tcMesRepository.findByMes(mesArray[0]).getDescripcion());
-		parameters.put("mesFinName", tcMesRepository.findByMes(mesArray[1]).getDescripcion());
 		parameters.put("year", conctb.getAnoemp());
-		parameters.put("pathImage", getUserDetails().getPathImgCab1());
+		parameters.put("pImage", getUserDetails().getPathImgCab1());
 		parameters.put("semestre", Integer.valueOf(conTrim));
 		parameters.put("idSector", getUserDetails().getIdSector());
-		parameters.put("firmaP1", firmas.getL6());
-		parameters.put("firmaP2", firmas.getL30());
-		parameters.put("firmaP3", firmas.getL3());
-		parameters.put("firmaN1", firmas.getN6());
-		parameters.put("firmaN2", firmas.getN30());
-		parameters.put("firmaN3", firmas.getN3());
+		parameters.put("pL6", firmas.getL6());
+		parameters.put("pN6", firmas.getN6());
 
 		return parameters;
 	}
@@ -937,7 +929,7 @@ public class Reporte141MB extends BaseDirectReport {
 				bEstSup2 = Boolean.FALSE;
 				bLblEstSup2 = Boolean.TRUE;
 			}
-			
+
 		} else {
 			listPm3811.add(index, pm3811);
 			listPm3811 = pm3811Service.save(index, listPm3811);

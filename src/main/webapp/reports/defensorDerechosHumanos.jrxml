@@ -11,6 +11,9 @@
 	<parameter name="imagen" class="java.lang.String"/>
 	<parameter name="municipioName" class="java.lang.String"/>
 	<parameter name="semestre" class="java.lang.Integer"/>
+	<parameter name="listMeses" class="java.lang.List">
+		<defaultValueExpression><![CDATA[Arrays.asList("Enero","Febreo","Marzo","Abril")]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT T1.ID_ROW,
        T1.FECHA,
@@ -19,7 +22,7 @@
        SEMESTRE
       FROM(SELECT VAL.ID_ROW,
  		          MAX(DECODE(ETI.NOMBRE, 'SEMESTRE',VAL.VALOR)) SEMESTRE,
-		          MAX(DECODE(ETI.NOMBRE, 'FECHAING',VAL.VALOR)) FECHA,
+		          MAX(DECODE(ETI.NOMBRE, 'FECHAING',TO_DATE(VAL.VALOR, 'DD/MM/YYYY'))) FECHA,
 		          MAX(DECODE(ETI.NOMBRE, 'TITULO'  ,VAL.VALOR)) TITULO,
   		          MAX(DECODE(ETI.NOMBRE, 'ESTUDIOS',VAL.VALOR)) ESTUDIOS	
                  FROM TC_TABLAS TAB
@@ -38,7 +41,7 @@ WHERE T1.SEMESTRE = $P{semestre}]]>
 		<property name="com.jaspersoft.studio.field.label" value="ID_ROW"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="TC_VALORES"/>
 	</field>
-	<field name="FECHA" class="java.lang.String">
+	<field name="FECHA" class="java.util.Date">
 		<property name="com.jaspersoft.studio.field.label" value="FECHA"/>
 	</field>
 	<field name="TITULO" class="java.lang.String">
@@ -51,7 +54,7 @@ WHERE T1.SEMESTRE = $P{semestre}]]>
 		<property name="com.jaspersoft.studio.field.label" value="SEMESTRE"/>
 	</field>
 	<pageHeader>
-		<band height="110" splitType="Stretch">
+		<band height="115" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="70" width="80" height="20" uuid="8a4d324a-2593-4218-a351-f20953cfe4f8"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -92,11 +95,18 @@ WHERE T1.SEMESTRE = $P{semestre}]]>
 				<textFieldExpression><![CDATA[$P{municipioName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="410" y="90" width="342" height="20" uuid="678d2f61-8e96-4c71-808b-41a93cdd8990"/>
+				<reportElement x="340" y="90" width="290" height="20" uuid="678d2f61-8e96-4c71-808b-41a93cdd8990"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["FECHA DE INGRESO AL CARGO: "+DAY($F{FECHA})+" DEL "+MONTH($F{FECHA}) +" DEL "+YEAR($F{FECHA} )]]></textFieldExpression>
+				<textFieldExpression><![CDATA["FECHA DE INGRESO AL CARGO: "]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd &apos;de&apos; MMMM &apos;de&apos; yyyy">
+				<reportElement x="630" y="90" width="120" height="20" uuid="83b67b48-2012-40c2-af70-457acdd0050f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHA}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
