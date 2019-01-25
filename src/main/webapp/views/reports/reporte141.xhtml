@@ -23,13 +23,13 @@
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
 						widgetVar="pm3811Wdg" rowIndexVar="rowIndex">
 						<p:column>
-							<p:panelGrid id="idGrid1" columns="2" style="text-align: left;"
-								styleClass="ui-noborder">
-								<p:row style="text-align: left;">
-									<p:column style="width : 18%; text-align: right;">
+							<p:panelGrid id="idGrid1" style="text-align: left;"
+								styleClass="ui-noborder col-centered row-centered">
+								<p:row>
+									<p:column style="text-align: right;">
 										<h:outputText value="Semestre  " />
 									</p:column>
-									<p:column style="width: 6%; text-align: left;">
+									<p:column style=" text-align: left;">
 										<p:outputLabel id="lblTrimestre" value="#{objects.semestral}"
 											rendered="#{reporte141MB.bLblsemestre}">
 											<f:convertNumber pattern="00" />
@@ -106,13 +106,14 @@
 								<p:row>
 									<p:column>
 										<p:panel>
-											<p:panelGrid id="idGrid5" styleClass="">
+											<p:panelGrid id="idGrid5"
+												styleClass="ui-noborder col-centered row-centered">
 												<p:row>
-													<p:column style="text-align: right;" colspan="4">
+													<p:column style="text-align: right;">
 														<p:outputLabel
 															value="Fecha de Ingreso al Cargo de Director de Obras" />
 													</p:column>
-													<p:column style="text-align: left;" colspan="6">
+													<p:column style="text-align: left;">
 														<p:outputLabel id="lblFecha" value="#{objects.fecing}"
 															rendered="#{reporte141MB.bLbl}">
 															<f:convertDateTime pattern="dd/MM/yyyy" />
@@ -131,7 +132,7 @@
 													</p:column>
 												</p:row>
 												<p:row>
-													<p:column colspan="4" style="text-align: right;">
+													<p:column style="text-align: right;">
 														<p:outputLabel
 															value="Título Profesional en Ingeniería o Arquitectura" />
 													</p:column>
@@ -180,7 +181,7 @@
 													</p:column>
 												</p:row> -->
 												<p:row>
-													<p:column style="text-align: right;" colspan="4">
+													<p:column style="text-align: right;">
 														<p:outputLabel
 															value="Experiencia minimo de un año en la materia" />
 													</p:column>
@@ -204,7 +205,7 @@
 													</p:column>
 												</p:row>
 												<p:row>
-													<p:column colspan="4" style="text-align: right;">
+													<p:column style="text-align: right;">
 														<p:outputLabel
 															value="Certificación en Competencia Laboral Expedida por el Instituto Hacendario del Estado de México" />
 													</p:column>
