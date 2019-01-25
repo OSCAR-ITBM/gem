@@ -182,44 +182,6 @@ public class ExportInformationDAOImpl implements ExportInformationDAO {
 	@Override
 	public String zipFile(File[] inputFile, String zipFilePath) {
 
-//		try {
-//
-//			// Wrap a FileOutputStream around a ZipOutputStream
-//			// to store the zip stream to a file. Note that this is
-//			// not absolutely necessary
-//			FileOutputStream fileOutputStream = new FileOutputStream(zipFilePath);
-//			ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream);
-//
-//			// a ZipEntry represents a file entry in the zip archive
-//			// We name the ZipEntry after the original file's name
-//			for (int i = 0; i < inputFile.length; i++) {
-//				ZipEntry zipEntry = new ZipEntry(inputFile[i].getName());
-//				zipOutputStream.putNextEntry(zipEntry);
-//
-//				FileInputStream fileInputStream = new FileInputStream(inputFile[i]);
-//				byte[] buf = new byte[1024];
-//				int bytesRead;
-//
-//				// Read the input file by chucks of 1024 bytes
-//				// and write the read bytes to the zip stream
-//				while ((bytesRead = fileInputStream.read(buf)) > 0) {
-//					zipOutputStream.write(buf, 0, bytesRead);
-//				}
-//
-//				// close ZipEntry to store the stream to the file
-//				if (i == inputFile.length) {
-//					zipOutputStream.closeEntry();
-//
-//					zipOutputStream.close();
-//					fileOutputStream.close();
-//				}
-//
-//			}
-//
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-
 		byte[] buffer = new byte[1024];
 		FileInputStream in = null;
 		try {

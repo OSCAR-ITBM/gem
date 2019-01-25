@@ -104,9 +104,9 @@
 								<p:row>
 									<p:column>
 										<p:panel>
-											<p:panelGrid id="idGrid5">
+											<p:panelGrid id="idGrid5" styleClass="">
 												<p:row>
-													<p:column style="text-align: left;" colspan="4">
+													<p:column style="text-align: right;" colspan="4">
 														<p:outputLabel
 															value="Fecha de Ingreso al Cargo de Director de Obras" />
 													</p:column>
@@ -129,7 +129,7 @@
 													</p:column>
 												</p:row>
 												<p:row>
-													<p:column colspan="4">
+													<p:column colspan="4" style="text-align: right;">
 														<p:outputLabel
 															value="Título Profesional en Ingeniería o Arquitectura" />
 													</p:column>
@@ -178,7 +178,7 @@
 													</p:column>
 												</p:row> -->
 												<p:row>
-													<p:column style="text-align: left;" colspan="4">
+													<p:column style="text-align: right;" colspan="4">
 														<p:outputLabel
 															value="Experiencia minimo de un año en la materia" />
 													</p:column>
@@ -202,21 +202,25 @@
 													</p:column>
 												</p:row>
 												<p:row>
-													<p:column colspan="4" style="text-align: left;">
+													<p:column colspan="4" style="text-align: right;">
 														<p:outputLabel
-															value="certificación en competencia laboral expedida por el instituto hacendario del estado de México" />
+															value="Certificación en Competencia Laboral Expedida por el Instituto Hacendario del Estado de México" />
 													</p:column>
 
-													<p:column>
+													<p:column style="text-align: left;">
 														<p:outputLabel id="lblsn5" value="#{objects.cert}"
-															rendered="#{reporte141mb.blbl}" />
-														<p:selectOneRadio id="radios4"
-															rendered="#{reporte141mb.btxt}" value="#{objects.cert}">
+															rendered="#{!reporte141MB.bTxt}" />
+
+
+														<p:selectOneRadio id="txtCertificado"
+															onkeypress="if (event.keyCode == 13) {return false;}"
+															rendered="#{reporte141MB.bTxt}" value="#{objects.cert}">
 															<f:selectItem itemLabel="SI" itemValue="SI" />
 															<f:selectItem itemLabel="NO" itemValue="NO" />
 															<p:ajax event="change"
-																listener="#{reporte141mb.activetxt(rowindex, 'cert')}"
+																listener="#{reporte141MB.activeTxt(rowIndex, 'cert')}"
 																update=":form1:object" />
+
 														</p:selectOneRadio>
 													</p:column>
 												</p:row>
