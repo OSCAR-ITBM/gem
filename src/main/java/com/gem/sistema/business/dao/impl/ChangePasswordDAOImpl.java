@@ -1,7 +1,6 @@
 package com.gem.sistema.business.dao.impl;
 
-
-
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
@@ -65,11 +64,13 @@ public class ChangePasswordDAOImpl implements ChangePasswordDAO {
 
 		TcParametro tcParametro = this.parametrosRepository
 				.findOne(ParametrosPredicate.findByDataType("PASS_AFECTA", "PASSWORD"));
-		boolean bandera = this.passwordEncoder.matches(password, tcParametro.getValor());
-		if (tcParametro != null)
-			if (bandera) {
-				return true;
-			}
+		if (null != tcParametro) {
+			boolean bandera = this.passwordEncoder.matches(password, tcParametro.getValor());
+			if (tcParametro != null)
+				if (bandera) {
+					return true;
+				}
+		}
 		return false;
 	}
 

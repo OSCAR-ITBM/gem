@@ -41,6 +41,7 @@ public class ChangePassMB extends AbstractMB {
 
 					if (password.equals(confirmPassword)) {
 						this.changePasswordService.save(password);
+						confirmPassword = StringUtils.EMPTY;
 						generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!",
 								"El password se guardo correctamente");
 					} else {
@@ -55,6 +56,8 @@ public class ChangePassMB extends AbstractMB {
 					if (bandera) {
 						if (newPassword.equals(confirmPassword)) {
 							this.changePasswordService.save(newPassword);
+							newPassword = StringUtils.EMPTY;
+							confirmPassword = StringUtils.EMPTY;
 							generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!",
 									"El password se cambio correctamente");
 						} else {

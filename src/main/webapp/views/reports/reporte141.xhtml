@@ -15,7 +15,7 @@
 				<p:growl id="messagesEdit" showDetail="true" sticky="true" />
 				<p:panel id="idPanel"
 					header="Reportes de Indicadores Semestral de Competencia Laboral del Director de Obras"
-					styleClass="green col-md-11 col-centered row-centered shadow-panel">
+					styleClass="green col-md-8 col-centered row-centered shadow-panel">
 					<p:dataTable id="object" var="objects"
 						value="#{reporte141MB.listPm3811}" binding="#{table}"
 						styleClass="et_datatable" emptyMessage="No hay registros"
@@ -23,7 +23,8 @@
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
 						widgetVar="pm3811Wdg" rowIndexVar="rowIndex">
 						<p:column>
-							<p:panelGrid id="idGrid1" columns="2" style="text-align: left;">
+							<p:panelGrid id="idGrid1" columns="2" style="text-align: left;"
+								styleClass="ui-noborder">
 								<p:row style="text-align: left;">
 									<p:column style="width : 18%; text-align: right;">
 										<h:outputText value="Semestre  " />
@@ -100,13 +101,14 @@
 									</p:column>
 								</p:row>
 							</p:panelGrid> -->
-							<p:panelGrid id="idGrid4">
+							<p:panelGrid id="idGrid4"
+								styleClass="ui-noborder col-centered row-centered">
 								<p:row>
 									<p:column>
 										<p:panel>
-											<p:panelGrid id="idGrid5">
+											<p:panelGrid id="idGrid5" styleClass="">
 												<p:row>
-													<p:column style="text-align: left;" colspan="4">
+													<p:column style="text-align: right;" colspan="4">
 														<p:outputLabel
 															value="Fecha de Ingreso al Cargo de Director de Obras" />
 													</p:column>
@@ -129,7 +131,7 @@
 													</p:column>
 												</p:row>
 												<p:row>
-													<p:column colspan="4">
+													<p:column colspan="4" style="text-align: right;">
 														<p:outputLabel
 															value="Título Profesional en Ingeniería o Arquitectura" />
 													</p:column>
@@ -178,7 +180,7 @@
 													</p:column>
 												</p:row> -->
 												<p:row>
-													<p:column style="text-align: left;" colspan="4">
+													<p:column style="text-align: right;" colspan="4">
 														<p:outputLabel
 															value="Experiencia minimo de un año en la materia" />
 													</p:column>
@@ -199,6 +201,29 @@
 
 														</p:selectOneRadio>
 
+													</p:column>
+												</p:row>
+												<p:row>
+													<p:column colspan="4" style="text-align: right;">
+														<p:outputLabel
+															value="Certificación en Competencia Laboral Expedida por el Instituto Hacendario del Estado de México" />
+													</p:column>
+
+													<p:column style="text-align: left;">
+														<p:outputLabel id="lblsn5" value="#{objects.cert}"
+															rendered="#{!reporte141MB.bTxt}" />
+
+
+														<p:selectOneRadio id="txtCertificado"
+															onkeypress="if (event.keyCode == 13) {return false;}"
+															rendered="#{reporte141MB.bTxt}" value="#{objects.cert}">
+															<f:selectItem itemLabel="SI" itemValue="SI" />
+															<f:selectItem itemLabel="NO" itemValue="NO" />
+															<p:ajax event="change"
+																listener="#{reporte141MB.activeTxt(rowIndex, 'cert')}"
+																update=":form1:object" />
+
+														</p:selectOneRadio>
 													</p:column>
 												</p:row>
 
@@ -331,25 +356,9 @@
 														</p:inputtextarea>
 													</p:column>
 												</p:row>
-												<p:row>
-													<p:column colspan="4" style="text-align: left;">
-														<p:outputlabel
-															value="certificación en competencia laboral expedida por el instituto hacendario del estado de néxico" />
-													</p:column>
-													<p:column>
-														<p:outputlabel id="lblsn5" value="#{objects.cert}"
-															rendered="#{reporte141mb.blbl}" />
-														<p:selectoneradio id="radios4"
-															rendered="#{reporte141mb.btxt}" value="#{objects.cert}">
-															<f:selectitem itemlabel="si" itemvalue="si" />
-															<f:selectitem itemlabel="no" itemvalue="no" />
-															<p:ajax event="change"
-																listener="#{reporte141mb.activetxt(rowindex, 'cert')}"
-																update=":form1:object" />
-														</p:selectoneradio>
-													</p:column>
+												-->
 
-												</p:row>
+												<!--
 												<p:row>
 													<p:column style="background-color:#bfbfbf" />
 													<p:column colspan="8" style="background-color:#bfbfbf">

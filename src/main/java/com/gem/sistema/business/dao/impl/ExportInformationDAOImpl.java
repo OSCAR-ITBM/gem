@@ -182,42 +182,30 @@ public class ExportInformationDAOImpl implements ExportInformationDAO {
 	@Override
 	public String zipFile(File[] inputFile, String zipFilePath) {
 
+		byte[] buffer = new byte[1024];
+		FileInputStream in = null;
 		try {
 
-			// Wrap a FileOutputStream around a ZipOutputStream
-			// to store the zip stream to a file. Note that this is
-			// not absolutely necessary
-			FileOutputStream fileOutputStream = new FileOutputStream(zipFilePath);
-			ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream);
-
-			// a ZipEntry represents a file entry in the zip archive
-			// We name the ZipEntry after the original file's name
+			FileOutputStream fos = new FileOutputStream(zipFilePath);
+			ZipOutputStream zos = new ZipOutputStream(fos);
 			for (int i = 0; i < inputFile.length; i++) {
-				ZipEntry zipEntry = new ZipEntry(inputFile[i].getName());
-				zipOutputStream.putNextEntry(zipEntry);
+				ZipEntry ze = new ZipEntry(inputFile[i].getName());
+				zos.putNextEntry(ze);
+				 in = new FileInputStream(inputFile[i]);
 
-				FileInputStream fileInputStream = new FileInputStream(inputFile[i]);
-				byte[] buf = new byte[1024];
-				int bytesRead;
-
-				// Read the input file by chucks of 1024 bytes
-				// and write the read bytes to the zip stream
-				while ((bytesRead = fileInputStream.read(buf)) > 0) {
-					zipOutputStream.write(buf, 0, bytesRead);
+				int len;
+				while ((len = in.read(buffer)) > 0) {
+					zos.write(buffer, 0, len);
 				}
-
-				// close ZipEntry to store the stream to the file
-				if (i == inputFile.length) {
-					zipOutputStream.closeEntry();
-
-					zipOutputStream.close();
-					fileOutputStream.close();
-				}
-
+				
 			}
+			in.close();
+			zos.closeEntry();
 
-		} catch (IOException e) {
-			e.printStackTrace();
+			zos.close();
+			System.out.println("Hecho");
+		} catch (IOException ex) {
+			ex.printStackTrace();
 		}
 		return zipFilePath;
 	}
