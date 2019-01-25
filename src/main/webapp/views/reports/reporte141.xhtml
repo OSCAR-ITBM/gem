@@ -15,7 +15,7 @@
 				<p:growl id="messagesEdit" showDetail="true" sticky="true" />
 				<p:panel id="idPanel"
 					header="Reportes de Indicadores Semestral de Competencia Laboral del Director de Obras"
-					styleClass="green col-md-11 col-centered row-centered shadow-panel">
+					styleClass="green col-md-8 col-centered row-centered shadow-panel">
 					<p:dataTable id="object" var="objects"
 						value="#{reporte141MB.listPm3811}" binding="#{table}"
 						styleClass="et_datatable" emptyMessage="No hay registros"
@@ -23,7 +23,8 @@
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
 						widgetVar="pm3811Wdg" rowIndexVar="rowIndex">
 						<p:column>
-							<p:panelGrid id="idGrid1" columns="2" style="text-align: left;">
+							<p:panelGrid id="idGrid1" columns="2" style="text-align: left;"
+								styleClass="ui-noborder">
 								<p:row style="text-align: left;">
 									<p:column style="width : 18%; text-align: right;">
 										<h:outputText value="Semestre  " />
@@ -100,7 +101,8 @@
 									</p:column>
 								</p:row>
 							</p:panelGrid> -->
-							<p:panelGrid id="idGrid4">
+							<p:panelGrid id="idGrid4"
+								styleClass="ui-noborder col-centered row-centered">
 								<p:row>
 									<p:column>
 										<p:panel>
