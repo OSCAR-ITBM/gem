@@ -176,7 +176,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Estado Análitico del ejercicio del Presupuesto de Egresos Detallado - LDF]]></text>
+				<text><![CDATA[Estado Análitico del Ejercicio del Presupuesto de Egresos Detallado - LDF]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="30" width="752" height="15" uuid="3ebea3d6-c383-4337-a8bd-69bbe3e7312f"/>
