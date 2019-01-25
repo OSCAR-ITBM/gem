@@ -87,14 +87,14 @@ public class CatalogThemeGrowthMB extends CommonCatalogMB<Cpd> implements Serial
 
 	/** Encabezados reporte de texto plano. */
 	// @Value("${header.text.plain.program.estructure}")
-	protected static final String HEADERS_REPORT_CSV_PLAIN = "Cve Temas,Descripción,Pilar/Eje,No. Pilar/Eje,Tema";
+	protected static final String HEADERS_REPORT_CSV_PLAIN = "Cve Temas,Descripción,Pilar/Eje,No. Pilar/Eje,Tema,Sub Tema";
 
 	/** Nombre del reporte en csv by PL-sql. */
 	// @Value("${file.name.report.txt.estructuraProgramatica}")
 	protected static final String REPORT_NAME_PLAIN_CSV = "catalogThemeGrowth.csv";
 
 	/** Query del reporte en csv by PL-sql. */
-	protected static final String QUERY_STRUCTURA = "select cvetemas || ',\"' || descripcion || '\",' || pe || ', '''|| nope || CASE WHEN NVL(tema,'') <> '' THEN ',''' || tema ELSE ',' END from cpd";
+	protected static final String QUERY_STRUCTURA = "select cvetemas || ',\"' || descripcion || '\",' || pe || ', '''|| nope || CASE WHEN NVL(tema,'') <> '' THEN ',''' || tema ELSE ',' END || '\",''' ||NVL(SUB_TEMA, '') SUB_TEMA  from cpd";
 
 	/**
 	 * Sets the cpd repository.
@@ -233,7 +233,7 @@ public class CatalogThemeGrowthMB extends CommonCatalogMB<Cpd> implements Serial
 	 */
 	@Override
 	protected boolean isValidRequest() {
-		return Boolean.TRUE;
+		return Boolean.TRUE;	
 	}
 
 	/**
