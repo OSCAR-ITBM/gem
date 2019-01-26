@@ -71,7 +71,7 @@ public class GeneraTxtBSImpl implements GeneraTxtBS {
 			fw = new FileWriter(fileSystem);
 			BufferedWriter bw = new BufferedWriter(fw);
 			PrintWriter out = new PrintWriter(bw);
-			listdatos.forEach(datos -> out.print(datos + "\n"));
+			listdatos.forEach(datos -> out.print(datos + "\r\n"));
 
 			out.close();
 			return fileSystem;
