@@ -215,6 +215,8 @@ public class MatrizIndicadoresMB extends AbstractMB {
 	/** The bandera modificar. */
 	private Boolean banderaModificar = new Boolean(false);
 
+	private Boolean bModificar = Boolean.FALSE;
+
 	/** The b adicionar. */
 	private Boolean bAdicionar;
 
@@ -577,10 +579,11 @@ public class MatrizIndicadoresMB extends AbstractMB {
 
 						f.setSectorid(getUserDetails().getIdSector());
 						Finalidad valida = this.finalidadRepository.findOne(FinalidadPredicates.eixtsFinalidad(f));
-						if (null == valida) {
+						if (null == valida || bModificar) {
 							matrizIndicadoresService.saveIndicador(f, 1);
 
 							llenarListaDependencias();
+							bModificar = Boolean.FALSE;
 
 							UtilFront.generateNotificationFront(FacesMessage.SEVERITY_INFO,
 									"Finalidad guardada correctamente", "Finalidad guardada correctamente");
@@ -634,10 +637,10 @@ public class MatrizIndicadoresMB extends AbstractMB {
 						p.setSectorid(getUserDetails().getIdSector());
 						p.setIdRef(0L);
 						Proposito valida = this.propositoRepository.findOne(PropositoPredicates.existeProposito(p));
-						if (null == valida) {
+						if (null == valida || bModificar) {
 							matrizIndicadoresService.saveIndicador(p, 2);
 							llenarListaDependencias();
-
+							this.bModificar = Boolean.FALSE;
 							UtilFront.generateNotificationFront(FacesMessage.SEVERITY_INFO,
 									"Propósito guardado correctamente", "Propósito guardado correctamente");
 							estadoInicialBotonesProposito(rowMaster);
@@ -688,10 +691,10 @@ public class MatrizIndicadoresMB extends AbstractMB {
 						c.setIdRef(0L);
 						c.setSectorid(getUserDetails().getIdSector());
 						Componente valida = this.componenteRepository.findOne(ComponentePredicates.existecomponente(c));
-						if (null == valida) {
+						if (null == valida || bModificar) {
 							matrizIndicadoresService.saveIndicador(c, 3);
 							llenarListaDependencias();
-
+							bModificar = Boolean.FALSE;
 							UtilFront.generateNotificationFront(FacesMessage.SEVERITY_INFO,
 									"Componente guardado correctamente", "Componente guardado correctamente");
 							estadoInicialBotonesComponente(rowMaster);
@@ -745,12 +748,12 @@ public class MatrizIndicadoresMB extends AbstractMB {
 						a.setIdRef(0L);
 						a.setSectorid(getUserDetails().getIdSector());
 						Actividad validar = this.actividadRepository.findOne(ActividadPredicate.existeActividad(a));
-						if (null == validar) {
+						if (null == validar || bModificar) {
 							matrizIndicadoresService.saveIndicador(a, 4);
 
 							// TODO
 							// llenarListaActividad2(rowMaster, rowComp);
-
+							bModificar = Boolean.FALSE;
 							UtilFront.generateNotificationFront(FacesMessage.SEVERITY_INFO,
 									"Actividad guardada correctamente", "Actividad guardada correctamente");
 							estadoInicialBotonesActividad(rowMaster);
@@ -1297,6 +1300,7 @@ public class MatrizIndicadoresMB extends AbstractMB {
 			setFinalidadDisabledReset(false);
 			setFinalidadDisabledCancelar(false);
 			setFinalidadDisabledEditables(false);
+			bModificar = Boolean.TRUE;
 			break;
 		case 2:
 			setPropositoVisibleSalvar(true);
@@ -1306,6 +1310,7 @@ public class MatrizIndicadoresMB extends AbstractMB {
 			setPropositoDisabledReset(false);
 			setPropositoDisabledCancelar(false);
 			setPropositoDisabledEditables(false);
+			bModificar = Boolean.TRUE;
 			break;
 		case 3:
 			setComponenteVisibleSalvar(true);
@@ -1315,6 +1320,7 @@ public class MatrizIndicadoresMB extends AbstractMB {
 			setComponenteDisabledReset(false);
 			setComponenteDisabledCancelar(false);
 			setComponenteDisabledEditables(false);
+			bModificar = Boolean.TRUE;
 			break;
 		case 4:
 			setActividadVisibleSalvar(true);
@@ -1324,6 +1330,7 @@ public class MatrizIndicadoresMB extends AbstractMB {
 			setActividadDisabledReset(false);
 			setActividadDisabledCancelar(false);
 			setActividadDisabledEditables(false);
+			bModificar = Boolean.TRUE;
 			break;
 
 		default:
@@ -1642,6 +1649,7 @@ public class MatrizIndicadoresMB extends AbstractMB {
 	 */
 	public void cancelarCapturaIndicador(Integer rowMaster, Integer rowInd, Integer tipoInd) {
 		MatrizIndicadoresDTO mat = masterList.get(rowMaster);
+		bModificar = Boolean.FALSE;
 		Long id = 0L;
 		switch (tipoInd) {
 

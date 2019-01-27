@@ -114,9 +114,9 @@ public class EAEPEMB extends AbstractMB {
 		ejxpa = ejxpa.substring(0, ejxpa.length() - 2) + " ) DEVENGADO, ";
 		toeje = toeje.substring(0, toeje.length() - 2) + " ) SUBEJERCIDO ";
 
-		sSql.append("SELECT '\"' || RES.PARTIDA||'\"|\"'|| RES.NOMGAS||'\"|\"'|| RES.EGRESO_APROBADO||'\"|\"'|| ")
-				.append("(RES.EGRESO_APROBADO+RES.AMP_RDC)||'\"|\"'|| RES.AMP_RDC||'\"|\"'|| ")
-				.append("RES.DEVENGADO||'\"|\"'|| RES.PAGADO||'\"|\"'|| RES.SUBEJERCIDO	||'\"' ")
+		sSql.append("SELECT '\"' || RES.PARTIDA||'\"|\"'|| RES.NOMGAS||'\"|\"'|| FN_GET_FORMAT_NUMBER(RES.EGRESO_APROBADO)||'\"|\"'|| ")
+				.append("FN_GET_FORMAT_NUMBER(RES.EGRESO_APROBADO+RES.AMP_RDC)||'\"|\"'||FN_GET_FORMAT_NUMBER( RES.AMP_RDC)||'\"|\"'|| ")
+				.append("FN_GET_FORMAT_NUMBER(RES.DEVENGADO)||'\"|\"'|| FN_GET_FORMAT_NUMBER(RES.PAGADO)||'\"|\"'|| FN_GET_FORMAT_NUMBER(RES.SUBEJERCIDO)	||'\"' ")
 				.append("FROM (SELECT P.PARTIDA, N.NOMGAS, ").append(auto).append("SUM(").append(ampli).append("-")
 				.append(redu).append(") AMP_RDC, ").append(ejxpa).append(ejpa).append(toeje)
 				.append("FROM PASO P, NATGAS N WHERE ")

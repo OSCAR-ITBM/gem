@@ -29,6 +29,8 @@ import com.gem.sistema.business.service.reportador.ReportValidationException;
 @ManagedBean(name = "pm3711MB")
 @ViewScoped
 public class Pm3711MB extends BaseDirectReport {
+	
+	private static final String REPORT_NAME = "";
 
 	private List<TcPeriodo> listSemestres;
 	private List<Pm3711DTO> listPm3711;
@@ -180,7 +182,7 @@ public class Pm3711MB extends BaseDirectReport {
 
 	@Override
 	public Map<String, Object> getParametersReports() throws ReportValidationException {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

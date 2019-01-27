@@ -95,7 +95,7 @@ public class ClciPdfMB extends BaseDirectReport {
 		jasperReporteName = "CLCI";
 		endFilename = jasperReporteName + ".pdf";
 		conctb = conctbRepository.findByIdsectorAndIdRef(this.getUserDetails().getIdSector(), 0);
-		listTrimestres = periodoRepository.findByTipoPeriodo(TIPO_PERIODO);
+		listTrimestres = periodoRepository.findByTipoPeriodo(6);
 
 		if (!CollectionUtils.isEmpty(listTrimestres)) {
 			trimestre = listTrimestres.get(0).getPeriodo();
