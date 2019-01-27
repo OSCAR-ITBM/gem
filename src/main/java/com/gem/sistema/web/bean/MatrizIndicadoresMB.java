@@ -1649,6 +1649,7 @@ public class MatrizIndicadoresMB extends AbstractMB {
 	 */
 	public void cancelarCapturaIndicador(Integer rowMaster, Integer rowInd, Integer tipoInd) {
 		MatrizIndicadoresDTO mat = masterList.get(rowMaster);
+		bModificar = Boolean.FALSE;
 		Long id = 0L;
 		switch (tipoInd) {
 
