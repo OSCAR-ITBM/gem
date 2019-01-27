@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CordinadorProteccionCivil" pageWidth="900" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="860" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="04883281-39d9-46a6-9eb9-bef1a5c2af65">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="pN34" class="java.lang.String"/>
 	<parameter name="pL34" class="java.lang.String"/>
@@ -11,18 +11,20 @@
 	<parameter name="imagen" class="java.lang.String"/>
 	<parameter name="municipio" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT 	VAL.ID_ROW,
+		<![CDATA[SELECT *  FROM (SELECT 	VAL.ID_ROW,
 		MAX(DECODE(ETI.NOMBRE, 'TITULO',VAL.VALOR))TITULO,
 		MAX(DECODE(ETI.NOMBRE, 'EXPERIENCIA',VAL.VALOR))  EXPERIENCIA,
 		MAX(DECODE(ETI.NOMBRE, 'CERTIFICACION',VAL.VALOR)) CERTIFICACION,
-		MAX(DECODE(ETI.NOMBRE, 'CURSOS',VAL.VALOR)) CURSO,
-		MAX(DECODE(ETI.NOMBRE, 'FECHAING',VAL.VALOR)) FECHA
+		MAX(DECODE(ETI.NOMBRE, 'CURSO',VAL.VALOR)) CURSO,
+		MAX(DECODE(ETI.NOMBRE, 'FECHAING',TO_DATE(VAL.VALOR, 'DD/MM/YYYY'))) FECHA,
+		MAX(DECODE(ETI.NOMBRE, 'SEMESTRE',VAL.VALOR)) SEMESTRE
 FROM GEMUSER.TC_TABLAS TAB
 		INNER JOIN GEMUSER.TR_ETIQ_TABLAS ETAB ON TAB.ID=ETAB.ID_TABLA  
 		INNER JOIN GEMUSER.TC_ETIQUETAS   ETI  ON ETAB.ID_ETIQUETA=ETI.ID
 		INNER JOIN GEMUSER.TC_VALORES     VAL  ON ETAB.ID=VAL.ID_ETIQ_TABLA 
-WHERE TAB.ID=5  
-GROUP BY VAL.ID_ROW]]>
+WHERE TAB.NOMBRE='PROTECCION'  
+GROUP BY VAL.ID_ROW) T1
+WHERE  T1.SEMESTRE=1]]>
 	</queryString>
 	<field name="ID_ROW" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="ID_ROW"/>
@@ -40,17 +42,20 @@ GROUP BY VAL.ID_ROW]]>
 	<field name="CURSO" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="CURSO"/>
 	</field>
-	<field name="FECHA" class="java.lang.String">
+	<field name="FECHA" class="java.util.Date">
 		<property name="com.jaspersoft.studio.field.label" value="FECHA"/>
+	</field>
+	<field name="SEMESTRE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SEMESTRE"/>
 	</field>
 	<pageHeader>
 		<band height="90" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement x="465" y="75" width="395" height="15" uuid="3219ec01-9ab6-4643-b82b-017c27f02b68"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
+				<reportElement x="465" y="75" width="235" height="15" uuid="3219ec01-9ab6-4643-b82b-017c27f02b68"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Fecha de Ingreso al Cargo: " + $F{FECHA}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Fecha de Ingreso al Cargo: "]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="0" y="75" width="465" height="15" uuid="f222fd01-78aa-4c7a-9116-c19ad00c8fd9"/>
@@ -71,15 +76,22 @@ GROUP BY VAL.ID_ROW]]>
 				<imageExpression><![CDATA[$P{imagen}]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement positionType="Float" x="60" y="0" width="740" height="60" uuid="732f97a4-3e13-4566-88c2-6b66c4db36be"/>
+				<reportElement positionType="Float" x="60" y="0" width="800" height="60" uuid="732f97a4-3e13-4566-88c2-6b66c4db36be"/>
 				<box>
 					<bottomPen lineWidth="2.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[REQUERIMIENTO DE INFORMACIÓN QUE ALIMENTA EL INDICADOR DE COMPETENCIA LABORAL DEL CORDINADOR MUNICIPAL DE PROTECCIÓN CIVIL]]></text>
+				<text><![CDATA[REQUERIMIENTO DE INFORMACIÓN QUE ALIMENTA EL INDICADOR DE COMPETENCIA LABORAL DEL COORDINADOR MUNICIPAL DE PROTECCIÓN CIVIL]]></text>
 			</staticText>
+			<textField pattern="dd &apos;de&apos; MMMM &apos;de&apos; yyyy" isBlankWhenNull="true">
+				<reportElement x="700" y="75" width="160" height="15" uuid="42e23027-2ea5-4271-b018-c0e74f860a55"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHA}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
