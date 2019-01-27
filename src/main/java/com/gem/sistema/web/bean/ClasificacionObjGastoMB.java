@@ -32,7 +32,7 @@ import com.gem.sistema.business.service.reportador.ReportValidationException;
 @ViewScoped
 public class ClasificacionObjGastoMB extends BaseDirectReport {
 	private static final String DOWNLOAD_TXT = " jQuery('#form1\\\\:downTxt').click();";
-	
+
 	private List<TcPeriodo> listTrimestres;
 	private Integer trimestre;
 	private Firmas firmas;
@@ -102,12 +102,12 @@ public class ClasificacionObjGastoMB extends BaseDirectReport {
 				"Se Generó el Archivo: " + pathName.substring(13));
 
 	}
-	
+
 	public void downloadCuentaTxt() {
 		try {
 			this.downloadCuenta();
 			RequestContext.getCurrentInstance().execute(DOWNLOAD_TXT);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -149,7 +149,7 @@ public class ClasificacionObjGastoMB extends BaseDirectReport {
 				.append("(T1.APROBADO + T1.AMPLIACION -T1.REDUCCIONES) - T1.DEVENGADO SUBEJERCICIO ")
 				.append("FROM (SELECT NAT.CLVGAS, NAT.NOMGAS, ").append(auto).append(ampli).append(redu).append(ejxpa)
 				.append(ejpa)
-				.append("FROM PASO PA INNER JOIN NATGAS NAT ON NAT.CLVGAS = PA.PARTIDA AND NAT.IDSECTOR = PA.IDSECTOR ")
+				.append("FROM PASO PA INNER JOIN NATGAS NAT ON NAT.CLVGAS = PA.PARTIDA AND NAT.IDSECTOR = PA.IDSECTOR AND SUBSTR(PA.PARTIDA, 3, 2) = '00' ")
 				.append("WHERE  PA.IDSECTOR = ").append(sector).append(" AND SUBSTR(PA.PARTIDA,4,1)<>'0' AND ")
 				.append("SUBSTR(PA.PROGRAMA,13,3)>='101' AND SUBSTR(PA.PROGRAMA,13,3)<='113' OR ")
 				.append("SUBSTR(PA.PROGRAMA,13,3)>='201' AND SUBSTR(PA.PROGRAMA,13,3)<='202' ")
@@ -159,7 +159,7 @@ public class ClasificacionObjGastoMB extends BaseDirectReport {
 				.append("(T1.APROBADO + T1.AMPLIACION -T1.REDUCCIONES) - T1.DEVENGADO SUBEJERCICIO "
 						+ "FROM (SELECT NAT.CLVGAS, NAT.NOMGAS, ")
 				.append(auto).append(ampli).append(redu).append(ejxpa).append(ejpa)
-				.append("FROM PASO PA INNER JOIN NATGAS NAT ON NAT.CLVGAS = PA.PARTIDA AND NAT.IDSECTOR = PA.IDSECTOR ")
+				.append("FROM PASO PA INNER JOIN NATGAS NAT ON NAT.CLVGAS = PA.PARTIDA AND NAT.IDSECTOR = PA.IDSECTOR AND SUBSTR(PA.PARTIDA, 3, 2) = '00' ")
 				.append("WHERE  PA.IDSECTOR = ").append(sector).append(" AND SUBSTR(PA.PARTIDA,4,1)<>'0' AND ")
 				.append("SUBSTR(PA.PROGRAMA,13,3)>='203' AND SUBSTR(PA.PROGRAMA,13,3)<='225' OR ")
 				.append("SUBSTR(PA.PROGRAMA,13,3)>='114' AND SUBSTR(PA.PROGRAMA,13,3)<='115' ")
