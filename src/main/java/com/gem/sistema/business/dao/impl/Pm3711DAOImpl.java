@@ -161,10 +161,11 @@ public class Pm3711DAOImpl implements Pm3711DAO {
 				System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
 
 				Long idEt = this.trEtqTablasRepository.findByEtiqueta(entry.getKey().toUpperCase(), 1);
+				System.out.println("ID ETIQUETA : " + idEt);
 				if (!entry.getKey().equals("idEtq")) {
 
 					tcValores.setValor(entry.getValue().toString());
-					
+
 					if (entry.getKey().equals("fechaIng")) {
 						tcValores.setValor(getFormatDate(entry.getValue().toString()));
 					}
@@ -196,6 +197,7 @@ public class Pm3711DAOImpl implements Pm3711DAO {
 	@Override
 	public List<Pm3711DTO> modificar(Pm3711DTO pm3711dto) {
 		String sSql;
+		String val;
 		Integer idRow = trEtqTablasRepository.getIdRow(pm3711dto.getSemestre().toString());
 		try {
 			map = GetValuesClassUtils.getFieldNamesAndValues(pm3711dto, false);
@@ -203,11 +205,15 @@ public class Pm3711DAOImpl implements Pm3711DAO {
 				System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
 
 				Long idEt = this.trEtqTablasRepository.findByEtiqueta(entry.getKey().toUpperCase(), 1);
+				System.out.println("id etiq:: " + idEt);
+				System.out.println("id etiq:: " + idEt);
 				if (!entry.getKey().equals("idEtq")) {
-
-					sSql = " UPDATE TC_VALORES \n" + "      SET VALOR = '" + entry.getValue().toString() + "'\n"
-							+ "    WHERE ID_ETIQ_TABLA = " + idEt + "\n" + "      AND ID_ROW = " + idRow
-							+ +tcValores.getIdRow();
+					val = entry.getValue().toString();
+					if (entry.getKey().equals("fechaIng")) {
+						val = getFormatDate(entry.getValue().toString());
+					}
+					sSql = " UPDATE TC_VALORES \n" + "      SET VALOR = '" + val + "'\n" + "    WHERE ID_ETIQ_TABLA = "
+							+ idEt + "\n" + "      AND ID_ROW = " + idRow;
 					jdbcTemplate.update(sSql);
 				}
 
