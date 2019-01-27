@@ -56,7 +56,7 @@
 										<f:convertDateTime pattern="dd/MM/yyyy" />
 									</h:outputText>
 
-								<!-- 	<p:calendar value="#{entity.fechaIng}" id="fechaIng"
+									<!-- 	<p:calendar value="#{entity.fechaIng}" id="fechaIng"
 										rendered="#{pm3711MB.editando}" pattern="dd/MM/yyyy"
 										showOn="button" size="10" maxlength="10" mask="true"
 										converterMessage="La fecha debe ser en fomato de dd/MM/aaaa">
@@ -64,10 +64,10 @@
 										<p:ajax event="change" update="fechaIng" />
 										<f:convertDateTime pattern="dd/MM/yyyy" for="fechaIng" />
 									</p:calendar> -->
-									
-									<p:calendar id="fechaIng" showOn="button" locale="es" rendered="#{pm3711MB.editando}"
-										size="10" pattern="dd/MM/yyyy" mask="true" maxlength="10"
-										required="true"
+
+									<p:calendar id="fechaIng" showOn="button" locale="es"
+										rendered="#{pm3711MB.editando}" size="10" pattern="dd/MM/yyyy"
+										mask="true" maxlength="10" required="true"
 										requiredMessage="Seleccione una fecha"
 										value="#{entity.fechaIng}"
 										converterMessage="La fecha debe ser en fomato de dd/MM/aaaa">
@@ -86,11 +86,17 @@
 									<p:outputLabel value="#{entity.titulo == 1 ? 'Si': 'No'}"
 										id="lbltitulo" rendered="#{!pm3711MB.editando}" />
 
-									<p:selectOneButton value="#{entity.titulo}" id="hasTitulo"
+									<!-- <p:selectOneButton value="#{entity.titulo}" id="hasTitulo"
 										rendered="#{pm3711MB.editando}">
 										<f:selectItem itemLabel="Si" itemValue="1" />
 										<f:selectItem itemLabel="No" itemValue="0" />
-									</p:selectOneButton>
+									</p:selectOneButton> -->
+
+									<p:selectOneRadio value="#{entity.titulo}" id="hasTitulo"
+										rendered="#{pm3711MB.editando}">
+										<f:selectItem itemLabel="Si" itemValue="1" />
+										<f:selectItem itemLabel="No" itemValue="0" />
+									</p:selectOneRadio>
 								</p:column>
 							</p:row>
 
@@ -102,11 +108,16 @@
 								<p:column>
 									<h:outputText value="#{entity.experiencia == 1 ? 'Si': 'No'}"
 										id="lblExperiencia" rendered="#{!pm3711MB.editando}" />
-									<p:selectOneButton value="#{entity.experiencia}"
+									<!-- 	<p:selectOneButton value="#{entity.experiencia}"
 										id="hasExperiencia" rendered="#{pm3711MB.editando}">
 										<f:selectItem itemLabel="Si" itemValue="1" />
 										<f:selectItem itemLabel="No" itemValue="0" />
-									</p:selectOneButton>
+									</p:selectOneButton> -->
+									<p:selectOneRadio value="#{entity.experiencia}"
+										id="hasExperiencia" rendered="#{pm3711MB.editando}">
+										<f:selectItem itemLabel="Si" itemValue="1" />
+										<f:selectItem itemLabel="No" itemValue="0" />
+									</p:selectOneRadio>
 								</p:column>
 
 							</p:row>
@@ -118,11 +129,11 @@
 								<p:column>
 									<h:outputText value="#{entity.certificacion == 1 ? 'Si': 'No'}"
 										id="lblCertificado" rendered="#{!pm3711MB.editando}" />
-									<p:selectOneButton value="#{entity.certificacion}"
-										id="hasCertficacion" rendered="#{pm3711MB.editando}">
+									<p:selectOneRadio value="#{entity.certificacion}"
+										id="hasCertificado" rendered="#{pm3711MB.editando}">
 										<f:selectItem itemLabel="Si" itemValue="1" />
 										<f:selectItem itemLabel="No" itemValue="0" />
-									</p:selectOneButton>
+									</p:selectOneRadio>
 								</p:column>
 							</p:row>
 
