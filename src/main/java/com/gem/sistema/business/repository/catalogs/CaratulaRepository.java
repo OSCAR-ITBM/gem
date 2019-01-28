@@ -41,7 +41,5 @@ public interface CaratulaRepository extends PagingAndSortingRepository<Caratula,
 	
 
 	
-
-	
 	
 }

@@ -87,6 +87,15 @@ public class CaratulaPredicates {
 		return QCaratula.caratula.cuenta.eq(cuenta);
 	}
 	
+	public static Predicate existsAccountAndScta(final String cuenta, final String scta) {
+		Predicate p = null;
+		if(StringUtils.isEmpty(scta)) {
+			return QCaratula.caratula.cuenta.eq(cuenta).and(QCaratula.caratula.scta.eq(StringUtils.EMPTY));
+		}else {
+			return QCaratula.caratula.cuenta.eq(cuenta).and(QCaratula.caratula.scta.eq(scta));
+		}
+	}
+	
 	/**
 	 * Find by accoun composite.
 	 *
