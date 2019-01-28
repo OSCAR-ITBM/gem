@@ -2,7 +2,7 @@
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OficialMediador" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1e24d539-77b6-4747-8ada-056d067ff356">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="gemLocal"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
 	<parameter name="pImagen" class="java.lang.String"/>
 	<parameter name="pMunicipio" class="java.lang.String"/>
 	<parameter name="pDay" class="java.lang.Integer"/>
@@ -14,11 +14,11 @@
 	<queryString language="SQL">
 		<![CDATA[SELECT * FROM (SELECT  TV.ID_ROW,
         MAX(DECODE(TE.NOMBRE, 'SEMESTRE', TV.VALOR, NULL)) SEMESTRE,
-        MAX(DECODE(TE.NOMBRE, 'FECHAING', TV.VALOR, NULL)) FECHAING,
+        MAX(DECODE(TE.NOMBRE, 'FECHAING', TO_DATE(TV.VALOR,'DD/MM/YYYY'), NULL)) FECHAING,
         MAX(DECODE(TE.NOMBRE, 'IDSECTOR', TV.VALOR, NULL)) ID_SECTOR,
         MAX(DECODE(TE.NOMBRE, 'IDANIO', TV.VALOR, NULL)) ID_ANIO,
         MAX(DECODE(TE.NOMBRE, 'CERTIFICACION', TV.VALOR, NULL)) CERTIFICACION,
-        MAX(DECODE(TE.NOMBRE, 'EXPERIENCIA', TV.VALOR, NULL)) EXPERIENCIA,
+        MAX(DECODE(TE.NOMBRE, 'ESTUDIOS', TV.VALOR, NULL)) EXPERIENCIA,
         MAX(DECODE(TE.NOMBRE, 'TITULO', TV.VALOR,NULL)) TITULO
     FROM TR_ETIQ_TABLAS AS ET
         INNER JOIN TC_ETIQUETAS AS TE ON ET.ID_ETIQUETA = TE.ID
@@ -29,14 +29,21 @@ WHERE 1=1
     AND TT.NOMBRE = 'MEDIADOR'
 GROUP BY TV.ID_ROW) T1 WHERE SEMESTRE=$P{pSemestre}]]>
 	</queryString>
+	<field name="ID_ROW" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ID_ROW"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="TC_VALORES"/>
+	</field>
 	<field name="SEMESTRE" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="SEMESTRE"/>
 	</field>
-	<field name="FECHAING" class="java.lang.String">
+	<field name="FECHAING" class="java.sql.Timestamp">
 		<property name="com.jaspersoft.studio.field.label" value="FECHAING"/>
 	</field>
 	<field name="ID_SECTOR" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="ID_SECTOR"/>
+	</field>
+	<field name="ID_ANIO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ID_ANIO"/>
 	</field>
 	<field name="CERTIFICACION" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="CERTIFICACION"/>
@@ -54,7 +61,7 @@ GROUP BY TV.ID_ROW) T1 WHERE SEMESTRE=$P{pSemestre}]]>
 				<imageExpression><![CDATA[$P{pImagen}]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="60" y="0" width="632" height="60" uuid="297f8ddb-fe14-4836-96eb-b1f40ccdff95"/>
+				<reportElement x="60" y="0" width="692" height="60" uuid="297f8ddb-fe14-4836-96eb-b1f40ccdff95"/>
 				<box>
 					<bottomPen lineWidth="2.5"/>
 				</box>
@@ -87,7 +94,7 @@ GROUP BY TV.ID_ROW) T1 WHERE SEMESTRE=$P{pSemestre}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[" AL " +$P{pDay} +  " DE " + $P{pMes} + " DE " + $P{pYear}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
+			<textField pattern="dd &apos;de&apos; MMMM &apos;de&apos; yyyy" isBlankWhenNull="true">
 				<reportElement x="502" y="80" width="250" height="20" uuid="7ec9b489-e259-48ee-845c-525c1b455f40"/>
 				<box>
 					<bottomPen lineWidth="1.0"/>
@@ -130,7 +137,7 @@ GROUP BY TV.ID_ROW) T1 WHERE SEMESTRE=$P{pSemestre}]]>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
 				</textElement>
-				<text><![CDATA[Favor de indentificar sicuenta con los siguientes aspectos de evaluació:]]></text>
+				<text><![CDATA[Favor de indentificar sicuenta con los siguientes aspectos de evaluación:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="180" y="23" width="50" height="49" uuid="f96b689c-651d-4dd9-8398-4710da28ea93"/>
@@ -245,7 +252,7 @@ GROUP BY TV.ID_ROW) T1 WHERE SEMESTRE=$P{pSemestre}]]>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
 				</textElement>
-				<text><![CDATA[Estudios en Materia de Mediacion]]></text>
+				<text><![CDATA[Estudios en Materia de Mediación]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="60" width="180" height="48" uuid="f7dce0f4-7cef-4fac-b207-d3d3bea9cf06">
