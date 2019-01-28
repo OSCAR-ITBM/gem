@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PbRM01e" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="347f82c7-291b-481e-95e2-cd74ada78bed">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PbRM01e" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="347f82c7-291b-481e-95e2-cd74ada78bed">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="gemServer"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<parameter name="pIdSector" class="java.lang.Integer"/>
 	<parameter name="pImagenPath" class="java.lang.String"/>
 	<parameter name="pAnio" class="java.lang.Integer"/>
@@ -93,7 +93,7 @@ ORDER BY MA.CLVDEPG,
 	<variable name="v_Programa" class="java.lang.String">
 		<variableExpression><![CDATA[$F{PROGRAMA}]]></variableExpression>
 	</variable>
-	<group name="GroupMaster" isStartNewPage="true" isReprintHeaderOnEachPage="true">
+	<group name="GroupMaster">
 		<groupExpression><![CDATA[$F{GRUPO}]]></groupExpression>
 		<groupHeader>
 			<band height="120">
@@ -103,6 +103,7 @@ ORDER BY MA.CLVDEPG,
 					</reportElement>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font fontName="Arial" size="10" isBold="true"/>
+						<paragraph rightIndent="3"/>
 					</textElement>
 					<text><![CDATA[Programa Presupuestario:]]></text>
 				</staticText>
@@ -112,6 +113,7 @@ ORDER BY MA.CLVDEPG,
 					</reportElement>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font fontName="Arial" size="10" isBold="true"/>
+						<paragraph rightIndent="3"/>
 					</textElement>
 					<text><![CDATA[Objetivo del Programa Presupuestario:]]></text>
 				</staticText>
@@ -121,6 +123,7 @@ ORDER BY MA.CLVDEPG,
 					</reportElement>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font fontName="Arial" size="10" isBold="true"/>
+						<paragraph rightIndent="3"/>
 					</textElement>
 					<text><![CDATA[Dependencia General:]]></text>
 				</staticText>
@@ -130,6 +133,7 @@ ORDER BY MA.CLVDEPG,
 					</reportElement>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font fontName="Arial" size="10" isBold="true"/>
+						<paragraph rightIndent="3"/>
 					</textElement>
 					<text><![CDATA[Pilar Temático o Eje Transversal:]]></text>
 				</staticText>
@@ -139,6 +143,7 @@ ORDER BY MA.CLVDEPG,
 					</reportElement>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font fontName="Arial" size="10" isBold="true"/>
+						<paragraph rightIndent="3"/>
 					</textElement>
 					<text><![CDATA[Tema de Desarrollo:]]></text>
 				</staticText>
@@ -149,9 +154,9 @@ ORDER BY MA.CLVDEPG,
 					<textElement verticalAlignment="Middle">
 						<font fontName="Arial" size="9"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{PROGRAMA}  + " " + $F{CAMPO6}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{PROGRAMA}==("null") ? "" :  ($F{PROGRAMA})  + " " + $F{CAMPO6}==("null") ?  "":($F{CAMPO6})]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="true">
+				<textField evaluationTime="Group" evaluationGroup="GroupMaster" isBlankWhenNull="true">
 					<reportElement x="190" y="25" width="560" height="15" uuid="c0b13111-69f9-4fa6-997d-752f3f24b45a">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
@@ -160,32 +165,32 @@ ORDER BY MA.CLVDEPG,
 					</textElement>
 					<textFieldExpression><![CDATA[$F{OBJETIVO}]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="true">
-					<reportElement x="190" y="40" width="560" height="15" uuid="585ef272-99b8-4d6b-99f5-3287d16569f7">
+				<textField evaluationTime="Group" evaluationGroup="GroupMaster" isBlankWhenNull="true">
+					<reportElement x="190" y="40" width="560" height="15" isRemoveLineWhenBlank="true" uuid="585ef272-99b8-4d6b-99f5-3287d16569f7">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Arial" size="9"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{CLVDEPG} + " " +  $F{NOMBRE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CLVDEPG}==("null") ? "" :  ($F{CLVDEPG}) + " " + $F{NOMBRE}==("null") ?  "":($F{NOMBRE})]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="true">
+				<textField evaluationTime="Group" evaluationGroup="GroupMaster" isBlankWhenNull="true">
 					<reportElement x="190" y="55" width="560" height="15" uuid="f6ef8971-8284-4df5-aabb-3d89c5116ffa">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Arial" size="9"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{PTEMATICO}+ " " +  $F{NOMPILAR}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{PTEMATICO}==("null") ? "" :  ($F{PTEMATICO}) + " " + $F{NOMPILAR}==("null") ?  "":($F{NOMPILAR})]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="true">
+				<textField evaluationTime="Group" evaluationGroup="GroupMaster" isBlankWhenNull="true">
 					<reportElement x="190" y="70" width="560" height="15" uuid="dc1e4ccd-74c2-425f-bddc-d27408c3609e">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Arial" size="9"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{TEMA}+ "  " +  $F{NOMTEMA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{TEMA}==("null") ? "" :  ($F{TEMA}) + " " + $F{NOMTEMA}==("null") ?  "":($F{NOMTEMA})]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="30" y="100" width="120" height="20" backcolor="#D6D6D6" uuid="425a9f63-6fe0-4629-a539-67db9b57b92c">
@@ -265,7 +270,7 @@ ORDER BY MA.CLVDEPG,
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
-					<text><![CDATA[MEDIOS DE VERIFICACIÓN	 ]]></text>
+					<text><![CDATA[MEDIOS DE VERIFICACIÓN]]></text>
 				</staticText>
 				<staticText>
 					<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="630" y="100" width="120" height="20" backcolor="#D6D6D6" uuid="83c98e59-e228-451f-b10c-aafc4384d29b">
@@ -281,16 +286,16 @@ ORDER BY MA.CLVDEPG,
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
-					<text><![CDATA[SUPUESTOS	 ]]></text>
+					<text><![CDATA[SUPUESTOS]]></text>
 				</staticText>
-				<textField isBlankWhenNull="true">
+				<textField evaluationTime="Group" evaluationGroup="GroupMaster" isBlankWhenNull="true">
 					<reportElement x="190" y="85" width="560" height="15" uuid="c7358afe-a77a-43e2-bc69-2daba363e5d9">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Arial" size="9"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{SUBTEMA} + " "+ $F{NOMSUBTEMA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{SUBTEMA}==("null") ? "" :  ($F{SUBTEMA}) + " " + $F{NOMSUBTEMA}==("null") ?  "":($F{NOMSUBTEMA})]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="0" y="85" width="190" height="15" uuid="aa1fdc7d-75de-4ce0-ad76-3757b6312b9f">
@@ -298,6 +303,7 @@ ORDER BY MA.CLVDEPG,
 					</reportElement>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font fontName="Arial" size="10" isBold="true"/>
+						<paragraph rightIndent="3"/>
 					</textElement>
 					<text><![CDATA[SubTema de Desarrollo:]]></text>
 				</staticText>
