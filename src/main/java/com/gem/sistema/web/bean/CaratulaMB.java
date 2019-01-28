@@ -1,7 +1,10 @@
 package com.gem.sistema.web.bean;
 
+import static com.gem.sistema.util.UtilFront.generateNotificationFront;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -13,6 +16,7 @@ import javax.faces.event.ActionEvent;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.datatable.DataTable;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.LazyDataModel;
@@ -20,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.gem.sistema.business.domain.Caratula;
+import com.gem.sistema.business.predicates.CaratulaPredicates;
 import com.gem.sistema.business.repository.catalogs.CaratulaRepository;
 
 // TODO: Auto-generated Javadoc
@@ -40,6 +45,11 @@ public class CaratulaMB implements Serializable {
 	/** Constante para utilizar el log de la aplicacion. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(CaratulaMB.class);
 
+	/** The Constant EDIT_FLOW_ROW_JQUERY. */
+	private static final String EDIT_FLOW_ROW_JQUERY = "jQuery('#form1\\\\:objects span.ui-icon-pencil').eq(%1$s).each(function(){jQuery(this).click()});";
+
+	private static final String FOCUS_FLOW_CLVFLU_ROW_JQUERY = "PrimeFaces.focus('form1:%1$s:oclvflu');";
+
 	/** The caratula data model. */
 	@ManagedProperty(value = "#{caratulaDataModel}")
 	private LazyDataModel<Caratula> caratulaDataModel;
@@ -49,6 +59,10 @@ public class CaratulaMB implements Serializable {
 
 	/** The caratula aux. */
 	private Caratula caratulaAux;
+	
+	private List<Caratula> listCaratula;
+
+	private Boolean bEdicion;
 
 	/** The caratula repository. */
 	@ManagedProperty(value = "#{caratulaRepository}")
@@ -190,6 +204,57 @@ public class CaratulaMB implements Serializable {
 		// TODO pendiente de implementar
 	}
 
+	public void onInitRowEdit(final RowEditEvent event) {
+		selectedCaratula = (Caratula) event.getObject();
+		if (null != event.getObject()) {
+
+			if (null != selectedCaratula.getId() && selectedCaratula.getId() != 0) {
+				this.bEdicion = Boolean.TRUE;
+			} else {
+				this.bEdicion = Boolean.FALSE;
+			}
+			// this.activateRowEditFlow(selectedCaratula.getIndex());
+		}
+	}
+
+	public void addRow() {
+		selectedCaratula =new Caratula();
+		
+		selectedCaratula.setCuenta("");
+		selectedCaratula.setScta("");
+		selectedCaratula.setNombre("");
+		selectedCaratula.setAutoi1(BigDecimal.ZERO);
+		selectedCaratula.setAutoi2(BigDecimal.ZERO);
+		selectedCaratula.setAutoi3(BigDecimal.ZERO);
+		
+		listCaratula = ((List<Caratula>) caratulaDataModel.getWrappedData());
+		listCaratula.add(selectedCaratula);
+		caratulaDataModel.setWrappedData(listCaratula);
+	}
+	
+	public void onRowEdit(RowEditEvent event) {
+		selectedCaratula = (Caratula) event.getObject();
+		selectedCaratula.setScta(StringUtils.leftPad(selectedCaratula.getScta(), 10, "0"));
+
+		if (bEdicion) {
+			this.caratulaRepository.save(selectedCaratula);
+			generateNotificationFront(FacesMessage.SEVERITY_INFO, "Información!",
+					"¡El registro se ha actualizado correctamente!");
+		} else {
+			Caratula valida = this.caratulaRepository.findOne(
+					CaratulaPredicates.existsAccountAndScta(selectedCaratula.getCuenta(), selectedCaratula.getScta()));
+
+			if (null == valida) {
+				this.caratulaRepository.save(selectedCaratula);
+				generateNotificationFront(FacesMessage.SEVERITY_INFO, "Información!",
+						"¡El registro se ha guardado correctamente!");
+			} else
+				generateNotificationFront(FacesMessage.SEVERITY_INFO, "Información!", "¡La Cuenta y Scta ya existe!");
+
+		}
+
+	}
+
 	/**
 	 * On cell edit.
 	 *
@@ -219,6 +284,33 @@ public class CaratulaMB implements Serializable {
 							oDetail.getScta()));
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
+	}
+
+	public void activateRowEditFlow(final int index) {
+		LOGGER.info(":: Cerrar cuadro de dialogo ");
+		final StringBuilder text = new StringBuilder();
+		text.append(String.format(EDIT_FLOW_ROW_JQUERY, index));
+		// text.append(index);
+		// text.append(VIEW_EDIT_ROW_ACTIVATE_PENCIL_COMPLEMENT);
+		text.append(" ");
+		text.append(String.format(FOCUS_FLOW_CLVFLU_ROW_JQUERY, index));
+		RequestContext.getCurrentInstance().execute(text.toString());
+	}
+
+	public Boolean getbEdicion() {
+		return bEdicion;
+	}
+
+	public void setbEdicion(Boolean bEdicion) {
+		this.bEdicion = bEdicion;
+	}
+
+	public List<Caratula> getListCaratula() {
+		return listCaratula;
+	}
+
+	public void setListCaratula(List<Caratula> listCaratula) {
+		this.listCaratula = listCaratula;
 	}
 
 }

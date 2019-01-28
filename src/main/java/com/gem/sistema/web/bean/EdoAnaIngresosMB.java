@@ -102,8 +102,8 @@ public class EdoAnaIngresosMB extends AbstractMB {
 		abonos = abonos.substring(0, abonos.length() - 2) + " ) ";
 		ingreso = ingreso.substring(0, ingreso.length() - 2) + " ) ESTIMADO, ";
 
-		sSql.append("SELECT '\"'||CONS.CUENTA||'\"|\"'||CONS.SCTA ||'\"|\"'||CONS.SSCTA ||'\"|\"'||")
-				.append("CONS.SSCTA || '\"|\"'||TRIM(CONS.NOM_CUENTA)|| '\"|\"'||")
+		sSql.append("SELECT '\"'||CONS.CUENTA||'\"|\"'||TRIM(LEADING '0' FROM CONS.SCTA) ||'\"|\"'||TRIM(BOTH '0' FROM CONS.SSCTA) ||'\"|\"'||")
+				.append("TRIM(BOTH '0' FROM CONS.SSSCTA) || '\"|\"'||CONS.NOM_CUENTA|| '\"|\"'||")
 				.append("FN_GET_FORMAT_NUMBER(CONS.ESTIMADO) || '\"|\"' ||")
 				.append("FN_GET_FORMAT_NUMBER(CONS.AMP_REDU) || '\"|\"' ||")
 				.append("FN_GET_FORMAT_NUMBER(CONS.ESTIMADO+CONS.AMP_REDU) || '\"|\"'||")

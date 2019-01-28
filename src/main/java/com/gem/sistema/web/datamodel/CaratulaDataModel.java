@@ -64,6 +64,13 @@ public class CaratulaDataModel extends CustomPagingModel<Caratula> {
 
 	}
 
+	protected List<Caratula> addRow(Pageable pageable){
+		 List<Caratula> list = this.fetchData(pageable);
+		 list.add(new Caratula());
+		return list;
+	}
+	
+	
 	/*
 	 * (non-Javadoc)
 	 * 

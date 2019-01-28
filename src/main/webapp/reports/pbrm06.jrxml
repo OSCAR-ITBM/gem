@@ -2,7 +2,7 @@
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pbrm06" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="343de2e2-4d3d-4d60-a7b4-545596eb1085">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
 	<parameter name="pImage" class="java.lang.String"/>
 	<parameter name="pImage2" class="java.lang.String"/>
 	<parameter name="pYear" class="java.lang.Integer"/>
@@ -15,9 +15,10 @@
 	<parameter name="pL2" class="java.lang.String"/>
 	<parameter name="pL1" class="java.lang.String"/>
 	<parameter name="pIdSector" class="java.lang.Integer"/>
+	<parameter name="pFechaCreacion" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT PA.PARTIDA CUENTA,
-	   NA.NOMGAS NOMCUENTA,
+		<![CDATA[SELECT  PA.PARTIDA CUENTA,
+	  NA.NOMGAS NOMCUENTA,	  
 	   SUBSTR (PA.PROGRAMA,1,2)FIN ,
 	   SUBSTR (PA.PROGRAMA,3,2)FUN,
 	   SUBSTR (PA.PROGRAMA,5,2)SFN,
@@ -25,29 +26,38 @@
 	   SUBSTR (PA.PROGRAMA,9,2)SPG,
 	   SUBSTR (PA.PROGRAMA,11,2)PY,
 	   SUBSTR (PA.PROGRAMA,13,2)FF,
-       (PA.AUTO1_1 + PA.AUTO1_2 + PA.AUTO1_3 + PA.AUTO1_4 + PA.AUTO1_5 + 
-        PA.AUTO1_6 + PA.AUTO1_7 + PA.AMPLI1_8 + PA.AMPLI1_9 + PA.AMPLI1_10 +
-        PA.AMPLI1_11 + PA.AMPLI1_12)PREAUTO,
-       PA.AUTO1_1  ENERO,
-       PA.AUTO1_2  FEBRERO,
-       PA.AUTO1_3  MARZO ,
-       PA.AUTO1_4  ABRIL,
-       PA.AUTO1_5  MAYO,
-       PA.AUTO1_6  JUNIO,
-       PA.AUTO1_7  JULIO,
-       PA.AUTO1_8  AGOSTO,
-       PA.AUTO1_9  SEPTIEMBRE,
-       PA.AUTO1_10 OCTUBRE,
-       PA.AUTO1_11 NOVIEMBRE,
-       PA.AUTO1_12 DICIEMBRE
-	  
+      SUM(PA.AUTO1_1 + PA.AUTO1_2 + PA.AUTO1_3 + PA.AUTO1_4 + PA.AUTO1_5 + 
+			PA.AUTO1_6 + PA.AUTO1_7 + PA.AMPLI1_8 + PA.AMPLI1_9 + PA.AMPLI1_10 +
+		  	PA.AMPLI1_11 + PA.AMPLI1_12)PREAUTO,
+      SUM( PA.AUTO1_1)  ENERO,
+       SUM(PA.AUTO1_2)  FEBRERO,
+       SUM(PA.AUTO1_3)  MARZO ,
+      SUM( PA.AUTO1_4)  ABRIL,
+       SUM(PA.AUTO1_5)  MAYO,
+       SUM(PA.AUTO1_6)  JUNIO,
+       SUM(PA.AUTO1_7)  JULIO,
+       SUM(PA.AUTO1_8)  AGOSTO,
+       SUM(PA.AUTO1_9)  SEPTIEMBRE,
+       SUM(PA.AUTO1_10) OCTUBRE,
+       SUM(PA.AUTO1_11) NOVIEMBRE,
+       SUM(PA.AUTO1_12) DICIEMBRE	  
      FROM PASO PA, NATGAS NA
  WHERE PA.PARTIDA BETWEEN 2000 AND 5999 AND
        PA.PARTIDA NOT BETWEEN 4000 AND 4999 AND
-       PA.PARTIDA=NA.CLVGAS AND
-       
-       PA.IDSECTOR=$P{pIdSector}
-     ORDER BY PA.PARTIDA ASC]]>
+       PA.PARTIDA=NA.CLVGAS AND 
+      PA.IDSECTOR=NA.IDSECTOR AND              
+       PA.IDSECTOR=1
+       GROUP BY 
+       PA.PARTIDA ,
+	 NA.NOMGAS,
+	   SUBSTR (PA.PROGRAMA,1,2) ,
+	   SUBSTR (PA.PROGRAMA,3,2),
+	   SUBSTR (PA.PROGRAMA,5,2),
+	   SUBSTR (PA.PROGRAMA,7,2),
+	   SUBSTR (PA.PROGRAMA,9,2),
+	   SUBSTR (PA.PROGRAMA,11,2),
+	   SUBSTR (PA.PROGRAMA,13,2)
+     ORDER BY 3,4,5,6,7,8,9,1 ASC]]>
 	</queryString>
 	<field name="CUENTA" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="CUENTA"/>
@@ -197,7 +207,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="12"/>
 				</textElement>
-				<text><![CDATA[Sistema de Coordinación Hacendaria del Estado de México con sus MUnicipios Manual para la Planeación, Programación y Presupuestación Municipal]]></text>
+				<text><![CDATA[Sistema de Coordinación Hacendaría del Estado de México con sus Municipios Manual para la Planeación, Programación y Presupuestación Municipal]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="60" y="30" width="632" height="30" uuid="c569724e-cfc7-48d8-a5e7-c9803339adc6"/>
@@ -603,15 +613,15 @@
 				<text><![CDATA[Ente Público: ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="567" y="0" width="185" height="20" backcolor="#DFDFDF" uuid="c3d6d4d1-740a-4a49-837d-cfa0655a025a"/>
+				<reportElement mode="Opaque" x="567" y="0" width="74" height="20" backcolor="#DFDFDF" uuid="c3d6d4d1-740a-4a49-837d-cfa0655a025a"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[" No. " + $P{pNumero}]]></textFieldExpression>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" No. " ]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement mode="Opaque" x="138" y="20" width="94" height="15" backcolor="#DFDFDF" uuid="7814b40b-b41e-48ca-8b6a-be67f3b0be86"/>
@@ -639,11 +649,22 @@
 				</textElement>
 				<text><![CDATA[CALENDARIZACIÓN DE ADQUISICIONES]]></text>
 			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="641" y="0" width="111" height="20" backcolor="#DFDFDF" uuid="52191194-10c3-41f5-a953-8a708094a1f0"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[ $P{pNumero}]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="0" y="0" width="30" height="20" uuid="6bcfef4d-dd57-4c81-b0ae-24ce7343a077">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e2ee9e9c-361d-4a53-9add-c10bc9e55293"/>
 				</reportElement>
@@ -658,7 +679,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{CUENTA}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="30" y="0" width="108" height="20" uuid="bce98a41-da1c-45be-a8c1-9c785f087e5e">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bd52797e-0451-4d0e-808a-a6d994a47ddb"/>
 				</reportElement>
@@ -673,7 +694,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NOMCUENTA}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="138" y="0" width="14" height="20" uuid="91336f3c-8ab9-434f-86f7-331c068e3c39">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="841a15ad-5ad3-428b-b556-cbc28444edef"/>
 				</reportElement>
@@ -688,7 +709,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{FIN}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="152" y="0" width="17" height="20" uuid="4e9dab28-0d8a-4976-90fb-944bdd7d2d4f">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6eadda14-a5c4-45a8-a49b-d94ba8de0992"/>
 				</reportElement>
@@ -703,7 +724,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{FUN}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="169" y="0" width="17" height="20" uuid="fa5b108f-0bcf-4e09-b300-fb828fd077d5">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="790584d1-c7d6-4e37-8c5b-9458801a47a9"/>
 				</reportElement>
@@ -718,7 +739,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{SFN}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="186" y="0" width="15" height="20" uuid="de48f3a9-dce8-4f6d-9586-df81a535f92e">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9e7dd262-7b14-49bb-b2f1-536b358b8653"/>
 				</reportElement>
@@ -733,7 +754,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PG}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="201" y="0" width="18" height="20" uuid="fc241791-0a85-4657-96de-70d94efed449">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e5ed4d37-675c-4db9-b553-0dd722431b62"/>
 				</reportElement>
@@ -748,7 +769,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{SPG}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="219" y="0" width="13" height="20" uuid="601bf194-585d-4846-be3f-ecdbfc31294f">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a58fce6b-a3f3-4147-8c74-f790e3555d89"/>
 				</reportElement>
@@ -763,7 +784,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PY}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="232" y="0" width="12" height="20" uuid="fd07e8cd-bff5-44d8-8b99-26f0a5d955ed">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6147aae0-be54-478e-b5dd-b8c41d1b08a6"/>
 				</reportElement>
@@ -975,6 +996,38 @@
 			</textField>
 		</band>
 	</detail>
+	<columnFooter>
+		<band height="20">
+			<textField>
+				<reportElement x="678" y="0" width="37" height="20" uuid="6a761b82-ad6b-4a6f-ac4a-c1bb9c91c5fb"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Hoja" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="715" y="0" width="37" height="20" uuid="e52f0ec4-6958-4da1-bbda-9d466ecf13c8"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="ElementGroupHeight" x="493" y="0" width="111" height="20" isRemoveLineWhenBlank="true" uuid="b71dc1fb-9b24-4d2c-b783-65d3339e8231"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Fecha de elaboracion "]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement stretchType="ElementGroupHeight" x="604" y="0" width="74" height="20" isRemoveLineWhenBlank="true" uuid="8c987739-30e1-475b-85b3-33e498766ca6"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[ new Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
 	<lastPageFooter>
 		<band height="80">
 			<textField isBlankWhenNull="true">
