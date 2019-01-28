@@ -363,7 +363,7 @@ public class CatalogFinancialSourcesMB extends CommonCatalogMB<Fuentef> implemen
 		AND_ID_SECTOR = " and idsector = " + this.getUserDetails().getIdSector();
 		this.setValidatePass("");
 
-		maxLength = 1 == this.getUserDetails().getIdSector() ? 5 : 8;
+		maxLength = 1 == this.getUserDetails().getIdSector() ? 6 : 8;
 	}
 
 	/**
