@@ -82,11 +82,16 @@
 									<p:outputLabel value="#{entity.titulo == 1 ? 'Si': 'No'}"
 										id="lbltitulo" rendered="#{!derechosHumanosMB.bAdicionar}" />
 
-									<p:selectOneButton value="#{entity.titulo}" id="hasTitulo"
+									<!-- <p:selectOneButton value="#{entity.titulo}" id="hasTitulo"
 										rendered="#{derechosHumanosMB.bAdicionar}">
 										<f:selectItem itemLabel="Si" itemValue="1" />
 										<f:selectItem itemLabel="No" itemValue="0" />
-									</p:selectOneButton>
+									</p:selectOneButton> -->
+									<p:selectOneRadio id="hasTitulo" value="#{entity.titulo}"
+										rendered="#{derechosHumanosMB.bAdicionar}">
+										<f:selectItem itemLabel="Si" itemValue="1" />
+										<f:selectItem itemLabel="No" itemValue="0" />
+									</p:selectOneRadio>
 								</p:column>
 							</p:row>
 
@@ -99,11 +104,16 @@
 									<h:outputText value="#{entity.estudios == 1 ? 'Si': 'No'}"
 										id="lblExperiencia"
 										rendered="#{!derechosHumanosMB.bAdicionar}" />
-									<p:selectOneButton value="#{entity.estudios}"
+									<!-- <p:selectOneButton value="#{entity.estudios}"
 										id="hasExperiencia" rendered="#{derechosHumanosMB.bAdicionar}">
 										<f:selectItem itemLabel="Si" itemValue="1" />
 										<f:selectItem itemLabel="No" itemValue="0" />
-									</p:selectOneButton>
+									</p:selectOneButton> -->
+									<p:selectOneRadio id="estudios" value="#{entity.estudios}"
+										rendered="#{derechosHumanosMB.bAdicionar}">
+										<f:selectItem itemLabel="Si" itemValue="1" />
+										<f:selectItem itemLabel="No" itemValue="0" />
+									</p:selectOneRadio>
 								</p:column>
 
 							</p:row>
@@ -123,18 +133,18 @@
 										id="modificar" actionListener="#{derechosHumanosMB.modificar}"
 										rendered="#{derechosHumanosMB.bModificar}"
 										disabled="#{derechosHumanosMB.bUpdate}"
-										update="form1:pnlBotonesCRUD, form1:dataGrid" />
+										update="form1:pnlBotonesCRUD, form1:dataGrid, :form1:msgs" />
 									<p:commandButton value="Salvar" icon="ui-icon-disk" id="salvar"
 										actionListener="#{derechosHumanosMB.save}"
 										rendered="#{derechosHumanosMB.bAdicionar}"
-										update="form1:pnlBotonesCRUD, form1:dataGrid" />
+										update="form1:pnlBotonesCRUD, form1:dataGrid, :form1:msgs" />
 
 									<p:commandButton value="Adicionar" icon="ui-icon-circle-plus"
 										id="adicionar"
 										actionListener="#{derechosHumanosMB.addElement}"
 										rendered="#{derechosHumanosMB.bMostrarAdd}"
 										disabled="#{derechosHumanosMB.bEditar}"
-										update="form1:pnlBotonesCRUD, form1:dataGrid, form1:msgs" />
+										update="form1:pnlBotonesCRUD, form1:dataGrid, :form1:msgs" />
 									<p:commandButton value="Limpiar" icon="ui-icon-circle-plus"
 										id="limpiar" disabled="#{derechosHumanosMB.bLimpiar}"
 										actionListener="#{derechosHumanosMB.reset}"

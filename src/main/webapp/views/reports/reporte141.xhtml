@@ -15,7 +15,7 @@
 				<p:growl id="messagesEdit" showDetail="true" sticky="true" />
 				<p:panel id="idPanel"
 					header="Reportes de Indicadores Semestral de Competencia Laboral del Director de Obras"
-					styleClass="green col-md-11 col-centered row-centered shadow-panel">
+					styleClass="green col-md-8 col-centered row-centered shadow-panel">
 					<p:dataTable id="object" var="objects"
 						value="#{reporte141MB.listPm3811}" binding="#{table}"
 						styleClass="et_datatable" emptyMessage="No hay registros"
@@ -23,12 +23,13 @@
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
 						widgetVar="pm3811Wdg" rowIndexVar="rowIndex">
 						<p:column>
-							<p:panelGrid id="idGrid1" columns="2" style="text-align: left;">
-								<p:row style="text-align: left;">
-									<p:column style="width : 18%; text-align: right;">
+							<p:panelGrid id="idGrid1" style="text-align: left;"
+								styleClass="ui-noborder col-centered row-centered">
+								<p:row>
+									<p:column style="text-align: right;">
 										<h:outputText value="Semestre  " />
 									</p:column>
-									<p:column style="width: 6%; text-align: left;">
+									<p:column style=" text-align: left;">
 										<p:outputLabel id="lblTrimestre" value="#{objects.semestral}"
 											rendered="#{reporte141MB.bLblsemestre}">
 											<f:convertNumber pattern="00" />
@@ -100,17 +101,19 @@
 									</p:column>
 								</p:row>
 							</p:panelGrid> -->
-							<p:panelGrid id="idGrid4">
+							<p:panelGrid id="idGrid4"
+								styleClass="ui-noborder col-centered row-centered">
 								<p:row>
 									<p:column>
 										<p:panel>
-											<p:panelGrid id="idGrid5">
+											<p:panelGrid id="idGrid5"
+												styleClass="ui-noborder col-centered row-centered">
 												<p:row>
-													<p:column style="text-align: left;" colspan="4">
+													<p:column style="text-align: right;">
 														<p:outputLabel
 															value="Fecha de Ingreso al Cargo de Director de Obras" />
 													</p:column>
-													<p:column style="text-align: left;" colspan="6">
+													<p:column style="text-align: left;">
 														<p:outputLabel id="lblFecha" value="#{objects.fecing}"
 															rendered="#{reporte141MB.bLbl}">
 															<f:convertDateTime pattern="dd/MM/yyyy" />
@@ -129,9 +132,9 @@
 													</p:column>
 												</p:row>
 												<p:row>
-													<p:column colspan="4">
+													<p:column style="text-align: right;">
 														<p:outputLabel
-															value="Titulo Profesional en ingeniera, arquitectura o algún área afín" />
+															value="Título Profesional en Ingeniería, Arquitectura o alguna área afin" />
 													</p:column>
 													<p:column style="text-align: left;">
 														<p:outputLabel id="lblMaximo"
@@ -178,7 +181,7 @@
 													</p:column>
 												</p:row> -->
 												<p:row>
-													<p:column style="text-align: left;" colspan="4">
+													<p:column style="text-align: right;">
 														<p:outputLabel
 															value="Experiencia minimo de un año en la materia" />
 													</p:column>
@@ -202,21 +205,25 @@
 													</p:column>
 												</p:row>
 												<p:row>
-													<p:column colspan="4" style="text-align: left;">
+													<p:column style="text-align: right;">
 														<p:outputLabel
-															value="Certificación en Competencia Laboral expedida por el Instituto Hacendario del Estado de México" />
+															value="Certificación en Competencia Laboral Expedida por el Instituto Hacendario del Estado de México" />
 													</p:column>
 
-													<p:column>
+													<p:column style="text-align: left;">
 														<p:outputLabel id="lblsn5" value="#{objects.cert}"
-															rendered="#{reporte141mb.blbl}" />
-														<p:selectOneRadio id="radios4"
-															rendered="#{reporte141mb.btxt}" value="#{objects.cert}">
+															rendered="#{!reporte141MB.bTxt}" />
+
+
+														<p:selectOneRadio id="txtCertificado"
+															onkeypress="if (event.keyCode == 13) {return false;}"
+															rendered="#{reporte141MB.bTxt}" value="#{objects.cert}">
 															<f:selectItem itemLabel="SI" itemValue="SI" />
 															<f:selectItem itemLabel="NO" itemValue="NO" />
 															<p:ajax event="change"
-																listener="#{reporte141mb.activetxt(rowindex, 'cert')}"
+																listener="#{reporte141MB.activeTxt(rowIndex, 'cert')}"
 																update=":form1:object" />
+
 														</p:selectOneRadio>
 													</p:column>
 												</p:row>

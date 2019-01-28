@@ -2,7 +2,7 @@
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ECPEDG" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="28f650fe-8aa5-43ae-be55-c1ce8ba87468">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="gemLocal"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="gemAdapter"/>
 	<parameter name="pImage" class="java.lang.String"/>
 	<parameter name="pMunicipio" class="java.lang.String"/>
 	<parameter name="pLastDay" class="java.lang.Integer"/>
@@ -56,6 +56,9 @@
 	<field name="VAR" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.label" value="VAR"/>
 	</field>
+	<variable name="var" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[ $F{MODIACUM}.compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO: ($F{VARABS}.divide($F{MODIACUM}, 4, RoundingMode.CEILING)).multiply(new BigDecimal(100))]]></variableExpression>
+	</variable>
 	<pageHeader>
 		<band height="80">
 			<textField isBlankWhenNull="true">
@@ -408,7 +411,7 @@
 					<font fontName="Arial" size="10"/>
 					<paragraph rightIndent="1"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{VAR}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{var}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -488,14 +491,14 @@
 				<textFieldExpression><![CDATA[$P{pN2}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="524" y="10" width="151" height="30" uuid="159032d4-4f12-4078-a466-3ce30c0c8261"/>
+				<reportElement x="524" y="10" width="152" height="30" uuid="159032d4-4f12-4078-a466-3ce30c0c8261"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{pL3}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="524" y="40" width="151" height="20" uuid="31d265b8-e79e-459a-a596-a383bcbe1666"/>
+				<reportElement x="524" y="40" width="152" height="20" uuid="31d265b8-e79e-459a-a596-a383bcbe1666"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 				</box>

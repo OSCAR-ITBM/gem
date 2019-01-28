@@ -185,7 +185,7 @@ public class ReporteIGBM22MB extends BaseDirectReport {
 	@PostConstruct
 	public void init() {
 
-		jasperReporteName = "bienesMuebles";
+		jasperReporteName = "ReporteIGBM_22";//bienesMuebles";
 		endFilename = jasperReporteName + ".pdf";
 
 		listsemestre = new ArrayList<String>();
