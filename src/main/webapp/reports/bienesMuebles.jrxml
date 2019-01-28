@@ -8,7 +8,6 @@
 	<parameter name="pMesName" class="java.lang.String"/>
 	<parameter name="pLastDay" class="java.lang.Integer"/>
 	<parameter name="pMesIni" class="java.lang.Integer"/>
-	<parameter name="pMesFin" class="java.lang.Integer"/>
 	<parameter name="pImgMuni" class="java.lang.String"/>
 	<parameter name="pNomMunicipio" class="java.lang.String"/>
 	<parameter name="pNumMunicipio" class="java.lang.String"/>
@@ -54,7 +53,7 @@
 	B.DEPREACUM 
 FROM BIENESM B
  WHERE B.IDSECTOR=  $P{pSector} 
- AND B.MES BETWEEN  $P{pMesIni} AND  $P{pMesFin} 
+ AND B.MES = $P{pMesIni} 
 ORDER BY MES, CONSEC]]>
 	</queryString>
 	<field name="MES" class="java.lang.Integer">
