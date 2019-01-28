@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte142" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="636249bf-8af6-4c11-8fab-3c1337573b4e">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Servidor"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="server adapter"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
@@ -256,7 +256,7 @@ WHERE PM3811.IDSECTOR=$P{idSector} AND
 				</textElement>
 				<text><![CDATA[Remitir fotocopia legible de la misma. Cabe señalar que, conformidad con el articulo 7 del Reglamento de la COCERTEM, la vigencia de la certificación en competencia laboral es de 2 años.]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="210" y="0" width="60" height="45" uuid="0b82ffbd-fd5a-43b2-9604-1f7c1e7d92a2">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ac75388f-c457-4aa7-8a1d-6626ba916225"/>
 				</reportElement>
@@ -267,7 +267,7 @@ WHERE PM3811.IDSECTOR=$P{idSector} AND
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{TITINGOARQ}==("SI")?"X":""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{TITINGOARQ}.equals("SI")?"X":""]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="0" width="210" height="45" uuid="8bc1c0db-bb94-419a-a974-8079995bc020">
@@ -281,9 +281,9 @@ WHERE PM3811.IDSECTOR=$P{idSector} AND
 					<font fontName="Arial"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
-				<text><![CDATA[Titulo en ingenieria, arquitectura o titulo profesional en áreas jurídicas ecónomicas o contable-administrativas o algún área afín.]]></text>
+				<text><![CDATA[Titulo en ingeniería, arquitectura o titulo profesional en áreas jurídicas ecónomicas o contable-administrativas o algún área afín.]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="210" y="45" width="60" height="45" uuid="569c95f5-5cd8-408f-8eb8-de374597f1aa">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="14b1ccbc-c35f-4004-a4fd-545eacb98cce"/>
 				</reportElement>
@@ -294,7 +294,7 @@ WHERE PM3811.IDSECTOR=$P{idSector} AND
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{EXPLAB}==("SI")?"X":""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{EXPLAB}.equals("SI")?"X":""]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="45" width="210" height="45" uuid="99d2581e-5fed-4e73-9e37-96afc07a01c1">
@@ -310,7 +310,7 @@ WHERE PM3811.IDSECTOR=$P{idSector} AND
 				</textElement>
 				<text><![CDATA[Experiencia mínima de un año en la materia.]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="210" y="90" width="60" height="45" uuid="63234e5a-1405-4a79-a23c-bccfefb5ea1a">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9af8187b-92fa-43de-a386-3a2c027278cc"/>
 				</reportElement>
@@ -321,7 +321,7 @@ WHERE PM3811.IDSECTOR=$P{idSector} AND
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{CERT}==("SI")?"X":""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CERT}.equals("SI")?"X":""]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="90" width="210" height="45" uuid="7e37d2c1-7e09-470e-802c-c14266c5c311">
@@ -337,7 +337,7 @@ WHERE PM3811.IDSECTOR=$P{idSector} AND
 				</textElement>
 				<text><![CDATA[Certificación en Comptencia Laboral expedida por el Instituto Hacendario del Estado de México.]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="270" y="0" width="60" height="45" uuid="da37209f-b2a1-49bb-b27f-05f60bbf5cc3">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ac75388f-c457-4aa7-8a1d-6626ba916225"/>
 				</reportElement>
@@ -348,9 +348,9 @@ WHERE PM3811.IDSECTOR=$P{idSector} AND
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{TITINGOARQ}==( "NO" )?"X":""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{TITINGOARQ}.equals( "NO" )?"X":""]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="270" y="45" width="60" height="45" uuid="51448cdf-c941-4b65-b49e-59c5a9597e90">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="14b1ccbc-c35f-4004-a4fd-545eacb98cce"/>
 				</reportElement>
@@ -361,9 +361,9 @@ WHERE PM3811.IDSECTOR=$P{idSector} AND
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{EXPLAB}==( "NO" )?"X":""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{EXPLAB}.equals( "NO" )?"X":""]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="270" y="90" width="60" height="45" uuid="d81b7377-2fa8-4f25-a2a9-11e71103ecdb">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9af8187b-92fa-43de-a386-3a2c027278cc"/>
 				</reportElement>
@@ -374,7 +374,7 @@ WHERE PM3811.IDSECTOR=$P{idSector} AND
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{CERT}==( "NO" )?"X":""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CERT}.equals( "NO" )?"X":""]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
