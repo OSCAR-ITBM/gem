@@ -102,7 +102,7 @@ WHERE T1.SEMESTRE = $P{semestre}]]>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<imageExpression><![CDATA[""]]></imageExpression>
+				<imageExpression><![CDATA[$P{pImage}]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="true">
 				<reportElement x="0" y="112" width="430" height="18" uuid="576c0d66-cebe-4c57-be63-4625736fbc93"/>

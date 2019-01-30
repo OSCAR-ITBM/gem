@@ -136,7 +136,7 @@ public class Reporte26MB extends BaseDirectReport {
 	 */
 	@PostConstruct
 	public void init() {
-		jasperReporteName = "bienesInmuebles";
+		jasperReporteName = "reporte26";
 		endFilename = jasperReporteName + ".pdf";
 
 	}

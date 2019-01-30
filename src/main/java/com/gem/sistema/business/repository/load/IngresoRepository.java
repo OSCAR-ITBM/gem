@@ -75,6 +75,7 @@ public interface IngresoRepository extends PagingAndSortingRepository<Ingreso, L
 	@Procedure(	name = "acumula_ingreso")
  	void executeAcumulaIngreso(@Param("ID_SECTOR") Integer idSector, @Param("USER_ID") String userName );
 
-
+    @Query("select i from Ingreso i where idsector =:idSector order by cuenta, scta, sscta, ssscta, sssscta asc")
+	List<Ingreso> getIngresosByIdsector(@Param("idSector")Long idSector);
 
 }
