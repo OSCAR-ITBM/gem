@@ -9,17 +9,13 @@
 	<parameter name="pYear" class="java.lang.String"/>
 	<parameter name="pL1" class="java.lang.String"/>
 	<parameter name="pN1" class="java.lang.String"/>
-	<parameter name="pDay2" class="java.lang.String"/>
-	<parameter name="pMes2" class="java.lang.String"/>
-	<parameter name="pYear2" class="java.lang.String"/>
-	<parameter name="pFecha" class="java.lang.String"/>
 	<parameter name="pL2" class="java.lang.String"/>
 	<parameter name="pN2" class="java.lang.String"/>
 	<parameter name="pL3" class="java.lang.String"/>
 	<parameter name="pN3" class="java.lang.String"/>
 	<parameter name="pQuery" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[ $P!{pQuery}]]>
+		<![CDATA[$P!{pQuery}]]>
 	</queryString>
 	<field name="CUENTA" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="CUENTA"/>
@@ -115,7 +111,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA["DEL" +$P{pDay} +  " DE " + $P{pMes}+ " DE " + $P{pYear} +" AL " +$P{pDay2} +  " DE " + $P{pMes2} + " DE " + $P{pYear2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["DEL 01 DE ENERO AL " +$P{pDay} +  " DE " + $P{pMes} + " DE " + $P{pYear}]]></textFieldExpression>
 			</textField>
 			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
 				<reportElement x="-1" y="0" width="60" height="60" uuid="f017b3ad-4c5c-4d0e-9ce7-96d906c95478"/>
@@ -388,18 +384,25 @@
 				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="420" y="1" width="222" height="20" uuid="d961047d-1556-4fa5-a72a-b6a0ba4a5579"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA["FECHA DE ELABORACIÒN: "+$P{pFecha}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="0" y="0" width="180" height="20" uuid="3dc47be9-09a8-46b0-807a-4b124f442422"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA["OSFAIM111/10/05"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="0" width="160" height="21" uuid="54137545-bbfb-404b-8469-f42edfd51fa8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["FECHA DE ELABORACIÒN: "]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd &apos;de&apos; MMMM &apos;de&apos; YYYY" isBlankWhenNull="true">
+				<reportElement x="540" y="0" width="80" height="21" uuid="4fb3d83b-a58d-4a6f-a02c-bbda1d0352aa"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
@@ -464,13 +467,6 @@
 				<textFieldExpression><![CDATA["OSFAIM111/10/05"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="420" y="71" width="222" height="20" uuid="953556af-c890-495c-b84a-a6dd789f1852"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA["FECHA DE ELABORACIÒN: "+$P{pFecha}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="642" y="71" width="70" height="20" uuid="76ecfe11-1462-4562-b0af-19e20f991269"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
@@ -483,6 +479,20 @@
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="402" y="71" width="160" height="21" uuid="fde0a39c-4148-40eb-9ddf-c788c879a71f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["FECHA DE ELABORACIÒN: "]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd &apos;de&apos; MMMM &apos;de&apos; YYYY" isBlankWhenNull="true">
+				<reportElement x="562" y="71" width="80" height="21" uuid="471da7bd-fac8-484b-9034-af4bbcb1e897"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>
