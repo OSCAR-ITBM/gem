@@ -16,7 +16,7 @@
 
 			<h:form id="form1">
 				<p:remoteCommand id="updateObjects" name="updateObjects"
-					update=":form1:objects" />
+					actionListener="#{caratulaMB.onPageLoad}" update="@form" />
 				<p:focus context="objects" id="focusTable" />
 
 				<p:dataTable id="objects" var="object"
@@ -28,14 +28,15 @@
 					selection="#{caratulaMB.selectedCaratula}" rowKey="#{object.id}">
 
 					<f:facet name="header">Caratula del presupuesto de Ingresos
-					<!-- <br />
-						<p:commandButton id="add" value="Agregar" actionListener="#{caratulaMB.addRow}" oncomplete="PF('programsWdg').addRow()" process="@this" />
-					 -->
+					 <br />
+						<p:commandButton id="add" value="Agregar"
+							actionListener="#{caratulaMB.addRow}" update=":form1:objects" />
 					</f:facet>
 
 					<p:ajax event="rowEditInit" listener="#{caratulaMB.onInitRowEdit}" />
 					<p:ajax event="rowEdit" listener="#{caratulaMB.onRowEdit}"
 						update="messagesEdit" oncomplete="updateObjects();" />
+					<p:ajax event="rowEditCancel" oncomplete="updateObjects();" />
 
 					<p:column headerText="CTA" width="6%">
 						<p:cellEditor>
@@ -44,7 +45,7 @@
 									value="#{object.cuenta}" />
 							</f:facet>
 							<f:facet name="input">
-								<p:inputText value="#{object.cuenta}" maxlength="4"
+								<p:inputText value="#{object.cuenta}" maxlength="4" id="cuenta"
 									style="width:100%;">
 								</p:inputText>
 							</f:facet>
