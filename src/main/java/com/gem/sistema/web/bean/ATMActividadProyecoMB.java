@@ -29,7 +29,7 @@ import com.gem.sistema.business.service.catalogos.ReporteGenericoService;
 public class ATMActividadProyecoMB extends AbstractMB {
 
 	private static final String DOWNLOAD_TXT = " jQuery('#form1\\\\:downTxt').click();";
-	
+
 	private List<TcPeriodo> listTrimestres;
 	private Integer trimestre;
 	private String nameFile;
@@ -91,36 +91,30 @@ public class ATMActividadProyecoMB extends AbstractMB {
 		String canAvan = "(";
 
 		for (int y = 1; y <= trimestre; y++) {
-			canAvan = canAvan + " RES.CANT_AVAN_" + y + " +";
+			canAvan = canAvan + " DAT.CANT_AVAN_" + y + " +";
 		}
 
 		canAvan = canAvan.substring(0, canAvan.length() - 2) + " ) ACUMULADO ";
 
-		sSql.append("SELECT RES2.UNO|| RES2.PORCENTAJE|| '\"|\"'|| RES2.ACUMULADO|| '\"|\"'||")
-				.append("(RES2.PORCENTAJE-RES2.ACUMULADO)|| '\"|\"'||")
-				.append("FN_GET_FORMAT_NUMBER(DECODE(RES2.PORCENTAJE,'0','0',(RES2.PORCENTAJE/RES2.ACUMULADO)*100))|| '\"' ")
-				.append("FROM (SELECT  '\"'|| RES.LOCBEN || '\"|\"'|| RES.POBBEN || '\"|\"'|| RES.CD1 || '\"|\"'|| ")
-				.append("RES.CD2|| '\"|\"'|| RES.CN1|| '\"|\"'|| RES.CN2|| '\"|\"'|| RES.CN3|| '\"|\"'|| ")
-				.append("RES.CN4|| '\"|\"'|| RES.CN5|| '\"|\"'|| RES.CN6|| '\"|\"'|| RES.CLVMET|| '\"|\"'|| ")
-				.append("RES.NOM_IND|| '\"|\"'|| RES.UNI_MED|| '\"|\"'|| RES.CAN_METI|| '\"|\"'|| ")
-				.append("RES.CAN_METIC|| '\"|\"'|| RES.CANT_AVAN_").append(trimestre).append("|| '\"|\"'|| ")
-				.append("FN_GET_FORMAT_NUMBER(RES.CAN_METIC-RES.CANT_AVAN_").append(trimestre)
-				.append(")|| '\"|\"' UNO, ")
-				.append("FN_GET_FORMAT_NUMBER(DECODE(RES.CAN_METIC,'0','0',((RES.CANT_AVAN_").append(trimestre)
-				.append(" *100)/ (RES.CAN_METIC)))) PORCENTAJE,").append(canAvan)
-				.append(" FROM (SELECT NVL(PN.LOCBEN,'')LOCBEN, PN.POBBEN , SUBSTR(PM.CLVDEP,1,3)CD1, ")
-				.append("SUBSTR(PM.CLVDEP,4,3)CD2, SUBSTR(PM.CLVNEP,1,2)CN1, SUBSTR(PM.CLVNEP,3,2)CN2, ")
-				.append("SUBSTR(PM.CLVNEP,5,2)CN3, SUBSTR(PM.CLVNEP,7,2)CN4, SUBSTR(PM.CLVNEP,9,2)CN5, ")
-				.append("SUBSTR(PM.CLVNEP,11,2)CN6, PM.CLVMET, PM.NOM_IND, NVL(PM.UNI_MED,'')UNI_MED, ")
-				.append("FN_GET_FORMAT_NUMBER(PM.CAN_METI) CAN_METI, FN_GET_FORMAT_NUMBER(PM.CAN_METIC_")
-				.append(trimestre).append(") CAN_METIC,  FN_GET_FORMAT_NUMBER(PM.CANT_AVAN_1) CANT_AVAN_1, ")
-				.append("FN_GET_FORMAT_NUMBER(PM.CANT_AVAN_2) CANT_AVAN_2, ")
-				.append("FN_GET_FORMAT_NUMBER(PM.CANT_AVAN_3) CANT_AVAN_3, ")
-				.append("FN_GET_FORMAT_NUMBER(PM.CANT_AVAN_4) CANT_AVAN_4 ")
-				.append("FROM PP_METT PM,PROGRAMAMUN PN WHERE PN.IDSECTOR = PM.IDSECTOR AND ")
-				.append("SUBSTR(PM.CLVDEP,1,3) = PN.CVEDEPG AND SUBSTR(PM.CLVDEP,4,3) = PN.CVEDEPA AND ")
-				.append("PM.CLVNEP = PN.PROGRAMA AND PN.IDSECTOR= ").append(idSector)
-				.append(" ORDER BY 1,2,3,4 ) RES )RES2");
+		sSql.append("SELECT   '\"'|| RES.CONC || '\"|\"'|| RES.RESTA || '\"|\"'|| RES.PORCENTAJE || '\"|\"'|| ")
+				.append("RES.ACUMULADO || '\"|\"'|| (RES.PORCENTAJE-RES.ACUMULADO) || '\"|\"'|| ")
+				.append("FN_GET_FORMAT_NUMBER(DECODE (0,RES.ACUMULADO,0,RES.PORCENTAJE,0,((RES.PORCENTAJE/RES.ACUMULADO)*100))) || '\"' ")
+				.append("FROM (SELECT DAT.LOCBEN || '\"|\"'|| DAT.POBBEN || '\"|\"'|| DAT.CD1 || '\"|\"'|| DAT.CD2 || '\"|\"'|| ")
+				.append("DAT.CN1 || '\"|\"'|| DAT.CN2 || '\"|\"'|| DAT.CN3 || '\"|\"'|| DAT.CN4 || '\"|\"'|| DAT.CN5 || '\"|\"'|| ")
+				.append("DAT.CN6|| '\"|\"'|| DAT.CLVMET || '\"|\"'|| DAT.NOM_IND|| '\"|\"'|| DAT.UNI_MED|| '\"|\"'|| DAT.CAN_METI || '\"|\"'|| ")
+				.append("DAT.CAN_METIC_2 || '\"|\"'|| DAT.CANT_AVAN_2 CONC, (DAT.CAN_METIC_2-DAT.CANT_AVAN_2) RESTA, ")
+				.append("FN_GET_FORMAT_NUMBER(DECODE(DAT.CAN_METIC_2,0,0, (DAT.CANT_AVAN_2*100)/DAT.CAN_METIC_2)) PORCENTAJE, ")
+				.append(canAvan)
+				.append("FROM (SELECT NVL(PN.LOCBEN,'') LOCBEN , NVL(TO_CHAR(PN.POBBEN),'') POBBEN , SUBSTR(PP.CLVDEP,1,3)CD1 , ")
+				.append("SUBSTR(PP.CLVDEP,4,3)CD2 , SUBSTR(PP.CLVNEP,1,2)CN1 , SUBSTR(PP.CLVNEP,3,2)CN2 , SUBSTR(PP.CLVNEP,5,2)CN3 , ")
+				.append("SUBSTR(PP.CLVNEP,7,2)CN4 , SUBSTR(PP.CLVNEP,9,2)CN5 , SUBSTR(PP.CLVNEP,11,2)CN6, PP.CLVMET , PP.NOM_IND, ")
+				.append("PP.UNI_MED, FN_GET_FORMAT_NUMBER(PP.CAN_METI) CAN_METI, FN_GET_FORMAT_NUMBER(PP.CAN_METIC_1) CAN_METIC_1, ")
+				.append("FN_GET_FORMAT_NUMBER(PP.CAN_METIC_2) CAN_METIC_2, FN_GET_FORMAT_NUMBER(PP.CAN_METIC_3) CAN_METIC_3, ")
+				.append("FN_GET_FORMAT_NUMBER(PP.CAN_METIC_4) CAN_METIC_4, FN_GET_FORMAT_NUMBER(PP.CANT_AVAN_1) CANT_AVAN_1, ")
+				.append("FN_GET_FORMAT_NUMBER(PP.CANT_AVAN_2) CANT_AVAN_2, FN_GET_FORMAT_NUMBER(PP.CANT_AVAN_4) CANT_AVAN_3, ")
+				.append("FN_GET_FORMAT_NUMBER(PP.CANT_AVAN_4) CANT_AVAN_4 FROM PP_METT PP LEFT OUTER JOIN PROGRAMAMUN PN ")
+				.append("ON (PN.CVEDEPG||PN.CVEDEPA)=SUBSTR(PP.CLVDEP,1,6) AND PN.PROGRAMA=PP.CLVNEP AND PN.IDSECTOR=PP.IDSECTOR ")
+				.append("WHERE PP.IDSECTOR = ").append(idSector).append(") DAT)  RES");
 
 		return sSql.toString();
 	}
