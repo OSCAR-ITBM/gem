@@ -1,2 +1,0 @@
-# gem
-CORREGIR PROYECTO gem
