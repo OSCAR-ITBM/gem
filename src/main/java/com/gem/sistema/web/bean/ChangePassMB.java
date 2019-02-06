@@ -76,6 +76,7 @@ public class ChangePassMB extends AbstractMB {
 				if (StringUtils.isNotBlank(newPassword) || StringUtils.isNotBlank(confirmPassword)) {
 					if (bandera) {
 						if (newPassword.equals(confirmPassword)) {
+							tcParametro.setValor(newPassword);
 							this.changePasswordService.save(tcParametro, tcModulosOperacione);
 							newPassword = StringUtils.EMPTY;
 							confirmPassword = StringUtils.EMPTY;
