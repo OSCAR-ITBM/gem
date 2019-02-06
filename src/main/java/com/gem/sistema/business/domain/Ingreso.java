@@ -2,6 +2,9 @@ package com.gem.sistema.business.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.apache.commons.lang3.StringUtils;
+
 import java.math.BigDecimal;
 
 import java.util.Arrays;
@@ -92,22 +95,22 @@ public class Ingreso extends MonthlyAbstractEntity implements Serializable {
 	private String clvfuen;
 
 	/** The cuenta. */
-	private String cuenta;
+	private String cuenta = StringUtils.EMPTY;
 
 	/** The cvetxt. */
-	private String cvetxt;
+	private String cvetxt = StringUtils.EMPTY;
 
 	/** The scta. */
-	private String scta;
+	private String scta = StringUtils.EMPTY;
 
 	/** The sscta. */
-	private String sscta;
+	private String sscta = StringUtils.EMPTY;
 
 	/** The ssscta. */
-	private String ssscta;
+	private String ssscta = StringUtils.EMPTY;
 
 	/** The sssscta. */
-	private String sssscta;
+	private String sssscta = StringUtils.EMPTY;
 
   /** The idsector. */
   private Long idsector;
