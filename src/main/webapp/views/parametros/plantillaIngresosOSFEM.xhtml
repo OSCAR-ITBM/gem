@@ -11,7 +11,7 @@
 <h:body>
 	<ui:composition template="/WEB-INF/layout/layout.xhtml">
 		<ui:define name="content">
-			<h:form id="form1">
+			<h:form id="form1" enctype="multipart/form-data">
 				<p:growl id="msgs" showDetail="true" />
 				<p:commandButton style="display: none;" id="hiddenUpdate"
 					name="hiddenUpdate"
@@ -20,15 +20,37 @@
 				<p:remoteCommand id="lasPage" name="lastPage"
 					oncomplete="activeRow(#{plantillaIngresosOsfemMB.listIngresos.size()})"
 					update=":form1:object" />
+				<p:remoteCommand id="refreshData" name="refreshData"
+					actionListener="#{plantillaIngresosOsfemMB.refreshData}"
+					update=":form1:msgs, :form1:object, :form1:head" />
 
 				<p:panel id="panel" header="Plantilla Ingresos del OSFEM"
 					styleClass="green col-md-9 col-centered row-centered shadow-panel">
 					<p:fieldset style="margin-bottom:20px">
-						<p style="text-align: left; color: #f00">
-							Campo CVETXT <br /> 1 = Cuenta se muestra en todos los archivos
-							de texto y reporte de ingresos. <br /> 0 = Cuenta NO se muestra
-							en los archivos de texto y reporte de ingresos.
-						</p>
+						<p:panelGrid id="head" columns="2"
+							styleClass="row-centered ui-noborder">
+
+							<p style="text-align: left; color: #f00">
+								Campo CVETXT <br /> 1 = Cuenta se muestra en todos los archivos
+								de texto y reporte de ingresos. <br /> 0 = Cuenta NO se muestra
+								en los archivos de texto y reporte de ingresos.
+							</p>
+
+							<p:commandButton value="Cargar Plantilla"
+								rendered="#{plantillaIngresosOsfemMB.objDisabled}"
+								onclick="PF('wingetPasswor').show(); resetPass();" />
+
+							<p:fileUpload
+								fileUploadListener="#{plantillaIngresosOsfemMB.handleFileUpload}"
+								mode="advanced" dragDropSupport="true" update="msgs"
+								rendered="#{!plantillaIngresosOsfemMB.objDisabled}"
+								sizeLimit="100000" fileLimit="3" uploadLabel="Cargar"
+								cancelLabel="Calcelar" label="Selecionar"
+								invalidFileMessage="Solo se permiten archivos CSV"
+								allowTypes="/(\.|\/)(csv)$/"
+								onstart="PF('blockUIWidget').block();"
+								oncomplete="PF('blockUIWidget').unblock(); refreshData();" />
+						</p:panelGrid>
 
 						<p:dataTable id="object" var="objects"
 							value="#{plantillaIngresosOsfemMB.dataModelIngreso.listT}"
@@ -114,7 +136,8 @@
 										<h:outputText value="#{objects.cvetxt}" />
 									</f:facet>
 									<f:facet name="input">
-										<p:inputText id="cvetxt" validatorMessage="Solo se permite 1 o 0" maxlength="1" 
+										<p:inputText id="cvetxt"
+											validatorMessage="Solo se permite 1 o 0" maxlength="1"
 											onkeypress="if(event.keyCode == 27) {jQuery('span.ui-icon-close').last().click(); return false;} if (event.keyCode == 13 || event.keyCode == 9) {jQuery('#form1\\:object span.ui-icon-check').last().click(); return false; } "
 											value="#{objects.cvetxt}" style="width:100%">
 											<f:validateDoubleRange minimum="0" maximum="1" />
@@ -138,6 +161,30 @@
 						</h:panelGrid>
 					</pe:blockUI>
 				</p:panel>
+				<p:dialog id="panelValida" widgetVar="wingetPasswor"
+					header="Valida Password" modal="true" styleClass="green">
+					<p:panelGrid id="pgridpass" columns="2"
+						styleClass="green col-md-8 col-centered row-centered ui-noborder">
+						<h:outputText value="Password Administrador" />
+						<h:inputSecret id="validatePass"
+							value="#{plantillaIngresosOsfemMB.validaPass}"
+							onkeypress="if(event.keyCode == 27) {PF('wingetPasswor').hide(); return false;} if(event.keyCode == 13){return false;}" />
+						<h:outputText value="" />
+						<p:commandButton value="Validar"
+							update=":form1:msgs, :form1:object, :form1:head"
+							actionListener="#{plantillaIngresosOsfemMB.validaPassword}"
+							oncomplete="PF('wingetPasswor').hide();document.getElementById('form1:validatePass').value=''; resetPass();" />
+					</p:panelGrid>
+
+				</p:dialog>
+				<pe:blockUI widgetVar="blockUIWidget" centerX="false">
+					<h:panelGrid columns="2">
+						<h:graphicImage value="../catalogs/please_wait.gif"
+							style="margin-right: 12px; vertical-align: middle;" />
+						<h:outputText value="Por favor espere..."
+							style="white-space: nowrap;" />
+					</h:panelGrid>
+				</pe:blockUI>
 			</h:form>
 			<script type="text/javascript">
 			     
