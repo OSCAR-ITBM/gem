@@ -86,6 +86,8 @@ public class QFtecnicasm extends EntityPathBase<Ftecnicasm> {
 
     public final StringPath interpretacion = createString("interpretacion");
 
+    public final StringPath lineaBase = createString("lineaBase");
+
     public final NumberPath<java.math.BigDecimal> metanuale1 = createNumber("metanuale1", java.math.BigDecimal.class);
 
     public final NumberPath<java.math.BigDecimal> metanuale2 = createNumber("metanuale2", java.math.BigDecimal.class);
