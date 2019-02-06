@@ -2,6 +2,8 @@ package com.gem.sistema.web.bean;
 
 import static com.gem.sistema.util.UtilFront.generateNotificationFront;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -10,37 +12,56 @@ import javax.faces.bean.ViewScoped;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.gem.sistema.business.domain.TcModulosOperacione;
+import com.gem.sistema.business.domain.TcParametro;
 import com.gem.sistema.business.service.catalogos.ChangePasswordService;
 
 @ManagedBean(name = "changePassMB")
 @ViewScoped
 public class ChangePassMB extends AbstractMB {
 
+	private static final Integer INDEX_HOME = 0;
+
 	private String labelPass = "Password";
 	private String password;
 	private String newPassword;
 	private String confirmPassword;
 	private Integer tipoPass = 1;
+	private Integer idSector;
+	private TcParametro tcParametro;
+	private TcModulosOperacione tcModulosOperacione;
 
 	private boolean bRender = false;
+	private String clvModulo;
+	private List<TcModulosOperacione> listModulo;
 
 	@ManagedProperty("#{changePasswordService}")
 	private ChangePasswordService changePasswordService;
 
 	@PostConstruct
 	public void init() {
+		idSector = this.getUserDetails().getIdSector();
+		listModulo = this.changePasswordService.findBySector(idSector);
+		clvModulo = listModulo.get(INDEX_HOME).getClvProceso();
 
 	}
 
 	public void save() {
+		tcParametro = new TcParametro();
+		tcModulosOperacione = new TcModulosOperacione();
 		if (StringUtils.isNotBlank(password)) {
-			boolean bandera = this.changePasswordService.validatePassword(password);
+			tcParametro.setCveParametro(clvModulo);
+			tcParametro.setValor(password);
+
+			tcModulosOperacione.setClvProceso(clvModulo);
+			tcModulosOperacione.setIdSector(idSector);
+			boolean bandera = this.changePasswordService.validatePassword(tcParametro, tcModulosOperacione);
 			if (tipoPass == 1) {
 
 				if (!bandera) {
 
 					if (password.equals(confirmPassword)) {
-						this.changePasswordService.save(password);
+						this.changePasswordService.save(tcParametro, tcModulosOperacione);
 						confirmPassword = StringUtils.EMPTY;
 						generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!",
 								"El password se guardo correctamente");
@@ -55,7 +76,7 @@ public class ChangePassMB extends AbstractMB {
 				if (StringUtils.isNotBlank(newPassword) || StringUtils.isNotBlank(confirmPassword)) {
 					if (bandera) {
 						if (newPassword.equals(confirmPassword)) {
-							this.changePasswordService.save(newPassword);
+							this.changePasswordService.save(tcParametro, tcModulosOperacione);
 							newPassword = StringUtils.EMPTY;
 							confirmPassword = StringUtils.EMPTY;
 							generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!",
@@ -143,6 +164,46 @@ public class ChangePassMB extends AbstractMB {
 
 	public void setTipoPass(Integer tipoPass) {
 		this.tipoPass = tipoPass;
+	}
+
+	public String getClvModulo() {
+		return clvModulo;
+	}
+
+	public void setClvModulo(String clvModulo) {
+		this.clvModulo = clvModulo;
+	}
+
+	public List<TcModulosOperacione> getListModulo() {
+		return listModulo;
+	}
+
+	public void setListModulo(List<TcModulosOperacione> listModulo) {
+		this.listModulo = listModulo;
+	}
+
+	public Integer getIdSector() {
+		return idSector;
+	}
+
+	public void setIdSector(Integer idSector) {
+		this.idSector = idSector;
+	}
+
+	public TcParametro getTcParametro() {
+		return tcParametro;
+	}
+
+	public void setTcParametro(TcParametro tcParametro) {
+		this.tcParametro = tcParametro;
+	}
+
+	public TcModulosOperacione getTcModulosOperacione() {
+		return tcModulosOperacione;
+	}
+
+	public void setTcModulosOperacione(TcModulosOperacione tcModulosOperacione) {
+		this.tcModulosOperacione = tcModulosOperacione;
 	}
 
 }
