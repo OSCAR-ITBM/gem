@@ -1,10 +1,19 @@
 package com.gem.sistema.business.dao;
 
+import java.util.List;
+
+import com.gem.sistema.business.domain.TcModulosOperacione;
+import com.gem.sistema.business.domain.TcParametro;
+
 public interface ChangePasswordDAO {
-	void save(String password);
+	void save(TcParametro tcParametro, TcModulosOperacione tcModulosOperacione);
 
-	void changePassword(String password);
+	void changePassword(TcParametro tcParametro, TcModulosOperacione tcModulosOperacione);
 
-	boolean validatePassword(String password);
+	boolean validatePassword(TcParametro tcParametro, TcModulosOperacione tcModulosOperacione);
+
+	List<TcModulosOperacione> findBySector(Integer idSector);
+
+	boolean passwordisTrue(String password, String keyPass);
 
 }
