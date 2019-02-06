@@ -42,7 +42,7 @@ public class PaormMB extends AbstractMB {
 	@PostConstruct
 	public void init() {
 		Conctb conctb = conctbRepository.findByIdsector(this.getUserDetails().getIdSector());
-		nameFile = "PAORM" + conctb.getClave() + conctb.getAnoemp() + ".txt";
+		nameFile = "PARM" + conctb.getClave() + conctb.getAnoemp() + ".txt";
 	}
 
 	public void downloadTxt() {

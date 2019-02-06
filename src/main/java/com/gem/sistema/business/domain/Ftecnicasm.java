@@ -191,6 +191,9 @@ public class Ftecnicasm extends AbstractEntity implements Serializable {
 	private String usuario;
 
 	private String valido;
+	
+	@Column(name="LINEA_BASE")
+	private String lineaBase;
 
 	public Ftecnicasm() {
 	}
@@ -729,6 +732,14 @@ public class Ftecnicasm extends AbstractEntity implements Serializable {
 
 	public void setValido(String valido) {
 		this.valido = valido;
+	}
+
+	public String getLineaBase() {
+		return lineaBase;
+	}
+
+	public void setLineaBase(String lineaBase) {
+		this.lineaBase = lineaBase;
 	}
 
 }
