@@ -24,11 +24,14 @@ import org.primefaces.model.StreamedContent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.gem.sistema.business.domain.Polien;
 import com.gem.sistema.business.domain.Poliza;
 import com.gem.sistema.business.domain.TcMes;
+import com.gem.sistema.business.domain.TcParametro;
+import com.gem.sistema.business.predicates.ParametrosPredicate;
 import com.gem.sistema.business.repository.catalogs.ParametrosRepository;
 import com.gem.sistema.business.repository.catalogs.PolienRepository;
 import com.gem.sistema.business.repository.catalogs.TcMesRepository;
@@ -47,17 +50,23 @@ public class AfectacionPolizaMB extends AbstractMB {
 
 	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(AfectacionPolizaMB.class);
-	
+
+	private static final String DATA_TYPE = "PASSWORD";
+	private static final String KEY_PASS = "PASS_AFECTA";
+
 	/** The mes. */
 	private Integer mes;
-	
+
 	/** The lis mes. */
 	private List<TcMes> lisMes;
+
+	@ManagedProperty("#{passwordEncoder}")
+	private PasswordEncoder passwordEncoder;
 
 	/** The tc mes repository. */
 	@ManagedProperty(value = "#{tcMesRepository}")
 	private TcMesRepository tcMesRepository;
-	
+
 	/** The poliza service. */
 	@ManagedProperty(value = "#{polizaService}")
 	private PolizaService polizaService;
@@ -66,12 +75,15 @@ public class AfectacionPolizaMB extends AbstractMB {
 	@ManagedProperty("#{polienRepository}")
 	private PolienRepository polienRepository;
 
+	@ManagedProperty("#{parametrosRepository}")
+	private ParametrosRepository parametrosRepository;
+
 	/** The download file. */
 	private StreamedContent downloadFile;
 
 	/** The activar button. */
 	private boolean activarButton = Boolean.TRUE;
-	
+
 	/** The active dowload. */
 	private boolean activeDowload = Boolean.TRUE;
 
@@ -116,7 +128,7 @@ public class AfectacionPolizaMB extends AbstractMB {
 
 	/** The file name. */
 	private String fileName;
-	
+
 	/** The path file. */
 	private String pathFile;
 
@@ -124,8 +136,8 @@ public class AfectacionPolizaMB extends AbstractMB {
 	private Poliza poliza;
 
 	/** The pass afectacion. */
-	private String passAfectacion = "xafecta2016";
-	
+	private String passAfectacion;
+
 	/** The pass. */
 	private String pass;
 
@@ -361,21 +373,26 @@ public class AfectacionPolizaMB extends AbstractMB {
 		lisMes = tcMesRepository.findAll();
 		activarButton = Boolean.TRUE;
 		isActivarButton();
+		TcParametro param = this.parametrosRepository.findOne(ParametrosPredicate.findByDataType(KEY_PASS, DATA_TYPE));
+		passAfectacion = param.getValor();
 	}
 
 	/**
 	 * Checks if is true pass.
 	 */
 	public void isTruePass() {
-		if(pass != null) {
-			if (passAfectacion.equals(pass)) {
+		if (pass != null) {
+			boolean bandera = this.passwordEncoder.matches(pass, passAfectacion);
+			if (bandera) {
 				activarButton = Boolean.FALSE;
 			} else {
-				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El passwor es incorrecto");
+				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+						"El passwor es incorrecto");
 				FacesContext.getCurrentInstance().addMessage(null, message);
 			}
 		} else {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El campo password esta vació.");
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+					"El campo password esta vació.");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		}
 	}
@@ -388,44 +405,44 @@ public class AfectacionPolizaMB extends AbstractMB {
 		Integer bandera = polienRepository.xisteMont(mes, this.getUserDetails().getIdSector());
 		if (bandera > 0) {
 			Date fIni = Calendar.getInstance().getTime();
-			System.out.println("" );
-			System.out.println("" );
-			System.out.println("" );
-			System.out.println("" );
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
 			System.out.println("F Iniciio: " + fIni);
-			System.out.println("" );
-			System.out.println("" );
-			System.out.println("" );
-			System.out.println("" );
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
 			poliza = polizaService.cierreMensul(mes, this.getUserDetails().getUsername(),
 					this.getUserDetails().getIdSector());
 			Date fFin = Calendar.getInstance().getTime();
-			System.out.println("" );
-			System.out.println("" );
-			System.out.println("" );
-			System.out.println("" );
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
 			System.out.println("F. Fin:: " + fFin);
-			System.out.println("" );
-			System.out.println("" );
-			System.out.println("" );
-			System.out.println("" );
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
 			long tiempo = fFin.getTime() - fIni.getTime();
-			System.out.println("" );
-			System.out.println("" );
-			System.out.println("" );
-			System.out.println("" );
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
 			System.out.println("tiempo::" + tiempo);
-			
-			System.out.println("" );
-			System.out.println("" );
-			System.out.println("" );
-			System.out.println("" );
+
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
 			if (poliza.getErrorCode() > 0) {
 				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", poliza.getMsgError());
 				FacesContext.getCurrentInstance().addMessage(null, message);
 			} else {
 
-				if (poliza.getFileName()!=null) {
+				if (poliza.getFileName() != null) {
 					activeDowload = Boolean.FALSE;
 					FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", poliza.getMsgError());
 					FacesContext.getCurrentInstance().addMessage(null, message);
@@ -525,6 +542,22 @@ public class AfectacionPolizaMB extends AbstractMB {
 		fileErrror.mkdirs();
 		fileHEad.mkdirs();
 		fileCuentas.mkdirs();
+	}
+
+	public ParametrosRepository getParametrosRepository() {
+		return parametrosRepository;
+	}
+
+	public void setParametrosRepository(ParametrosRepository parametrosRepository) {
+		this.parametrosRepository = parametrosRepository;
+	}
+
+	public PasswordEncoder getPasswordEncoder() {
+		return passwordEncoder;
+	}
+
+	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+		this.passwordEncoder = passwordEncoder;
 	}
 
 }

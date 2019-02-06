@@ -186,7 +186,7 @@
 												<h:outputLabel value="Código Indicador:"></h:outputLabel>
 												<h:panelGroup>
 													<h:inputText id="varIndic" value="#{varDiseno.cveind}"
-														disabled="#{indicadoresDisenoMB.deshabilitadoEditables}">
+														disabled="#{indicadoresDisenoMB.deshabilitadoEditables}" maxlength="14">
 														<p:ajax
 															update="varIndic,descIndicator,growlIndicadoresDiseno"
 															event="change"
@@ -273,10 +273,19 @@
 									</p:row>
 									<p:row>
 										<p:column>
+											<h:outputLabel value="Descripcion del factor:"></h:outputLabel>
+										
+											<h:inputText value="#{varDiseno.descfac}" size="70"
+												disabled="#{indicadoresDisenoMB.deshabilitadoEditables}"></h:inputText>
+										</p:column>
+
+									</p:row>
+									<p:row>
+										<p:column>
 											<h:panelGrid columns="2" columnClasses="column20,column80"
 												styleClass="noBorders">
-												<h:outputLabel value="Descripcion del factor:"></h:outputLabel>
-												<h:inputText value="#{varDiseno.descfac}" size="70"
+												<h:outputLabel value="Linea Base:"></h:outputLabel>
+												<h:inputText value="#{varDiseno.lineaBase}" size="70"
 													disabled="#{indicadoresDisenoMB.deshabilitadoEditables}"></h:inputText>
 											</h:panelGrid>
 										</p:column>
@@ -515,8 +524,8 @@
 					<br />
 					<p:outputPanel id="panelCatalogVariables" layout="block"
 						style="text-align:left">
-						<p:dataTable id="variablesTbl" var="variable" widgetVar="variablesWdg"
-							value="#{indicadoresDisenoMB.variables}"
+						<p:dataTable id="variablesTbl" var="variable"
+							widgetVar="variablesWdg" value="#{indicadoresDisenoMB.variables}"
 							styleClass="et_datatable" paginator="true" rows="10"
 							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 							selectionMode="single"
@@ -560,7 +569,8 @@
 					<br />
 					<p:outputPanel id="panelCatalogIndicadores" layout="block"
 						style="text-align:left">
-						<p:dataTable id="indicadoresTbl" var="indicador" widgetVar="indicadorWdg"
+						<p:dataTable id="indicadoresTbl" var="indicador"
+							widgetVar="indicadorWdg"
 							value="#{indicadoresDisenoMB.indicadores}"
 							styleClass="et_datatable" paginator="true" rows="10"
 							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -577,7 +587,7 @@
 
 							<p:column headerText="Código" width="20%"
 								filterMatchMode="contains" filterBy="#{indicador.codigo}"
-								filterMaxLength="13">
+								filterMaxLength="14">
 								<h:outputText value="#{indicador.codigo}" />
 							</p:column>
 

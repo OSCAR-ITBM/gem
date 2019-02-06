@@ -1,6 +1,6 @@
 package com.gem.sistema.web.bean;
 
-import static com.roonin.utils.UtilDate.getLastDay;
+import static com.roonin.utils.UtilDate.getLastDayByAnoEmp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.model.StreamedContent;
 
 import com.gem.sistema.business.domain.Conctb;
@@ -243,20 +242,20 @@ public class ReporteIGBBCMB extends BaseDirectReport {
 		parameters.put("pImg1", this.getUserDetails().getPathImgCab1());
 		parameters.put("pNomMun", firmas.getCampo1());
 		parameters.put("pClveMun", conctb.getClave());
-		parameters.put("pLastDay", getLastDay(Integer.valueOf(getMes(Integer.valueOf(semestre)))));
-		parameters.put("pMes", descripMes.getDescripcion());
-		parameters.put("pAn", conctb.getAnoemp());
-		parameters.put("pL1", firmas.getL27());
-		parameters.put("pN1", firmas.getN27());
-		parameters.put("pL2", firmas.getL28());
-		parameters.put("pN2", firmas.getN28());
-		parameters.put("pL4", firmas.getL5());
-		parameters.put("pN4", firmas.getN5());
-		parameters.put("pL5", firmas.getL3());
-		parameters.put("pN5", firmas.getN3());
 		parameters.put("pOpc", conctb.getClave().substring(0, 1));
-		parameters.put("pElaboro", firmas.getN4());
-		parameters.put("pReviso", firmas.getN5());
+		parameters.put("pLastDay", getLastDayByAnoEmp(this.getInt(Integer.valueOf(semestre)), conctb.getAnoemp()));
+		parameters.put("pMes", descripMes.getDescripcion());
+		parameters.put("pAnio", conctb.getAnoemp());
+		parameters.put("pL1", firmas.getL1());
+		parameters.put("pN1", firmas.getN1());
+		parameters.put("pL2", firmas.getL2());
+		parameters.put("pN2", firmas.getN2());
+		parameters.put("pL3", firmas.getL3());
+		parameters.put("pN3", firmas.getN3());
+		parameters.put("pL4", firmas.getL16());
+		parameters.put("pN4", firmas.getN16());
+		parameters.put("pL5", firmas.getL28());
+		parameters.put("pN5", firmas.getN28());
 
 		return parameters;
 	}

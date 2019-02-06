@@ -1,93 +1,191 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<<<<<<< HEAD
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PbRM01e" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="347f82c7-291b-481e-95e2-cd74ada78bed">
+=======
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PbRM01e" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="347f82c7-291b-481e-95e2-cd74ada78bed">
+>>>>>>> refs/remotes/origin/Desarrollo
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+<<<<<<< HEAD
 	<parameter name="pAnio2" class="java.lang.Integer"/>
 	<parameter name="pAnio1" class="java.lang.Integer"/>
 	<parameter name="pImage" class="java.lang.String"/>
 	<parameter name="pNumMun" class="java.lang.Integer"/>
 	<parameter name="pMunicipio" class="java.lang.String"/>
 	<parameter name="p_Idsector" class="java.lang.Integer"/>
+=======
+	<parameter name="pIdSector" class="java.lang.Integer"/>
+	<parameter name="pImagenPath" class="java.lang.String"/>
+	<parameter name="pAnio" class="java.lang.Integer"/>
+>>>>>>> refs/remotes/origin/Desarrollo
 	<queryString>
-		<![CDATA[SELECT
-F.CAMPO3,
-MA.CLVDEPG, 
-MA.CVEPROG PROGRAMA, 
-MA.CVEFIN, 
-MA.CVETEMAS,
-REPLACE((MA.CLVDEPG ||MA.CVEPROG|| MA.CVEFIN || MA.CVETEMAS) ,' ','')AS GRUPO,
- MA.OBJETIVO,
-C.NOMBRE,
-MU.CAMPO6,
-CPD1.CVETEMAS PTEMATICO,
-CPD1.DESCRIPCION AS NOMPILAR,
-CPD2.CVETEMAS TEMADES,
-CPD2.DESCRIPCION AS NOMTEMA
-FROM
-MATIND MA
-INNER JOIN CATDGM C ON MA.CLVDEPG = C.CLAVE 
-INNER JOIN MUNINEP MU ON SUBSTR(MA.CVEPROG,1,8) = MU.CAMPO7 AND MA.IDSECTOR = MU.IDSECTOR
-INNER JOIN CPD CPD1 ON SUBSTR(MA.CVETEMAS,1,4) =CPD1.CVETEMAS
-INNER JOIN CPD CPD2 ON SUBSTR(MA.CVETEMAS,1,6) =CPD2.CVETEMAS
-INNER JOIN FIRMAS F ON F.IDSECTOR = MA.IDSECTOR
-WHERE MA.IDSECTOR= $P{p_Idsector}
-ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
+		<![CDATA[SELECT	MA.CLVDEPG, 
+		MA.CVEPROG PROGRAMA, 
+		MA.CVEFIN, 
+		MA.CVETEMAS,
+		REPLACE((MA.CLVDEPG ||MA.CVEPROG|| MA.CVEFIN || MA.CVETEMAS) ,' ','') GRUPO,
+		MA.OBJETIVO,
+		C.NOMBRE,
+		MU.CAMPO6,
+		MAX(DECODE(LENGTH(CPD1.CVETEMAS), 4, CPD1.CVETEMAS)) PTEMATICO,
+		MAX(DECODE(LENGTH(CPD1.CVETEMAS), 4, CPD1.DESCRIPCION)) NOMPILAR,
+		MAX(DECODE(LENGTH(CPD1.CVETEMAS), 6, CPD1.CVETEMAS)) TEMA,
+		MAX(DECODE(LENGTH(CPD1.CVETEMAS), 6, CPD1.DESCRIPCION)) NOMTEMA,
+		MAX(DECODE(LENGTH(CPD1.CVETEMAS), 8, CPD1.CVETEMAS)) SUBTEMA,
+		MAX(DECODE(LENGTH(CPD1.CVETEMAS), 8, CPD1.DESCRIPCION)) NOMSUBTEMA
+	FROM MATIND MA
+		INNER JOIN CATDGM C ON MA.CLVDEPG = C.CLAVE 
+		INNER JOIN MUNINEP MU ON SUBSTR(MA.CVEPROG,1,8) = MU.CAMPO7 AND 
+								 MA.IDSECTOR = MU.IDSECTOR
+		INNER JOIN CPD CPD1 ON SUBSTR(MA.CVETEMAS,1,4) =CPD1.CVETEMAS OR
+								 SUBSTR(MA.CVETEMAS,1,6) =CPD1.CVETEMAS OR 
+								 MA.CVETEMAS =CPD1.CVETEMAS
+WHERE MA.IDSECTOR= $P{pIdSector}
+GROUP BY MA.CLVDEPG, 
+		 MA.CVEPROG, 
+		 MA.CVEFIN, 
+		 MA.CVETEMAS,
+		 REPLACE((MA.CLVDEPG ||MA.CVEPROG|| MA.CVEFIN || MA.CVETEMAS) ,' ',''),
+		 MA.OBJETIVO,
+		 C.NOMBRE,
+		 MU.CAMPO6
+ORDER BY MA.CLVDEPG, 
+		 MA.CVEPROG,
+		 MA.CVETEMAS]]>
 	</queryString>
-	<field name="CAMPO3" class="java.lang.Integer"/>
-	<field name="CLVDEPG" class="java.lang.String"/>
-	<field name="PROGRAMA" class="java.lang.String"/>
-	<field name="CVEFIN" class="java.lang.String"/>
-	<field name="CVETEMAS" class="java.lang.String"/>
-	<field name="GRUPO" class="java.lang.String"/>
-	<field name="OBJETIVO" class="java.lang.String"/>
-	<field name="NOMBRE" class="java.lang.String"/>
-	<field name="CAMPO6" class="java.lang.String"/>
-	<field name="PTEMATICO" class="java.lang.String"/>
-	<field name="NOMPILAR" class="java.lang.String"/>
-	<field name="TEMADES" class="java.lang.String"/>
-	<field name="NOMTEMA" class="java.lang.String"/>
+	<field name="CLVDEPG" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CLVDEPG"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="MATIND"/>
+	</field>
+	<field name="PROGRAMA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PROGRAMA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="MATIND"/>
+	</field>
+	<field name="CVEFIN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CVEFIN"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="MATIND"/>
+	</field>
+	<field name="CVETEMAS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CVETEMAS"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="MATIND"/>
+	</field>
+	<field name="GRUPO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="GRUPO"/>
+	</field>
+	<field name="OBJETIVO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="OBJETIVO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="MATIND"/>
+	</field>
+	<field name="NOMBRE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOMBRE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CATDGM"/>
+	</field>
+	<field name="CAMPO6" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CAMPO6"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="MUNINEP"/>
+	</field>
+	<field name="PTEMATICO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PTEMATICO"/>
+	</field>
+	<field name="NOMPILAR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOMPILAR"/>
+	</field>
+	<field name="TEMA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="TEMA"/>
+	</field>
+	<field name="NOMTEMA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOMTEMA"/>
+	</field>
+	<field name="SUBTEMA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SUBTEMA"/>
+	</field>
+	<field name="NOMSUBTEMA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOMSUBTEMA"/>
+	</field>
 	<variable name="v_Programa" class="java.lang.String">
 		<variableExpression><![CDATA[$F{PROGRAMA}]]></variableExpression>
 	</variable>
-	<group name="GroupMaster" isStartNewPage="true" isReprintHeaderOnEachPage="true">
+	<group name="GroupMaster">
 		<groupExpression><![CDATA[$F{GRUPO}]]></groupExpression>
 		<groupHeader>
+<<<<<<< HEAD
 			<band height="115">
 				<staticText>
 					<reportElement x="260" y="0" width="140" height="15" uuid="2342ef67-79ed-4987-9055-0ada3b4137a5">
+=======
+			<band height="120">
+				<staticText>
+					<reportElement x="0" y="10" width="190" height="15" uuid="3a45a288-87cd-4d75-bb89-19b451ab3465">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
-					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="9" isBold="true"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true"/>
+						<paragraph rightIndent="3"/>
 					</textElement>
+					<text><![CDATA[Programa Presupuestario:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="25" width="190" height="15" uuid="cfd87351-c829-44e3-af45-c2e319c59b0f">
+>>>>>>> refs/remotes/origin/Desarrollo
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true"/>
+						<paragraph rightIndent="3"/>
+					</textElement>
+<<<<<<< HEAD
 					<text><![CDATA[Programa Presupuestario : ]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="220" y="16" width="180" height="15" uuid="ef1fb204-53c6-417e-a6c4-d65c44f48a87">
+=======
+					<text><![CDATA[Objetivo del Programa Presupuestario:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="40" width="190" height="15" uuid="f316dca8-ab84-4467-a45d-485923ecebbb">
+>>>>>>> refs/remotes/origin/Desarrollo
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
-					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="9" isBold="true"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true"/>
+						<paragraph rightIndent="3"/>
 					</textElement>
+<<<<<<< HEAD
 					<text><![CDATA[Objetivo del Programa Presupuestario : ]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="280" y="30" width="120" height="15" uuid="97031d4a-14c6-4e9f-bcc6-995a84b48488">
+=======
+					<text><![CDATA[Dependencia General:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="55" width="190" height="15" uuid="5f5f93da-220f-4a84-9595-86d4ed85838a">
+>>>>>>> refs/remotes/origin/Desarrollo
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
-					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="9" isBold="true"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true"/>
+						<paragraph rightIndent="3"/>
 					</textElement>
+<<<<<<< HEAD
 					<text><![CDATA[Dependencia General  : ]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="240" y="44" width="160" height="15" uuid="5e183e26-dfc3-4165-80d9-477ef4f94dbf">
+=======
+					<text><![CDATA[Pilar Temático o Eje Transversal:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="70" width="190" height="15" uuid="1cfb8c46-545e-43e6-88c1-55d1aebff5c5">
+>>>>>>> refs/remotes/origin/Desarrollo
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
-					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="9" isBold="true"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true"/>
+						<paragraph rightIndent="3"/>
 					</textElement>
+<<<<<<< HEAD
 					<text><![CDATA[Pilar Temático o Eje Transversal   : ]]></text>
 				</staticText>
 				<staticText>
@@ -98,9 +196,16 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 						<font fontName="Arial" size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Tema de Desarrollo  : ]]></text>
+=======
+					<text><![CDATA[Tema de Desarrollo:]]></text>
+>>>>>>> refs/remotes/origin/Desarrollo
 				</staticText>
 				<textField isBlankWhenNull="true">
+<<<<<<< HEAD
 					<reportElement x="399" y="0" width="81" height="15" uuid="9e64e487-491e-4e89-a807-35b32d1c7d49">
+=======
+					<reportElement x="190" y="10" width="560" height="15" uuid="9e64e487-491e-4e89-a807-35b32d1c7d49">
+>>>>>>> refs/remotes/origin/Desarrollo
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<box>
@@ -111,10 +216,15 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Arial" size="9"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{PROGRAMA}  + "     " + $F{CAMPO6}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{PROGRAMA}==("null") ? "" :  ($F{PROGRAMA})  + " " + $F{CAMPO6}==("null") ?  "":($F{CAMPO6})]]></textFieldExpression>
 				</textField>
+<<<<<<< HEAD
 				<textField isBlankWhenNull="true">
 					<reportElement x="399" y="15" width="81" height="15" uuid="c0b13111-69f9-4fa6-997d-752f3f24b45a">
+=======
+				<textField evaluationTime="Group" evaluationGroup="GroupMaster" isBlankWhenNull="true">
+					<reportElement x="190" y="25" width="560" height="15" uuid="c0b13111-69f9-4fa6-997d-752f3f24b45a">
+>>>>>>> refs/remotes/origin/Desarrollo
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<box>
@@ -126,8 +236,13 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{OBJETIVO}]]></textFieldExpression>
 				</textField>
+<<<<<<< HEAD
 				<textField isBlankWhenNull="true">
 					<reportElement x="399" y="30" width="81" height="15" uuid="585ef272-99b8-4d6b-99f5-3287d16569f7">
+=======
+				<textField evaluationTime="Group" evaluationGroup="GroupMaster" isBlankWhenNull="true">
+					<reportElement x="190" y="40" width="560" height="15" isRemoveLineWhenBlank="true" uuid="585ef272-99b8-4d6b-99f5-3287d16569f7">
+>>>>>>> refs/remotes/origin/Desarrollo
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<box>
@@ -137,10 +252,15 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Arial" size="9"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{CLVDEPG} + "    " +  $F{NOMBRE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CLVDEPG}==("null") ? "" :  ($F{CLVDEPG}) + " " + $F{NOMBRE}==("null") ?  "":($F{NOMBRE})]]></textFieldExpression>
 				</textField>
+<<<<<<< HEAD
 				<textField isBlankWhenNull="true">
 					<reportElement x="399" y="45" width="81" height="15" uuid="f6ef8971-8284-4df5-aabb-3d89c5116ffa">
+=======
+				<textField evaluationTime="Group" evaluationGroup="GroupMaster" isBlankWhenNull="true">
+					<reportElement x="190" y="55" width="560" height="15" uuid="f6ef8971-8284-4df5-aabb-3d89c5116ffa">
+>>>>>>> refs/remotes/origin/Desarrollo
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<box>
@@ -150,10 +270,15 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Arial" size="9"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{PTEMATICO}+ "     " +  $F{NOMPILAR}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{PTEMATICO}==("null") ? "" :  ($F{PTEMATICO}) + " " + $F{NOMPILAR}==("null") ?  "":($F{NOMPILAR})]]></textFieldExpression>
 				</textField>
+<<<<<<< HEAD
 				<textField isBlankWhenNull="true">
 					<reportElement x="399" y="60" width="81" height="15" uuid="dc1e4ccd-74c2-425f-bddc-d27408c3609e">
+=======
+				<textField evaluationTime="Group" evaluationGroup="GroupMaster" isBlankWhenNull="true">
+					<reportElement x="190" y="70" width="560" height="15" uuid="dc1e4ccd-74c2-425f-bddc-d27408c3609e">
+>>>>>>> refs/remotes/origin/Desarrollo
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<box>
@@ -164,10 +289,10 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Arial" size="9"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{TEMADES}+ "     " +  $F{NOMTEMA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{TEMA}==("null") ? "" :  ($F{TEMA}) + " " + $F{NOMTEMA}==("null") ?  "":($F{NOMTEMA})]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="22" y="95" width="123" height="20" backcolor="#D6D6D6" uuid="425a9f63-6fe0-4629-a539-67db9b57b92c">
+					<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="30" y="100" width="120" height="20" backcolor="#D6D6D6" uuid="425a9f63-6fe0-4629-a539-67db9b57b92c">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
@@ -183,7 +308,7 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 					<text><![CDATA[OBJETIVO O RESUMEN NARRATIVO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="145" y="95" width="123" height="20" backcolor="#D6D6D6" uuid="d2bf66d9-1540-4b54-b74a-15c81623e34f">
+					<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="150" y="100" width="120" height="20" backcolor="#D6D6D6" uuid="d2bf66d9-1540-4b54-b74a-15c81623e34f">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
@@ -199,7 +324,7 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 					<text><![CDATA[NOMBRE ]]></text>
 				</staticText>
 				<staticText>
-					<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="268" y="95" width="123" height="20" backcolor="#D6D6D6" uuid="37865caa-ebcc-433f-99ee-f3dbd5c54f77">
+					<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="270" y="100" width="120" height="20" backcolor="#D6D6D6" uuid="37865caa-ebcc-433f-99ee-f3dbd5c54f77">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
@@ -215,7 +340,7 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 					<text><![CDATA[INDICADORES FÓRMULA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="391" y="95" width="123" height="20" backcolor="#D6D6D6" uuid="27945912-92a4-4286-ad82-2c26c8df9421">
+					<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="390" y="100" width="120" height="20" backcolor="#D6D6D6" uuid="27945912-92a4-4286-ad82-2c26c8df9421">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
@@ -231,7 +356,7 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 					<text><![CDATA[FRECUENCIA Y TIPO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="514" y="95" width="123" height="20" backcolor="#D6D6D6" uuid="7e8cc782-a51d-47a7-8bb6-b218a4e49419">
+					<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="510" y="100" width="120" height="20" backcolor="#D6D6D6" uuid="7e8cc782-a51d-47a7-8bb6-b218a4e49419">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
@@ -244,10 +369,10 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
-					<text><![CDATA[MEDIOS DE VERIFICACIÓN	 ]]></text>
+					<text><![CDATA[MEDIOS DE VERIFICACIÓN]]></text>
 				</staticText>
 				<staticText>
-					<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="637" y="95" width="123" height="20" backcolor="#D6D6D6" uuid="83c98e59-e228-451f-b10c-aafc4384d29b">
+					<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="630" y="100" width="120" height="20" backcolor="#D6D6D6" uuid="83c98e59-e228-451f-b10c-aafc4384d29b">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
@@ -260,7 +385,26 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
-					<text><![CDATA[SUPUESTOS	 ]]></text>
+					<text><![CDATA[SUPUESTOS]]></text>
+				</staticText>
+				<textField evaluationTime="Group" evaluationGroup="GroupMaster" isBlankWhenNull="true">
+					<reportElement x="190" y="85" width="560" height="15" uuid="c7358afe-a77a-43e2-bc69-2daba363e5d9">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{SUBTEMA}==("null") ? "" :  ($F{SUBTEMA}) + " " + $F{NOMSUBTEMA}==("null") ?  "":($F{NOMSUBTEMA})]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="85" width="190" height="15" uuid="aa1fdc7d-75de-4ce0-ad76-3757b6312b9f">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true"/>
+						<paragraph rightIndent="3"/>
+					</textElement>
+					<text><![CDATA[SubTema de Desarrollo:]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="480" y="0" width="272" height="15" uuid="9fe3919d-5cd7-42ee-9fa1-2f7a717df883"/>
@@ -352,7 +496,7 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 		<groupFooter>
 			<band height="20">
 				<subreport>
-					<reportElement x="-9" y="0" width="759" height="20" uuid="a39151ca-be66-4c53-bff8-fec99da88879">
+					<reportElement x="0" y="0" width="752" height="20" uuid="a39151ca-be66-4c53-bff8-fec99da88879">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
@@ -360,7 +504,7 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 						<subreportParameterExpression><![CDATA[$F{GRUPO}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="p_Idsector">
-						<subreportParameterExpression><![CDATA[$P{p_Idsector}]]></subreportParameterExpression>
+						<subreportParameterExpression><![CDATA[$P{pIdSector}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					<subreportExpression><![CDATA["actividad.jasper"]]></subreportExpression>
@@ -372,7 +516,7 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 		<groupFooter>
 			<band height="20">
 				<subreport>
-					<reportElement x="-9" y="0" width="759" height="20" uuid="f3cb668b-93c7-4587-a79a-e84e77abdad6">
+					<reportElement x="0" y="0" width="752" height="20" uuid="f3cb668b-93c7-4587-a79a-e84e77abdad6">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
@@ -380,7 +524,7 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 						<subreportParameterExpression><![CDATA[$F{GRUPO}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="p_Idsector">
-						<subreportParameterExpression><![CDATA[$P{p_Idsector}]]></subreportParameterExpression>
+						<subreportParameterExpression><![CDATA[$P{pIdSector}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					<subreportExpression><![CDATA["componente.jasper"]]></subreportExpression>
@@ -392,7 +536,7 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 		<groupFooter>
 			<band height="20">
 				<subreport>
-					<reportElement x="-9" y="0" width="759" height="20" uuid="ec937e40-d0ab-44c1-a8b1-eda6b6f90e50">
+					<reportElement x="0" y="0" width="752" height="20" uuid="ec937e40-d0ab-44c1-a8b1-eda6b6f90e50">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
@@ -400,7 +544,7 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 						<subreportParameterExpression><![CDATA[$F{GRUPO}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="p_Idsector">
-						<subreportParameterExpression><![CDATA[$P{p_Idsector}]]></subreportParameterExpression>
+						<subreportParameterExpression><![CDATA[$P{pIdSector}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					<subreportExpression><![CDATA["proposito.jasper"]]></subreportExpression>
@@ -412,7 +556,7 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 		<groupFooter>
 			<band height="20">
 				<subreport>
-					<reportElement x="-9" y="0" width="759" height="20" uuid="9f9c2a04-aa72-4b97-867f-dbd3d2ef91b3">
+					<reportElement x="0" y="0" width="752" height="20" uuid="9f9c2a04-aa72-4b97-867f-dbd3d2ef91b3">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
@@ -420,7 +564,7 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 						<subreportParameterExpression><![CDATA[$F{GRUPO}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="p_Idsector">
-						<subreportParameterExpression><![CDATA[$P{p_Idsector}]]></subreportParameterExpression>
+						<subreportParameterExpression><![CDATA[$P{pIdSector}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					<subreportExpression><![CDATA["finalidad.jasper"]]></subreportExpression>
@@ -432,6 +576,7 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
+<<<<<<< HEAD
 		<band height="107">
 			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
 				<reportElement x="0" y="0" width="60" height="60" uuid="7d211d5e-2b15-4a5a-9ac4-a86f26d443a7"/>
@@ -463,44 +608,50 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 					<font fontName="Arial" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" Fecha: Del 1 de Enero de " + $P{pAnio1} + " al 31 de Diciembre de  " + $P{pAnio2}]]></textFieldExpression>
+=======
+		<band height="60">
+			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement x="0" y="0" width="60" height="60" uuid="389a2fa2-e2f7-4673-b9e2-965af4ec5915"/>
+				<imageExpression><![CDATA[$P{pImagenPath}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="60" y="0" width="632" height="60" uuid="f40620a2-f332-462a-ad38-c43100404924">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PbRM-01e MATRIZ DE INDICADORES PARA RESULTADOS  " +$P{pAnio} + ", POR PROGRAMA PRESUPUESTARIO Y DEPENDENCIA GENERAL"]]></textFieldExpression>
+>>>>>>> refs/remotes/origin/Desarrollo
 			</textField>
 		</band>
 	</pageHeader>
 	<pageFooter>
 		<band height="11" splitType="Stretch">
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="603" y="0" width="76" height="11" uuid="b78ef343-6605-4f18-818a-efcd0eda2213"/>
+				<reportElement x="630" y="0" width="62" height="11" uuid="b78ef343-6605-4f18-818a-efcd0eda2213"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="574" y="0" width="29" height="11" uuid="51237296-201c-4eed-a184-7a647e8cf73f">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-				</reportElement>
-				<textElement>
-					<font fontName="Arial" size="8"/>
-				</textElement>
-				<text><![CDATA[Fecha:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="684" y="0" width="34" height="11" uuid="3fc13c12-17aa-4124-8479-471b5cb7e56e">
+				<reportElement x="510" y="0" width="120" height="11" uuid="51237296-201c-4eed-a184-7a647e8cf73f">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Hoja " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement x="720" y="0" width="32" height="11" uuid="a1eb346b-c4f7-4650-ae9c-0c469ee56d0a">
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="692" y="0" width="58" height="11" uuid="3fc13c12-17aa-4124-8479-471b5cb7e56e">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
-				<textElement textAlignment="Left">
+				<textElement textAlignment="Right">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA["de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Hoja " + $V{PAGE_NUMBER} + "de " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

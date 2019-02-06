@@ -6,7 +6,7 @@
 
 	<groupId>com.gem.sistema</groupId>
 	<artifactId>gem-web</artifactId>
-	<version>1.0.7-SNAPSHOT</version>
+	<version>1.0.12-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<name>gem-web</name>
@@ -334,6 +334,10 @@
 			<groupId>org.eclipse.birt.runtime.3_7_1</groupId>
 			<artifactId>com.lowagie.text</artifactId>
 			<version>2.1.7</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
 		</dependency>
 	</dependencies>
 

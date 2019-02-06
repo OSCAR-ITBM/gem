@@ -36,10 +36,10 @@ public class RF001120MB extends GenericExecuteProcedure {
 
 	/** The mes. */
 	private String mes;
-	
+
 	/** The list mes. */
 	private List<TcMes> listMes;
-	
+
 	/** The file txt 1. */
 	private StreamedContent fileTxt1;
 
@@ -135,7 +135,9 @@ public class RF001120MB extends GenericExecuteProcedure {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.gem.sistema.web.bean.GenericExecuteProcedure#getParametersReports()
 	 */
 	@Override
@@ -148,11 +150,13 @@ public class RF001120MB extends GenericExecuteProcedure {
 
 	/** The stream. */
 	InputStream stream = null;
-	
+
 	/** The out. */
 	Map<String, Object> out;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.gem.sistema.web.bean.GenericExecuteProcedure#downLoadFile()
 	 */
 	@Override
@@ -172,9 +176,10 @@ public class RF001120MB extends GenericExecuteProcedure {
 				byte[] buffer = new byte[1024];
 				FileOutputStream fos = new FileOutputStream(zipFile);
 				ZipOutputStream zos = new ZipOutputStream(fos);
+				FileInputStream fis = null;
 				for (int i = 0; i < srcFiles.length; i++) {
 					File srcFile = new File(srcFiles[i]);
-					FileInputStream fis = new FileInputStream(srcFile);
+					fis = new FileInputStream(srcFile);
 					// begin writing a new ZIP entry, positions the stream to
 					// the start of the entry data
 					zos.putNextEntry(new ZipEntry(srcFile.getName()));
@@ -184,12 +189,11 @@ public class RF001120MB extends GenericExecuteProcedure {
 						zos.write(buffer, 0, length);
 					}
 
-					zos.closeEntry();
-
-					// close the InputStream
-					fis.close();
-
 				}
+				zos.closeEntry();
+
+				// close the InputStream
+				fis.close();
 				// close the ZipOutputStream
 				zos.close();
 				stream = new FileInputStream(new File(zipFile.toString()));

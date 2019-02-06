@@ -2,7 +2,6 @@ package com.gem.sistema.business.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * The persistent class for the TR_ETIQ_TABLAS database table.
@@ -14,57 +13,40 @@ import java.util.List;
 public class TrEtiqTabla extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@JoinColumn(name = "ID_ETIQUETA")
-	@ManyToOne
-	private TcEtiqueta tcEtiqueta;
+	@Column(name = "ID_ETIQUETA")
+	private long idEtiqueta;
 
-	@JoinColumn(name = "ID_TABLA")
-	@ManyToOne
-	private TcTabla tcTabla;
+	@Column(name = "ID_TABLA")
+	private long idTabla;
 
-	// bi-directional many-to-one association to TcValore
-	@OneToMany(mappedBy = "trEtiqTabla")
-	private List<TcValores> tcValores;
+	@Column(name = "STATUS")
+	private int status;
 
 	public TrEtiqTabla() {
 	}
 
-	public TcEtiqueta getTcEtiqueta() {
-		return tcEtiqueta;
+	public long getIdEtiqueta() {
+		return this.idEtiqueta;
 	}
 
-	public void setTcEtiqueta(TcEtiqueta tcEtiqueta) {
-		this.tcEtiqueta = tcEtiqueta;
+	public void setIdEtiqueta(long idEtiqueta) {
+		this.idEtiqueta = idEtiqueta;
 	}
 
-	public TcTabla getTcTabla() {
-		return tcTabla;
+	public long getIdTabla() {
+		return this.idTabla;
 	}
 
-	public void setTcTabla(TcTabla tcTabla) {
-		this.tcTabla = tcTabla;
+	public void setIdTabla(long idTabla) {
+		this.idTabla = idTabla;
 	}
 
-	public List<TcValores> getTcValores() {
-		return this.tcValores;
+	public int getStatus() {
+		return this.status;
 	}
 
-	public void setTcValores(List<TcValores> tcValores) {
-		this.tcValores = tcValores;
-	}
-
-	public TcValores addTcValores(TcValores tcValores) {
-		getTcValores().add(tcValores);
-		tcValores.setTrEtiqTabla(this);
-
-		return tcValores;
-	}
-
-	public TcValores removeTcValore(TcValores tcValores) {
-		getTcValores().remove(tcValores);
-		tcValores.setTrEtiqTabla(null);
-
-		return tcValores;
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 }

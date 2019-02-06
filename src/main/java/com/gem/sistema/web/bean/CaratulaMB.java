@@ -1,7 +1,13 @@
 package com.gem.sistema.web.bean;
 
+import static com.gem.sistema.util.UtilFront.generateNotificationFront;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -13,14 +19,18 @@ import javax.faces.event.ActionEvent;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.datatable.DataTable;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortMeta;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.gem.sistema.business.domain.Caratula;
+import com.gem.sistema.business.predicates.CaratulaPredicates;
 import com.gem.sistema.business.repository.catalogs.CaratulaRepository;
+import com.gem.sistema.web.datamodel.DataModelGeneric;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -40,15 +50,27 @@ public class CaratulaMB implements Serializable {
 	/** Constante para utilizar el log de la aplicacion. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(CaratulaMB.class);
 
+	/** The Constant EDIT_FLOW_ROW_JQUERY. */
+	private static final String VIEW_EDIT_ROW_ACTIVATE_PENCIL = "jQuery('span.ui-icon-pencil').eq(";
+
+	/** The Constant VIEW_EDIT_ROW_ACTIVATE_PENCIL_COMPLEMENT. */
+	private static final String VIEW_EDIT_ROW_ACTIVATE_PENCIL_COMPLEMENT = ").each(function(){jQuery(this).click()});";
+
+	/** The Constant FOCUS_BY_ROWID. */
+	private static final String FOCUS_BY_ROWID = "PrimeFaces.focus('form1:objects:%1$s:cuenta');";
+
 	/** The caratula data model. */
-	@ManagedProperty(value = "#{caratulaDataModel}")
-	private LazyDataModel<Caratula> caratulaDataModel;
+	private DataModelGeneric<Caratula> caratulaDataModel;
 
 	/** The selected caratula. */
 	private Caratula selectedCaratula;
 
 	/** The caratula aux. */
 	private Caratula caratulaAux;
+
+	private List<Caratula> listCaratula;
+
+	private Boolean bEdicion;
 
 	/** The caratula repository. */
 	@ManagedProperty(value = "#{caratulaRepository}")
@@ -60,6 +82,9 @@ public class CaratulaMB implements Serializable {
 	@PostConstruct
 	public void init() {
 		LOGGER.info(":: En postconsruct Caratula ");
+		listCaratula = this.reloadData();
+		caratulaDataModel = new DataModelGeneric<Caratula>(listCaratula);
+
 	}
 
 	/**
@@ -67,6 +92,7 @@ public class CaratulaMB implements Serializable {
 	 */
 	public void onPageLoad() {
 		LOGGER.info(":: Antes de cargar la pagina caratulaMB  ");
+		this.caratulaDataModel.setListT(reloadData());
 
 	}
 
@@ -82,6 +108,14 @@ public class CaratulaMB implements Serializable {
 		// // TODO Auto-generated catch block
 		// e.printStackTrace();
 		// }
+	}
+
+	public List<Caratula> reloadData() {
+		listCaratula = this.caratulaRepository.findAll();
+		for (Caratula cara : listCaratula) {
+			cara.setScta(StringUtils.stripStart(cara.getScta(), BigInteger.ZERO.toString()));
+		}
+		return listCaratula;
 	}
 
 	/**
@@ -123,9 +157,6 @@ public class CaratulaMB implements Serializable {
 	 *
 	 * @param caratulaDataModel the new caratula data model
 	 */
-	public void setCaratulaDataModel(LazyDataModel<Caratula> caratulaDataModel) {
-		this.caratulaDataModel = caratulaDataModel;
-	}
 
 	/**
 	 * Gets the selected caratula.
@@ -134,6 +165,10 @@ public class CaratulaMB implements Serializable {
 	 */
 	public Caratula getSelectedCaratula() {
 		return selectedCaratula;
+	}
+
+	public void setCaratulaDataModel(DataModelGeneric<Caratula> caratulaDataModel) {
+		this.caratulaDataModel = caratulaDataModel;
 	}
 
 	/**
@@ -187,7 +222,68 @@ public class CaratulaMB implements Serializable {
 	 * @param event the event
 	 */
 	public void onRowCancel(RowEditEvent event) {
-		// TODO pendiente de implementar
+		generateNotificationFront(FacesMessage.SEVERITY_INFO, "Información!", "¡Edición cancelada!");
+		listCaratula = this.reloadData();
+		this.caratulaDataModel.setListT(listCaratula);
+	}
+
+	public void onInitRowEdit(final RowEditEvent event) {
+		selectedCaratula = (Caratula) event.getObject();
+		if (null != event.getObject()) {
+
+			if (null != selectedCaratula.getId() && selectedCaratula.getId() != 0) {
+				this.bEdicion = Boolean.TRUE;
+			} else {
+				this.bEdicion = Boolean.FALSE;
+			}
+			// this.activateRowEditFlow(selectedCaratula.getIndex());
+		}
+	}
+
+	public void addRow() {
+		selectedCaratula = new Caratula();
+
+		selectedCaratula.setCuenta(StringUtils.EMPTY);
+		selectedCaratula.setScta(StringUtils.EMPTY);
+		selectedCaratula.setNombre(StringUtils.EMPTY);
+		selectedCaratula.setSscta(StringUtils.EMPTY);
+		selectedCaratula.setSsscta(StringUtils.EMPTY);
+		selectedCaratula.setSssscta(StringUtils.EMPTY);
+		selectedCaratula.setAutoi1(BigDecimal.ZERO);
+		selectedCaratula.setAutoi2(BigDecimal.ZERO);
+		selectedCaratula.setAutoi3(BigDecimal.ZERO);
+
+		listCaratula.add(BigDecimal.ZERO.intValue(), selectedCaratula);
+		caratulaDataModel.setListT(listCaratula);
+		this.activateRowEditFlow(BigDecimal.ZERO.intValue());
+
+	}
+
+	public void onRowEdit(RowEditEvent event) {
+		selectedCaratula = (Caratula) event.getObject();
+		selectedCaratula.setScta(StringUtils.leftPad(selectedCaratula.getScta(), 10, "0"));
+		selectedCaratula.setIdRef(BigInteger.ZERO.longValue());
+		selectedCaratula.setSectorid(BigInteger.ONE.intValue());
+
+		if (bEdicion) {
+			this.caratulaRepository.save(selectedCaratula);
+			generateNotificationFront(FacesMessage.SEVERITY_INFO, "Información!",
+					"¡El registro se ha actualizado correctamente!");
+		} else {
+			Caratula valida = this.caratulaRepository.findOne(
+					CaratulaPredicates.existsAccountAndScta(selectedCaratula.getCuenta(), selectedCaratula.getScta()));
+
+			if (null == valida) {
+				this.caratulaRepository.save(selectedCaratula);
+				generateNotificationFront(FacesMessage.SEVERITY_INFO, "Información!",
+						"¡El registro se ha guardado correctamente!");
+			} else {
+				generateNotificationFront(FacesMessage.SEVERITY_INFO, "Información!", "¡La Cuenta y Scta ya existe!");
+				this.activateRowEditFlow(BigInteger.ZERO.intValue());
+			}
+
+		}
+
 	}
 
 	/**
@@ -219,6 +315,35 @@ public class CaratulaMB implements Serializable {
 							oDetail.getScta()));
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
+	}
+
+	public void activateRowEditFlow(final int index) {
+		LOGGER.info(":: Cerrar cuadro de dialogo ");
+		final StringBuilder text = new StringBuilder();
+		text.append(VIEW_EDIT_ROW_ACTIVATE_PENCIL);
+		// text.append(index);
+		// text.append(VIEW_EDIT_ROW_ACTIVATE_PENCIL_COMPLEMENT);
+		text.append(index);
+		text.append(VIEW_EDIT_ROW_ACTIVATE_PENCIL_COMPLEMENT);
+		text.append(" ");
+		text.append(String.format(FOCUS_BY_ROWID, index));
+		RequestContext.getCurrentInstance().execute(text.toString());
+	}
+
+	public Boolean getbEdicion() {
+		return bEdicion;
+	}
+
+	public void setbEdicion(Boolean bEdicion) {
+		this.bEdicion = bEdicion;
+	}
+
+	public List<Caratula> getListCaratula() {
+		return listCaratula;
+	}
+
+	public void setListCaratula(List<Caratula> listCaratula) {
+		this.listCaratula = listCaratula;
 	}
 
 }

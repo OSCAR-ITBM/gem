@@ -65,22 +65,23 @@ public class ExpInformationMB extends AbstractMB {
 	}
 
 	public void downloadCuenta() {
-		pathName = this.exportInformationService.exportCuentas(idSector, mes);
-		String fileName2 = this.exportInformationService.exportPaso(idSector, mes);
-		String fineName3 = this.exportInformationService.exportPoliza(idSector, mes);
+		File[] file = new File[4]; 
+		file[0] = new File(this.exportInformationService.exportCuentas(idSector, mes));
+		file[1] = new File( this.exportInformationService.exportPaso(idSector, mes));
+		file[2] = new File( this.exportInformationService.exportPoliza(idSector, mes));
+		file[3] = new File( this.exportInformationService.exportCuentaMes(idSector, mes));
+		pathName = this.exportInformationService.zipFile(file, "/gem/upfiles/export.zip");
 		try {
 			stream1 = new FileInputStream(new File(pathName));
-			stream2 = new FileInputStream(new File(fileName2));
-			stream3 = new FileInputStream(new File(fineName3));
+			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		file1 = new DefaultStreamedContent(stream1, "application/txt", pathName.substring(13));
-		file2 = new DefaultStreamedContent(stream2, "application/txt", fileName2.substring(13));
-		file3 = new DefaultStreamedContent(stream3, "application/txt", fineName3.substring(13));
-		generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!", "Se Generaron los Archivos: "
-				+ pathName.substring(13) + "\n" + fileName2.substring(13) + "\n" + fineName3.substring(13));
+		file1 = new DefaultStreamedContent(stream1, "application/zip", pathName.substring(13));
+		
+		generateNotificationFront(FacesMessage.SEVERITY_INFO, "Info!", "Se Generaro el archivo zip: "
+				+ pathName.substring(13) );
 
 	}
 

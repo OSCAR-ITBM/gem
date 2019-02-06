@@ -31,7 +31,7 @@ import com.gem.sistema.business.service.catalogos.PuestosFirmasService;
 import com.gem.sistema.business.service.reportador.ReportValidationException;
 import com.gem.sistema.web.datamodel.DataModelGeneric;
 
-@ManagedBean(name ="clciPdfMB")
+@ManagedBean(name = "clciPdfMB")
 @ViewScoped
 public class ClciPdfMB extends BaseDirectReport {
 
@@ -95,7 +95,7 @@ public class ClciPdfMB extends BaseDirectReport {
 		jasperReporteName = "CLCI";
 		endFilename = jasperReporteName + ".pdf";
 		conctb = conctbRepository.findByIdsectorAndIdRef(this.getUserDetails().getIdSector(), 0);
-		listTrimestres = periodoRepository.findByTipoPeriodo(TIPO_PERIODO);
+		listTrimestres = periodoRepository.findByTipoPeriodo(6);
 
 		if (!CollectionUtils.isEmpty(listTrimestres)) {
 			trimestre = listTrimestres.get(0).getPeriodo();
@@ -275,16 +275,17 @@ public class ClciPdfMB extends BaseDirectReport {
 		Object[] meses = this.getMonths(trimestre, firmas.getCampo3());
 		parameters = new HashMap<String, Object>();
 
-		parameters.put("pMesInicial", meses[0]);
+		parameters.put("pMesName", meses[0]);
 		parameters.put("pMesFinal", meses[1]);
 		parameters.put("pLastDay", meses[2]);
-		parameters.put("pYear", firmas.getCampo3());
-		parameters.put("pNombreMunicipio", firmas.getCampo1());
-		parameters.put("pImagen", this.getUserDetails().getPathImgCab1());
-		parameters.put("pTrimestre", trimestre);
-		parameters.put("pIdSector", this.getUserDetails().getIdSector());
-		parameters.put("pL1", this.presidente.getPuesto());
-		parameters.put("pN1", this.presidente.getNombre());
+		parameters.put("pAnio", firmas.getCampo3());
+		parameters.put("pMunicipioName", firmas.getCampo1());
+
+		parameters.put("pImage", this.getUserDetails().getPathImgCab1());
+		parameters.put("semestre", trimestre);
+		parameters.put("pNum", conctb.getClave());
+		parameters.put("pL16", firmas.getL16());
+		parameters.put("pN16", firmas.getN16());
 		parameters.put("pL3", this.tesorero.getPuesto());
 		parameters.put("pN3", this.tesorero.getNombre());
 

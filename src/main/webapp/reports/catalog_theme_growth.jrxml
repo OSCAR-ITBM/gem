@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
-<!-- 2017-04-26T10:59:57 -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="catalog_theme_growth" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="5" bottomMargin="5" uuid="0c4642d6-cb06-4bac-9842-73ebf12b49ca">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="45"/>
 	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="server desarrollo"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<style name="style1" markup="styled"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["/Users/upekshamati/Documents/GEM/templeteReportes/"]]></defaultValueExpression>
@@ -23,22 +24,31 @@
 		<defaultValueExpression><![CDATA["where 1=1"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select cvetemas, descripcion, pe, nope, tema from cpd $P!{pWhereClause}]]>
+		<![CDATA[select cvetemas, descripcion, pe, nope, tema, sub_tema from cpd $P!{pWhereClause}]]>
 	</queryString>
-	<field name="cvetemas" class="java.lang.String">
-		<fieldDescription><![CDATA[Clave de Temas (pe + nope + tema)]]></fieldDescription>
+	<field name="CVETEMAS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CVETEMAS"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CPD"/>
 	</field>
-	<field name="descripcion" class="java.lang.String">
-		<fieldDescription><![CDATA[pilar o eje/tema de desarrollo]]></fieldDescription>
+	<field name="DESCRIPCION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DESCRIPCION"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CPD"/>
 	</field>
-	<field name="pe" class="java.lang.String">
-		<fieldDescription><![CDATA[Pilar o Eje]]></fieldDescription>
+	<field name="PE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CPD"/>
 	</field>
-	<field name="nope" class="java.lang.String">
-		<fieldDescription><![CDATA[No. Pilar/Eje]]></fieldDescription>
+	<field name="NOPE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOPE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CPD"/>
 	</field>
-	<field name="tema" class="java.lang.String">
-		<fieldDescription><![CDATA[clave del tema]]></fieldDescription>
+	<field name="TEMA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="TEMA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CPD"/>
+	</field>
+	<field name="SUB_TEMA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SUB_TEMA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CPD"/>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -46,7 +56,7 @@
 	<pageHeader>
 		<band height="123" splitType="Stretch">
 			<subreport>
-				<reportElement x="0" y="1" width="802" height="84" uuid="1a833b72-75bb-48da-93b1-be1a991e11ba">
+				<reportElement x="0" y="1" width="802" height="79" uuid="1a833b72-75bb-48da-93b1-be1a991e11ba">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<subreportParameter name="pLogoName">
@@ -119,32 +129,39 @@
 				<text><![CDATA[Cve Temas]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="67" y="0" width="551" height="10" uuid="c5e912fb-ae55-49bc-a605-00f844e039cc"/>
+				<reportElement x="67" y="0" width="493" height="10" uuid="c5e912fb-ae55-49bc-a605-00f844e039cc"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Descripción]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="618" y="0" width="61" height="10" uuid="43d49a39-b51e-4c6f-812b-b1cca588ca8e"/>
+				<reportElement x="560" y="0" width="61" height="10" uuid="43d49a39-b51e-4c6f-812b-b1cca588ca8e"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Pilar/Eje]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="679" y="0" width="61" height="10" uuid="d8fee5dc-dc4d-4879-98c6-c739775d74c8"/>
+				<reportElement x="621" y="0" width="61" height="10" uuid="d8fee5dc-dc4d-4879-98c6-c739775d74c8"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[No. Pilar/Eje]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="740" y="0" width="62" height="10" uuid="feb5f300-7459-4e71-844b-7d71852139a4"/>
+				<reportElement x="682" y="0" width="62" height="10" uuid="feb5f300-7459-4e71-844b-7d71852139a4"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Tema]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="744" y="0" width="58" height="10" uuid="f6649b0e-bd2a-4559-ac40-1030f56e6747"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sub Tema]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -156,39 +173,46 @@
 					<font fontName="Arial" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cvetemas}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CVETEMAS}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement mode="Transparent" x="67" y="0" width="551" height="10" forecolor="#000000" backcolor="#FFFFFF" uuid="0b0d0424-2252-4436-b41d-b0cb97d342e9"/>
+				<reportElement mode="Transparent" x="67" y="0" width="493" height="10" forecolor="#000000" backcolor="#FFFFFF" uuid="0b0d0424-2252-4436-b41d-b0cb97d342e9"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="Arial" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{DESCRIPCION}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement mode="Transparent" x="618" y="0" width="61" height="10" forecolor="#000000" backcolor="#FFFFFF" uuid="ac2964c7-ebfe-4c80-924b-f4303b2abee1"/>
+				<reportElement mode="Transparent" x="560" y="0" width="61" height="10" forecolor="#000000" backcolor="#FFFFFF" uuid="ac2964c7-ebfe-4c80-924b-f4303b2abee1"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="Arial" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pe}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{PE}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement mode="Transparent" x="679" y="0" width="61" height="10" forecolor="#000000" backcolor="#FFFFFF" uuid="6dc60940-ed1f-4457-88fb-ed87e4dacb4c"/>
+				<reportElement mode="Transparent" x="621" y="0" width="61" height="10" forecolor="#000000" backcolor="#FFFFFF" uuid="6dc60940-ed1f-4457-88fb-ed87e4dacb4c"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="Arial" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nope}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{NOPE}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement mode="Transparent" x="740" y="0" width="62" height="10" forecolor="#000000" backcolor="#FFFFFF" uuid="0d872320-27f8-43ed-9db8-26b89ca651d3"/>
+				<reportElement mode="Transparent" x="682" y="0" width="62" height="10" forecolor="#000000" backcolor="#FFFFFF" uuid="0d872320-27f8-43ed-9db8-26b89ca651d3"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="Arial" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{tema}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{TEMA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="744" y="0" width="58" height="10" uuid="3a3de81f-9d54-4a60-a197-fb81ed4b93fc"/>
+				<textElement>
+					<font fontName="Arial&#xA;arial&#xA;Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SUB_TEMA}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

@@ -363,7 +363,7 @@ public class CatalogFinancialSourcesMB extends CommonCatalogMB<Fuentef> implemen
 		AND_ID_SECTOR = " and idsector = " + this.getUserDetails().getIdSector();
 		this.setValidatePass("");
 
-		maxLength = 1 == this.getUserDetails().getIdSector() ? 5 : 8;
+		maxLength = 1 == this.getUserDetails().getIdSector() ? 6 : 8;
 	}
 
 	/**
@@ -667,7 +667,7 @@ public class CatalogFinancialSourcesMB extends CommonCatalogMB<Fuentef> implemen
 			activeLiga = Boolean.FALSE;
 			activeClve = Boolean.FALSE;
 			if (this.getUserDetails().getIdSector() == 1) {
-				mask = "9?9.9?9";
+				mask = "999999";
 
 			} else if (this.getUserDetails().getIdSector() == 2) {
 				mask = "99999999";

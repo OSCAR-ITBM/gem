@@ -261,7 +261,7 @@ public class CatalogMatrixIndicatorsMB extends CommonCatalogMB<Mir> implements S
 	 */
 	private Mir updateMir(Mir catalog) {
 		catalog.setCodigo(catalog.getPrograma() + catalog.getNivel()
-				+ StringUtils.leftPad(StringUtils.EMPTY + catalog.getConsec(), 3, "0"));
+				+ StringUtils.leftPad(StringUtils.EMPTY + catalog.getConsec(), 4, "0"));
 		return catalog;
 	}
 	// /**

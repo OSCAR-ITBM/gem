@@ -23,8 +23,8 @@
 
 						<p:selectOneMenu id="idsemestre"
 							value="#{reporteIGBBCMB.semestre}">
-							<f:selectItems value="#{reporteIGBBCMB.listsemestre}"
-								var="semes" itemValue="#{semes}" itemLabel="#{semes}" />
+							<f:selectItems value="#{reporteIGBBCMB.listsemestre}" var="semes"
+								itemValue="#{semes}" itemLabel="#{semes}" />
 						</p:selectOneMenu>
 						<p:panelGrid columns="4" styleClass="ui-noborder">
 
@@ -56,6 +56,12 @@
 								update="form1:inlinePdf, :form1:growlReportador"
 								styleClass="btn btn-default">
 							</p:commandButton>
+
+							<h:commandLink onclick="PrimeFaces.monitorDownload(start, stop);"
+								title="EXCEL">
+								<p:graphicImage value="excel.png" width="24" />
+								<p:fileDownload value="#{reporteIGBBCMB.fileXls}" />
+							</h:commandLink>
 
 						</p:panelGrid>
 					</p:panelGrid>

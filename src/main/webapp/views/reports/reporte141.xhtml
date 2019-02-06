@@ -15,7 +15,7 @@
 				<p:growl id="messagesEdit" showDetail="true" sticky="true" />
 				<p:panel id="idPanel"
 					header="Reportes de Indicadores Semestral de Competencia Laboral del Director de Obras"
-					styleClass="green col-md-11 col-centered row-centered shadow-panel">
+					styleClass="green col-md-8 col-centered row-centered shadow-panel">
 					<p:dataTable id="object" var="objects"
 						value="#{reporte141MB.listPm3811}" binding="#{table}"
 						styleClass="et_datatable" emptyMessage="No hay registros"
@@ -23,12 +23,13 @@
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
 						widgetVar="pm3811Wdg" rowIndexVar="rowIndex">
 						<p:column>
-							<p:panelGrid id="idGrid1" columns="2" style="text-align: left;">
-								<p:row style="text-align: left;">
-									<p:column style="width : 18%; text-align: right;">
+							<p:panelGrid id="idGrid1" style="text-align: left;"
+								styleClass="ui-noborder col-centered row-centered">
+								<p:row>
+									<p:column style="text-align: right;">
 										<h:outputText value="Semestre  " />
 									</p:column>
-									<p:column style="width: 6%; text-align: left;">
+									<p:column style=" text-align: left;">
 										<p:outputLabel id="lblTrimestre" value="#{objects.semestral}"
 											rendered="#{reporte141MB.bLblsemestre}">
 											<f:convertNumber pattern="00" />
@@ -37,13 +38,13 @@
 											id="comboTri" rendered="#{reporte141MB.bComboTri}">
 											<f:selectItems value="#{reporte141MB.listsemestre}" var="tri"
 												itemValue="#{tri}" itemLabel="#{tris}" />
-												<p:ajax event="change" update="comboTri"  />
+											<p:ajax event="change" update="comboTri" />
 										</p:selectOneMenu>
 									</p:column>
 								</p:row>
 
 							</p:panelGrid>
-							<p:panelGrid id="idGrid2">
+							<!-- <p:panelGrid id="idGrid2">
 								<p:row>
 									<p:column>
 										<p:panel header="DATOS GENERALES" id="pGenerales"
@@ -99,24 +100,27 @@
 										</p:panel>
 									</p:column>
 								</p:row>
-							</p:panelGrid>
-							<p:panelGrid id="idGrid4">
+							</p:panelGrid> -->
+							<p:panelGrid id="idGrid4"
+								styleClass="ui-noborder col-centered row-centered">
 								<p:row>
 									<p:column>
 										<p:panel>
-											<p:panelGrid id="idGrid5">
+											<p:panelGrid id="idGrid5"
+												styleClass="ui-noborder col-centered row-centered">
 												<p:row>
-													<p:column style="text-align: left;" colspan="3">
+													<p:column style="text-align: right;">
 														<p:outputLabel
-															value="1.- Fecha de Ingreso al Cargo de Director de Obras" />
+															value="Fecha de Ingreso al Cargo de Director de Obras" />
 													</p:column>
-													<p:column style="text-align: left;" colspan="6">
+													<p:column style="text-align: left;">
 														<p:outputLabel id="lblFecha" value="#{objects.fecing}"
 															rendered="#{reporte141MB.bLbl}">
 															<f:convertDateTime pattern="dd/MM/yyyy" />
 														</p:outputLabel>
-														<p:calendar id="fechaInput" showOn="button" locale="es" onkeypress="if (event.keyCode == 13) {return false;}"
-															rendered="#{reporte141MB.bTxt}" size="6"
+														<p:calendar id="fechaInput" showOn="button" locale="es"
+															onkeypress="if (event.keyCode == 13) {return false;}"
+															rendered="#{reporte141MB.bTxt}" size="10"
 															pattern="dd/MM/yyyy" mask="true" immediate="true"
 															requiredMessage="Seleccione una fecha"
 															value="#{objects.fecing}"
@@ -128,29 +132,30 @@
 													</p:column>
 												</p:row>
 												<p:row>
-													<p:column colspan="3">
+													<p:column style="text-align: right;">
 														<p:outputLabel
-															value="2.- Cuenta con título en Ingeniería o Arquitectura" />
+															value="Título Profesional en Ingeniería, Arquitectura o alguna área afin" />
 													</p:column>
 													<p:column style="text-align: left;">
 														<p:outputLabel id="lblMaximo"
 															value="#{objects.titingoarq}"
 															rendered="#{reporte141MB.bLbl}" />
-														<p:selectOneRadio id="bTitulo" onkeypress="if (event.keyCode == 13) {return false;}"
+														<p:selectOneRadio id="bTitulo"
+															onkeypress="if (event.keyCode == 13) {return false;}"
 															rendered="#{reporte141MB.bTxt}"
 															value="#{objects.titingoarq}">
-															<f:selectItem itemLabel="SI" itemValue="SI"/>
+															<f:selectItem itemLabel="SI" itemValue="SI" />
 															<f:selectItem itemLabel="NO" itemValue="NO" />
 															<p:ajax event="change"
 																listener="#{reporte141MB.activeTxt(rowIndex, 'bTitulo')}"
-																update=":form1:object"  />
+																update=":form1:object" />
 
 														</p:selectOneRadio>
 
 													</p:column>
 
 												</p:row>
-												<p:row>
+												<!-- <p:row>
 													<p:column colspan="2">
 														<p:outputLabel value="3.- Máximo Grado Académico" />
 													</p:column>
@@ -174,104 +179,56 @@
 														</p:inputText>
 
 													</p:column>
-												</p:row>
+												</p:row> -->
 												<p:row>
-													<p:column colspan="9" style="text-align: left;">
+													<p:column style="text-align: right;">
 														<p:outputLabel
-															value="4.- Experiencia laboral de puesto desempeñado Actualmente" />
+															value="Experiencia minimo de un año en la materia" />
+													</p:column>
+
+													<p:column style="text-align: left;">
+														<p:outputLabel id="lblPuesto" size="1"
+															rendered="#{!reporte141MB.bTxt}"
+															value="#{objects.explab}" />
+
+														<p:selectOneRadio id="txtPuesto"
+															onkeypress="if (event.keyCode == 13) {return false;}"
+															rendered="#{reporte141MB.bTxt}" value="#{objects.explab}">
+															<f:selectItem itemLabel="SI" itemValue="SI" />
+															<f:selectItem itemLabel="NO" itemValue="NO" />
+															<p:ajax event="change"
+																listener="#{reporte141MB.activeTxt(rowIndex, 'bTitulo')}"
+																update=":form1:object" />
+
+														</p:selectOneRadio>
+
 													</p:column>
 												</p:row>
 												<p:row>
 													<p:column style="text-align: right;">
-														<p:outputLabel value="Puesto" />
-													</p:column>
-													<p:column colspan="8" style="text-align: left;">
-														<p:outputPanel id="lblPuesto"
-															rendered="#{reporte141MB.bLbl}" value="#{objects.explab}" />
-														<p:inputText id="txtPuesto" value="#{objects.explab}" onkeypress="if (event.keyCode == 13) {return false;}"
-															size="39" rendered="#{reporte141MB.bTxt}">
-															<p:ajax event="blur" update="txtPuesto" />
-														</p:inputText>
-													</p:column>
-												</p:row>
-												<p:row>
-													<p:column colspan="9" style="text-align: left;">
 														<p:outputLabel
-															value="5.- Último empleo previo desempeñado previo al cargo de director de Obras" />
+															value="Certificación en Competencia Laboral Expedida por el Instituto Hacendario del Estado de México" />
 													</p:column>
 
-												</p:row>
-												<p:row>
-													<p:column style="text-align: right;">
-														<p:outputLabel value="Puesto" />
-													</p:column>
+													<p:column style="text-align: left;">
+														<p:outputLabel id="lblsn5" value="#{objects.cert}"
+															rendered="#{!reporte141MB.bTxt}" />
 
-													<p:column style="text-align: left; " colspan="2">
-														<p:outputLabel id="lblRadio1" value="#{objects.ultpuesto}"
-															rendered="#{reporte141MB.bLbl}" />
-														<p:inputText id="txtUltPuesto" size="25" onkeypress="if (event.keyCode == 13) {return false;}"
-															value="#{objects.ultpuesto}"
-															rendered="#{reporte141MB.bTxt}">
-															<p:ajax event="blur" update="txtUltPuesto" />
-														</p:inputText>
 
-													</p:column>
-													<p:column style="text-align: right;">
-														<p:outputLabel value="Fecha de Inicio" />
-													</p:column>
-													<p:column colspan="2" style="text-align: left; ">
-														<p:outputLabel id="lblFini" value="#{objects.fiupuesto}"
-															rendered="#{reporte141MB.bLbl}">
-															<f:convertDateTime pattern="dd/MM/yyyy" />
-														</p:outputLabel>
-														<p:calendar id="fechaFini" showOn="button" locale="es" onkeypress="if (event.keyCode == 13) {return false;}"
-															rendered="#{reporte141MB.bTxt}" size="6"
-															pattern="dd/MM/yyyy" mask="true"
-															requiredMessage="Seleccione una fecha"
-															value="#{objects.fiupuesto}"
-															converterMessage="La fecha debe ser en fomato de dd/MM/aaaa">
-															<f:convertDateTime pattern="dd/MM/yyyy" for="fechaFini" />
-															<p:ajax event="dateSelect" update="fechaFini" />
-															<p:ajax event="change" update="fechaFini" />
-														</p:calendar>
-													</p:column>
-													<p:column style="text-align: right;">
-														<p:outputLabel value="Fecha de Termino" />
-													</p:column>
-													<p:column colspan="2" style="text-align: left; ">
-														<p:outputLabel id="lblFin" value="#{objects.ftupuesto}"
-															rendered="#{reporte141MB.bLbl}">
-															<f:convertDateTime pattern="dd/MM/yyyy" />
-														</p:outputLabel>
-														<p:calendar id="fechaFin" showOn="button" locale="es" onkeypress="if (event.keyCode == 13) {return false;}"
-															rendered="#{reporte141MB.bTxt}" size="6"
-															pattern="dd/MM/yyyy" mask="true"
-															requiredMessage="Seleccione una fecha"
-															value="#{objects.ftupuesto}"
-															converterMessage="La fecha debe ser en fomato de dd/MM/aaaa">
-															<f:convertDateTime pattern="dd/MM/yyyy" for="fechaFin" />
-															<p:ajax event="dateSelect" update="fechaFin" />
-															<p:ajax event="change" update="fechaFin" />
-														</p:calendar>
-													</p:column>
+														<p:selectOneRadio id="txtCertificado"
+															onkeypress="if (event.keyCode == 13) {return false;}"
+															rendered="#{reporte141MB.bTxt}" value="#{objects.cert}">
+															<f:selectItem itemLabel="SI" itemValue="SI" />
+															<f:selectItem itemLabel="NO" itemValue="NO" />
+															<p:ajax event="change"
+																listener="#{reporte141MB.activeTxt(rowIndex, 'cert')}"
+																update=":form1:object" />
 
+														</p:selectOneRadio>
+													</p:column>
 												</p:row>
 
-												<p:row>
-													<p:column style="text-align: right;">
-														<p:outputLabel value="Lugar" />
-													</p:column>
-													<p:column colspan="8" style="text-align: left;">
-														<p:outputLabel id="lblLugar" value="#{objects.ultlugar}"
-															rendered="#{reporte141MB.bLbl}" />
-														<p:inputText id="txtLugar" size="100" onkeypress="if (event.keyCode == 13) {return false;}"
-															rendered="#{reporte141MB.bTxt}"
-															value="#{objects.ultlugar}">
-															<p:ajax event="blur" update="txtLugar" />
-														</p:inputText>
-													</p:column>
-												</p:row>
-												<p:row>
+												<!-- <p:row>
 													<p:column colspan="4" style="text-align: left;">
 														<p:outputLabel
 															value="6.- Ha desempeñado alguno puesto en el Sector Público" />
@@ -303,7 +260,8 @@
 													<p:column colspan="2" style="text-align: left;">
 														<p:outputLabel id="lblStsup" value="#{objects.pubpuesto}"
 															rendered="#{reporte141MB.bLblEstSup}" />
-														<p:inputText id="txtStSup" value="#{objects.pubpuesto}" onkeypress="if (event.keyCode == 13) {return false;}"
+														<p:inputText id="txtStSup" value="#{objects.pubpuesto}"
+															onkeypress="if (event.keyCode == 13) {return false;}"
 															rendered="#{reporte141MB.bEstSup}">
 															<p:ajax event="blur" update="txtStSup" />
 														</p:inputText>
@@ -317,7 +275,8 @@
 															rendered="#{reporte141MB.bLblEstSup}">
 															<f:convertDateTime pattern="dd/MM/yyyy" />
 														</p:outputLabel>
-														<p:calendar id="fechaFini2" showOn="button" locale="es" onkeypress="if (event.keyCode == 13) {return false;}"
+														<p:calendar id="fechaFini2" showOn="button" locale="es"
+															onkeypress="if (event.keyCode == 13) {return false;}"
 															rendered="#{reporte141MB.bEstSup}" size="6"
 															pattern="dd/MM/yyyy" mask="true"
 															converterMessage="La fecha debe ser en fomato de dd/MM/aaaa"
@@ -335,7 +294,8 @@
 															rendered="#{reporte141MB.bLblEstSup}">
 															<f:convertDateTime pattern="dd/MM/yyyy" />
 														</p:outputLabel>
-														<p:calendar id="fechaFin2" showOn="button" locale="es" onkeypress="if (event.keyCode == 13) {return false;}"
+														<p:calendar id="fechaFin2" showOn="button" locale="es"
+															onkeypress="if (event.keyCode == 13) {return false;}"
 															rendered="#{reporte141MB.bEstSup}" size="6"
 															pattern="dd/MM/yyyy" mask="true"
 															converterMessage="La fecha debe ser en fomato de dd/MM/aaaa"
@@ -354,13 +314,14 @@
 														<p:outputLabel id="lblLugarEst"
 															value="#{objects.publugar}"
 															rendered="#{reporte141MB.bLblEstSup}" />
-														<p:inputText id="txtLugarEst" value="#{objects.publugar}" onkeypress="if (event.keyCode == 13) {return false;}"
+														<p:inputText id="txtLugarEst" value="#{objects.publugar}"
+															onkeypress="if (event.keyCode == 13) {return false;}"
 															size="50" rendered="#{reporte141MB.bEstSup}">
 															<p:ajax event="blur" update="txtLugarEst" />
 														</p:inputText>
 													</p:column>
-												</p:row>
-												<p:row>
+												</p:row> -->
+												<!-- <p:row>
 													<p:column colspan="6" style="text-align: left;">
 														<p:outputLabel
 															value="7.- Ha realizado estudios superiores como diplomados, postgrados, cursos de especialización maestría, ect" />
@@ -379,60 +340,47 @@
 													</p:column>
 												</p:row>
 												<p:row>
-													<p:column style="background-color:#BFBFBF" />
-													<p:column colspan="8" style="background-color:#BFBFBF">
-														<p:outputLabel
-															value="Si su respuesta es positiva ¿Cuáles, en que institución, y documento que lo avala?" />
+													<p:column style="background-color:#bfbfbf" />
+													<p:column colspan="8" style="background-color:#bfbfbf">
+														<p:outputlabel
+															value="si su respuesta es positiva ¿cuáles, en que institución, y documento que lo avala?" />
 													</p:column>
 												</p:row>
 												<p:row>
 													<p:column colspan="9">
-														<p:outputLabel id="lblespest" value="#{objects.espest}"
-															rendered="#{reporte141MB.bLblEstSup2}" />
-														<p:inputTextarea id="txtespest" value="#{objects.espest}" onkeypress="if (event.keyCode == 13) {return false;}"
-															rendered="#{reporte141MB.bEstSup2}" rows="3" cols="150">
+														<p:outputlabel id="lblespest" value="#{objects.espest}"
+															rendered="#{reporte141mb.blblestsup2}" />
+														<p:inputtextarea id="txtespest" value="#{objects.espest}"
+															onkeypress="if (event.keycode == 13) {return false;}"
+															rendered="#{reporte141mb.bestsup2}" rows="3" cols="150">
 															<p:ajax event="blur" update="txtespest" />
-														</p:inputTextarea>
+														</p:inputtextarea>
 													</p:column>
 												</p:row>
-												<p:row>
-													<p:column colspan="4" style="text-align: left;">
-														<p:outputLabel
-															value="8.- Cuenta usted con certificación en competencia laboral" />
-													</p:column>
-													<p:column>
-														<p:outputLabel id="lblSN5" value="#{objects.cert}"
-															rendered="#{reporte141MB.bLbl}" />
-														<p:selectOneRadio id="radios4"
-															rendered="#{reporte141MB.bTxt}" value="#{objects.cert}">
-															<f:selectItem itemLabel="SI" itemValue="SI" />
-															<f:selectItem itemLabel="NO" itemValue="NO" />
-															<p:ajax event="change"
-																listener="#{reporte141MB.activeTxt(rowIndex, 'cert')}"
-																update=":form1:object" />
-														</p:selectOneRadio>
-													</p:column>
+												-->
 
-												</p:row>
+												<!--
 												<p:row>
-													<p:column style="background-color:#BFBFBF" />
-													<p:column colspan="8" style="background-color:#BFBFBF">
-														<p:outputLabel
-															value="Si su respuesta es positiva ¿Cuáles, en que institución, y documento que lo avala?" />
+													<p:column style="background-color:#bfbfbf" />
+													<p:column colspan="8" style="background-color:#bfbfbf">
+														<p:outputlabel
+															value="si su respuesta es positiva ¿cuáles, en que institución, y documento que lo avala?" />
 													</p:column>
 												</p:row>
-												<p:row>
+												-->
+												<!-- <p:row>
 													<p:column colspan="9">
-														<p:outputLabel id="lblcertificacion"
+														<p:outputlabel id="lblcertificacion"
 															value="#{objects.espcert}"
-															rendered="#{reporte141MB.bLblCertf}" />
-														<p:inputText id="txtCertificacion" size="140" onkeypress="if (event.keyCode == 13) {return false;}"
+															rendered="#{reporte141mb.blblcertf}" />
+														<p:inputtext id="txtcertificacion" size="140"
+															onkeypress="if (event.keycode == 13) {return false;}"
 															value="#{objects.espcert}"
-															rendered="#{reporte141MB.bCertf}">
-															<p:ajax event="blur" update="txtCertificacion" />
-														</p:inputText>
+															rendered="#{reporte141mb.bcertf}">
+															<p:ajax event="blur" update="txtcertificacion" />
+														</p:inputtext>
 													</p:column>
-												</p:row>
+												</p:row> -->
 											</p:panelGrid>
 										</p:panel>
 									</p:column>
@@ -463,15 +411,15 @@
 									<p:confirm header="Confirmación"
 										message="Desea eliminar el registro actual?"
 										icon="ui-icon-alert" />
-									
-									 </p:commandButton>
-									
-									
+
+								</p:commandButton>
+
+
 								<p:commandButton value="Cancelar" id="cancelar"
 									update=":form1:object, :form1:messagesEdit"
 									actionListener="#{reporte141MB.cancel(rowIndex)}"
-									icon="ui-icon-circle-close" disabled="#{reporte141MB.bLbl}" >
-									</p:commandButton>
+									icon="ui-icon-circle-close" disabled="#{reporte141MB.bLbl}">
+								</p:commandButton>
 							</p:panelGrid>
 						</p:column>
 					</p:dataTable>
@@ -500,8 +448,8 @@
 
 					</p:panel>
 				</p:panel>
-				
-					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 					<p:commandButton value="SI" type="button"
 						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
 					<p:commandButton value="NO" type="button"

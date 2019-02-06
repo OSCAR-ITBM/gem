@@ -16,7 +16,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.StreamedContent;
 
@@ -45,7 +44,7 @@ public class Reporte138MB extends BaseDirectReport {
 	private static final String NO = "NO";
 	
 	/** The Constant REPORTE_138. */
-	private static final String REPORTE_138 = "reporte138";
+	private static final String REPORTE_138 = "CLTM";
 	
 	/** The Constant PDF. */
 	private static final String PDF = ".pdf";
@@ -753,17 +752,16 @@ public class Reporte138MB extends BaseDirectReport {
 		firmas = firmasRepository.findAllByIdsector(this.getUserDetails().getIdSector());
 		conctb = conctbRepository.findByIdsector(getUserDetails().getIdSector());
 		String[] mesArray = this.getMonths(Integer.valueOf(conTrim)).split(",");
-		parameters.put("municipioName", firmas.getCampo1());
-		parameters.put("municipioClave", conctb.getClave());
-		parameters.put("lastDayOfMonth", getLastDay(Integer.valueOf(mesArray[1])));
-		parameters.put("mesInicioName", tcMesRepository.findByMes(mesArray[0]).getDescripcion());
-		parameters.put("mesFinName", tcMesRepository.findByMes(mesArray[1]).getDescripcion());
-		parameters.put("year", conctb.getAnoemp());
-		parameters.put("pathImage", getUserDetails().getPathImgCab1());
-		parameters.put("semestre", Integer.valueOf(conTrim));
-		parameters.put("idSector", getUserDetails().getIdSector());
-		parameters.put("firmaP1", firmas.getL3());
-		parameters.put("firmaN1", firmas.getN3());
+		parameters.put("pNombreMunicipio", firmas.getCampo1());
+		parameters.put("pNumMunicipio", conctb.getClave());
+		parameters.put("pDiaUltimo", getLastDay(Integer.valueOf(mesArray[1])));
+		parameters.put("pNombreMes", tcMesRepository.findByMes(mesArray[1]).getDescripcion());
+		parameters.put("pAnio", conctb.getAnoemp());
+		parameters.put("pLogo", getUserDetails().getPathImgCab1());
+		parameters.put("pSemestre", Integer.valueOf(conTrim));
+		parameters.put("pIdSector", getUserDetails().getIdSector());
+		parameters.put("pL3", firmas.getL3());
+		parameters.put("pN3", firmas.getN3());
 		return parameters;
 	}
 

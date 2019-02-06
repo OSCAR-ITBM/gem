@@ -256,10 +256,10 @@ public class UtilReport {
 	/**
 	 * Generate content repor xls.
 	 *
-	 * @param parameters the parameters
+	 * @param parameters  the parameters
 	 * @param listRecords the list records
-	 * @param pathJasper the path jasper
-	 * @param reportName the report name
+	 * @param pathJasper  the path jasper
+	 * @param reportName  the report name
 	 * @return the streamed content
 	 */
 
@@ -288,6 +288,7 @@ public class UtilReport {
 			LOGGER.info(":: Finaliza exportar Excel {} ", result);
 		} catch (final Exception genericExc) {
 			LOGGER.error(":: Error al generar reporte de Excel ", genericExc);
+			genericExc.printStackTrace();
 		} finally {
 			try {
 				connection.close();
@@ -301,11 +302,11 @@ public class UtilReport {
 	/**
 	 * Generate content report plain text.
 	 *
-	 * @param list the list
-	 * @param header the header
-	 * @param typeContent the type content
-	 * @param reportName the report name
-	 * @param extension the extension
+	 * @param list          the list
+	 * @param header        the header
+	 * @param typeContent   the type content
+	 * @param reportName    the report name
+	 * @param extension     the extension
 	 * @param separatorCols the separator cols
 	 * @return the streamed content
 	 */
@@ -324,11 +325,11 @@ public class UtilReport {
 	/**
 	 * Generate content report CSV.
 	 *
-	 * @param list the list
-	 * @param header the header
-	 * @param typeContent the type content
-	 * @param reportName the report name
-	 * @param extension the extension
+	 * @param list          the list
+	 * @param header        the header
+	 * @param typeContent   the type content
+	 * @param reportName    the report name
+	 * @param extension     the extension
 	 * @param separatorCols the separator cols
 	 * @return the streamed content
 	 */
@@ -347,7 +348,7 @@ public class UtilReport {
 	/**
 	 * Creates the row from object.
 	 *
-	 * @param bean the bean
+	 * @param bean      the bean
 	 * @param separator the separator
 	 * @return the string
 	 */
@@ -386,7 +387,7 @@ public class UtilReport {
 	/**
 	 * Creates the CSV row from object.
 	 *
-	 * @param bean the bean
+	 * @param bean      the bean
 	 * @param separator the separator
 	 * @return the string
 	 */
@@ -409,7 +410,7 @@ public class UtilReport {
 	/**
 	 * Obtiene el numero de columnas.
 	 *
-	 * @param bean            datos de la fila
+	 * @param bean datos de la fila
 	 * @return numero de columnas
 	 */
 	private int getMaxNumberColumn(final Object bean) {
@@ -429,7 +430,7 @@ public class UtilReport {
 	/**
 	 * Obtiene el valor de cada columna.
 	 *
-	 * @param bean the bean
+	 * @param bean            the bean
 	 * @param maxNumberColumn the max number column
 	 * @return the column values
 	 */
@@ -540,7 +541,8 @@ public class UtilReport {
 		} catch (final Exception ignored) {
 			LOGGER.error(":: Error al crear la clausula WHERE ", ignored);
 		}
-		if (result.indexOf(OPERATOR_EQUAL) == NOT_INDEX_OF && result.indexOf(LIKE) == NOT_INDEX_OF && bandera == false) {
+		if (result.indexOf(OPERATOR_EQUAL) == NOT_INDEX_OF && result.indexOf(LIKE) == NOT_INDEX_OF
+				&& bandera == false) {
 			result.append(DEFAULT_CLAUSE);
 		}
 		LOGGER.info(":: Clausula WHERE: {} ", result);

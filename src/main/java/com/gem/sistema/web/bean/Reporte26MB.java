@@ -162,17 +162,17 @@ public class Reporte26MB extends BaseDirectReport {
 
 		parametrs.put("pNomMunicipio", firmas.getCampo1());
 		parametrs.put("pNumMunicipio", conctb.getClave());
-		parametrs.put("pL1", firmas.getL27());
-		parametrs.put("pL2", firmas.getL28());
-		parametrs.put("pL4", firmas.getL5());
-		parametrs.put("pL5", firmas.getL3());
-		parametrs.put("pN1", firmas.getN27());
-		parametrs.put("pN2", firmas.getN28());
-		parametrs.put("pN4", firmas.getN5());
-		parametrs.put("pN5", firmas.getN3());
+		parametrs.put("pL1", firmas.getL1());
+		parametrs.put("pL2", firmas.getL2());
+		parametrs.put("pL3", firmas.getL3());
+		parametrs.put("pL4", firmas.getL16());
+		parametrs.put("pL5", firmas.getL28());
+		parametrs.put("pN1", firmas.getN1());
+		parametrs.put("pN2", firmas.getN2());
+		parametrs.put("pN3", firmas.getN3());
+		parametrs.put("pN4", firmas.getN16());
+		parametrs.put("pN5", firmas.getN28());
 		parametrs.put("pImgMuni", this.getUserDetails().getPathImgCab1());
-		parametrs.put("pElaboro", firmas.getN4());
-		parametrs.put("pReviso", firmas.getN5());
 
 		return parametrs;
 	}
