@@ -4,7 +4,7 @@
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SERVERGEM"/>
 	<parameter name="pAnio" class="java.lang.Integer"/>
-	<parameter name="pImage" class="java.lang.String"/>
+	<parameter name="pImagenPath" class="java.lang.String"/>
 	<parameter name="pNumMun" class="java.lang.Integer"/>
 	<parameter name="pMunicipio" class="java.lang.String"/>
 	<parameter name="pIdSector" class="java.lang.Integer"/>
@@ -136,7 +136,7 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Arial" size="9"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{CLVDEPG}.equals(null)? " " : $F{CLVDEPG} ]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CLVDEPG}.equals(null)? " " : $F{CLVDEPG}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement x="399" y="45" width="81" height="15" uuid="f6ef8971-8284-4df5-aabb-3d89c5116ffa">
@@ -450,7 +450,7 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 		<band height="100">
 			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
 				<reportElement x="0" y="0" width="60" height="60" uuid="7d211d5e-2b15-4a5a-9ac4-a86f26d443a7"/>
-				<imageExpression><![CDATA[$P{pImage}]]></imageExpression>
+				<imageExpression><![CDATA[$P{pImagenPath}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="60" y="0" width="632" height="30" uuid="07ac1863-4c34-4c92-951d-2d3882d5e636"/>
