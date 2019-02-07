@@ -2,12 +2,12 @@
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PbRM01e" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="347f82c7-291b-481e-95e2-cd74ada78bed">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="server adapter"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SERVERGEM"/>
 	<parameter name="pAnio" class="java.lang.Integer"/>
 	<parameter name="pImage" class="java.lang.String"/>
 	<parameter name="pNumMun" class="java.lang.Integer"/>
 	<parameter name="pMunicipio" class="java.lang.String"/>
-	<parameter name="pIdsector" class="java.lang.Integer"/>
+	<parameter name="pIdSector" class="java.lang.Integer"/>
 	<queryString>
 		<![CDATA[SELECT
 F.CAMPO3,
@@ -30,7 +30,7 @@ INNER JOIN MUNINEP MU ON SUBSTR(MA.CVEPROG,1,8) = MU.CAMPO7 AND MA.IDSECTOR = MU
 INNER JOIN CPD CPD1 ON SUBSTR(MA.CVETEMAS,1,4) =CPD1.CVETEMAS
 INNER JOIN CPD CPD2 ON SUBSTR(MA.CVETEMAS,1,6) =CPD2.CVETEMAS
 INNER JOIN FIRMAS F ON F.IDSECTOR = MA.IDSECTOR
-WHERE MA.IDSECTOR= $P{pIdsector}
+WHERE MA.IDSECTOR= $P{pIdSector}
 ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 	</queryString>
 	<field name="CAMPO3" class="java.lang.Integer"/>
@@ -110,10 +110,10 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Arial" size="9"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{PROGRAMA}.equals(null)? " " : $F{PROGRAMA} + "     " + $F{CAMPO6}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{PROGRAMA}.equals(null)? " " : $F{PROGRAMA}]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="true">
-					<reportElement x="399" y="15" width="81" height="15" uuid="c0b13111-69f9-4fa6-997d-752f3f24b45a">
+				<staticText>
+					<reportElement x="399" y="15" width="81" height="15" uuid="b730f73d-6f3f-482c-a38f-b8a273f11d4d">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<box>
@@ -123,8 +123,8 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Arial" size="9"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{OBJETIVO}]]></textFieldExpression>
-				</textField>
+					<text><![CDATA[]]></text>
+				</staticText>
 				<textField isBlankWhenNull="true">
 					<reportElement x="399" y="30" width="81" height="15" uuid="585ef272-99b8-4d6b-99f5-3287d16569f7">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
@@ -136,7 +136,7 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Arial" size="9"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{CLVDEPG}.equals(null)? " " : $F{CLVDEPG} + "    " +  $F{NOMBRE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CLVDEPG}.equals(null)? " " : $F{CLVDEPG} ]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement x="399" y="45" width="81" height="15" uuid="f6ef8971-8284-4df5-aabb-3d89c5116ffa">
@@ -149,7 +149,7 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Arial" size="9"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{PTEMATICO}.equals(null)? " " : $F{PTEMATICO}+ "     " +  $F{NOMPILAR}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{PTEMATICO}.equals(null)? " " : $F{PTEMATICO}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement x="399" y="60" width="81" height="15" uuid="dc1e4ccd-74c2-425f-bddc-d27408c3609e">
@@ -163,7 +163,7 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Arial" size="9"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{TEMADES}.equals(null)? " " : $F{CVETEMAS}+ "     " +  $F{NOMTEMA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{TEMADES}.equals(null)? " " : $F{CVETEMAS}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="22" y="95" width="123" height="20" backcolor="#D6D6D6" uuid="425a9f63-6fe0-4629-a539-67db9b57b92c">
@@ -246,7 +246,7 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 					<text><![CDATA[MEDIOS DE VERIFICACIÓN	 ]]></text>
 				</staticText>
 				<staticText>
-					<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="637" y="95" width="123" height="20" backcolor="#D6D6D6" uuid="83c98e59-e228-451f-b10c-aafc4384d29b">
+					<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="637" y="95" width="115" height="20" backcolor="#D6D6D6" uuid="83c98e59-e228-451f-b10c-aafc4384d29b">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
@@ -261,43 +261,48 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 					</textElement>
 					<text><![CDATA[SUPUESTOS	 ]]></text>
 				</staticText>
-				<staticText>
-					<reportElement x="480" y="0" width="272" height="15" uuid="9fe3919d-5cd7-42ee-9fa1-2f7a717df883"/>
+				<textField isBlankWhenNull="true">
+					<reportElement x="480" y="0" width="272" height="15" uuid="a2e1fd50-cb34-46d0-a137-c8a3b83993be"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<rightPen lineWidth="1.0"/>
 					</box>
-					<text><![CDATA[]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="480" y="15" width="272" height="15" uuid="fd12bb54-a77e-4536-912d-26ce7b0528fe"/>
+					<textElement>
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CAMPO6}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="480" y="30" width="272" height="15" uuid="b93e893e-5494-4e47-a689-71df81ade38b"/>
 					<box>
 						<rightPen lineWidth="1.0"/>
 					</box>
-					<text><![CDATA[]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="480" y="30" width="272" height="15" uuid="0d8b5ae5-35b5-4e38-886c-fc5933971cd5"/>
+					<textElement>
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="480" y="45" width="272" height="15" uuid="6dd69ec8-257c-4f60-8a07-90d64a6e6e10"/>
 					<box>
 						<rightPen lineWidth="1.0"/>
 					</box>
-					<text><![CDATA[]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="480" y="45" width="272" height="15" uuid="5de0eadf-84d1-435b-98e2-189283a81cf3"/>
-					<box>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<text><![CDATA[]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="480" y="60" width="272" height="15" uuid="017248b6-5f08-478b-8f5f-60cd81d0d5c6"/>
+					<textElement>
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{NOMPILAR}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="480" y="60" width="272" height="15" uuid="3b30a7a0-1048-42c6-b088-96c636763043"/>
 					<box>
 						<bottomPen lineWidth="1.0"/>
 						<rightPen lineWidth="1.0"/>
 					</box>
-					<text><![CDATA[]]></text>
-				</staticText>
+					<textElement>
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{NOMTEMA}]]></textFieldExpression>
+				</textField>
 				<staticText>
 					<reportElement x="0" y="16" width="60" height="72" uuid="9887f279-6409-4adf-abb5-2f91e1a250ab"/>
 					<box>
@@ -347,6 +352,16 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 					</textElement>
 					<textFieldExpression><![CDATA[$P{pNumMun} == null ? "No: ": "No: "+ $P{pNumMun}]]></textFieldExpression>
 				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="480" y="16" width="272" height="15" uuid="cda1d774-cf6d-4a8d-b7b7-f67853f41206"/>
+					<box>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement>
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{OBJETIVO}]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupHeader>
 		<groupFooter>
@@ -360,7 +375,7 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 						<subreportParameterExpression><![CDATA[$F{GRUPO}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="p_Idsector">
-						<subreportParameterExpression><![CDATA[$P{pIdsector}]]></subreportParameterExpression>
+						<subreportParameterExpression><![CDATA[$P{pIdSector}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					<subreportExpression><![CDATA["actividad.jasper"]]></subreportExpression>
@@ -380,7 +395,7 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 						<subreportParameterExpression><![CDATA[$F{GRUPO}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="p_Idsector">
-						<subreportParameterExpression><![CDATA[$P{pIdsector}]]></subreportParameterExpression>
+						<subreportParameterExpression><![CDATA[$P{pIdSector}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					<subreportExpression><![CDATA["componente.jasper"]]></subreportExpression>
@@ -400,7 +415,7 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 						<subreportParameterExpression><![CDATA[$F{GRUPO}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="p_Idsector">
-						<subreportParameterExpression><![CDATA[$P{pIdsector}]]></subreportParameterExpression>
+						<subreportParameterExpression><![CDATA[$P{pIdSector}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					<subreportExpression><![CDATA["proposito.jasper"]]></subreportExpression>
@@ -420,7 +435,7 @@ ORDER BY MA.CLVDEPG, MA.CVEPROG,MA.CVETEMAS]]>
 						<subreportParameterExpression><![CDATA[$F{GRUPO}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="p_Idsector">
-						<subreportParameterExpression><![CDATA[$P{pIdsector}]]></subreportParameterExpression>
+						<subreportParameterExpression><![CDATA[$P{pIdSector}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					<subreportExpression><![CDATA["finalidad.jasper"]]></subreportExpression>
