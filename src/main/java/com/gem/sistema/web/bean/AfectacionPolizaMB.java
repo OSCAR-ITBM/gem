@@ -53,6 +53,7 @@ public class AfectacionPolizaMB extends AbstractMB {
 
 	private static final String DATA_TYPE = "PASSWORD";
 	private static final String KEY_PASS = "PASS_AFECTA";
+	private static final String KEY_PASS_1 = "PASS_AFECTA1";
 
 	/** The mes. */
 	private Integer mes;
@@ -373,7 +374,8 @@ public class AfectacionPolizaMB extends AbstractMB {
 		lisMes = tcMesRepository.findAll();
 		activarButton = Boolean.TRUE;
 		isActivarButton();
-		TcParametro param = this.parametrosRepository.findOne(ParametrosPredicate.findByDataType(KEY_PASS, DATA_TYPE));
+		String keyPass = this.getUserDetails().getIdSector() == 1 ? KEY_PASS_1 : KEY_PASS;
+		TcParametro param = this.parametrosRepository.findOne(ParametrosPredicate.findByDataType(keyPass, DATA_TYPE));
 		passAfectacion = param.getValor();
 	}
 

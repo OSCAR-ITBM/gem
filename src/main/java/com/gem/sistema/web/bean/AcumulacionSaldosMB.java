@@ -83,7 +83,8 @@ public class AcumulacionSaldosMB extends AbstractMB {
 	/**
 	 * Sets the cuenta repository.
 	 *
-	 * @param cuentaRepository the new cuenta repository
+	 * @param cuentaRepository
+	 *            the new cuenta repository
 	 */
 	public void setCuentaRepository(CuentaRepository cuentaRepository) {
 		this.cuentaRepository = cuentaRepository;
@@ -101,7 +102,8 @@ public class AcumulacionSaldosMB extends AbstractMB {
 	/**
 	 * Sets the ingreso repository.
 	 *
-	 * @param ingresoRepository the new ingreso repository
+	 * @param ingresoRepository
+	 *            the new ingreso repository
 	 */
 	public void setIngresoRepository(IngresoRepository ingresoRepository) {
 		this.ingresoRepository = ingresoRepository;
@@ -119,7 +121,8 @@ public class AcumulacionSaldosMB extends AbstractMB {
 	/**
 	 * Sets the ingresot repository.
 	 *
-	 * @param ingresotRepository the new ingresot repository
+	 * @param ingresotRepository
+	 *            the new ingresot repository
 	 */
 	public void setIngresotRepository(IngresotRepository ingresotRepository) {
 		this.ingresotRepository = ingresotRepository;
@@ -137,7 +140,8 @@ public class AcumulacionSaldosMB extends AbstractMB {
 	/**
 	 * Sets the programamun repository.
 	 *
-	 * @param programamunRepository the new programamun repository
+	 * @param programamunRepository
+	 *            the new programamun repository
 	 */
 	public void setProgramamunRepository(ProgramamunRepository programamunRepository) {
 		this.programamunRepository = programamunRepository;
@@ -155,7 +159,8 @@ public class AcumulacionSaldosMB extends AbstractMB {
 	/**
 	 * Sets the paso repository.
 	 *
-	 * @param pasoRepository the new paso repository
+	 * @param pasoRepository
+	 *            the new paso repository
 	 */
 	public void setPasoRepository(PasoRepository pasoRepository) {
 		this.pasoRepository = pasoRepository;
@@ -173,7 +178,8 @@ public class AcumulacionSaldosMB extends AbstractMB {
 	/**
 	 * Sets the pasot repository.
 	 *
-	 * @param pasotRepository the new pasot repository
+	 * @param pasotRepository
+	 *            the new pasot repository
 	 */
 	public void setPasotRepository(PasotRepository pasotRepository) {
 		this.pasotRepository = pasotRepository;
@@ -191,7 +197,8 @@ public class AcumulacionSaldosMB extends AbstractMB {
 	/**
 	 * Sets the preprogra repository.
 	 *
-	 * @param preprograRepository the new preprogra repository
+	 * @param preprograRepository
+	 *            the new preprogra repository
 	 */
 	public void setPreprograRepository(PreprograRepository preprograRepository) {
 		this.preprograRepository = preprograRepository;
@@ -218,7 +225,8 @@ public class AcumulacionSaldosMB extends AbstractMB {
 	/**
 	 * Sets the account service.
 	 *
-	 * @param accountService the new account service
+	 * @param accountService
+	 *            the new account service
 	 */
 	public void setAccountService(AccountService accountService) {
 		this.accountService = accountService;
@@ -251,7 +259,8 @@ public class AcumulacionSaldosMB extends AbstractMB {
 	/**
 	 * Process municipal.
 	 *
-	 * @param idSector the id sector
+	 * @param idSector
+	 *            the id sector
 	 */
 	public void processMunicipal(Integer idSector) {
 		pasoRepository.executePistov409(idSector, getUserDetails().getUsername());
@@ -270,7 +279,8 @@ public class AcumulacionSaldosMB extends AbstractMB {
 	/**
 	 * Process central.
 	 *
-	 * @param idSector the id sector
+	 * @param idSector
+	 *            the id sector
 	 */
 	public void processCentral(Long idSector) {
 		cuentaRepository.executeAcumulacionSaldos(idSector.intValue());
@@ -280,8 +290,10 @@ public class AcumulacionSaldosMB extends AbstractMB {
 	/**
 	 * Acumula pasot.
 	 *
-	 * @param idSector the id sector
-	 * @param userId   the user id
+	 * @param idSector
+	 *            the id sector
+	 * @param userId
+	 *            the user id
 	 */
 	private void acumulaPasot(Integer idSector, String userId) {
 		List<Object[]> results = pasoRepository.findPartidaPrimerNivelByIdSector(idSector);
@@ -305,8 +317,10 @@ public class AcumulacionSaldosMB extends AbstractMB {
 	/**
 	 * Progmun.
 	 *
-	 * @param idSector the id sector
-	 * @param userId   the user id
+	 * @param idSector
+	 *            the id sector
+	 * @param userId
+	 *            the user id
 	 */
 	private void progmun(Integer idSector, String userId) {
 		List<Object[]> results = pasoRepository.findClaveAndProgramaByIdSector(idSector);
@@ -333,7 +347,8 @@ public class AcumulacionSaldosMB extends AbstractMB {
 	/**
 	 * Sal sum 1.
 	 *
-	 * @param idSector the id sector
+	 * @param idSector
+	 *            the id sector
 	 */
 	private void salSum1(Long idSector) {
 		update3DigitAccounts(idSector);
@@ -369,10 +384,14 @@ public class AcumulacionSaldosMB extends AbstractMB {
 	/**
 	 * Find and update.
 	 *
-	 * @param idSector the id sector
-	 * @param account  the account
-	 * @param salini   the salini
-	 * @param message  the message
+	 * @param idSector
+	 *            the id sector
+	 * @param account
+	 *            the account
+	 * @param salini
+	 *            the salini
+	 * @param message
+	 *            the message
 	 */
 	private void findAndUpdate(Long idSector, String account, Double salini, String message) {
 		Cuenta c = cuentaRepository.findFirstByIdsectorAndCuenta(idSector, account);
@@ -386,7 +405,8 @@ public class AcumulacionSaldosMB extends AbstractMB {
 	/**
 	 * Update 3 digit accounts.
 	 *
-	 * @param idSector the id sector
+	 * @param idSector
+	 *            the id sector
 	 */
 	private void update3DigitAccounts(Long idSector) {
 		List<Object[]> results = cuentaRepository.getSum3DigitsAccount(idSector, "4000", 0);
@@ -399,7 +419,8 @@ public class AcumulacionSaldosMB extends AbstractMB {
 	/**
 	 * Update digit accounts.
 	 *
-	 * @param idSector the id sector
+	 * @param idSector
+	 *            the id sector
 	 */
 	private void updateDigitAccounts(Long idSector) {
 		List<Object[]> results = cuentaRepository.getSum2DigitsAccount(idSector, 3);
@@ -420,12 +441,18 @@ public class AcumulacionSaldosMB extends AbstractMB {
 	/**
 	 * Update account range salini.
 	 *
-	 * @param idSector     the id sector
-	 * @param minCta       the min cta
-	 * @param maxCta       the max cta
-	 * @param searchCuenta the search cuenta
-	 * @param scta         the scta
-	 * @param message      the message
+	 * @param idSector
+	 *            the id sector
+	 * @param minCta
+	 *            the min cta
+	 * @param maxCta
+	 *            the max cta
+	 * @param searchCuenta
+	 *            the search cuenta
+	 * @param scta
+	 *            the scta
+	 * @param message
+	 *            the message
 	 */
 	private void updateAccountRangeSalini(Long idSector, String minCta, String maxCta, String searchCuenta, String scta,
 			String message) {
@@ -443,7 +470,9 @@ public class AcumulacionSaldosMB extends AbstractMB {
 	}
 
 	public void validatePassword() {
-		boolean bandera = this.changePasswordService.passwordisTrue(password, ConstansEnum.KEY_PASS_ACUM.getValue());
+		String keyPas = this.getUserDetails().getIdSector() == 1 ? ConstansEnum.KEY_PASS_ACUM_1.getValue()
+				: ConstansEnum.KEY_PASS_ACUM.getValue();
+		boolean bandera = this.changePasswordService.passwordisTrue(password, keyPas);
 		bDisable = true;
 		if (bandera)
 			bDisable = false;
