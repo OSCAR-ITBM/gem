@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.2.2.final using JasperReports Library version 6.2.2  -->
-<!-- 2017-01-18T12:09:55 -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte72" pageWidth="1300" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1300" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="37ed2b96-4991-4df6-a685-0545e5bf7158">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="gemdb_linux"/>
@@ -218,7 +217,7 @@ INNER JOIN NATGAS N ON P.PARTIDA=N.CLVGAS
 					<font fontName="Arial" size="9"/>
 					<paragraph lineSpacingSize="1.0" tabStopWidth="0"/>
 				</textElement>
-				<text><![CDATA[SECRETARIA DE FINANZAS Y PLANEACION]]></text>
+				<text><![CDATA[SECRETARIA DE FINANZAS ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" x="69" y="15" width="215" height="13" isRemoveLineWhenBlank="true" uuid="051fc5b0-bebd-4f91-98da-b9edbd49566e">
