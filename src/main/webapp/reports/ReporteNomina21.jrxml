@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-04-10T13:41:50 -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteNomina21" pageWidth="1380" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1380" leftMargin="0" rightMargin="0" topMargin="20" bottomMargin="20" uuid="96b07db0-45b4-42e6-9fc3-70aad29a8277">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ServerLinux"/>
@@ -294,7 +293,7 @@ GROUP BY partida, nomgas]]>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[SECRETARIA DE FINANZAS MEXICO]]></text>
+				<text><![CDATA[SECRETARIA DE FINANZAS]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="5" width="1362" height="10" uuid="a7a8ceba-bb45-45ea-ae5b-e210649b0853"/>
