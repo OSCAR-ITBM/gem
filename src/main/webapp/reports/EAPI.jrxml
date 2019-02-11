@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-06-02T12:12:27 -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EAPI" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="47aa314d-9ace-4353-81de-50ddce7335a5">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ServerLinux"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<style name="Table 1_TH" mode="Opaque" backcolor="#F0F8FF">
 		<box>
 			<pen lineWidth="0.5" lineColor="#000000"/>
@@ -401,7 +400,7 @@ ORDER BY DI.CUENTA,DI.SCTA, DI.SSCTA, DI.SSSCTA, DI.SSSSCTA]]>
 	<group name="GroupTotales">
 		<groupFooter>
 			<band height="10">
-				<textField pattern="#,##0.00">
+				<textField pattern="#,##0.00" isBlankWhenNull="true">
 					<reportElement mode="Opaque" x="302" y="0" width="66" height="10" backcolor="#C9C9C9" uuid="00d6c684-2ad7-4a3e-910e-595c2c2d7588"/>
 					<box>
 						<pen lineWidth="0.5"/>
@@ -412,7 +411,7 @@ ORDER BY DI.CUENTA,DI.SCTA, DI.SSCTA, DI.SSSCTA, DI.SSSSCTA]]>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{V_Total_Estimada}]]></textFieldExpression>
 				</textField>
-				<textField pattern="#,##0.00">
+				<textField pattern="#,##0.00" isBlankWhenNull="true">
 					<reportElement mode="Opaque" x="368" y="0" width="64" height="10" backcolor="#C9C9C9" uuid="4d21bec3-d0b8-49cd-b3e5-ca4577ea73b7"/>
 					<box>
 						<pen lineWidth="0.5"/>
@@ -423,7 +422,7 @@ ORDER BY DI.CUENTA,DI.SCTA, DI.SSCTA, DI.SSSCTA, DI.SSSSCTA]]>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{V_Total_Ampliacion}]]></textFieldExpression>
 				</textField>
-				<textField pattern="#,##0.00">
+				<textField pattern="#,##0.00" isBlankWhenNull="true">
 					<reportElement mode="Opaque" x="432" y="0" width="64" height="10" backcolor="#C9C9C9" uuid="bd30246e-ddff-43c7-9dc2-9d01b034fc8e"/>
 					<box>
 						<pen lineWidth="0.5"/>
@@ -434,7 +433,7 @@ ORDER BY DI.CUENTA,DI.SCTA, DI.SSCTA, DI.SSSCTA, DI.SSSSCTA]]>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{V_Total_Reduccion}]]></textFieldExpression>
 				</textField>
-				<textField pattern="#,##0.00">
+				<textField pattern="#,##0.00" isBlankWhenNull="true">
 					<reportElement mode="Opaque" x="624" y="0" width="64" height="10" backcolor="#C9C9C9" uuid="8a6457f3-25ac-44b6-a4a6-bf3513909a4b"/>
 					<box>
 						<pen lineWidth="0.5"/>
@@ -445,7 +444,7 @@ ORDER BY DI.CUENTA,DI.SCTA, DI.SSCTA, DI.SSSCTA, DI.SSSSCTA]]>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{V_Total_Recaudado}]]></textFieldExpression>
 				</textField>
-				<textField pattern="#,##0.00">
+				<textField pattern="#,##0.00" isBlankWhenNull="true">
 					<reportElement mode="Opaque" x="560" y="0" width="64" height="10" backcolor="#C9C9C9" uuid="ede06f17-9e78-4b8d-8a26-89233e27d1f8"/>
 					<box>
 						<pen lineWidth="0.5"/>
@@ -456,7 +455,7 @@ ORDER BY DI.CUENTA,DI.SCTA, DI.SSCTA, DI.SSSCTA, DI.SSSSCTA]]>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{V_Total_Devengado}]]></textFieldExpression>
 				</textField>
-				<textField pattern="#,##0.00">
+				<textField pattern="#,##0.00" isBlankWhenNull="true">
 					<reportElement mode="Opaque" x="496" y="0" width="64" height="10" backcolor="#C9C9C9" uuid="a191cf94-9573-45f5-90c7-a56f8a1878cb"/>
 					<box>
 						<pen lineWidth="0.5"/>
@@ -467,7 +466,7 @@ ORDER BY DI.CUENTA,DI.SCTA, DI.SSCTA, DI.SSSCTA, DI.SSSSCTA]]>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{V_Total_Modificado}]]></textFieldExpression>
 				</textField>
-				<textField pattern="#,##0.00">
+				<textField pattern="#,##0.00" isBlankWhenNull="true">
 					<reportElement mode="Opaque" x="688" y="0" width="64" height="10" backcolor="#C9C9C9" uuid="8b0c1e7a-3134-4644-9088-5c26c6cfe187"/>
 					<box>
 						<pen lineWidth="0.5"/>
@@ -508,7 +507,7 @@ ORDER BY DI.CUENTA,DI.SCTA, DI.SSCTA, DI.SSSCTA, DI.SSSSCTA]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$P{dependenciaName}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{dependenciaName} + ", SECRETARIA DE FINANZAS, SUBSECRETARIA DE PLANEACIÓN Y PRESUPUESTO"]]></textFieldExpression>
 				</textField>
 				<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
 					<reportElement x="0" y="0" width="45" height="45" uuid="8db61f0f-66f0-4128-8834-3dc3919bcbb7">
@@ -656,7 +655,7 @@ ORDER BY DI.CUENTA,DI.SCTA, DI.SSCTA, DI.SSSCTA, DI.SSSSCTA]]>
 					<textElement verticalAlignment="Bottom">
 						<font fontName="Arial" size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[ new java.util.Date()]]></textFieldExpression>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="526" y="33" width="128" height="10" uuid="e4f2d6a2-4ea9-4637-b665-73c882385700"/>
