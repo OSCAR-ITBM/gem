@@ -11,16 +11,26 @@
 		<ui:define name="content">
 			<h:form id="acumulacionsaldos">
 				<p:panel id="panel" header="Acumulacion de saldos"
-					styleClass="green col-md-9 col-centered row-centered shadow-panel">
+					styleClass="green col-md-6 col-centered row-centered shadow-panel">
 					<p:growl id="growl" showDetail="true" sticky="true"></p:growl>
-					<br />
-					<br />
-					<p:commandButton value="Correcto" ajax="true"
+					<p:panelGrid id="gridPass" columns="2"
+						styleClass="green col-md-5 col-centered row-centered shadow-panel">
+
+						<p:password id="pass" value="#{acumulacionSaldosMB.password}"
+							required="true" disabled="#{!acumulacionSaldosMB.bDisable}"
+							requiredMessage="El campo del password es requerido" />
+						<p:commandButton value="validar" id="validar"
+							disabled="#{!acumulacionSaldosMB.bDisable}"
+							update=":acumulacionsaldos:growl, :acumulacionsaldos:pass, :acumulacionsaldos:correcto, validar"
+							actionListener="#{acumulacionSaldosMB.validatePassword}" />
+					</p:panelGrid>
+
+					<p:commandButton value="Correcto" ajax="true" id="correcto"
 						action="#{acumulacionSaldosMB.process}"
-						disabled="#{acumulacionSaldosMB.disabled}"
+						disabled="#{acumulacionSaldosMB.bDisable}"
 						onstart="PF('blockUIWidget').block();"
-						oncomplete="PF('blockUIWidget').unblock();" 
-						update=":acumulacionsaldos:growl"/>
+						oncomplete="PF('blockUIWidget').unblock();"
+						update=":acumulacionsaldos:growl, :acumulacionsaldos:pass, :acumulacionsaldos:correcto, :acumulacionsaldos: validar" />
 				</p:panel>
 				<pe:blockUI widgetVar="blockUIWidget" centerX="false">
 					<h:panelGrid columns="2">
