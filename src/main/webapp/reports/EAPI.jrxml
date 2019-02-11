@@ -493,10 +493,10 @@ ORDER BY DI.CUENTA,DI.SCTA, DI.SSCTA, DI.SSSCTA, DI.SSSSCTA]]>
 	</group>
 	<group name="HEADER_CENT" isReprintHeaderOnEachPage="true">
 		<groupHeader>
-			<band height="130">
+			<band height="148">
 				<printWhenExpression><![CDATA[$P{idSector}!=1]]></printWhenExpression>
 				<textField isBlankWhenNull="true">
-					<reportElement x="2" y="58" width="749" height="15" uuid="ea3b2070-c0fa-491d-8722-a3e63ff604a7"/>
+					<reportElement x="2" y="80" width="749" height="15" uuid="ea3b2070-c0fa-491d-8722-a3e63ff604a7"/>
 					<box>
 						<pen lineWidth="2.0"/>
 						<topPen lineWidth="2.0" lineStyle="Solid" lineColor="#000000"/>
@@ -507,7 +507,7 @@ ORDER BY DI.CUENTA,DI.SCTA, DI.SSCTA, DI.SSSCTA, DI.SSSSCTA]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$P{dependenciaName} + ", SECRETARIA DE FINANZAS, SUBSECRETARIA DE PLANEACIÓN Y PRESUPUESTO"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{dependenciaName}]]></textFieldExpression>
 				</textField>
 				<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
 					<reportElement x="0" y="0" width="45" height="45" uuid="8db61f0f-66f0-4128-8834-3dc3919bcbb7">
@@ -517,7 +517,7 @@ ORDER BY DI.CUENTA,DI.SCTA, DI.SSCTA, DI.SSSCTA, DI.SSSSCTA]]>
 					<imageExpression><![CDATA[$P{LOGO}]]></imageExpression>
 				</image>
 				<textField evaluationTime="Report">
-					<reportElement x="2" y="73" width="749" height="15" uuid="856bbd1d-acb0-4391-867c-e3777b6558d2">
+					<reportElement x="2" y="95" width="749" height="15" uuid="856bbd1d-acb0-4391-867c-e3777b6558d2">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<box>
@@ -532,16 +532,16 @@ ORDER BY DI.CUENTA,DI.SCTA, DI.SSCTA, DI.SSSCTA, DI.SSSSCTA]]>
 					</textElement>
 					<textFieldExpression><![CDATA["ESTADO DE AVANCE PRESUPUESTAL DE INGRESOS DEL 1o. DE "+$V{v_mes}.get(1) +" AL " +$V{Get_day} +" DE "+ $V{v_mes}.get($P{MES}) + " DE " + $P{AN}]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement x="45" y="0" width="661" height="20" uuid="5c3ae4b0-4619-492a-895d-4d68f78fcc31"/>
+				<staticText>
+					<reportElement x="45" y="0" width="661" height="20" uuid="700305bc-459d-416b-b613-17af324eb5e8"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Arial" size="12" isBold="true"/>
 						<paragraph leftIndent="2"/>
 					</textElement>
-					<textFieldExpression><![CDATA["GOBIERNO DEL ESTADO DE MEXICO"]]></textFieldExpression>
-				</textField>
+					<text><![CDATA[GOBIERNO DEL ESTADO DE MEXICO]]></text>
+				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="0" y="100" width="85" height="30" backcolor="#C9C9C9" uuid="70209429-a6a5-4aa0-aad4-1247545d3350"/>
+					<reportElement mode="Opaque" x="0" y="118" width="85" height="30" backcolor="#C9C9C9" uuid="70209429-a6a5-4aa0-aad4-1247545d3350"/>
 					<box>
 						<pen lineWidth="0.5"/>
 					</box>
@@ -551,7 +551,7 @@ ORDER BY DI.CUENTA,DI.SCTA, DI.SSCTA, DI.SSSCTA, DI.SSSSCTA]]>
 					<text><![CDATA[CUENTA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="85" y="100" width="217" height="30" backcolor="#C9C9C9" uuid="d04430a0-e337-4040-99a3-14d2974b27ce"/>
+					<reportElement mode="Opaque" x="85" y="118" width="217" height="30" backcolor="#C9C9C9" uuid="d04430a0-e337-4040-99a3-14d2974b27ce"/>
 					<box>
 						<pen lineWidth="0.5"/>
 					</box>
@@ -561,7 +561,7 @@ ORDER BY DI.CUENTA,DI.SCTA, DI.SSCTA, DI.SSSCTA, DI.SSSSCTA]]>
 					<text><![CDATA[CONCEPTO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="302" y="100" width="66" height="30" backcolor="#C9C9C9" uuid="5a9e95d5-e1f2-4114-be68-a146b0fd1e90"/>
+					<reportElement mode="Opaque" x="302" y="118" width="66" height="30" backcolor="#C9C9C9" uuid="5a9e95d5-e1f2-4114-be68-a146b0fd1e90"/>
 					<box>
 						<pen lineWidth="0.5"/>
 					</box>
@@ -571,7 +571,7 @@ ORDER BY DI.CUENTA,DI.SCTA, DI.SSCTA, DI.SSSCTA, DI.SSSSCTA]]>
 					<text><![CDATA[ESTIMADA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="368" y="100" width="384" height="15" backcolor="#C9C9C9" uuid="15731208-5f69-4c6d-bc86-8306b9fb067b"/>
+					<reportElement mode="Opaque" x="368" y="118" width="384" height="15" backcolor="#C9C9C9" uuid="15731208-5f69-4c6d-bc86-8306b9fb067b"/>
 					<box>
 						<pen lineWidth="0.5"/>
 					</box>
@@ -581,7 +581,7 @@ ORDER BY DI.CUENTA,DI.SCTA, DI.SSCTA, DI.SSSCTA, DI.SSSSCTA]]>
 					<text><![CDATA[LEY DE INGRESOS]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="368" y="115" width="64" height="15" backcolor="#C9C9C9" uuid="e1032721-524b-4a1f-867b-b7b4b60df898"/>
+					<reportElement mode="Opaque" x="368" y="133" width="64" height="15" backcolor="#C9C9C9" uuid="e1032721-524b-4a1f-867b-b7b4b60df898"/>
 					<box>
 						<pen lineWidth="0.5"/>
 					</box>
@@ -591,7 +591,7 @@ ORDER BY DI.CUENTA,DI.SCTA, DI.SSCTA, DI.SSSCTA, DI.SSSSCTA]]>
 					<text><![CDATA[AMPLIACIÓN]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="432" y="115" width="64" height="15" backcolor="#C9C9C9" uuid="5eb9cb43-82b3-4e76-aeb0-f52844b9add3"/>
+					<reportElement mode="Opaque" x="432" y="133" width="64" height="15" backcolor="#C9C9C9" uuid="5eb9cb43-82b3-4e76-aeb0-f52844b9add3"/>
 					<box>
 						<pen lineWidth="0.5"/>
 					</box>
@@ -601,7 +601,7 @@ ORDER BY DI.CUENTA,DI.SCTA, DI.SSCTA, DI.SSSCTA, DI.SSSSCTA]]>
 					<text><![CDATA[REDUCCIÓN]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="624" y="115" width="64" height="15" backcolor="#C9C9C9" uuid="d845411d-3556-4215-aa7d-3f73a34113a7"/>
+					<reportElement mode="Opaque" x="624" y="133" width="64" height="15" backcolor="#C9C9C9" uuid="d845411d-3556-4215-aa7d-3f73a34113a7"/>
 					<box>
 						<pen lineWidth="0.5"/>
 					</box>
@@ -611,7 +611,7 @@ ORDER BY DI.CUENTA,DI.SCTA, DI.SSCTA, DI.SSSCTA, DI.SSSSCTA]]>
 					<text><![CDATA[RECAUDADO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="496" y="115" width="64" height="15" backcolor="#C9C9C9" uuid="183c79ee-c506-484b-9c51-7c0ac4f53749"/>
+					<reportElement mode="Opaque" x="496" y="133" width="64" height="15" backcolor="#C9C9C9" uuid="183c79ee-c506-484b-9c51-7c0ac4f53749"/>
 					<box>
 						<pen lineWidth="0.5"/>
 					</box>
@@ -621,7 +621,7 @@ ORDER BY DI.CUENTA,DI.SCTA, DI.SSCTA, DI.SSSCTA, DI.SSSSCTA]]>
 					<text><![CDATA[MODIFICADA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="688" y="115" width="64" height="15" backcolor="#C9C9C9" uuid="d47cdecd-1c09-4aab-ace0-c989a613e22f"/>
+					<reportElement mode="Opaque" x="688" y="133" width="64" height="15" backcolor="#C9C9C9" uuid="d47cdecd-1c09-4aab-ace0-c989a613e22f"/>
 					<box>
 						<pen lineWidth="0.5"/>
 					</box>
@@ -631,7 +631,7 @@ ORDER BY DI.CUENTA,DI.SCTA, DI.SSCTA, DI.SSSCTA, DI.SSSSCTA]]>
 					<text><![CDATA[POR EJECUTAR]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="560" y="115" width="64" height="15" backcolor="#C9C9C9" uuid="f931ee67-e7d5-46aa-b232-87cafa6659af"/>
+					<reportElement mode="Opaque" x="560" y="133" width="64" height="15" backcolor="#C9C9C9" uuid="f931ee67-e7d5-46aa-b232-87cafa6659af"/>
 					<box>
 						<pen lineWidth="0.5"/>
 					</box>
@@ -640,14 +640,14 @@ ORDER BY DI.CUENTA,DI.SCTA, DI.SSCTA, DI.SSSCTA, DI.SSSSCTA]]>
 					</textElement>
 					<text><![CDATA[DEVENGADO]]></text>
 				</staticText>
-				<textField>
-					<reportElement x="45" y="20" width="425" height="20" uuid="18102517-aba6-42a5-9db6-732ec6ed7868"/>
+				<staticText>
+					<reportElement x="45" y="20" width="425" height="20" uuid="59ae50e7-c006-409c-a036-7bbf200ab39f"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Arial" size="12" isBold="true"/>
 						<paragraph leftIndent="2"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Instituto de la Función Registral del Estado de México ( I F R E M )"]]></textFieldExpression>
-				</textField>
+					<text><![CDATA["Secretaria de Finanzas"]]></text>
+				</staticText>
 				<textField pattern="dd/MM/yyyy">
 					<reportElement x="654" y="33" width="64" height="10" uuid="a2b14b47-ea9b-4084-8baf-cc3554e53c59">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
@@ -664,6 +664,22 @@ ORDER BY DI.CUENTA,DI.SCTA, DI.SSCTA, DI.SSSCTA, DI.SSSSCTA]]>
 					</textElement>
 					<textFieldExpression><![CDATA["Fecha de Elaboración:"]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement x="45" y="40" width="425" height="20" uuid="62e6d4c7-84c5-40f9-8896-5c82143b4a5c"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" size="12" isBold="true"/>
+						<paragraph leftIndent="2"/>
+					</textElement>
+					<text><![CDATA["Subsecretaria de Planeación y Presupuesto"]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="45" y="60" width="425" height="20" uuid="b492dc37-2953-4649-882f-2f7622d2ae5f"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" size="12" isBold="true"/>
+						<paragraph leftIndent="2"/>
+					</textElement>
+					<text><![CDATA["Instituto de la Función Registral del Estado de México ( I F R E M )"]]></text>
+				</staticText>
 			</band>
 		</groupHeader>
 	</group>
