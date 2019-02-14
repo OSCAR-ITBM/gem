@@ -93,100 +93,100 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	
+
 	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(PolizaMantenimientoMB3.class);
 
 	/** The year. */
 	private Integer year;
-	
+
 	/** The yeat aux. */
 	private Integer yeatAux;
-	
+
 	/** The moth aux. */
 	private Integer mothAux;
-	
+
 	/** The conpolflu. */
 	private Integer conpolflu;
-	
+
 	/** The mespolflu. */
 	private Integer mespolflu;
-	
+
 	/** The renpolflu. */
 	private BigDecimal renpolflu;
-	
+
 	/** The id entidad. */
 	private Integer idEntidad;
-	
+
 	/** The mes activo. */
 	private Integer mesActivo;
 
 	/** The suma 1. */
 	private BigDecimal suma1 = BigDecimal.ZERO;
-	
+
 	/** The suma 2. */
 	private BigDecimal suma2 = BigDecimal.ZERO;
-	
+
 	/** The suma 3. */
 	private BigDecimal suma3 = BigDecimal.ZERO;
-	
+
 	/** The suma 4. */
 	private BigDecimal suma4 = BigDecimal.ZERO;
-	
+
 	/** The suma 5. */
 	private BigDecimal suma5 = BigDecimal.ZERO;
-	
+
 	/** The suma 6. */
 	private BigDecimal suma6 = BigDecimal.ZERO;
-	
+
 	/** The cargoflu. */
 	private BigDecimal cargoflu;
-	
+
 	/** The abonoflu. */
 	private BigDecimal abonoflu;
-	
+
 	/** The suma ff. */
 	private BigDecimal sumaFf = BigDecimal.ZERO;
-	
+
 	/** The canflu. */
 	private BigDecimal canflu;
-	
+
 	/** The clvflu. */
 	private BigDecimal clvflu;
-	
+
 	/** The renglon. */
 	private BigDecimal renglon;
 
 	/** The suma cargo. */
 	private String sumaCargo;
-	
+
 	/** The suma abono. */
 	private String sumaAbono;
-	
+
 	/** The suma A 8000. */
 	private String sumaA8000;
-	
+
 	/** The suma B 8000. */
 	private String sumaB8000;
-	
+
 	/** The lock user. */
 	private String lockUser;
-	
+
 	/** The valida pass. */
 	private String validaPass = "xpoli2005";
-	
+
 	/** The password. */
 	private String password;
-	
+
 	/** The cuentaflu. */
 	private String cuentaflu;
-	
+
 	/** The id user. */
 	private String idUser;
-	
+
 	/** The b edit plf. */
 	private Boolean bEditPlf;
-	
+
 	/** The b edit data. */
 	private Boolean bEditData;
 
@@ -548,7 +548,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	/**
 	 * Sets the polifl 2.
 	 *
-	 * @param polifl2            the polifl2 to set
+	 * @param polifl2 the polifl2 to set
 	 */
 	public void setPolifl2(Polifl polifl2) {
 		this.polifl2 = polifl2;
@@ -719,7 +719,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 
 					PolizaMantenimientoMB3.displayErrorMsg("Esta clave de flujo no esta registrada");
 					RequestContext.getCurrentInstance().execute(String.format(EDIT_FLOW_ROW_JQUERY, pl.getIndex())
-						+ String.format(FOCUS_FLOW_CLVFLU_ROW_JQUERY, pl.getIndex()));
+							+ String.format(FOCUS_FLOW_CLVFLU_ROW_JQUERY, pl.getIndex()));
 
 				} else {
 
@@ -732,25 +732,24 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 						if (StringUtils.isEmpty(erroMsg)) {
 
 							List<Polifl> polifls = getPoliflRepository()
-								.findByMespolAndTippolAndConpolAndRenpolAndIdsector(mespolflu, tippolflu, conpolflu,
-																																		renpolflu, this.getUserDetails().getIdSector());
+									.findByMespolAndTippolAndConpolAndRenpolAndIdsector(mespolflu, tippolflu, conpolflu,
+											renpolflu, this.getUserDetails().getIdSector());
 
 							if (this.getbEditPlf() == Boolean.TRUE) {
 								// this.getPoliflRepository().delete(this.poliflBuff.getId());
 								Polifl pointer = null;
-								if(polifls != null){
-									for(Polifl polifl : polifls){
-										if(polifl.getId().equals(pl.getId())){
+								if (polifls != null) {
+									for (Polifl polifl : polifls) {
+										if (polifl.getId().equals(pl.getId())) {
 											pointer = polifl;
 											break;
 										}
 									}
 								}
-								if(pointer != null){
+								if (pointer != null) {
 									pointer.setCanflu(BigDecimal.ZERO);
 								}
 							}
-
 
 							suma = this.getSum(polifls, this.poliflBuff);
 
@@ -810,7 +809,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	/**
 	 * Gets the sum.
 	 *
-	 * @param polifls the polifls
+	 * @param polifls    the polifls
 	 * @param poliflbuff the poliflbuff
 	 * @return the sum
 	 */
@@ -818,7 +817,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 		BigDecimal toReturn = BigDecimal.ZERO;
 		if (CollectionUtils.isNotEmpty(polifls)) {
 			for (Polifl polifl : polifls) {
-				if (polifl != null && polifl.getCanflu() != null){
+				if (polifl != null && polifl.getCanflu() != null) {
 					toReturn = toReturn.add(polifl.getCanflu().abs());
 				}
 			}
@@ -871,7 +870,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	/**
 	 * Sets the cuentaflu.
 	 *
-	 * @param cuentaflu            the cuentaflu to set
+	 * @param cuentaflu the cuentaflu to set
 	 */
 	public void setCuentaflu(String cuentaflu) {
 		this.cuentaflu = cuentaflu;
@@ -1145,9 +1144,9 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	}
 	/*
 	 * 
-	 * public StreamedContent getStreamedContent() { if (streamedContent !=
-	 * null) try { streamedContent.getStream().reset(); } catch (IOException e)
-	 * { LOGGER.error(e.getMessage(), e); } return streamedContent; }
+	 * public StreamedContent getStreamedContent() { if (streamedContent != null)
+	 * try { streamedContent.getStream().reset(); } catch (IOException e) {
+	 * LOGGER.error(e.getMessage(), e); } return streamedContent; }
 	 * 
 	 * public void setStreamedContent(StreamedContent streamedContent) {
 	 * this.streamedContent = streamedContent; }
@@ -1731,7 +1730,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	/**
 	 * Append status.
 	 *
-	 * @param sb the sb
+	 * @param sb    the sb
 	 * @param field the field
 	 * @return the string builder
 	 */
@@ -1886,20 +1885,21 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	/**
 	 * Checks if is valid account.
 	 *
-	 * @param polide the polide
+	 * @param polide   the polide
 	 * @param errorMsg the error msg
 	 * @return true, if is valid account
 	 */
 	BigDecimal maxpol;
+
 	private boolean isValidAccount(Polide polide, StringBuilder errorMsg) {
 		Boolean toReturn = !StringUtils.isEmpty(polide.getCuenta()) && !polide.getCuenta().matches("(0-9){4}");
 		if (toReturn) {
 
 			if (polide.getId() == null || polide.getId() == 0) {
-				 maxpol = this.getPolideDataModel().getLastRenpol();
-				 BigDecimal operation = polide.getRenpol().subtract(maxpol);
-				 BigDecimal opMaxPol = maxpol.add(operation);
-				if (polide.getRenpol().compareTo(maxpol) != 0 ) {
+				maxpol = this.getPolideDataModel().getLastRenpol();
+				BigDecimal operation = polide.getRenpol().subtract(maxpol);
+				BigDecimal opMaxPol = maxpol.add(operation);
+				if (polide.getRenpol().compareTo(maxpol) != 0) {
 					if (polide.getRenpol().compareTo(opMaxPol) > 0) {
 						errorMsg.append("El numero del renglon no puede ser mayor al maximo de renglones de la poliza");
 					} else {
@@ -1914,7 +1914,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 				Polide buff = this.getPolideRepository().findOne(polide.getId());
 				if (polide.getRenpol().intValue() != buff.getRenpol().intValue()) {
 					BigDecimal maxpol = this.getPolideDataModel().getLastRenpol();
-					if (polide.getRenpol().compareTo(maxpol) > 0 ) {
+					if (polide.getRenpol().compareTo(maxpol) > 0) {
 						errorMsg.append("El numero del renglon no puede ser mayor al maximo de renglones de la poliza");
 					} else {
 						if (getPolideRepository()
@@ -1953,14 +1953,18 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 				errorMsg.append("El Concepto no puede ser vacío o no cumple con el formato. ");
 			}
 
-			if (!((null != polide.getCanpol() && null != polide.getCanpolh())
-					&& (polide.getCanpolh().doubleValue() != 0 || polide.getCanpol().doubleValue() != 0))) {
-				errorMsg.append("El cargo o el abono no son valores válidos. ");
-			} else {
-				if (!((polide.getCanpolh().doubleValue() != 0 && polide.getCanpol().doubleValue() == 0)
-						|| (polide.getCanpolh().doubleValue() == 0 && polide.getCanpol().doubleValue() != 0))) {
-					errorMsg.append(POLIZA_CARGO_ABONO_MSG);
-				}
+//			if (!((null != polide.getCanpol() && null != polide.getCanpolh())
+//					&& (polide.getCanpolh().doubleValue() != 0 || polide.getCanpol().doubleValue() != 0))) {
+//				errorMsg.append("El cargo o el abono no son valores válidos. ");
+//			} else {
+//				if (!((polide.getCanpolh().doubleValue() != 0 && polide.getCanpol().doubleValue() == 0)
+//						|| (polide.getCanpolh().doubleValue() == 0 && polide.getCanpol().doubleValue() != 0))) {
+//					errorMsg.append(POLIZA_CARGO_ABONO_MSG);
+//				}
+//			}
+			if ((polide.getCanpolh().doubleValue() >= 1 && polide.getCanpol().doubleValue() >= 1)) {
+				errorMsg.append(POLIZA_CARGO_ABONO_MSG);
+
 			}
 
 		} else {
@@ -1973,7 +1977,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	/**
 	 * Exist account last level.
 	 *
-	 * @param polide the polide
+	 * @param polide   the polide
 	 * @param errorMsg the error msg
 	 * @return true, if successful
 	 */
@@ -1985,7 +1989,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	/**
 	 * Exist account.
 	 *
-	 * @param polide the polide
+	 * @param polide   the polide
 	 * @param errorMsg the error msg
 	 * @return true, if successful
 	 */
@@ -1997,7 +2001,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	/**
 	 * Validate.
 	 *
-	 * @param catalog the catalog
+	 * @param catalog  the catalog
 	 * @param errorMsg the error msg
 	 * @return true, if successful
 	 */
@@ -2062,7 +2066,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	/**
 	 * Sets the last row.
 	 *
-	 * @param lastRow            the lastRow to set
+	 * @param lastRow the lastRow to set
 	 */
 	public void setLastRow(Polide lastRow) {
 		this.lastRow = lastRow;
@@ -2124,7 +2128,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 					selected.setRefpol(this.lastRow.getRefpol());
 					selected.setDn(this.lastRow.getDn());
 					selected = this.getNullCounts(selected);
-					//selected.setRenpol(this.getPolideDataModel().getSelected().getIndex() + 1);
+					// selected.setRenpol(this.getPolideDataModel().getSelected().getIndex() + 1);
 					selected.setFecpol(polien.getFecpol());
 				}
 				selected.setIndex(this.getPolideDataModel().getListPolide().isEmpty() ? 0
@@ -2199,8 +2203,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	/**
 	 * Activa el modo de edicion en una fila.
 	 * 
-	 * @param index
-	 *            fila a ser activada.
+	 * @param index fila a ser activada.
 	 */
 	/**
 	 * @param index
@@ -2219,8 +2222,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	/**
 	 * Activa el modo de edicion en una fila.
 	 * 
-	 * @param index
-	 *            fila a ser activada.
+	 * @param index fila a ser activada.
 	 */
 	/**
 	 * @param index
@@ -2239,8 +2241,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	/**
 	 * Activa el modo de edicion en una fila.
 	 * 
-	 * @param index
-	 *            fila a ser activada.
+	 * @param index fila a ser activada.
 	 */
 	/**
 	 * @param index
@@ -2261,7 +2262,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	/**
 	 * Activate row edit.
 	 *
-	 * @param index the index
+	 * @param index   the index
 	 * @param focusJs the focus js
 	 */
 	public void activateRowEdit(final int index, String focusJs) {
@@ -2331,12 +2332,11 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	 * this.setRenderPdf(Boolean.TRUE);
 	 * 
 	 * try { this.filePdfPath =
-	 * this.getPolizaService().savePDFFile(REPORT_PATH_JASPER_POLICY,
-	 * REPORT_NAME, "escudo_ecatepec.png", polien.getTippol(),
-	 * polien.getMespol(), polien.getConpol(), polien.getConpol(),
-	 * getUserDetails().getIdSector(), this.getUserDetails().getUsername()); }
-	 * catch (NumberFormatException | IOException e) {
-	 * generateNotificationFront(SEVERITY_ERROR, MESSAGE_ERROR,
+	 * this.getPolizaService().savePDFFile(REPORT_PATH_JASPER_POLICY, REPORT_NAME,
+	 * "escudo_ecatepec.png", polien.getTippol(), polien.getMespol(),
+	 * polien.getConpol(), polien.getConpol(), getUserDetails().getIdSector(),
+	 * this.getUserDetails().getUsername()); } catch (NumberFormatException |
+	 * IOException e) { generateNotificationFront(SEVERITY_ERROR, MESSAGE_ERROR,
 	 * "Error al generar el archivo PDF."); } } else {
 	 * generateNotificationFront(SEVERITY_ERROR, MESSAGE_ERROR,
 	 * "Error al capturar los parametros."); } }
@@ -2344,7 +2344,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 
 	/** The uuid. */
 	protected String uuid = null;
-	
+
 	/** The end filename. */
 	protected String endFilename = null;
 
@@ -2581,8 +2581,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 		}
 
 		if ((this.getUserDetails().getUsername().equals(encabezado.getCappol()) && 0 < mesActivo
-				&& encabezado.getStaafe().equalsIgnoreCase("N"))
-				&& allowToUse /* & checkLockPolice() */) {
+				&& encabezado.getStaafe().equalsIgnoreCase("N")) && allowToUse /* & checkLockPolice() */) {
 			this.setActivButtons(Boolean.FALSE);
 			this.setEditableTable(Boolean.TRUE);
 			this.setActivaAdicionar(Boolean.TRUE);
@@ -2699,23 +2698,23 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	/*
 	 * private void lockPolice() { ServletContext servletContext =
 	 * getServletContext(); setLockUser(getUserDetails().getUsername());
-	 * LOGGER.info("blocking for lockUser: " + getLockUser()); String policeKey
-	 * = getPoliceKey(polien);
+	 * LOGGER.info("blocking for lockUser: " + getLockUser()); String policeKey =
+	 * getPoliceKey(polien);
 	 * FacesContext.getCurrentInstance().getExternalContext().getSessionMap().
 	 * put(policeKey, new LockedPolice(policeKey));
 	 * servletContext.setAttribute(policeKey, getLockUser()); }
 	 * 
 	 * private boolean checkLockPolice() { LOGGER.info("enter checkLockPolice");
 	 * ServletContext servletContext = getServletContext(); clearLocks(); String
-	 * policeKey = getPoliceKey(polien); if
-	 * (servletContext.getAttribute(policeKey) != null) { String blockUser =
-	 * (String) servletContext.getAttribute(policeKey); setLockUser(blockUser);
+	 * policeKey = getPoliceKey(polien); if (servletContext.getAttribute(policeKey)
+	 * != null) { String blockUser = (String)
+	 * servletContext.getAttribute(policeKey); setLockUser(blockUser);
 	 * LOGGER.info("blockUser: " + blockUser); if
-	 * (!blockUser.equals(getUserDetails().getUsername())) { FacesMessage
-	 * message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+	 * (!blockUser.equals(getUserDetails().getUsername())) { FacesMessage message =
+	 * new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
 	 * "Esta Póliza está siendo ocupada por otro usuario");
-	 * FacesContext.getCurrentInstance().addMessage(null, message); return
-	 * false; } } else { setLockUser(""); } return true; }
+	 * FacesContext.getCurrentInstance().addMessage(null, message); return false; }
+	 * } else { setLockUser(""); } return true; }
 	 */
 
 	/**
@@ -2748,24 +2747,28 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 		this.setRepeatConcept(Boolean.FALSE);
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 
-		// boolean isAffectedMonth = this.getPolienRepository().count(PolienPredicates.byMesAfectado(polien.getMespol(),
-		// 		this.getUserDetails().getIdSector(), AFFECTED_POLICY_ST)) > 0;
+		// boolean isAffectedMonth =
+		// this.getPolienRepository().count(PolienPredicates.byMesAfectado(polien.getMespol(),
+		// this.getUserDetails().getIdSector(), AFFECTED_POLICY_ST)) > 0;
 
 		if (!isAffectedMonth()) {
 			mesActivo = getConPolizSirvice().isPoliceActive(polien.getMespol(), this.getUserDetails().getIdSector());
 			if (mesActivo > 0) {
 				semaphores.cleanSession(session.getId());
 				// listPolide.clear();
-				suma1 = ZERO; suma2 = ZERO; suma4 = ZERO; suma5 = ZERO; suma6 = ZERO;
+				suma1 = ZERO;
+				suma2 = ZERO;
+				suma4 = ZERO;
+				suma5 = ZERO;
+				suma6 = ZERO;
 
-				Copome copome = getCopomeService()
-												.getNextNume(polien, this.getUserDetails().getIdSector(),
-																		 this.getUserDetails().getUsername());
+				Copome copome = getCopomeService().getNextNume(polien, this.getUserDetails().getIdSector(),
+						this.getUserDetails().getUsername());
 
 				Integer conpol = copome.getNumNex();
 				String tipopol = new String(polien.getTippol());
 				Integer mesPol = polien.getMespol();
-				System.out.println("Preparing polien with "+mesPol+", "+tipopol+", "+conpol);
+				System.out.println("Preparing polien with " + mesPol + ", " + tipopol + ", " + conpol);
 
 				polien = preparePolien(mesPol, tipopol, conpol);
 
@@ -2792,27 +2795,27 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 		}
 	}
 
-	public void enableUse(Polien p){
+	public void enableUse(Polien p) {
 		this.setEditableTable(Boolean.TRUE);
 		this.setActivaAdicionar(Boolean.FALSE);
 		getPolienRepository().save(p);
 		this.lastRow = null;
 		this.nomSelectedConcept = StringUtils.EMPTY;
 		this.nomSelectedAcc = StringUtils.EMPTY;
-		this.actualPage = this.getPolienRepository().getPage(p.getMespol(), p.getTippol(),
-		p.getConpol(), this.getUserDetails().getIdSector()) - 1;
+		this.actualPage = this.getPolienRepository().getPage(p.getMespol(), p.getTippol(), p.getConpol(),
+				this.getUserDetails().getIdSector()) - 1;
 		this.getPolideDataModel().setPolien(p);
 		this.getPolideDataModel().setInsert(Boolean.FALSE);
 		this.getPolideDataModel().setCount(null);
 		RequestContext.getCurrentInstance().execute("PF('polizasWdg').filter();");
 	}
 
-	private boolean isAffectedMonth(){
+	private boolean isAffectedMonth() {
 		return this.getPolienRepository().count(PolienPredicates.byMesAfectado(polien.getMespol(),
-																						this.getUserDetails().getIdSector(), AFFECTED_POLICY_ST)) > 0;
+				this.getUserDetails().getIdSector(), AFFECTED_POLICY_ST)) > 0;
 	}
 
-	private Polien preparePolien(Integer mesPol, String tipopol, Integer conpol){
+	private Polien preparePolien(Integer mesPol, String tipopol, Integer conpol) {
 		Polien p = new Polien();
 
 		p.setMespol(mesPol);
@@ -2824,13 +2827,9 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 		p.setPolclv1(null);
 		p.setFecpol(this.getYeraEmp(p.getMespol()).getTime());
 
-		String clvPol = new StringBuffer()
-										.append(p.getTippol())
-										.append(" ")
-										.append(StringUtils.leftPad(String.valueOf(p.getMespol()), 2, "0"))
-										.append(" ")
-										.append(StringUtils.leftPad(String.valueOf(conpol), 4, "0"))
-										.toString();
+		String clvPol = new StringBuffer().append(p.getTippol()).append(" ")
+				.append(StringUtils.leftPad(String.valueOf(p.getMespol()), 2, "0")).append(" ")
+				.append(StringUtils.leftPad(String.valueOf(conpol), 4, "0")).toString();
 
 		p.setClvpol(clvPol);
 		p.setCdebe(BigDecimal.valueOf(0.0));
@@ -2878,7 +2877,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	/**
 	 * Sets the new fecpol.
 	 *
-	 * @param newFecpol            the newFecpol to set
+	 * @param newFecpol the newFecpol to set
 	 */
 	public void setNewFecpol(Date newFecpol) {
 		this.newFecpol = newFecpol;
@@ -2969,7 +2968,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	 * Persistence poliza 2.
 	 *
 	 * @param listPoliSelect the list poli select
-	 * @param index the index
+	 * @param index          the index
 	 */
 	public void persistencePoliza2(List<Polide> listPoliSelect, Integer index) {
 		this.persistencePolizaOnDeleteRow();
@@ -3147,7 +3146,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	/**
 	 * Sets the suma 1.
 	 *
-	 * @param suma1            the suma1 to set
+	 * @param suma1 the suma1 to set
 	 */
 	public void setSuma1(BigDecimal suma1) {
 		this.suma1 = suma1;
@@ -3165,7 +3164,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	/**
 	 * Sets the suma 2.
 	 *
-	 * @param suma2            the suma2 to set
+	 * @param suma2 the suma2 to set
 	 */
 	public void setSuma2(BigDecimal suma2) {
 		this.suma2 = suma2;
@@ -3183,7 +3182,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	/**
 	 * Sets the error msg.
 	 *
-	 * @param errorMsg            the errorMsg to set
+	 * @param errorMsg the errorMsg to set
 	 */
 	public void setErrorMsg(StringBuilder errorMsg) {
 		this.errorMsg = errorMsg;
@@ -3192,33 +3191,29 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	/**
 	 * Validate flujo.
 	 *
-	 * @param cargo the cargo
-	 * @param abono the abono
+	 * @param cargo    the cargo
+	 * @param abono    the abono
 	 * @param cveFlujo the cve flujo
-	 * @param flujoE the flujo E
+	 * @param flujoE   the flujo E
 	 * @return the string
 	 */
 	public String validateFlujo(BigDecimal cargo, BigDecimal abono, BigDecimal cveFlujo, BigDecimal flujoE) {
 		StringBuilder toReturn = new StringBuilder();
 		if (cargo.compareTo(BigDecimal.ZERO) != 0) {
-			if (cveFlujo.compareTo(BigDecimal.valueOf(20l)) < 0
-					&& flujoE.compareTo(BigDecimal.ZERO) < 0) {
+			if (cveFlujo.compareTo(BigDecimal.valueOf(20l)) < 0 && flujoE.compareTo(BigDecimal.ZERO) < 0) {
 
 				toReturn.append("El saldo debe de ser porsitivo");
 
-			} else if (cveFlujo.compareTo(BigDecimal.valueOf(20l)) > 0
-			           && flujoE.compareTo(BigDecimal.ZERO) > 0) {
+			} else if (cveFlujo.compareTo(BigDecimal.valueOf(20l)) > 0 && flujoE.compareTo(BigDecimal.ZERO) > 0) {
 
 				toReturn.append("El saldo debe de ser negativo");
 
 			}
 		} else if (abono.compareTo(BigDecimal.ZERO) != 0) {
-			if (cveFlujo.compareTo(BigDecimal.valueOf(20l)) < 0
-					&& flujoE.compareTo(BigDecimal.ZERO) > 0) {
+			if (cveFlujo.compareTo(BigDecimal.valueOf(20l)) < 0 && flujoE.compareTo(BigDecimal.ZERO) > 0) {
 				toReturn.append("El saldo debe de ser negativo");
 
-			} else if (cveFlujo.compareTo(BigDecimal.valueOf(20l)) > 0
-			           && flujoE.compareTo(BigDecimal.ZERO) < 0) {
+			} else if (cveFlujo.compareTo(BigDecimal.valueOf(20l)) > 0 && flujoE.compareTo(BigDecimal.ZERO) < 0) {
 				toReturn.append("El saldo debe de ser positivo");
 			}
 		}
@@ -3429,7 +3424,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	/**
 	 * Sets the actual index.
 	 *
-	 * @param actualIndex            the actualIndex to set
+	 * @param actualIndex the actualIndex to set
 	 */
 	public void setActualIndex(Integer actualIndex) {
 		this.actualIndex = actualIndex;
@@ -3536,7 +3531,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	/**
 	 * Sets the nom selected concept.
 	 *
-	 * @param nomSelectedConcept            the nomSelectedConcept to set
+	 * @param nomSelectedConcept the nomSelectedConcept to set
 	 */
 	public void setNomSelectedConcept(String nomSelectedConcept) {
 		this.nomSelectedConcept = nomSelectedConcept;
@@ -3554,7 +3549,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	/**
 	 * Sets the nom selected acc.
 	 *
-	 * @param nomSelectedAcc            the nomSelectedAcc to set
+	 * @param nomSelectedAcc the nomSelectedAcc to set
 	 */
 	public void setNomSelectedAcc(String nomSelectedAcc) {
 		this.nomSelectedAcc = nomSelectedAcc;
@@ -3625,7 +3620,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	/**
 	 * Sets the row edit flag.
 	 *
-	 * @param rowEditFlag            the rowEditFlag to set
+	 * @param rowEditFlag the rowEditFlag to set
 	 */
 	public void setRowEditFlag(String rowEditFlag) {
 		this.rowEditFlag = rowEditFlag;
@@ -3691,7 +3686,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	/**
 	 * Sets the inmediato.
 	 *
-	 * @param inmediato            the inmediato to set
+	 * @param inmediato the inmediato to set
 	 */
 	public void setInmediato(Boolean inmediato) {
 		this.inmediato = inmediato;
@@ -3800,7 +3795,7 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 	/**
 	 * Sets the image id.
 	 *
-	 * @param imageId            the imageId to set
+	 * @param imageId the imageId to set
 	 */
 	public void setImageId(Long imageId) {
 		this.imageId = imageId;
@@ -4054,9 +4049,10 @@ public class PolizaMantenimientoMB3 extends AbstractPolizaMantenimiento implemen
 		}
 	}
 
-	public void updatePolicyNumber(){
-		Integer currentPolicy = getCopomeService().getCurrentPolicyNumber(polien.getTippol(), polien.getMespol(), this.getUserDetails().getIdSector());
-		polien.setConpol(currentPolicy+1);
+	public void updatePolicyNumber() {
+		Integer currentPolicy = getCopomeService().getCurrentPolicyNumber(polien.getTippol(), polien.getMespol(),
+				this.getUserDetails().getIdSector());
+		polien.setConpol(currentPolicy + 1);
 	}
 
 }
