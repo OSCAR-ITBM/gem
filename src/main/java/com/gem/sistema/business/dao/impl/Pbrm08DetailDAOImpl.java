@@ -68,6 +68,7 @@ public class Pbrm08DetailDAOImpl implements Pbrm08DetailDAO {
 				.append(" NVL(FT.DIMENSION,'')DIMENSION,").append(" NVL(FT.DESCFAC,'') DESFAC,")
 				.append(" NVL(FT.AMBITO1,'') AMBITO1,").append(" FT.AMBITO2 AMBITO,")
 				.append(" NVL(FT.COBERTURA,'')COBERTURA,").append(" NVL(FT.DESCRIPCION,'')DESCRIPCION,")
+				.append(" NVL(FT.LINEA_BASE,'')LINEA_BASE,")
 				.append(" NVL(FT.EVALUACION,'')EVALUACION,").append(" CPD1.CVETEMAS CVTEMAS,")
 				.append(" COALESCE(FT.METANUALE_" + trim + ",0.00) METAANULE,")
 				.append(" (FT.SEMAFORO1_" + trim + ") SEMAFORO1,").append(" (FT.SEMAFORO2_" + trim + ") SEMAFORO2,")
