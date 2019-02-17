@@ -10,7 +10,7 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="server adapter"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="pImg1" class="java.lang.String"/>
 	<parameter name="pImg2" class="java.lang.String"/>
@@ -168,6 +168,9 @@
 	<field name="NOM_TEMA" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="NOM_TEMA"/>
 	</field>
+	<field name="LINEA_BASE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOM_TEMA"/>
+	</field>
 	<variable name="vFrecuencia" class="java.lang.String">
 		<variableExpression><![CDATA[($F{FREC}.toUpperCase().equals("S"))?("Semestral"):(
 	($F{FREC}.toUpperCase().equals("A"))?("Anual"):(
@@ -183,7 +186,7 @@
 	<group name="Grupo" isStartNewColumn="true">
 		<groupExpression><![CDATA[$F{GRUPO}]]></groupExpression>
 		<groupHeader>
-			<band height="231">
+			<band height="250">
 				<staticText>
 					<reportElement x="40" y="0" width="180" height="10" uuid="590213a8-e677-430d-88ff-d8dcc8890386">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
@@ -350,7 +353,7 @@
 					<textFieldExpression><![CDATA["Cobertura:"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement mode="Opaque" x="0" y="211" width="752" height="20" backcolor="#BFBFBF" uuid="5cceffb4-acf9-4616-a952-7efa94f53814">
+					<reportElement mode="Opaque" x="0" y="230" width="752" height="20" backcolor="#BFBFBF" uuid="5cceffb4-acf9-4616-a952-7efa94f53814">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
@@ -603,6 +606,28 @@
 						<font fontName="Arial" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{SUBTEMA}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="40" y="209" width="180" height="10" uuid="e0b79c47-727f-49d3-9dff-07f2c9cb7ee0">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Linea base:"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="220" y="209" width="532" height="10" uuid="b3c15b51-f9de-4d3a-b829-0fefef898443">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{LINEA_BASE}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
