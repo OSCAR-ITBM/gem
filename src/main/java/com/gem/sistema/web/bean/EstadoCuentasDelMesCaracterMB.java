@@ -35,41 +35,41 @@ public class EstadoCuentasDelMesCaracterMB extends BaseDirectReport {
 	/** The firmas repository. */
 	@ManagedProperty("#{firmasRepository}")
 	private FirmasRepository firmasRepository;
-	
+
 	/** The cuenta repository. */
 	@ManagedProperty("#{cuentaRepository}")
 	private CuentaRepository cuentaRepository;
 
 	/** The mes. */
 	private Integer mes;
-	
+
 	/** The cuenta. */
 	private Cuenta cuenta;
-	
+
 	/** The order by. */
 	private String orderBy;
-	
+
 	/** The selected cuenta. */
 	private Cuenta selectedCuenta;
-	
+
 	/** The cuentas. */
 	private List<Cuenta> cuentas;
-	
+
 	/** The cuenta mayor. */
 	private String cuentaMayor;
-	
+
 	/** The nombre cuenta mayor. */
 	private String nombreCuentaMayor;
-	
+
 	/** The Constant SECTOR_MUNICIPAL. */
 	private static final Integer SECTOR_MUNICIPAL = 1;
-	
+
 	/** The Constant SECTOR_CENTRAL. */
 	private static final Integer SECTOR_CENTRAL = 2;
-	
+
 	/** The bandera M. */
 	private boolean banderaM = Boolean.FALSE;
-	
+
 	/** The bandera C. */
 	private boolean banderaC = Boolean.FALSE;
 
@@ -82,7 +82,7 @@ public class EstadoCuentasDelMesCaracterMB extends BaseDirectReport {
 		LOGGER.info(":: En postconsruct EstadoCuentasMesMB ");
 		// reportId = 2;
 		// jasperReporteName = "EstadoCuentasDelMesCaracter";
-		jasperReporteName = "EstadoCuentasDelMesGrafico";
+		jasperReporteName = "EstadoCuentasDelMesCaracter";
 		endFilename = "EstadoCuentasDelMesCaracter.pdf";
 
 		cuenta = new Cuenta();
@@ -93,43 +93,92 @@ public class EstadoCuentasDelMesCaracterMB extends BaseDirectReport {
 		} else if (this.getUserDetails().getIdSector() == SECTOR_CENTRAL) {
 			banderaM = Boolean.FALSE;
 		}
-		
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.gem.sistema.web.bean.BaseDirectReport#getParametersReports()
 	 */
 	public Map<String, Object> getParametersReports() {
 		Firmas firmas = firmasRepository.findAllByIdsector(this.getUserDetails().getIdSector());
 		Map<String, Object> parameters = new java.util.HashMap<String, Object>();
+		if (null == cuenta.getScuenta())
+			cuenta.setScuenta(StringUtils.EMPTY);
 
-		parameters.put("P_SECTOR", getUserDetails().getIdSector());
-		parameters.put("P_MES", mes);
-		parameters.put("P_IMG", getUserDetails().getPathImgCab1());
+		if (null == cuenta.getSscuenta())
+			cuenta.setSscuenta(StringUtils.EMPTY);
 
-		parameters.put("P_CAMPO1", firmas.getCampo1());
-		parameters.put("P_CAMPO2", firmas.getCampo2());
-		parameters.put("P_CAMPO3", firmas.getCampo3());
+		if (null == cuenta.getSsscuenta())
+			cuenta.setSsscuenta(StringUtils.EMPTY);
 
-		parameters.put("P_CUENTA", cuenta.getCuenta());
-		parameters.put("P_SCTA", cuenta.getScuenta());
-		parameters.put("P_SSCTA", cuenta.getSscuenta());
-		parameters.put("P_SSSCTA", cuenta.getSsscuenta());
-		parameters.put("P_SSSSCTA", cuenta.getSssscuenta());
+		if (null == cuenta.getSssscuenta())
+			cuenta.setSssscuenta(StringUtils.EMPTY);
 
-		parameters.put("P_L3", firmas.getL27());
-		parameters.put("P_N3", firmas.getN27());
-		parameters.put("P_L4", firmas.getL4());
-		parameters.put("P_N4", firmas.getN4());
-		parameters.put("P_L5", firmas.getL5());
-		parameters.put("P_N5", firmas.getN5());
+		parameters.put("pMes", mes);
+		parameters.put("pImagenPath", getUserDetails().getPathImgCab1());
+		parameters.put("pCampo1", firmas.getCampo1());
+		parameters.put("pCampo2", firmas.getCampo2());
+		parameters.put("pAnio", firmas.getCampo3());
+		parameters.put("pL3", firmas.getL3());
+		parameters.put("pN3", firmas.getN3());
+		parameters.put("pL4", firmas.getL4());
+		parameters.put("pN4", firmas.getN4());
+		parameters.put("pL5", firmas.getL5());
+		parameters.put("pN5", firmas.getN5());
+		parameters.put("pOrderByExtenso",
+				orderBy.equals("FECPOL") ? "FECHA" : (orderBy.equals("REFPOL") ? "REFERENCIA" : "MES"));
+		parameters.put("pQuery",
+				this.generateSQL(cuenta.getCuenta(), cuenta.getScuenta(), cuenta.getSscuenta(), cuenta.getSsscuenta(),
+						cuenta.getSssscuenta(), this.generateCargosAbonos(mes), orderBy, firmas.getCampo3(), mes,
+						this.getUserDetails().getIdSector()));
 
-		parameters.put("P_ORDER_BY", orderBy);
-		parameters.put("P_ORDER_BY_EXTENSO", orderBy.equals("FECPOL") ? "FECHA"
-				: (orderBy.equals("REFPOL") ? "REFERENCIA" : (orderBy.equals("CONCEP") ? "CONCEPTO" : "MES")));
-		parameters.put("abonos_cargos", this.generateCargosAbonos(mes));
-		
 		return parameters;
+	}
+
+	private String generateSQL(String cuenta, String scta, String sscta, String ssscta, String sssscta,
+			String cargosAbonos, String order, Integer anio, Integer mes, Integer sector) {
+
+		StringBuilder sql = new StringBuilder();
+
+		sql.append("SELECT CU.NOMCTA, CU.XNICTA, CU.CUENTA, CU.SCTA, CU.SSCTA, CU.SSSCTA, CU.SSSSCTA, CU.SALINI ")
+				.append(cargosAbonos)
+				.append("  SALINI, CU.STACTA, DECODE(PO.MESPOL, 1, 1, PO.MESPOL - 1) MESPOL, 1 CONPOL, ").append(anio)
+				.append(" ANOPOL, 1 RENPOL, CU.SALINI CANPOL, 0 CANPOLH, '*-*-*-*' CONCEP, '' DN, 1 REFPOL, '01/01/'||")
+				.append(anio)
+				.append(" FECPOL,'E' TIPPOL FROM CUENTA CU LEFT JOIN POLIDE PO ON CU.CUENTA = NVL(PO.CUENTA,'') ")
+				.append("AND CU.SCTA = NVL(PO.SCTA,'') AND CU.SSCTA = NVL(PO.SSCTA,'') AND CU.SSSCTA = NVL(PO.SSSCTA,'') ")
+				.append("AND CU.SSSSCTA = NVL(PO.SSSSCTA,'') AND CU.IDSECTOR = PO.IDSECTOR AND PO.MESPOL = ")
+				.append(mes).append(" WHERE 1=1 AND	CU.CUENTA = ").append(cuenta)
+				.append(" AND CU.NIVCTA = 'S' AND CU.IDSECTOR = ").append(sector).append(" AND ('").append(scta)
+				.append("' IS NULL OR '").append(scta).append("' = '' OR CU.SCTA = '").append(scta)
+				.append("') " + " AND ('").append(sscta).append("' IS NULL OR '").append(sscta)
+				.append("' = '' OR CU.SSCTA = '").append(sscta).append("') " + " AND ('").append(ssscta)
+				.append("' IS NULL OR '").append(ssscta).append("' = '' OR CU.SSSCTA = '").append(ssscta)
+				.append("') " + "	AND ('").append(sssscta).append("' IS NULL OR '").append(sssscta)
+				.append("' = '' OR CU.SSSSCTA = '").append(sssscta).append("') UNION ALL ")
+				.append("SELECT CUENTA.NOMCTA, CUENTA.XNICTA, CUENTA.CUENTA, CUENTA.SCTA, CUENTA.SSCTA, ")
+				.append("CUENTA.SSSCTA, CUENTA.SSSSCTA, CUENTA.SALINI, CUENTA.STACTA, POLIDE.MESPOL, ")
+				.append("POLIDE.CONPOL, POLIDE.ANOPOL, POLIDE.RENPOL, NVL(POLIDE.CANPOL, 0) CANPOL, ")
+				.append("NVL(POLIDE.CANPOLH, 0) CANPOLH, POLIDE.CONCEP, POLIDE.DN, POLIDE.REFPOL, ")
+				.append("POLIEN.FECPOL, POLIDE.TIPPOL FROM CUENTA ")
+				.append("LEFT JOIN POLIDE ON CUENTA.CUENTA  = POLIDE.CUENTA AND CUENTA.SCTA = NVL(POLIDE.SCTA,'') ")
+				.append("AND CUENTA.SSCTA   = NVL(POLIDE.SSCTA,'') AND CUENTA.SSSCTA  = NVL(POLIDE.SSSCTA,'') ")
+				.append("AND CUENTA.SSSSCTA = NVL(POLIDE.SSSSCTA,'') AND CUENTA.IDSECTOR = POLIDE.IDSECTOR ")
+				.append("AND POLIDE.MESPOL = ").append(mes).append(" LEFT  JOIN POLIEN ON POLIDE.TIPPOL=POLIEN.TIPPOL ")
+				.append("AND POLIDE.MESPOL=POLIEN.MESPOL AND POLIDE.CONPOL= POLIEN.CONPOL AND POLIDE.ANOPOL=POLIEN.ANOPOL ")
+				.append("AND POLIDE.IDSECTOR = POLIEN.IDSECTOR WHERE 1 = 1  AND CUENTA.CUENTA = ").append(cuenta)
+				.append(" AND CUENTA.NIVCTA = 'S' AND CUENTA.IDSECTOR = ").append(sector).append("	AND ('")
+				.append(scta).append("' IS NULL OR '").append(scta).append("' = '' OR CUENTA.SCTA = '").append(scta)
+				.append("') " + "	AND ('").append(sscta).append("' IS NULL OR '").append(sscta)
+				.append("' = '' OR CUENTA.SSCTA = '").append(sscta).append("') " + "	AND ('").append(ssscta)
+				.append("' IS NULL OR '").append(ssscta).append("' = '' OR CUENTA.SSSCTA = '").append(ssscta)
+				.append("') " + "	AND ('").append(sssscta).append("' IS NULL OR '").append(sssscta)
+				.append("' = '' OR CUENTA.SSSSCTA = '").append(sssscta)
+				.append("') " + "ORDER BY  CUENTA, SCTA, SSCTA, SSSCTA, SSSSCTA, ").append(order).append(", DN");
+
+		return sql.toString();
 	}
 
 	/**
@@ -144,7 +193,7 @@ public class EstadoCuentasDelMesCaracterMB extends BaseDirectReport {
 
 		if (mes != 1) {
 			while (i < mes) {
-				cadena.append(" + CUENTA.CARGOS_" + i + " - CUENTA.ABONOS_" + i);
+				cadena.append(" + CU.CARGOS_" + i + " - CU.ABONOS_" + i);
 
 				i++;
 			}
@@ -155,14 +204,16 @@ public class EstadoCuentasDelMesCaracterMB extends BaseDirectReport {
 		return cadena.toString();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.gem.sistema.web.bean.BaseDirectReport#generaReporteSimple(int)
 	 */
 	public StreamedContent generaReporteSimple(int type) {
 		return null;
 		/*
-		 * Map<String, Object> paramsQuery = new java.util.HashMap<String,
-		 * Object>(); paramsQuery.put("ID_REF", new Integer(0)); //FALTA return
+		 * Map<String, Object> paramsQuery = new java.util.HashMap<String, Object>();
+		 * paramsQuery.put("ID_REF", new Integer(0)); //FALTA return
 		 * reporteadorDirectoImpl.getFileReport(tcReporte,paramsQuery,
 		 * reporteName,type);
 		 */
@@ -467,7 +518,4 @@ public class EstadoCuentasDelMesCaracterMB extends BaseDirectReport {
 		this.banderaC = banderaC;
 	}
 
-	
-	
-	
 }
