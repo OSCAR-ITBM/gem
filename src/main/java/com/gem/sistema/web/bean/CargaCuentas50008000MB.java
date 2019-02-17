@@ -300,7 +300,7 @@ public class CargaCuentas50008000MB extends AbstractMB {
 			displayInfoMessage("si existe el programa y es de último nivel");
 			values[1] = xcatpro.getNompro();
 		}
-		Natgas natgas = natgasRepository.findFirstByClvgasAndIndcapAndIdsector(modSsscta, "s", idSector.intValue());
+		Natgas natgas = natgasRepository.findFirstByClvgasAndIndcapAndIdsector(modSsscta, "S", idSector.intValue());
 		if (natgas == null) {
 			displayErrorMessage("no existe la naturaleza de gasto.");
 			return null;
