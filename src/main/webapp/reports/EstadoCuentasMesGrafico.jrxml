@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-08-08T13:23:54 -->
+<!-- 2019-02-17T08:58:26 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EstadoCuentaAlMesGrafico" pageWidth="1020" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="992" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14" isFloatColumnFooter="true" uuid="94a9e52e-7229-46b2-9151-d67a6d4593c1">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="LOCALHOST"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -100,16 +100,17 @@ AND (CUENTA.SSCTA   = NVL(POLIDE.SSCTA,''))
 AND (CUENTA.SSSCTA  = NVL(POLIDE.SSSCTA,'')) 
 AND (CUENTA.SSSSCTA = NVL(POLIDE.SSSSCTA,''))  
 AND CUENTA.IDSECTOR = POLIDE.IDSECTOR
+AND (POLIDE.MESPOL <= $P{P_MES} OR POLIDE.MESPOL IS NULL)
 WHERE 1 = 1 
 AND CUENTA.CUENTA = $P{P_CUENTA}
 AND CUENTA.NIVCTA = 'S' 
 AND CUENTA.IDSECTOR =  $P{P_SECTOR} 
-AND (POLIDE.MESPOL <= $P{P_MES} OR POLIDE.MESPOL IS NULL)
+
 AND (($P{P_SCTA} IS NULL OR $P{P_SCTA} = '' OR CUENTA.SCTA = $P{P_SCTA} ) 
 AND ($P{P_SSCTA} IS NULL OR $P{P_SSCTA} = '' OR CUENTA.SSCTA = $P{P_SSCTA}  ) 
 AND ($P{P_SSSCTA} IS NULL OR $P{P_SSSCTA} = '' OR CUENTA.SSSCTA = $P{P_SSSCTA}  ) 
 AND ($P{P_SSSSCTA} IS NULL OR $P{P_SSSSCTA} = '' OR CUENTA.SSSSCTA = $P{P_SSSSCTA}))
-AND POLIDE.RENPOL IS NOT NULL
+
 GROUP BY CUENTA.NOMCTA, CUENTA.XNICTA, CUENTA.CUENTA, CUENTA.SCTA, CUENTA.SSCTA,CUENTA.SSSCTA, CUENTA.SSSSCTA , CUENTA.STACTA
 
 UNION
@@ -133,17 +134,17 @@ AND CUENTA.IDSECTOR = POLIDE.IDSECTOR
 LEFT OUTER JOIN POLIEN ON ((POLIDE.TIPPOL=POLIEN.TIPPOL) 
 AND (POLIDE.MESPOL=POLIEN.MESPOL) AND (POLIDE.CONPOL= POLIEN.CONPOL)
 AND (POLIDE.ANOPOL=POLIEN.ANOPOL) AND POLIDE.IDSECTOR = POLIEN.IDSECTOR)
-
+AND (POLIDE.MESPOL <= $P{P_MES} OR POLIDE.MESPOL IS NULL)
 WHERE 1 = 1 
 AND CUENTA.CUENTA = $P{P_CUENTA}
 AND CUENTA.NIVCTA = 'S' 
 AND CUENTA.IDSECTOR =  $P{P_SECTOR} 
-AND (POLIDE.MESPOL <= $P{P_MES} OR POLIDE.MESPOL IS NULL)
+
 AND (($P{P_SCTA} IS NULL OR $P{P_SCTA} = '' OR CUENTA.SCTA = $P{P_SCTA} ) 
 AND ($P{P_SSCTA} IS NULL OR $P{P_SSCTA} = '' OR CUENTA.SSCTA = $P{P_SSCTA}  ) 
 AND ($P{P_SSSCTA} IS NULL OR $P{P_SSSCTA} = '' OR CUENTA.SSSCTA = $P{P_SSSCTA}  ) 
 AND ($P{P_SSSSCTA} IS NULL OR $P{P_SSSSCTA} = '' OR CUENTA.SSSSCTA = $P{P_SSSSCTA}))
-AND POLIDE.RENPOL IS NOT NULL
+
 
 
 ORDER BY  CUENTA, SCTA, SSCTA, SSSCTA, SSSSCTA, $P!{P_ORDER_BY} , DN]]>
