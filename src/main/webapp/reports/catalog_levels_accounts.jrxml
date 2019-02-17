@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
-<!-- 2017-05-25T17:15:59 -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="catalog_levels_accounts" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="5" bottomMargin="5" uuid="0c4642d6-cb06-4bac-9842-73ebf12b49ca">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="640"/>
@@ -24,6 +23,7 @@
 	<parameter name="pWhereClause" class="java.lang.String">
 		<defaultValueExpression><![CDATA["where 1=1"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="idSector" class="java.lang.Integer"/>
 	<queryString>
 		<![CDATA[select cuenta, nommay, nivcta, natcta from maycta $P!{pWhereClause}  and natcta <>'' order by cuenta]]>
 	</queryString>
@@ -54,6 +54,9 @@
 				</subreportParameter>
 				<subreportParameter name="pHeader4">
 					<subreportParameterExpression><![CDATA[$P{pHeader4}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="idSector">
+					<subreportParameterExpression><![CDATA[$P{idSector}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "headerGEM.jasper"]]></subreportExpression>
 			</subreport>
