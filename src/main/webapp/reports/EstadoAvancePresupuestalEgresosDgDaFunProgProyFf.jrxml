@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-06-14T13:43:27 -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Dg_Da_Fun_Prog_Proy_Ff" pageWidth="1300" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1300" leftMargin="0" rightMargin="0" topMargin="10" bottomMargin="10" uuid="94a9e52e-7229-46b2-9151-d67a6d4593c1">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="LOCAL_GEM"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -240,7 +239,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 						<printWhenExpression><![CDATA[$F{PARTIDA} != null]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="Consolas" size="7" isBold="true"/>
+						<font fontName="Monospaced" size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[T O T A L E S]]></text>
 				</staticText>
@@ -251,7 +250,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 						<printWhenExpression><![CDATA[$F{PARTIDA} != null]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Right">
-						<font size="7" isBold="true"/>
+						<font fontName="Monospaced" size="7" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{total_aprobado}]]></textFieldExpression>
 				</textField>
@@ -261,7 +260,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 						<printWhenExpression><![CDATA[$F{PARTIDA} != null]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Right">
-						<font size="7" isBold="true"/>
+						<font fontName="Monospaced" size="7" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{total_ampliacion}]]></textFieldExpression>
 				</textField>
@@ -271,7 +270,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 						<printWhenExpression><![CDATA[$F{PARTIDA} != null]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Right">
-						<font size="7" isBold="true"/>
+						<font fontName="Monospaced" size="7" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{total_reduccion}]]></textFieldExpression>
 				</textField>
@@ -281,7 +280,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 						<printWhenExpression><![CDATA[$F{PARTIDA} != null]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Right">
-						<font size="7" isBold="true"/>
+						<font fontName="Monospaced" size="7" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{total_modificado}]]></textFieldExpression>
 				</textField>
@@ -291,7 +290,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 						<printWhenExpression><![CDATA[$F{PARTIDA} != null]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Right">
-						<font size="7" isBold="true"/>
+						<font fontName="Monospaced" size="7" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{total_comprometido}]]></textFieldExpression>
 				</textField>
@@ -301,7 +300,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 						<printWhenExpression><![CDATA[$F{PARTIDA} != null]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Right">
-						<font size="7" isBold="true"/>
+						<font fontName="Monospaced" size="7" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{total_devengado}]]></textFieldExpression>
 				</textField>
@@ -311,7 +310,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 						<printWhenExpression><![CDATA[$F{PARTIDA} != null]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Right">
-						<font size="7" isBold="true"/>
+						<font fontName="Monospaced" size="7" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{total_pagado}]]></textFieldExpression>
 				</textField>
@@ -321,7 +320,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 						<printWhenExpression><![CDATA[$F{PARTIDA} != null]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Right">
-						<font size="7" isBold="true"/>
+						<font fontName="Monospaced" size="7" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{total_ejercido}]]></textFieldExpression>
 				</textField>
@@ -331,7 +330,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 						<printWhenExpression><![CDATA[$F{PARTIDA} != null]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Right">
-						<font size="7" isBold="true"/>
+						<font fontName="Monospaced" size="7" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{total_porejercer}]]></textFieldExpression>
 				</textField>
@@ -346,7 +345,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 				<textField isBlankWhenNull="true">
 					<reportElement positionType="Float" x="0" y="0" width="60" height="12" uuid="836145c9-3fa7-4465-9f11-396324772be6"/>
 					<textElement>
-						<font size="7"/>
+						<font fontName="Monospaced" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{PARTIDA}]]></textFieldExpression>
 				</textField>
@@ -356,7 +355,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 						<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 					</reportElement>
 					<textElement>
-						<font size="7"/>
+						<font fontName="Monospaced" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{NOMGAS}]]></textFieldExpression>
 				</textField>
@@ -365,7 +364,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement textAlignment="Right">
-						<font size="7"/>
+						<font fontName="Monospaced" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{aprobado}]]></textFieldExpression>
 				</textField>
@@ -374,7 +373,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement textAlignment="Right">
-						<font size="7"/>
+						<font fontName="Monospaced" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ampliacion}]]></textFieldExpression>
 				</textField>
@@ -383,7 +382,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement textAlignment="Right">
-						<font size="7"/>
+						<font fontName="Monospaced" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{reduccion}]]></textFieldExpression>
 				</textField>
@@ -392,14 +391,14 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement textAlignment="Right">
-						<font size="7"/>
+						<font fontName="Monospaced" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{modificado}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00">
 					<reportElement positionType="Float" x="666" y="0" width="115" height="12" uuid="436f2abd-4141-4bd9-a9d2-4941f78f732e"/>
 					<textElement textAlignment="Right">
-						<font size="7"/>
+						<font fontName="Monospaced" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{comprometido}]]></textFieldExpression>
 				</textField>
@@ -408,7 +407,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement textAlignment="Right">
-						<font size="7"/>
+						<font fontName="Monospaced" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{devengado}]]></textFieldExpression>
 				</textField>
@@ -417,7 +416,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement textAlignment="Right">
-						<font size="7"/>
+						<font fontName="Monospaced" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{pagado}]]></textFieldExpression>
 				</textField>
@@ -426,14 +425,14 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement textAlignment="Right">
-						<font size="7"/>
+						<font fontName="Monospaced" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ejercido}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00">
 					<reportElement positionType="Float" x="1144" y="0" width="115" height="12" uuid="79c39308-1273-4f32-8e50-18ff5ea9eefc"/>
 					<textElement textAlignment="Right">
-						<font size="7"/>
+						<font fontName="Monospaced" size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{porejercer}]]></textFieldExpression>
 				</textField>
@@ -448,7 +447,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center">
-					<font fontName="Consolas"/>
+					<font fontName="Monospaced"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Dg/Da/Fun/Subfun/Prog/SubProg/Proy/Ff: " + $P{P_DIRE} +", " + $P{P_NOMPRO}]]></textFieldExpression>
 			</textField>
@@ -459,7 +458,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center">
-					<font fontName="Consolas"/>
+					<font fontName="Monospaced"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{P_CAMPO1}]]></textFieldExpression>
 			</textField>
@@ -470,7 +469,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center">
-					<font fontName="Consolas"/>
+					<font fontName="Monospaced"/>
 				</textElement>
 				<textFieldExpression><![CDATA["ESTADO DE AVANCE PRESUPUESTAL DE EGRESOS DEL 1 DE ENERO DE "+ $P{year}+ " AL " + $V{lastDayOfMonth} + " DE " + $V{mes_extenso} + " DE " +$P{year}]]></textFieldExpression>
 			</textField>
@@ -483,6 +482,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right">
+					<font fontName="Monospaced"/>
 					<paragraph rightIndent="5"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Hoja no.: " + $V{PAGE_NUMBER}]]></textFieldExpression>
@@ -499,7 +499,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Left">
-					<font fontName="Consolas" size="8" isBold="true"/>
+					<font fontName="Monospaced" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["DESCRIPCION"]]></textFieldExpression>
 			</textField>
@@ -509,7 +509,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font fontName="Consolas" size="8" isBold="true"/>
+					<font fontName="Monospaced" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["APROBADO"]]></textFieldExpression>
 			</textField>
@@ -521,7 +521,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font fontName="Consolas" size="8" isBold="true"/>
+					<font fontName="Monospaced" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["AMPLIACION"]]></textFieldExpression>
 			</textField>
@@ -532,7 +532,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font fontName="Consolas" size="8" isBold="true"/>
+					<font fontName="Monospaced" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["REDUCCION"]]></textFieldExpression>
 			</textField>
@@ -543,7 +543,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font fontName="Consolas" size="8" isBold="true"/>
+					<font fontName="Monospaced" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["MODIFICADO"]]></textFieldExpression>
 			</textField>
@@ -553,7 +553,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font fontName="Consolas" size="8" isBold="true"/>
+					<font fontName="Monospaced" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["COMPROMETIDO"]]></textFieldExpression>
 			</textField>
@@ -563,7 +563,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font fontName="Consolas" size="8" isBold="true"/>
+					<font fontName="Monospaced" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["DEVENGADO"]]></textFieldExpression>
 			</textField>
@@ -573,7 +573,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font fontName="Consolas" size="8" isBold="true"/>
+					<font fontName="Monospaced" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["PAGADO"]]></textFieldExpression>
 			</textField>
@@ -583,7 +583,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font fontName="Consolas" size="8" isBold="true"/>
+					<font fontName="Monospaced" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["EJERCIDO"]]></textFieldExpression>
 			</textField>
@@ -594,7 +594,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font fontName="Consolas" size="8" isBold="true"/>
+					<font fontName="Monospaced" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["POR EJERCER"]]></textFieldExpression>
 			</textField>
@@ -606,7 +606,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Left">
-					<font fontName="Consolas" size="8" isBold="true"/>
+					<font fontName="Monospaced" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["PART"]]></textFieldExpression>
 			</textField>
@@ -618,7 +618,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Left">
-					<font fontName="Consolas" size="8" isBold="true"/>
+					<font fontName="Monospaced" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["--------------------------"]]></textFieldExpression>
 			</textField>
@@ -628,7 +628,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font fontName="Consolas" size="8" isBold="true"/>
+					<font fontName="Monospaced" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["------------------"]]></textFieldExpression>
 			</textField>
@@ -640,7 +640,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font fontName="Consolas" size="8" isBold="true"/>
+					<font fontName="Monospaced" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["------------------"]]></textFieldExpression>
 			</textField>
@@ -651,7 +651,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font fontName="Consolas" size="8" isBold="true"/>
+					<font fontName="Monospaced" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["------------------"]]></textFieldExpression>
 			</textField>
@@ -662,7 +662,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font fontName="Consolas" size="8" isBold="true"/>
+					<font fontName="Monospaced" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["------------------"]]></textFieldExpression>
 			</textField>
@@ -672,7 +672,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font fontName="Consolas" size="8" isBold="true"/>
+					<font fontName="Monospaced" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["------------------"]]></textFieldExpression>
 			</textField>
@@ -682,7 +682,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font fontName="Consolas" size="8" isBold="true"/>
+					<font fontName="Monospaced" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["------------------"]]></textFieldExpression>
 			</textField>
@@ -692,7 +692,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font fontName="Consolas" size="8" isBold="true"/>
+					<font fontName="Monospaced" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["------------------"]]></textFieldExpression>
 			</textField>
@@ -702,7 +702,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font fontName="Consolas" size="8" isBold="true"/>
+					<font fontName="Monospaced" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["------------------"]]></textFieldExpression>
 			</textField>
@@ -713,7 +713,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font fontName="Consolas" size="8" isBold="true"/>
+					<font fontName="Monospaced" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["------------------"]]></textFieldExpression>
 			</textField>
@@ -725,7 +725,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Left">
-					<font fontName="Consolas" size="8" isBold="true"/>
+					<font fontName="Monospaced" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["----------"]]></textFieldExpression>
 			</textField>
@@ -739,7 +739,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center">
-					<font fontName="Consolas" size="10"/>
+					<font fontName="Monospaced" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{P_L1}]]></textFieldExpression>
 			</textField>
@@ -748,7 +748,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center">
-					<font fontName="Consolas" size="10"/>
+					<font fontName="Monospaced" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{P_L2}]]></textFieldExpression>
 			</textField>
@@ -757,7 +757,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center">
-					<font fontName="Consolas" size="10"/>
+					<font fontName="Monospaced" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{P_L3}]]></textFieldExpression>
 			</textField>
@@ -774,7 +774,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Consolas" size="10"/>
+					<font fontName="Monospaced" size="10"/>
 				</textElement>
 				<text><![CDATA[-------------------------------------]]></text>
 			</staticText>
@@ -788,7 +788,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Consolas" size="10"/>
+					<font fontName="Monospaced" size="10"/>
 				</textElement>
 				<text><![CDATA[------------------------------------]]></text>
 			</staticText>
@@ -802,7 +802,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Consolas" size="10"/>
+					<font fontName="Monospaced" size="10"/>
 				</textElement>
 				<text><![CDATA[------------------------------------]]></text>
 			</staticText>
@@ -816,7 +816,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font fontName="Consolas" size="8"/>
+					<font fontName="Monospaced" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{P_N1}]]></textFieldExpression>
 			</textField>
@@ -832,7 +832,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font fontName="Consolas" size="8"/>
+					<font fontName="Monospaced" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{P_N2}]]></textFieldExpression>
 			</textField>
@@ -848,7 +848,7 @@ GROUP BY PASO.PARTIDA,NATGAS.NOMGAS]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font fontName="Consolas" size="8"/>
+					<font fontName="Monospaced" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{P_N3}]]></textFieldExpression>
 			</textField>
