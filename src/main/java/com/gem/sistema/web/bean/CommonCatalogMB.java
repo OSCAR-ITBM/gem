@@ -748,6 +748,7 @@ public abstract class CommonCatalogMB<T extends AbstractEntity> extends Abstract
 			result.put("pTitulo1", StringUtils.EMPTY);
 		}
 		result.put("pTitulo2", StringUtils.EMPTY);
+		result.put("idSector", this.getUserDetails().getIdSector());
 		return result;
 	}
 
